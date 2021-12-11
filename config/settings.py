@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # Local
     'account.apps.AccountConfig',
     'shop.apps.ShopConfig',
+    'products.apps.ProductsConfig',
 
 ]
 
