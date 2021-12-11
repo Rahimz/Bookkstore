@@ -59,12 +59,12 @@
     </nav>
     <div class="">
       {% if request.user.is_authenticated %}
-        <a href="{% url 'logout' %}" style="position: absolute; top:20px; left:20px; "><img src="{% static 'img/logout.png' %}" width="30px" height="auto" alt="logout"></a>
-        <a href="{% url 'dashboard' %}" style="position: absolute; top:20px; left:70px; "><b>{{ request.user }}</b></a>
-        {% else %}
-        <a href="{% url 'login' %}" style="position: absolute; top:30px; left:20px; "><img src="{% static 'img/login.png' %}" width="30px" height="auto" alt="login"></a>
-        <a href="{% url 'register' %}" style="position: absolute; top:20px; left:90px; "><img src="{% static 'img/signup.png' %}" width="40px" height="auto" alt="signup"></a>
-        {% endif %}
+      <a href="{% url 'logout' %}" style="position: absolute; top:20px; left:20px; "><img src="{% static 'img/logout.png' %}" width="30px" height="auto" alt="logout"></a>
+      <a href="{% url 'dashboard' %}" style="position: absolute; top:20px; left:70px; "><b>{{ request.user }}</b></a>
+      {% else %}
+      <a href="{% url 'login' %}" style="position: absolute; top:30px; left:20px; "><img src="{% static 'img/login.png' %}" width="30px" height="auto" alt="login"></a>
+      <a href="{% url 'register' %}" style="position: absolute; top:20px; left:90px; "><img src="{% static 'img/signup.png' %}" width="40px" height="auto" alt="signup"></a>
+      {% endif %}
 
     </div>
 
@@ -74,7 +74,36 @@
     {% endblock %}
   </main>
 
-  <footer>
+  <footer class="footer  mt-3">
+    <div class="container-fluid ">
+      <div class="row p-4 bg-secondary">
+        <div class="col-md-3 text-light">
+          <p class="fw-bold">Lorem ipsum 1</p>
+          <p>Lorem ipsum 1</p>
+          <p>Lorem ipsum 1</p>
+        </div>
+        <div class="col-md-3 text-light">
+          <p class="fw-bold">Lorem ipsum 1</p>
+          <p>Lorem ipsum 1</p>
+          <p>Lorem ipsum 1</p>
+        </div>
+        <div class="col-md-3 text-light">
+          <p class="fw-bold">Lorem ipsum 1</p>
+          <p>Lorem ipsum 1</p>
+          <p>Lorem ipsum 1</p>
+        </div>
+        <div class="col-md-3 text-light">
+          <p class="text-center fw-bold">{% trans 'Social Media' %}</p>
+          <span>Lorem 1</span>
+          <span>Lorem 2</span>
+        </div>
+
+      </div>
+      <div class="row bg-dark text-center">
+        <p class="text-light">copyright@ 2021</p>
+      </div>
+    </div>
+
   </footer>
 
   <script src="{% static 'js/bootstrap.min.js' %}"></script>

@@ -1,16 +1,14 @@
 
 
 .sidebar {
-  width: 24vw;
-  float: right;
   padding: 30px;
-  margin-right: : 20px;
+
 }
 
 .booklist {
-  float: left;
-  width: 74vw;
   padding: 30px;
+}
 
-  /* margin: 20px 400px 0px 0px; */
+.footer {
+padding: 20px;
 }
