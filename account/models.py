@@ -4,6 +4,7 @@ from django.conf import settings
 
 
 class CustomUser(AbstractUser):
+    # id = models.AutoField(primary_key=True)
     pass
 
 class Profile(models.Model):
