@@ -15,15 +15,58 @@
 
   <!-- css files -->
   <link href="{% static 'css/bootstrap.rtl.min.css' %}" rel="stylesheet">
-  <link href="{% static 'css/bootstrap-grid.rtl.css.css' %}" rel="stylesheet">
+  <link href="{% static 'css/bootstrap-grid.rtl.css' %}" rel="stylesheet">
   <link href="{% static 'css/bootstrap-utilities.rtl.min.css' %}" rel="stylesheet">
   <link href="{% static 'css/base.css' %}" rel="stylesheet">
+
+
 
   <title>{% block title %}{% endblock %} | {% trans 'Ketab Damavand' %}</title>
 </head>
 
 <body>
   <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}">{% trans 'Ketab Damavand' %}</a>
+        <!-- navbar button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">{% trans 'category 1' %}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">{% trans 'category 2' %}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">{% trans 'category 2' %}</a>
+            </li>
+          </ul>
+
+        </div>
+
+      </div>
+      <!-- search bar -->
+      <div class="container-fluid">
+        <form class="d-flex ">
+          <input class="form-control me-2" type="search" placeholder="نام کتاب، پدیدآورنده، ناشر" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">{% trans 'Search' %}</button>
+        </form>
+      </div>
+    </nav>
+    <div class="">
+      {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}" style="position: absolute; top:20px; left:20px; "><img src="{% static 'img/logout.png' %}" width="30px" height="auto" alt="logout"></a>
+        <a href="{% url 'dashboard' %}" style="position: absolute; top:20px; left:70px; "><b>{{ request.user }}</b></a>
+        {% else %}
+        <a href="{% url 'login' %}" style="position: absolute; top:30px; left:20px; "><img src="{% static 'img/login.png' %}" width="30px" height="auto" alt="login"></a>
+        <a href="{% url 'register' %}" style="position: absolute; top:20px; left:90px; "><img src="{% static 'img/signup.png' %}" width="40px" height="auto" alt="signup"></a>
+        {% endif %}
+
+    </div>
 
   </header>
   <main>
@@ -33,6 +76,8 @@
 
   <footer>
   </footer>
+
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
 
 </html>
