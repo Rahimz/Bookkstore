@@ -10,13 +10,13 @@ urlpatterns = [
     path('password_change/', auth_views.PasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),
     # include all url we need for registration
-        # path('', include('django.contrib.auth.urls')),
+    path('', include('django.contrib.auth.urls')),
     # user registration url
-        # path('register/', views.register, name='register'),
-        # path('edit/', views.edit, name='edit'),
-        # path('add-profile/', views.create, name='add'),
-        #
-        # path('address/<int:pk>/', views.address_detail, name='address_detail'),
-        # path('address/create/', views.add_address, name='add_address'),
+    path('register/', views.register, name='register'),
+    path('edit/', views.edit, name='edit'),
+    path('add-profile/', views.create, name='add'),
+
+    # path('address/<int:pk>/', views.address_detail, name='address_detail'),
+    # path('address/create/', views.add_address, name='add_address'),
 
 ]
