@@ -1,0 +1,42 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block title %}{% endblock %}
+
+{% block dash_active%}active{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md  text-center">
+		<h1>{% trans 'Log-in' %}</h1>
+
+		{% if form.errors %}
+		<p>{% trans "Your username and password didn't match.Please try again." %}
+
+		</p>
+
+		{% else %}
+		<p>{% trans 'Please, use the following form to log-in.' %}
+
+			{% trans "If you don't have an account" %} <a class="text-warning" href="{% url "register" %}">{% trans 'register here' %}</a></p>
+		{% endif %}
+	</div>
+</div><!--/end of row -->
+
+<div class="row">
+		<div class="text-center">
+			<form action="{% url 'login' %}" method="post" class="login-form">
+				{{ form.as_p }}
+				{% csrf_token %}
+				<input type="hidden" name="next" value="{{ next }}" />
+				<p><input type="submit" value="{% trans 'Log-in' %}"></p>
+			</form>
+			<p><a href="{% url "password_reset" %}">{% trans 'Forgotten your password?' %}</a></p>
+		</div>
+
+</div>
+<!--/end of row -->
+{% endblock %}

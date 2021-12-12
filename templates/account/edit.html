@@ -1,0 +1,25 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans 'Dashboard' %}|{% trans 'Edit your account' %}{% endblock %}
+
+{% block dash_active%}active{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-md  text-center">
+		<h1>{% trans 'Edit your account' %} </h1>
+		<p>{% trans 'You can edit your account using the following form:' %} </p>
+		
+		
+		<form action="." method="post" enctype="multipart/form-data">
+			{{ user_form.as_p }}
+			{{ profile_form.as_p }}
+			{% csrf_token %}
+			<p><input type="submit" value="{% trans 'Save changes' %}"></p>
+		</form>
+	</div>
+</div> <!--/end of row -->	
+{% endblock %}

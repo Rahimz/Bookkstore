@@ -1,0 +1,25 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans 'User registeration' %}{% endblock %}
+
+{% block content %}
+<div class="row m-5">
+	<div class=" text-center">
+		<h1>{% trans 'Create an account' %}</h1>
+		<p>{% trans 'Please, sign up using the following form:' %}</p>
+	</div>
+</div>
+<!--/end of row -->
+<div class="row">
+	<div class="d-flex justify-content-center">
+		<form action="." method="post" class="reset-password-form">
+			{{ user_form.as_p }}
+			{% csrf_token %}
+			<p><input type="submit" value="{% trans 'Create my account' %}"></p>
+		</form>
+	</div>
+</div>
+<!--/end of row -->
+{% endblock %}i
