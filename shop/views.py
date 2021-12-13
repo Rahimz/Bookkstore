@@ -7,3 +7,11 @@ def home(request):
         'home.html',
         {}
     )
+
+
+def product_detail(request):
+    return render(
+        request,
+        'shop/product_detail.html',
+        {}
+    )
