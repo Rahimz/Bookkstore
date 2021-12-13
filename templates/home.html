@@ -7,16 +7,18 @@
 {% block title %}{% trans 'Home' %}{% endblock %}
 
 {% block content %}
-<div class="container">
-  <div class="row">
-
-    <div class="sidebar col-md-3 bg-secondary rounded-2 ">
+<div class="container-fluid overflow-hidden">
+  <div class="row gy-2">
+    <div class="col-md-3">
+    <div class="sidebar bg-secondary rounded-2">
       <p>{% trans 'Filter 1' %}</p>
       <p>{% trans 'Filter 2' %}</p>
       <p>{% trans 'Filter 3' %}</p>
       <p>{% trans 'Filter 4' %}</p>
     </div>
-    <div class="booklist col-md-9 bg-secondary rounded-2">
+  </div>
+  <div class="col-md-9">
+    <div class="booklist bg-secondary rounded-2">
       <h2 class="border-bottom">{% trans 'Category 1' %}</h2>
       <p>{% trans 'Category 4 asoidsjd gosidj gopasih' %}</p>
       <h2 class="border-bottom">{% trans 'Category 2' %}</h2>
@@ -25,8 +27,8 @@
       <p>{% trans 'Category 4 asoidsjd gosidj gopasih' %}</p>
       <p>{% trans 'Category 4 asoidsjd gosidj gopasih' %}</p>
       <p>{% trans 'Category 4 asoidsjd gosidj gopasih' %}</p>
-
     </div>
+  </div>
   </div>
 </div>
 
