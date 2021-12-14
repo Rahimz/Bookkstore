@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'shop.apps.ShopConfig',
     'products.apps.ProductsConfig',
-    'files.apps.FilessConfig',    
+    'files.apps.FilesConfig',    
 
 ]
 
