@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 Django = ">=3.2.0"
 pillow = "*"
+openpyxl = "*"
 
 [dev-packages]
 
