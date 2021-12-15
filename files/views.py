@@ -21,6 +21,7 @@ def add_to_database(request, file_slug=None):
     file_object = None
     row = None
     test_object = None
+    barcode_number_list =['9780000002457']
     if file_slug:
         file_object = get_object_or_404(FileObject, slug=file_slug)
         # f = file_object.path
@@ -28,46 +29,37 @@ def add_to_database(request, file_slug=None):
         # myfile.open('rb').readlines()
         path = file_object.file.path
         with open(path, 'rb') as f:
+            # Load excel workbook
             wb = load_workbook(f)
             ws = wb.active
-            row = ws['A2':'M2']
+            row_count = ws.max_row
+
+            # a loop for scrape the excel file
             category = Category.objects.get(name='other')
-            # category1 = Category()
-            # category1.name = 'test1'
-            # category1.slug = 'test1'
-            # category1.save()
-            test_object = Product.objects.create(
-                name = ws['M2'].value,
-                stock = ws['L2'].value,
-                # author = ws['K2'].value,
-                # translator = ws['J2'].value,
-                price = ws['I2'].value,
-                publish_year = ws['H2'].value,
-                # edition = ws['G2'].value,
-                publisher = ws['F2'].value,
-                isbn = ws['E2'].value,
-                product_type = ws['D2'].value,
-                cover_type = ws['C2'].value,
-                barcode_number = ws['B2'].value,
-                size = ws['A2'].value,
-                category = category,
-            )
-            # test_object.name = ws['M2'].value
-            # test_object.stock = ws['L2'].value
-            # test_object.author = ws['K2'].value
-            # test_object.translator = ws['J2'].value
-            # test_object.price = ws['I2'].value
-            # test_object.publicationYear = ws['H2'].value
-            # test_object.edition = ws['G2'].value
-            # test_object.publication = ws['F2'].value
-            # test_object.isbn = ws['E2'].value
-            # test_object.prductType = ws['D2'].value
-            # test_object.coverType = ws['C2'].value
-            # test_object.barCode = ws['B2'].value
-            # test_object.size = ws['A2'].value
-            # test_object.category = category
-            # test_object.save()
-        # myfile.close()
+            for i in range(2, 6):
+
+                row = ws['A'+str(i):'M'+str(i)]
+
+                test_object = Product(
+                    name = ws['M' + str(i)].value,
+                    stock = ws['L' + str(i)].value,
+                    # author = ws['K' + str(i)].value,
+                    # translator = ws['J' + str(i)].value,
+                    price = ws['I' + str(i)].value,
+                    publish_year = ws['H' + str(i)].value,
+                    # edition = ws['G' + str(i)].value,
+                    publisher = ws['F' + str(i)].value,
+                    isbn = ws['E' + str(i)].value,
+                    product_type = ws['D' + str(i)].value,
+                    cover_type = ws['C' + str(i)].value,
+                    barcode_number = ws['B' + str(i)].value,
+                    size = ws['A' + str(i)].value,
+                    category = category,
+                )
+
+                if test_object.barcode_number not in barcode_number_list:
+                    test_object.save()
+
     return render(request,
                   'files/upload_database.html',
                   {'files': files,
