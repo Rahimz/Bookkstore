@@ -1,3 +1,10 @@
 {% for file in files %}
-{{ file.name }} {{ file.type }}
+{{ file.name }} {{ file.type }} {{ file.file.url}}
+<form class="" action="{% url 'upload_file' file.slug %}" method="post">
+<input type="submit" name="upload" value="upload">
+{% csrf_token %}
+</form>
 {% endfor %}
+{% if file_object %}
+{{ file_object.name }} {{ file_object.type }} {{ file_object.url}}
+{% endif %}
