@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.utils.translation import gettext_lazy as _
 
 
 class Category(models.Model):
@@ -24,6 +25,12 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    STATE_CHOICES = [
+        ('new', _('New')),
+        ('used', _('Used')),
+        ('children', _('children')),
+    ]
+
     category = models.ForeignKey(Category,
                                  related_name='product',
                                  on_delete=models.CASCADE,)
@@ -31,6 +38,8 @@ class Product(models.Model):
     slug = models.SlugField(max_length=550, db_index=True, allow_unicode=True)
 
     barcode_number = models.CharField(max_length=13,
+                                         blank=True, null=True)
+    isbn = models.CharField(max_length=13,
                                          blank=True, null=True)
 
     image = models.ImageField(upload_to='products/images/',
@@ -44,6 +53,12 @@ class Product(models.Model):
     product_type = models.CharField(max_length=250,
                                   null=True, blank=True)
 
+    state = models.CharField(
+        max_length=10,
+        null=True,
+        blank=True,
+        choices=STATE_CHOICES
+        )
     weight = models.FloatField(default=0,
                                  null=True, blank=True)
     size = models.CharField(max_length=250,
