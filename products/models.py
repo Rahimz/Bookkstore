@@ -65,6 +65,21 @@ class Product(models.Model):
         blank=True,
         null=True
     )
+    author = models.CharField(
+        max_length=200,
+        blank=True,
+        null=True
+    )
+    translator = models.CharField(
+        max_length=200,
+        blank=True,
+        null=True
+    )
+    illustrator = models.CharField(
+        max_length=200,
+        blank=True,
+        null=True
+    )
     image = models.ImageField(
         upload_to='products/images/',
         blank=True
@@ -118,6 +133,10 @@ class Product(models.Model):
         null=True,
         blank=True
     )
+    edition = models.IntegerField(
+        null=True,
+        blank=True,
+    )
     purchase_price = models.DecimalField(
         max_digits=10,
         decimal_places=0,
@@ -152,7 +171,7 @@ class Product(models.Model):
 
 
         if not self.slug:
-            self.slug = slugify(rand_slug() + "-" + self.name)
+            self.slug = slugify(rand_slug() + "-" + self.name, allow_unicode=True)
         super(Product, self).save(*args, **kwargs)
 
     def __str__(self):
