@@ -16,6 +16,7 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = os.path.dirname(os.path.join(__file__, os.pardir))
 
 
 # Quick-start development settings - unsuitable for production
@@ -44,7 +45,7 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'shop.apps.ShopConfig',
     'products.apps.ProductsConfig',
-    'files.apps.FilesConfig',    
+    'files.apps.FilesConfig',
 
 ]
 
@@ -87,7 +88,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME':'db.sqlite3',
     }
 }
 
@@ -129,6 +130,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR , 'media') # media directory in the root directory
+MEDIA_ROOT = BASE_DIR / 'media' # media directory in the root directory
 
 AUTH_USER_MODEL = 'account.CustomUser'
 
