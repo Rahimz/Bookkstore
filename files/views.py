@@ -18,15 +18,19 @@ def add_to_database(request, file_slug=None):
     and check the headers and import file in a manual method.
     """
     files = FileObject.objects.all()
+
     file_object = None
     row = None
-    test_object = None
-    barcode_number_list =['9780000002457']
+    temp_object = None
+    # use for reports
+    number_of_added_object = 0
+    # grab a list of available barcode numbers
+    barcode_number_list =Product.objects.all().values_list('barcode_number', flat=True)
     if file_slug:
         file_object = get_object_or_404(FileObject, slug=file_slug)
-        # f = file_object.path
+
         myfile = File(file_object)
-        # myfile.open('rb').readlines()
+
         path = file_object.file.path
         with open(path, 'rb') as f:
             # Load excel workbook
@@ -36,18 +40,18 @@ def add_to_database(request, file_slug=None):
 
             # a loop for scrape the excel file
             category = Category.objects.get(name='other')
-            for i in range(2, 6):
+            for i in range(2, row_count):
 
                 row = ws['A'+str(i):'M'+str(i)]
 
-                test_object = Product(
+                temp_object = Product(
                     name = ws['M' + str(i)].value,
                     stock = ws['L' + str(i)].value,
-                    # author = ws['K' + str(i)].value,
-                    # translator = ws['J' + str(i)].value,
+                    author = ws['K' + str(i)].value,
+                    translator = ws['J' + str(i)].value,
                     price = ws['I' + str(i)].value,
                     publish_year = ws['H' + str(i)].value,
-                    # edition = ws['G' + str(i)].value,
+                    edition = ws['G' + str(i)].value,
                     publisher = ws['F' + str(i)].value,
                     isbn = ws['E' + str(i)].value,
                     product_type = ws['D' + str(i)].value,
@@ -57,11 +61,14 @@ def add_to_database(request, file_slug=None):
                     category = category,
                 )
 
-                if test_object.barcode_number not in barcode_number_list:
-                    test_object.save()
+                if temp_object.barcode_number not in barcode_number_list:
+                    temp_object.save()
+                    number_of_added_object += 1
+
+
 
     return render(request,
                   'files/upload_database.html',
                   {'files': files,
-                   'test_object': test_object
+                   'number_of_added_object': number_of_added_object,
                    })
