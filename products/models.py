@@ -1,6 +1,13 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.translation import gettext_lazy as _
+from django.utils.text import slugify
+import string
+import random
+
+
+def rand_slug():
+    return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(6))
 
 
 class Category(models.Model):
@@ -140,8 +147,13 @@ class Product(models.Model):
                        args=[self.id, self.slug])
 
     def save(self, *args, **kwargs):
-        if image and not self.image_alt:
+        if self.image and not self.image_alt:
             self.image_alt = self.name
+
+
+        if not self.slug:
+            self.slug = slugify(rand_slug() + "-" + self.name)
+        super(Product, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
