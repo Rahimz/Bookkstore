@@ -15,3 +15,10 @@ def product_detail(request):
         'shop/product_detail.html',
         {}
     )
+
+def temp_home(request):
+    return render(
+        request,
+        'temp_home.html',
+        {}
+    )
