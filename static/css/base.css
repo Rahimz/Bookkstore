@@ -1,0 +1,27 @@
+.main-color {
+  color: #78C2C3;
+}
+.second-color {
+  color: #96a5a5;
+}
+.bg-main-color {
+  background-color: #78C2C3;
+}
+
+.bg-second-color {
+  background-color: #96a5a5;
+}
+
+
+.sidebar {
+  padding: 30px;
+
+}
+
+.booklist {
+  padding: 30px;
+}
+
+.footer {
+padding: 20px;
+}
