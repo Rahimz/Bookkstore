@@ -13,32 +13,28 @@
       <div class="bg-second-color rounded-2">
         <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top p-4" alt="{{ product.image_alt }}">
       </div>
+      <span class="badge bg-success rounded-pill ms-4 mt-2">NEW</span>
     </div>
     <div class="col-md-3">
       <div class="booklist bg-second-color rounded-2">
         <div class="bg-light p-2">
-          <p class="">name</p>
-          <p class="">author</p>
-          <p class="">price</p>
-          <p class="">publication</p>
-          <br>
-          <br>
-          <br>
+          <p class="">{% trans 'Name' %} : {{ product.name }}</p>
+          <p class="">{% trans 'Author' %} : {{ product.author }}</p>
+          <p class="">{% trans 'Translator' %} : {{ product.translator }}</p>
+          <p class="">{% trans 'Price' %} : {{ product.price }}</p>
+          <p class="">{% trans 'Publisher' %} : {{ product.publisher }}</p>
         </div>
       </div>
     </div>
+    {% if product.description %}
     <div class="col-md-5">
       <div class="booklist bg-second-color rounded-2">
         <div class="bg-light p-2">
-          <p class="">description</p>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
+          <p class="">product.description</p>
         </div>
       </div>
     </div>
+    {% endif %}
   </div>
   <div class="row mt-3">
     <div class="col-md-12">
@@ -60,10 +56,10 @@
           <div class="col">
             <div class="collapse" id="info-1">
               <div class="card card-body">
-                <p>lorem ipsum</p>
-                <p>lorem ipsum</p>
-                <p>lorem ipsum</p>
-                <p>lorem ipsum</p>
+                <p>{% trans 'ISBN' %} : {{ product.isbn }}</p>
+                <p>{% trans 'Publish year' %} : {{ product.publish_year }}</p>
+                <p>{% trans 'Edition' %} : {{ product.edition }}</p>
+
               </div>
             </div>
           </div>
@@ -71,10 +67,10 @@
           <div class="col">
             <div class="collapse" id="info-2">
               <div class="card card-body">
-                <p>lorem ipsum lorem ipsumlorem ipsum</p>
-                <p>lorem ipsum lorem ipsumlorem ipsum</p>
-                <p>lorem ipsum lorem ipsumlorem ipsum</p>
-                <p>lorem ipsum lorem ipsumlorem ipsum</p>
+                <p>{% trans 'Size' %} : {{ product.size }}</p>
+                <p>{% trans 'Weight' %} : {{ product.weight }}</p>
+                <p>{% trans 'Cover type' %} : {{ product.cover_type }}</p>
+
               </div>
             </div>
           </div>
