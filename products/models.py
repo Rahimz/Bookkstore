@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
@@ -163,7 +164,7 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('shop:product_detail',
-                       args=[self.id, self.slug])
+                       args=[self.id])
 
     def save(self, *args, **kwargs):
         if self.image and not self.image_alt:
