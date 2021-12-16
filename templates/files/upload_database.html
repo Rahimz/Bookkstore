@@ -1,0 +1,13 @@
+{% for file in files %}
+{{ file.name }} {{ file.type }} {{ file.file.url}}
+<form class="" action="{% url 'upload_file' file.slug %}" method="post">
+<input type="submit" name="upload" value="upload">
+{% csrf_token %}
+</form>
+{% endfor %}
+{% if number_of_added_object %}
+
+<p class="">{{ number_of_added_object }} objects added to database</p>
+{% else %}
+<p class="bg-warning"> No object added to database</p>
+{% endif %}
