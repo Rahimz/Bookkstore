@@ -6,12 +6,10 @@
     <div class="card col-md-12 text-center">
       <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top p-4" alt="{{ product.image_alt }}">
       <div class="card-body m-2 p-2">
-        <h5 class="card-title">{{ product.name }}</h5>
+        <h5 class="card-title">{{ product.name | truncatechars:25 }}</h5>
         <h6 class="cart-subtitle text-muted">{% if product.stock == 0 %}<span class="unavailable">{% trans 'unavailable' %}</span>{% else %}{{ product.price  }} {% trans 'Toman' %}{% endif %}</h6>
-        {% if product.weight %}<p>{{ product.weight }} {{ product.weight_measure }}</p>{% endif %}
-        <p class="card-text">
-          {{ product.description | truncatewords:15 }}
-        </p>
+        {% if product.author %}<p class="p-1">{{ product.author }} {{ product.ahthor | truncatechars:25 }}{% else %} __ {% endif %}</p>
+
       </div>
     </div>
   </a>
