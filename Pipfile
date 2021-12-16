@@ -7,6 +7,10 @@ name = "pypi"
 Django = ">=3.2.0"
 pillow = "*"
 openpyxl = "*"
+django = "*"
+gunicorn = "*"
+uvicorn = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
