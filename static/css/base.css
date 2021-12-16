@@ -1,3 +1,8 @@
+@font-face {
+  font-family: iransans;
+  src: url(../fonts/IRANSansWeb.woff2);
+}
+
 .main-color {
   color: #78C2C3;
 }
