@@ -1,8 +1,10 @@
 @font-face {
   font-family: iransans;
-  src: url(../fonts/IRANSansWeb.woff2);
+  src: url(../fonts/IRANSansWebFaNum.woff2);
 }
-
+body {
+  font-family: iransans, helevicta, sans-serif;
+}
 .main-color {
   color: #78C2C3;
 }
