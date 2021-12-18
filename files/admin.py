@@ -7,4 +7,5 @@ class FileAdmin(admin.ModelAdmin):
 
 @admin.register(ImportSession)
 class ImportSessionAdmin(admin.ModelAdmin):
-    list_display = ['user', 'created']
+    list_display = ['user', 'created', 'quantity']
+    search_fileds =['user', 'created']

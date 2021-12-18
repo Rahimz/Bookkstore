@@ -44,4 +44,5 @@ class ImportSession(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+    quantity = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)

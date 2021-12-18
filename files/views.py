@@ -87,7 +87,8 @@ def add_to_database(request, file_slug=None):
 
 
 
-
+        current_import_session.quantity = number_of_added_object
+        current_import_session.save()
     return render(request,
                   'files/upload_database.html',
                   {'files': files,
