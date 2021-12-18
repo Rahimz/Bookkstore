@@ -52,7 +52,7 @@ def add_to_database(request, file_slug=None):
             category = Category.objects.get(name='other')
 
             # we make a label for each import session to  control it
-            current_import_session = ImportSessionobjects.create(user=request.user,)
+            current_import_session = ImportSession.objects.create(user=request.user,)
 
             # read the data in cells
             for i in range(2, row_count):
