@@ -6,6 +6,8 @@ from django.utils.text import slugify
 import string
 import random
 
+from files.models import ImportSession
+
 
 def rand_slug():
     return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(6))
@@ -36,6 +38,14 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    # Meta data for an object
+    import_session = models.ForeignKey(
+        ImportSession,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    
     STATE_CHOICES = [
         ('new', _('New')),
         ('used', _('Used')),
