@@ -9,7 +9,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from openpyxl import load_workbook
 from io import BytesIO
 
-from .models import File as FileObject
+from .models import File as FileObject, ImportSession
 from django.core.files import File
 
 from products.models import Product, Category
@@ -51,6 +51,10 @@ def add_to_database(request, file_slug=None):
             # a loop for scrape the excel file
             category = Category.objects.get(name='other')
 
+            # we make a label for each import session to  control it
+            current_import_session = ImportSessionobjects.create(user=request.user,)
+
+            # read the data in cells
             for i in range(2, row_count):
 
                 row = ws['A'+str(i):'M'+str(i)]
@@ -70,6 +74,7 @@ def add_to_database(request, file_slug=None):
                     barcode_number = ws['B' + str(i)].value,
                     size = ws['A' + str(i)].value,
                     category = category,
+                    import_session=current_import_session,
                 )
 
                 if temp_object.barcode_number not in barcode_number_list:
