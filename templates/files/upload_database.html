@@ -5,9 +5,13 @@
 {% csrf_token %}
 </form>
 {% endfor %}
-{% if number_of_added_object %}
 
+{% if number_of_added_object %}
 <p class="">{{ number_of_added_object }} objects added to database</p>
 {% else %}
 <p class="bg-warning"> No object added to database</p>
 {% endif %}
+
+{% for error in error_report %}
+{{ error }} : {{ error.value }}
+{% endfor %}

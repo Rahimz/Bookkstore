@@ -3,6 +3,9 @@ from django.conf import settings
 import os
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
+
 from openpyxl import load_workbook
 from io import BytesIO
 
@@ -11,6 +14,8 @@ from django.core.files import File
 
 from products.models import Product, Category
 
+
+@staff_member_required
 def add_to_database(request, file_slug=None):
     """
     This Function is designed to import datat from excel.
@@ -22,8 +27,13 @@ def add_to_database(request, file_slug=None):
     file_object = None
     row = None
     temp_object = None
+
     # use for reports
     number_of_added_object = 0
+
+    # erroe report
+    error_report = {}
+
     # grab a list of available barcode numbers
     barcode_number_list =Product.objects.all().values_list('barcode_number', flat=True)
     if file_slug:
@@ -40,6 +50,7 @@ def add_to_database(request, file_slug=None):
 
             # a loop for scrape the excel file
             category = Category.objects.get(name='other')
+
             for i in range(2, row_count):
 
                 row = ws['A'+str(i):'M'+str(i)]
@@ -62,8 +73,13 @@ def add_to_database(request, file_slug=None):
                 )
 
                 if temp_object.barcode_number not in barcode_number_list:
-                    temp_object.save()
-                    number_of_added_object += 1
+                    try:
+                        temp_object.save()
+                        number_of_added_object += 1
+                    except:
+                        error_report[ws['M' + str(i)]] = ws['M' + str(i)].value
+                        messages.error(request, 'Error updating your profile')
+
 
 
 
@@ -71,4 +87,5 @@ def add_to_database(request, file_slug=None):
                   'files/upload_database.html',
                   {'files': files,
                    'number_of_added_object': number_of_added_object,
+                   'error_report': error_report,
                    })
