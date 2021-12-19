@@ -10,13 +10,13 @@
 <div class="container-fluid overflow-hidden">
   <div class="row gy-2">
     <div class="col-md-4">
-      <div class="bg-second-color rounded-2">
+      <div class="border drop_shadow rounded-2">
         <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top p-4" alt="{{ product.image_alt }}">
       </div>
       <span class="badge bg-success rounded-pill ms-4 mt-2">NEW</span>
     </div>
     <div class="col-md-3">
-      <div class="booklist bg-second-color rounded-2">
+      <div class="drop_shadow border rounded-2 p-2">
         <div class="bg-light p-2">
           <p class="">{% trans 'Name' %} : {{ product.name }}</p>
           <p class="">{% trans 'Author' %} : {{ product.author }}</p>
@@ -28,7 +28,7 @@
     </div>
     {% if product.description %}
     <div class="col-md-5">
-      <div class="booklist bg-second-color rounded-2">
+      <div class="drop_shadow border rounded-2 p-3">
         <div class="bg-light p-2">
           <p class="">product.description</p>
         </div>
@@ -38,12 +38,12 @@
   </div>
   <div class="row mt-3">
     <div class="col-md-12">
-      <div class="bg-second-color rounded-2 p-3">
+      <div class="drop_shadow border rounded-2 p-3">
         <!-- Info buttons -->
-        <a class="btn btn-light" data-bs-toggle="collapse" href="#info-1" role="button" aria-expanded="true" aria-controls="info-1">
+        <a class="btn btn-light btn-outline-secondary" data-bs-toggle="collapse" href="#info-1" role="button" aria-expanded="true" aria-controls="info-1">
           Info 1
         </a>
-        <a class="btn btn-light" data-bs-toggle="collapse" href="#info-2" role="button" aria-expanded="false" aria-controls="info-2">
+        <a class="btn btn-light btn-outline-secondary" data-bs-toggle="collapse" href="#info-2" role="button" aria-expanded="false" aria-controls="info-2">
           Info 2
         </a>
 

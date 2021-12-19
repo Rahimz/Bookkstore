@@ -35,14 +35,16 @@ a:hover {
 
 .sidebar {
   padding: 30px;
+  box-shadow: 4px 6px 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .booklist {
   padding: 30px;
+  box-shadow: 4px 6px 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .login-logo {
   position: relative;
-  top:px;
-  left:20px;
+  top: px;
+  left: 20px;
 }
