@@ -1,0 +1,16 @@
+{% load i18n %}
+<div class="pagination d-flex justify-content-center">
+  <p class="step-links ">
+    {% if page.has_previous %}
+    <a href="?page=1" class="btn btn-outline-success m-3">&laquo; {% trans 'first' %}</a>
+    <a href="?page={{ page.previous_page_number }}" class="btn btn-outline-success m-3">  {% trans 'Previous' %}</a>
+    {% endif %}
+    <span class="current">
+      {% trans 'Page' %} {{ page.number }} {% trans 'of' %} {{ page.paginator.num_pages }}
+    </span>
+    {% if page.has_next %}
+    <a href="?page={{ page.next_page_number }}" class="btn btn-outline-success m-3">{% trans 'Next' %}</a>
+    <a href="?page={{ page.paginator.num_pages }}" class="btn btn-outline-success m-3">{% trans 'last' %} &raquo;</a>
+    {% endif %}
+  </p>
+</div>

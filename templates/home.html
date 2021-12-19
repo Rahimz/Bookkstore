@@ -26,6 +26,7 @@
             {% include 'shop/product_card.html' %}
           </div>
           {% endfor %}
+          {% include "shop/pagination.html" with page=products %}
         </div>
 
       </div>
