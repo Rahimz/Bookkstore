@@ -32,15 +32,15 @@ a {
 a:hover {
   color: LightSlateGray;
 }
-
+.drop_shadow {
+  box-shadow: 4px 6px 10px 0 rgba(0, 0, 0, 0.1);
+}
 .sidebar {
   padding: 30px;
-  box-shadow: 4px 6px 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .booklist {
   padding: 30px;
-  box-shadow: 4px 6px 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .login-logo {
