@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'products.apps.ProductsConfig',
     'files.apps.FilesConfig',
+    'search.apps.SearchConfig',
 
 ]
 
