@@ -1,0 +1,49 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block title %}{% trans 'Search' %}{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <div class="row text-center">
+    {% if query %}
+    <h1>{% trans 'Products containing' %} <b><i>{{ query }}</i></b></h1>
+    <h3>
+      {% with results.count as total_results %}
+      {% blocktranslate %}
+      Found {{ total_results }} {% endblocktranslate %}
+      {% endwith %}
+    </h3>
+  </div>
+  <div class="row text-center">
+      {% for product in results %}
+      <div class="col-md-3">
+      {# we use product_card template to manage product cards #}
+      {% include 'shop/product_card.html' %}
+    </div>
+      {% empty %}
+      <p>{% trans 'There are no results for your query.' %}</p>
+      {% endfor %}
+  </div>
+
+  <div class="row text-center">
+    <p><a class="btn btn-outline-secondary" href="{% url 'search:product_search' %}">{% trans 'Search again' %}</a></p>
+  </div>
+  {% else %}
+  <div class="row">
+    <h2 class="text-center mt-3">{% trans 'Search for products' %}</h2>
+  </div>
+  <div class="row m-4 text-center">
+    <form action="{% url 'search:product_search'%}" method="get">
+      {{ form.query }}
+      <input type="submit" value="{% trans 'Search' %}">
+    </form>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}

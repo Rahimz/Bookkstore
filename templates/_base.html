@@ -39,8 +39,8 @@
 <body>
   <header class="mb-3">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'shop:home' %}">{% trans 'Ketab Damavand' %}</a>
+      <div class="container-fluid bg-main-color border-bottom border-2 border-dark">
+        <a class="navbar-brand p-5 fw-bolder" href="{% url 'shop:home' %}">{% trans 'Ketab Damavand' %}</a>
         <!-- navbar button -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -59,26 +59,33 @@
           </ul>
 
         </div>
+        <div class="p-5">
+          {% if request.user.is_authenticated %}
+          <a href="{% url 'dashboard' %}" <b>{{ request.user }}</b></a>
+          <a href="{% url 'logout' %}" class="">
+            <img src="{% static 'img/logout.png' %}" width="30px" height="auto" alt="logout"></a>
+          {% else %}
+          <a href="{% url 'register' %}">
+            <img src="{% static 'img/signup.png' %}" width="40px" height="auto" alt="signup"></a>
+          <a href="{% url 'login' %}" class="">
+            <img src="{% static 'img/login.png' %}" width="30px" height="auto" alt="login"></a>
+          {% endif %}
+
+        </div>
 
       </div>
-      <!-- search bar -->
-      <div class="container-fluid">
-        <form class="d-flex ">
-          <input class="form-control me-2" type="search" placeholder="نام کتاب، پدیدآورنده، ناشر" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">{% trans 'Search' %}</button>
-        </form>
-      </div>
+
     </nav>
-    <div class="">
-      {% if request.user.is_authenticated %}
-      <a href="{% url 'logout' %}" style="position: absolute; top:20px; left:20px; "><img src="{% static 'img/logout.png' %}" width="30px" height="auto" alt="logout"></a>
-      <a href="{% url 'dashboard' %}" style="position: absolute; top:20px; left:70px; "><b>{{ request.user }}</b></a>
-      {% else %}
-      <a href="{% url 'login' %}" style="position: absolute; top:30px; left:20px; "><img src="{% static 'img/login.png' %}" width="30px" height="auto" alt="login"></a>
-      <a href="{% url 'register' %}" style="position: absolute; top:20px; left:90px; "><img src="{% static 'img/signup.png' %}" width="40px" height="auto" alt="signup"></a>
-      {% endif %}
-
+    {% comment %}
+    <!-- search bar -->
+    <div class="container my-2">
+      <form class="d-flex " action="{% url 'search:product_search' %}" method="GET">
+        <input class="form-control me-2" type="search" placeholder="نام کتاب، پدیدآورنده، ناشر" aria-label="Search">
+        <button class="btn btn-outline-secondary" value="query" type="submit">{% trans 'Search' %}</button>
+      </form>
     </div>
+    {% endcomment %}
+
 
   </header>
   <main>
@@ -86,30 +93,25 @@
     {% endblock %}
   </main>
 
-  <footer class="footer  mt-3 container-fluid">
-
-    <div class="row p-4 bg-second-color">
-      <div class="col-md-3 text-light">
-        <p class="fw-bold">Lorem ipsum 1</p>
-        <p>Lorem ipsum 1</p>
-        <p>Lorem ipsum 1</p>
+  <footer class="footer">
+    <div class="mt-3 container-fluid bg-second-color">
+      <div class="row row-cols-md-3 p-5">
+        <div class="col text-light">
+          <p class="fw-bold">Lorem ipsum 1</p>
+          <p>Lorem ipsum 1</p>
+          <p>Lorem ipsum 1</p>
+        </div>
+        <div class="col text-light">
+          <p class="fw-bold">Lorem ipsum 1</p>
+          <p>Lorem ipsum 1</p>
+          <p>Lorem ipsum 1</p>
+        </div>
+        <div class="col text-light">
+          <p class="text-center fw-bold">{% trans 'Social Media' %}</p>
+          <span>Lorem 1</span>
+          <span>Lorem 2</span>
+        </div>
       </div>
-      <div class="col-md-3 text-light">
-        <p class="fw-bold">Lorem ipsum 1</p>
-        <p>Lorem ipsum 1</p>
-        <p>Lorem ipsum 1</p>
-      </div>
-      <div class="col-md-3 text-light">
-        <p class="fw-bold">Lorem ipsum 1</p>
-        <p>Lorem ipsum 1</p>
-        <p>Lorem ipsum 1</p>
-      </div>
-      <div class="col-md-3 text-light">
-        <p class="text-center fw-bold">{% trans 'Social Media' %}</p>
-        <span>Lorem 1</span>
-        <span>Lorem 2</span>
-      </div>
-
     </div>
     <div class="row bg-dark text-center">
       <p class="text-light pt-3">copyright@ 2021</p>

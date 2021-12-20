@@ -7,10 +7,16 @@
 {% block title %}{% trans 'Home' %}{% endblock %}
 
 {% block content %}
+<div class="row m-4 text-center">
+  <form action="{% url 'search:product_search'%}" method="get">
+    {{ form.query }}
+    <input type="submit" value="{% trans 'Search' %}">
+  </form>
+</div>
 <div class="container-fluid overflow-hidden">
-  <div class="row gy-2">
+    <div class="row gy-2">
     <div class="col-md-3">
-      <div class="sidebar bg-second-color rounded-2">
+      <div class="sidebar drop_shadow border border-1 rounded-2">
         <p>{% trans 'Filter 1' %}</p>
         <p>{% trans 'Filter 2' %}</p>
         <p>{% trans 'Filter 3' %}</p>
@@ -18,7 +24,7 @@
       </div>
     </div>
     <div class="col-md-9">
-      <div class="booklist bg-second-color rounded-2">
+      <div class="booklist drop_shadow border border-1 rounded-2">
         <h2 class="border-bottom">{% trans 'All Books' %}</h2>
         <div class="row">
           {% for product in products %}
@@ -26,6 +32,7 @@
             {% include 'shop/product_card.html' %}
           </div>
           {% endfor %}
+          {% include "shop/pagination.html" with page=products %}
         </div>
 
       </div>

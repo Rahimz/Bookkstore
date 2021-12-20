@@ -7,5 +7,43 @@
 {% block title %}{% trans 'Profile' %}{% endblock %}
 
 {% block content %}
-Hi!
+<div class="row m-3">
+	<div class="col-md  text-center">
+		<h1>{% trans 'Profile' %}</h1>
+
+		<p class="lead"><b>{{ request.user }}</b> {% trans 'Welcome' %}&nbsp;!</p>
+
+		<p class="my-3">{% trans 'Your profile details:' %}</p>
+		<div class="d-flex justify-content-center">
+			<table class="table table-stripped" style="width:50%;">
+				<tbody>
+					<tr>
+						<td>{% trans 'First name:' %}</td>
+						<td><b>{{ request.user.first_name }}</b></td>
+					</tr>
+					<tr>
+						<td>{% trans 'Last name:' %}</td>
+						<td><b>{{ request.user.last_name }}</b></td>
+					</tr>
+					<tr>
+						<td>{% trans 'Email:' %}</td>
+						<td><b>{{ request.user.email }}</b></td>
+					</tr>
+					<tr>
+						<td>{% trans 'Gender:' %}</td>
+						<td><b>{{ profile.gender }}</b></td>
+					</tr>
+					<tr>
+						<td>{% trans 'Date of birth:' %}</td>
+						<td><b>{{ profile.date_of_birth }}</b></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+
+		<a class="btn btn-dark" href="{% url 'edit' %}">{% trans 'Edit profile' %}<i class="fa fa-edit icon-large"></i></a>
+		<a href="{% url 'password_change' %}" class="btn btn-dark">{% trans 'Change  password' %}</a>
+	</div>
+</div>
 {% endblock %}

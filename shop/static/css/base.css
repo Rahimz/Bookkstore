@@ -2,15 +2,21 @@
   font-family: iransans;
   src: url(../fonts/IRANSansWebFaNum.woff2);
 }
+
 body {
+  margin: 0;
+  padding: 0;
   font-family: iransans, helevicta, sans-serif;
 }
+
 .main-color {
   color: #78C2C3;
 }
+
 .second-color {
   color: #96a5a5;
 }
+
 .bg-main-color {
   background-color: #78C2C3;
 }
@@ -19,16 +25,26 @@ body {
   background-color: #96a5a5;
 }
 
+a {
+  color: DarkSlateGray;
+}
 
+a:hover {
+  color: LightSlateGray;
+}
+.drop_shadow {
+  box-shadow: 4px 6px 10px 0 rgba(0, 0, 0, 0.1);
+}
 .sidebar {
   padding: 30px;
-
 }
 
 .booklist {
   padding: 30px;
 }
 
-.footer {
-padding: 20px;
+.login-logo {
+  position: relative;
+  top: px;
+  left: 20px;
 }
