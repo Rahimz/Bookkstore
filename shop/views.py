@@ -2,9 +2,12 @@ from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from products.models import Product
+from search.forms import SearchForm
 
 
 def home(request):
+    search_form = SearchForm()
+
     products_object = Product.objects.all()
     # pagination
     paginator = Paginator(products_object, 20) # 20 posts in each page
@@ -23,6 +26,7 @@ def home(request):
         {
         'products':products,
         'page': page,
+        'search_form': search_form,
         }
     )
 
