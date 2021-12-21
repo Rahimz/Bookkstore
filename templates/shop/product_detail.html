@@ -76,10 +76,24 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="row text-center">
+
+    {% for good in goods %}
+    <div class="col-md-3">
+      <div class="">
+        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class=" p-4" height="150px" width="auto" alt="{{ product.image_alt }}">
+      </div>
+      <p><span class="badge {% if good.state == "new" %}bg-success{% else %}bg-warning{% endif %} rounded-pill ms-4 mt-2">{{ good.state }}</span></p>
+      <p>{{ good.price }}</p>
+      <button type="button" class="btn btn-outline-secondary" name="button">{% trans 'Add to cart'%}</button>
 
     </div>
-
+    {% endfor %}
   </div>
+
 </div>
 
 {% endblock %}

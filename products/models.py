@@ -45,11 +45,10 @@ class Product(models.Model):
         blank=True,
         null=True,
     )
-    
+
     STATE_CHOICES = [
         ('new', _('New')),
         ('used', _('Used')),
-        ('children', _('children')),
     ]
 
     category = models.ForeignKey(
@@ -114,8 +113,7 @@ class Product(models.Model):
     )
     state = models.CharField(
         max_length=10,
-        null=True,
-        blank=True,
+        default='new',
         choices=STATE_CHOICES
     )
     weight = models.FloatField(
@@ -180,10 +178,81 @@ class Product(models.Model):
         if self.image and not self.image_alt:
             self.image_alt = self.name
 
-
         if not self.slug:
             self.slug = slugify(rand_slug() + "-" + self.name, allow_unicode=True)
         super(Product, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
+
+
+class Good(models.Model):
+    STATE_CHOICES = [
+        ('new', _('New')),
+        ('used', _('Used')),
+    ]
+
+    product = models.ForeignKey(
+        Product,
+        related_name='goods',
+        on_delete=models.CASCADE,
+    )
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=0,
+        default=0
+    )
+    stock = models.IntegerField(
+        default=0,
+    )
+    state = models.CharField(
+        max_length=10,
+        default = 'new',
+        choices=STATE_CHOICES
+    )
+    purchase_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=0,
+        null=True,
+        blank=True
+    )
+    edition = models.IntegerField(
+        null=True,
+        blank=True,
+    )
+    available = models.BooleanField(
+        default=True
+    )
+    created = models.DateTimeField(
+        auto_now_add=True
+    )
+    updated = models.DateTimeField(
+        auto_now=True
+    )
+    cover_type = models.CharField(
+        max_length=250,
+        null=True,
+        blank=True
+    )
+
+    class Meta:
+        ordering = ('-updated',)
+
+    def __str__(self):
+        return self.product.name
+
+    def save(self,  *args, **kwargs):
+        if not self.price:
+            self.price = self.product.price
+        
+
+        if self.state == 'used' and not self.price:
+            self.price = self.product.price / 2
+
+        if not self.purchase_price:
+            self.purchase_price = self.product.purchase_price
+
+        if not self.cover_type:
+            self.cover_type = self.product.cover_type
+
+        super(Good, self).save(*args, **kwargs)
