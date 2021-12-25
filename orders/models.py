@@ -5,6 +5,7 @@ import uuid
 from phonenumber_field.modelfields import PhoneNumberField
 
 from account.models import Address
+from products.models import Good
 
 
 class Order(models.Model):
@@ -125,3 +126,38 @@ class Order(models.Model):
     # def get_absolute_url(self):
     #     return reverse('shop:product_detail',
     #                    args=[self.id])
+
+
+class OrderLine(models.Model):
+    order = models.ForeignKey(
+        Order,
+        related_name='lines',
+        editable=False,
+        on_delete=models.CASCADE,
+    )
+    good = models.ForeignKey(
+        Good,
+        related_name='order_lines',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+    price = models.DecimalField(
+        max_digits=settings.DEFAULT_MAX_DIGITS,
+        decimal_places=settings.DEFAULT_DECIMAL_PLACES
+    )
+    quantity = models.PositiveIntegerField(
+        default=1
+    )
+    discount = models.DecimalField(
+        max_digits=settings.DEFAULT_MAX_DIGITS,
+        decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+        blank=True,
+        null=True,
+    )
+
+    def __str__(self):
+        return str(self.id)
+
+    def get_cost(self):
+        return self.price * self.quantity
