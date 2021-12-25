@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 from django_countries.fields import Country, CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -56,9 +57,17 @@ class Address(models.Model):
 
 
 class CustomUser(AbstractUser):
-    # id = models.AutoField(primary_key=True)
-    pass
-
+    email = models.EmailField(unique=True)
+    addresses = models.ManyToManyField(
+        Address, blank=True, related_name="user_addresses")
+    default_shipping_address = models.ForeignKey(
+        Address, related_name="+", null=True, blank=True, on_delete=models.SET_NULL
+    )
+    default_billing_address = models.ForeignKey(
+        Address, related_name="+", null=True, blank=True, on_delete=models.SET_NULL
+    )
+    date_joined = models.DateTimeField(default=timezone.now, editable=False)
+    
 
 class Profile(models.Model):
     # In order to keep your code generic, use the get_user_model()
