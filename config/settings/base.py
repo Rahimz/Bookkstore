@@ -158,3 +158,7 @@ LOGOUT_URL = 'logout'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#  Decimal numbers settings
+DEFAULT_MAX_DIGITS = 12
+DEFAULT_DECIMAL_PLACES = 0
