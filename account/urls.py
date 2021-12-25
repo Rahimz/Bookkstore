@@ -14,7 +14,7 @@ urlpatterns = [
     # user registration url
     path('register/', views.register, name='register'),
     path('edit/', views.edit, name='edit'),
-    path('add-profile/', views.create, name='add'),
+    
 
     # path('address/<int:pk>/', views.address_detail, name='address_detail'),
     # path('address/create/', views.add_address, name='add_address'),
