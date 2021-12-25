@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'products.apps.ProductsConfig',
     'files.apps.FilesConfig',
     'search.apps.SearchConfig',
+    'orders.apps.OrdersConfig',
 
 ]
 
