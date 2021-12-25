@@ -11,6 +11,8 @@ django = "*"
 gunicorn = "*"
 uvicorn = "*"
 psycopg2-binary = "*"
+django-countries = "*"
+django-phonenumber-field = "*"
 
 [dev-packages]
 
