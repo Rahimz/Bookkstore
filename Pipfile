@@ -13,6 +13,7 @@ uvicorn = "*"
 psycopg2-binary = "*"
 django-countries = "*"
 django-phonenumber-field = "*"
+phonenumberslite = "*"
 
 [dev-packages]
 
