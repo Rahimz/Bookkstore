@@ -1,0 +1,38 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block title %}{% trans 'Orders' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="sidebar drop_shadow border border-1 rounded-2">
+        <p><a href="{% url 'staff:product_create'%}">{% trans 'create product' %}</a></p>
+        <p><a href="{% url 'staff:products'%}">{% trans 'list of productss' %}</a></p>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <h2>List of orders</h2>
+      <form class="" action="." method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit"  name="cancel" class="btn btn-danger">{% trans 'Cancel' %}</button>
+          <input type="submit"  class="btn btn-success" value="{% trans 'Submit' %}">
+          <button type="submit"  name="another" class="btn btn-danger">{% trans 'Save and add another' %}</button>
+        </div>
+
+
+      </form>
+
+
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
