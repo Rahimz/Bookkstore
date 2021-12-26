@@ -1,0 +1,48 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block title %}{% trans 'Products' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+      <div class="col-md-2">
+        <div class="sidebar drop_shadow border border-1 rounded-2">
+          <p><a href="{% url 'staff:product_create'%}">{% trans 'create product' %}</a></p>
+          <p><a href="{% url 'staff:products'%}">{% trans 'list of productss' %}</a></p>
+        </div>
+      </div>
+      <div class="col-md-10">
+    <h2>List of products</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">{% trans 'Name' %}</th>
+          <th scope="col">{% trans 'Author' %}</th>
+          <th scope="col">{% trans 'Price' %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+        <tr>
+          <th scope="row">{{ product.pk }}</th>
+          <td><a href="{% url 'shop:product_detail' product.pk %}">{{ product.name }}</a></td>
+          <td>{{ product.author }}</td>
+          <td>{{ product.price }}</td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+    {% include "shop/pagination.html" with page=products %}
+    </div>
+
+
+  </div>
+
+</div>
+{% endblock %}

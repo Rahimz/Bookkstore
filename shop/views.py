@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from products.models import Product
+from products.models import Product, Good
 from search.forms import SearchForm
 
 
@@ -33,11 +33,13 @@ def home(request):
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
+    goods = Good.objects.filter(product=product)
     return render(
         request,
         'shop/product_detail.html',
         {
         'product':product,
+        'goods': goods,
         }
     )
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .forms import LoginForm, UserRegistrationForm, UserEditForm,  ProfileEditForm
+from .forms import LoginForm, UserRegistrationForm, UserEditForm
 
 def dashboard(request):
     user = request.user
@@ -18,8 +18,7 @@ def register(request):
             new_user.set_password(user_form.cleaned_data['password'])
             # Save the User object
             new_user.save()
-            # Create the user profile
-            Profile.objects.create(user=new_user)
+
             return render(request,
                          'account/register_done.html',
                          {'new_user': new_user})
@@ -35,51 +34,46 @@ def edit(request):
     if request.method == 'POST':
         user_form = UserEditForm(instance=request.user,
                                 data=request.POST)
-        profile_form = ProfileEditForm(instance=request.user.profile,
-                                       data=request.POST,
-                                       files=request.FILES)
-        if user_form.is_valid() and profile_form.is_valid():
+
+        if user_form.is_valid():
             user_form.save()
-            profile_form.save()
+
             # https://docs.djangoproject.com/en/2.0/ref/contrib/messages/
             messages.success(request,
-                            'Profile updated successfully')
+                            'User details updated successfully')
         else:
-            messages.error(request, 'Error updating your profile')
+            messages.error(request, 'Error updating your user details')
     else:
         user_form = UserEditForm(instance=request.user)
-        profile_form = ProfileEditForm(instance=request.user.profile)
+
 
     return render(request,
                 'account/edit.html',
                 {'user_form': user_form,
-                'profile_form': profile_form})
+                })
 
-@login_required
-def create(request):
-    if request.method == 'POST':
-        user_form = UserEditForm(instance=request.user,
-                                data=request.POST)
-        profile_form = ProfileEditForm(data=request.POST,
-                                       files=request.FILES)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            new_profile = profile_form.save(commit=False)
-            new_profile.user = request.user
-            new_profile.save()
-            messages.success(request,
-                            'Profile added successfully')
-            return render(request,
-                          'account/dashboard.html',
-                          {'profile': new_profile,}
-                          )
-        else:
-            messages.error(request, 'Error updating your profile')
-    else:
-        user_form = UserEditForm(instance=request.user)
-        profile_form = ProfileEditForm()
-
-    return render(request,
-                'account/create_profile.html',
-                {'user_form': user_form,
-                 'profile_form': profile_form})
+# @login_required
+# def create(request):
+#     if request.method == 'POST':
+#         user_form = UserEditForm(instance=request.user,
+#                                 data=request.POST)
+#
+#         if user_form.is_valid():
+#             user_form.save()
+#
+#             messages.success(request,
+#                             'User details added successfully')
+#             return render(request,
+#                           'account/dashboard.html',
+#                           {}
+#                           )
+#         else:
+#             messages.error(request, 'Error updating your user details')
+#     else:
+#         user_form = UserEditForm(instance=request.user)
+#
+#
+#     return render(request,
+#                 'account/create_profile.html',
+#                 {'user_form': user_form,
+#                  })

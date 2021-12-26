@@ -43,12 +43,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # 3rd party
+    'phonenumber_field',
+    'django_countries',
+
     # Local
     'account.apps.AccountConfig',
     'shop.apps.ShopConfig',
     'products.apps.ProductsConfig',
     'files.apps.FilesConfig',
     'search.apps.SearchConfig',
+    'orders.apps.OrdersConfig',
 
 ]
 
@@ -153,3 +158,7 @@ LOGOUT_URL = 'logout'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#  Decimal numbers settings
+DEFAULT_MAX_DIGITS = 12
+DEFAULT_DECIMAL_PLACES = 0

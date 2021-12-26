@@ -1,0 +1,50 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block title %}{% trans 'Orders' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="sidebar drop_shadow border border-1 rounded-2">
+        <p><a href="{% url 'staff:order_list'%}">{% trans 'list of orders' %}</a></p>
+        <p><a href="#">{% trans 'new order' %}</a></p>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <h2>List of orders</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">{% trans 'order' %}</th>
+            <th scope="col">{% trans 'user' %}</th>
+            <th scope="col">{% trans 'paid' %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td><a href="#">1234</a></td>
+            <td>rahim</td>
+            <td>&#10004</td>
+          </tr>
+          <tr>
+            <th scope="row">1</th>
+            <td><a href="#">1235</a></td>
+            <td>sorme</td>
+            <td>&#10008</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

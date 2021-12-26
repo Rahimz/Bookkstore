@@ -85,6 +85,14 @@
       </form>
     </div>
     {% endcomment %}
+    {% if user.is_staff %}
+    <div class="m-2">
+      <a href="{% url 'staff:order_list' %}" class="btn btn-outline-secondary ">{% trans 'Sales' %}</a>
+      <a href="{% url 'staff:purchase_list' %}" class="btn btn-outline-secondary ">{% trans 'Purchase' %}</a>
+      <a href="{% url 'staff:warehouse' %}" class="btn btn-outline-secondary ">{% trans 'Warehouse' %}</a>
+      <a href="{% url 'staff:products' %}" class="btn btn-outline-secondary ">{% trans 'Products' %}</a>
+    </div>
+    {% endif %}
 
 
   </header>

@@ -83,7 +83,7 @@ def add_to_database(request, file_slug=None):
                         number_of_added_object += 1
                     except:
                         error_report[ws['M' + str(i)]] = ws['M' + str(i)].value
-                        messages.error(request, 'Error updating your profile')
+                        messages.error(request, 'Error updating your user details')
 
 
 
