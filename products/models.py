@@ -154,7 +154,8 @@ class Product(models.Model):
     )
     price = models.DecimalField(
         max_digits=10,
-        decimal_places=0
+        decimal_places=0,
+        default=0
     )
     available = models.BooleanField(
         default=True
@@ -244,7 +245,7 @@ class Good(models.Model):
     def save(self,  *args, **kwargs):
         if not self.price:
             self.price = self.product.price
-        
+
 
         if self.state == 'used' and not self.price:
             self.price = self.product.price / 2
