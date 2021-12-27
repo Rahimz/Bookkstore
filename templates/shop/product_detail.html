@@ -13,7 +13,7 @@
       <div class="border drop_shadow rounded-2">
         <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top p-4" alt="{{ product.image_alt }}">
       </div>
-      <span class="badge bg-success rounded-pill ms-4 mt-2">NEW</span>
+      <span class="badge rounded-pill ms-4 mt-2 {% if product.state == 'new' %}bg-success{% else %}bg-warning{% endif %}">{{ product.state | capfirst }}</span>
     </div>
     <div class="col-md-3">
       <div class="drop_shadow border rounded-2 p-2">
