@@ -1,0 +1,31 @@
+{% load i18n %}
+{% if barName == "products" %}
+<div class="sidebar drop_shadow border border-1 rounded-2">
+  <p><a href="{% url 'staff:product_create'%}">{% trans 'Create product' %}</a></p>
+  <p><a href="{% url 'staff:products'%}">{% trans 'List of productss' %}</a></p>
+  <p><a href="#">{% trans 'Create a new category' %}</a></p>
+  <p><a href="#">{% trans 'List of categories' %}</a></p>
+</div>
+{% endif %}
+
+{% if barName == "orders" %}
+<div class="sidebar drop_shadow border border-1 rounded-2">
+  <p><a href="#">{% trans 'New invoice' %}</a></p>
+  <p><a href="{% url 'staff:order_list'%}">{% trans 'List of orders' %}</a></p>
+  <p><a href="{% url 'staff:order_create'%}">{% trans 'New order' %}</a></p>
+</div>
+{% endif %}
+
+{% if barName == "purchase" %}
+<div class="sidebar drop_shadow border border-1 rounded-2">
+  <p><a href="#">{% trans 'New purchase invoice' %}</a></p>
+  <p><a href="#">{% trans 'List of purchases' %}</a></p>
+</div>
+{% endif %}
+
+{% if barName == "warehouse" %}
+<div class="sidebar drop_shadow border border-1 rounded-2">
+  <p><a href="#">{% trans 'List of orders' %}</a></p>
+  <p><a href="#">{% trans 'Ready to ship' %}</a></p>
+</div>
+{% endif %}

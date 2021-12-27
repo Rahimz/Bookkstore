@@ -10,10 +10,7 @@
 <div class="container-fluid overflow-hidden">
   <div class="row">
       <div class="col-md-2">
-        <div class="sidebar drop_shadow border border-1 rounded-2">
-          <p><a href="{% url 'staff:product_create'%}">{% trans 'create product' %}</a></p>
-          <p><a href="{% url 'staff:products'%}">{% trans 'list of productss' %}</a></p>
-        </div>
+        {% include "staff/sidebar_staff.html" with barName="products" %}
       </div>
       <div class="col-md-10">
     <h2>List of products</h2>
