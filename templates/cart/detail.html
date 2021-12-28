@@ -1,4 +1,4 @@
-{% extends "shop/_base.html" %}
+{% extends "_base.html" %}
 {% load static %}
 {% load i18n %}
 
@@ -8,7 +8,8 @@
 
 {% block content %}
 <h1>{% trans "Your shopping cart" %}</h1>
-<table class="cart">
+
+<table class="cart table table-striped">
   <thead>
     <tr>
       <th>{% trans "Image" %}</th>
@@ -26,12 +27,12 @@
       <td>
         <a href="{{ product.get_absolute_url }}">
           <img src="{% if product.image %}{{ product.image.url }}
-                {% else %}{% static 'img/no_image.png' %}{% endif %}">
+                {% else %}{% static 'img/no_image.png' %}{% endif %}" width="100px" height="auto">
         </a>
       </td>
       <td>{{ product.name }}</td>
       <td>
-        <form action="{% url 'cart:cart_add' product.id %}" method="post">
+        <form action="{% url 'cart:cart_add' product.pk %}" method="post">
           {{ item.update_quantity_form.quantity }}
           {{ item.update_quantity_form.override }}
           <input type="submit" value="{% trans 'Update' %}">
@@ -39,7 +40,7 @@
         </form>
       </td>
       <td>
-        <form action="{% url 'cart:cart_remove' product.id %}" method="post">
+        <form action="{% url 'cart:cart_remove' product.pk %}" method="post">
           <input type="submit" value="{% trans 'Remove' %}">
           {% csrf_token %}
         </form>
@@ -49,6 +50,7 @@
     </tr>
     {% endwith %}
     {% endfor %}
+    {% comment %}
     {% if cart.coupon %}
     <tr class="subtotal">
       <td>{% trans "Subtotal" %}</td>
@@ -65,6 +67,7 @@
       </td>
     </tr>
     {% endif %}
+
     <tr class="subtotal">
       <td>{% trans "Shipping" %}</td>
       <td colspan="4"></td>
@@ -82,12 +85,15 @@
         + 25000
       </td>
       {% endif %}
+      {% endcomment %}
     </tr>
     <tr class="total">
       <td>{% trans "Total" %}</td>
       <td colspan="4"></td>
       <td class="num">
+        {% comment %}
         {{ cart.get_total_price_after_discount|floatformat:0 }} {% trans 'Toman' %}
+        {% endcomment %}
       </td>
     </tr>
   </tbody>
@@ -109,14 +115,17 @@
 {% endif %}
 
 <p>{% trans "Apply a coupon" %}:</p>
+{% comment %}
 <form action="{% url 'coupons:apply' %}" method="post">
   {{ coupon_apply_form }}
   <input type="submit" value="{% trans 'Apply' %}">
   {% csrf_token %}
 </form>
-
+{% endcomment %}
 <p class="text-right mt-3">
-  <a href="{% url 'shop:product_list' %}" class="button light">{% trans "Continue shopping" %}</a>
-  <a href="{% url 'orders:order_create' %}" class="button">{% trans "Checkout" %}</a>
+  <a href="{% url 'shop:home' %}" class="btn btn-outline-secondary">{% trans "Continue shopping" %}</a>
+  {% comment %}
+  <a href="{% url 'orders:order_create' %}" class="btn btn-outline-secondary">{% trans "Checkout" %}</a>
+  {% endcomment %}
 </p>
 {% endblock %}

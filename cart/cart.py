@@ -22,7 +22,7 @@ class Cart(object):
         """
         Add a product to the car or update its quantity.
         """
-        product_id = str(product.id)
+        product_id = str(product.pk)
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity': 0,
                                       'price': str(product.price)}
@@ -40,7 +40,7 @@ class Cart(object):
         """
         Remove a product from the cart.
         """
-        product_id = str(product.id)
+        product_id = str(product.pk)
         if product_id in self.cart:
             del self.cart[product_id]
             self.save()
@@ -55,7 +55,7 @@ class Cart(object):
 
         cart = self.cart.copy()
         for product in products:
-            cart[str(product.id)]['product'] = product
+            cart[str(product.pk)]['product'] = product
         for item in cart.values():
             item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * item['quantity']
