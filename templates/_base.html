@@ -85,6 +85,16 @@
       </form>
     </div>
     {% endcomment %}
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li class="{{ message.tags }}">
+        {{ message|safe }}
+        <a href="#" class="close">x</a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
     {% if user.is_staff %}
     <div class="m-2">
       <a href="{% url 'staff:order_list' %}" class="btn btn-outline-secondary ">{% trans 'Sales' %}</a>
