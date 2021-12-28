@@ -28,7 +28,7 @@ def cart_add(request, product_id):
         else:
             messages.warning(request, _(
                 'There are not enough products in stock!'))
-            return redirect('shop/product_detail', id=product_id, slug=product.slug)
+            return redirect('shop:product_detail', pk=product_id)
     return redirect('cart:cart_detail')
 
 
