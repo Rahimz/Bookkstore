@@ -3,6 +3,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from products.models import Product, Good
 from search.forms import SearchForm
+from cart.forms import CartAddProductForm
 
 
 def home(request):
@@ -34,12 +35,14 @@ def home(request):
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     goods = Good.objects.filter(product=product)
+    cart_product_form = CartAddProductForm()
     return render(
         request,
         'shop/product_detail.html',
         {
         'product':product,
         'goods': goods,
+        'cart_product_form': cart_product_form,
         }
     )
 

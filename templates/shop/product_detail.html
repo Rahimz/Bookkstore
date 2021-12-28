@@ -25,6 +25,13 @@
           <p class="">{% trans 'Publisher' %} : {{ product.publisher }}</p>
         </div>
       </div>
+      <div class="mt-4">
+        <form action="{% url 'cart:cart_add' product.id %}" method="post">
+        {{ cart_product_form}}
+        {% csrf_token %}
+        <input type="submit" value="{% trans 'Add to cart' %}">
+      </form>
+      </div>
     </div>
     {% if product.description %}
     <div class="col-md-5">
