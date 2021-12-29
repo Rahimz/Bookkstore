@@ -8,99 +8,100 @@
 
 {% block content %}
 <div class="container-fluid overflow-hidden">
-  <div class="row gy-2">
-    <div class="col-md-4">
-      <div class="border drop_shadow rounded-2">
-        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top p-4" alt="{{ product.image_alt }}">
-      </div>
-      <span class="badge rounded-pill ms-4 mt-2 {% if product.state == 'new' %}bg-success{% else %}bg-warning{% endif %}">{{ product.state | capfirst }}</span>
-    </div>
-    <div class="col-md-3">
-      <div class="drop_shadow border rounded-2 p-2">
-        <div class="bg-light p-2">
-          <p class="">{% trans 'Name' %} : {{ product.name }}</p>
-          <p class="">{% trans 'Author' %} : {{ product.author }}</p>
-          <p class="">{% trans 'Translator' %} : {{ product.translator }}</p>
-          <p class="">{% trans 'Price' %} : {{ product.price }}</p>
-          <p class="">{% trans 'Publisher' %} : {{ product.publisher }}</p>
+  <div itemscope itemtype="https://schema.org/Book">
+    <div class="row gy-2">
+      <div class="col-md-4">
+        <div class="border drop_shadow rounded-2">
+          <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top p-4" alt="{{ product.image_alt }}">
         </div>
+        <span class="badge rounded-pill ms-4 mt-2 {% if product.state == 'new' %}bg-success{% else %}bg-warning{% endif %}">{{ product.state | capfirst }}</span>
       </div>
-      <div class="mt-4">
-        <form action="{% url 'cart:cart_add' product.pk %}" method="post">
-        {{ cart_product_form}}
-        {% csrf_token %}
-        <input type="submit" value="{% trans 'Add to cart' %}">
-      </form>
-      </div>
-    </div>
-    {% if product.description %}
-    <div class="col-md-5">
-      <div class="drop_shadow border rounded-2 p-3">
-        <div class="bg-light p-2">
-          <p class="">product.description</p>
-        </div>
-      </div>
-    </div>
-    {% endif %}
-  </div>
-  <div class="row mt-3">
-    <div class="col-md-12">
-      <div class="drop_shadow border rounded-2 p-3">
-        <!-- Info buttons -->
-        <a class="btn btn-light btn-outline-secondary" data-bs-toggle="collapse" href="#info-1" role="button" aria-expanded="true" aria-controls="info-1">
-          Info 1
-        </a>
-        <a class="btn btn-light btn-outline-secondary" data-bs-toggle="collapse" href="#info-2" role="button" aria-expanded="false" aria-controls="info-2">
-          Info 2
-        </a>
-
-        {% comment %}
-        <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-          Button with data-bs-target
-        </button>
-        {% endcomment %}
-        <div class="row">
-          <div class="col">
-            <div class="collapse" id="info-1">
-              <div class="card card-body">
-                <p>{% trans 'ISBN' %} : {{ product.isbn }}</p>
-                <p>{% trans 'Publish year' %} : {{ product.publish_year }}</p>
-                <p>{% trans 'Edition' %} : {{ product.edition }}</p>
-
-              </div>
-            </div>
+      <div class="col-md-3">
+        <div class="drop_shadow border rounded-2 p-2">
+          <div class="bg-light p-2">
+            <p itemprop="name" class="">{% trans 'Name' %} : {{ product.name }}</p>
+            <p itemprop="author" class="">{% trans 'Author' %} : {{ product.author }}</p>
+            <p itemprop="translator" class="">{% trans 'Translator' %} : {{ product.translator }}</p>
+            <p class="">{% trans 'Price' %} : {{ product.price }}</p>
+            <p itemprop="publisher" class="">{% trans 'Publisher' %} : {{ product.publisher }}</p>
           </div>
-
-          <div class="col">
-            <div class="collapse" id="info-2">
-              <div class="card card-body">
-                <p>{% trans 'Size' %} : {{ product.size }}</p>
-                <p>{% trans 'Weight' %} : {{ product.weight }}</p>
-                <p>{% trans 'Cover type' %} : {{ product.cover_type }}</p>
-
-              </div>
-            </div>
+        </div>
+        <div class="mt-4">
+          <form action="{% url 'cart:cart_add' product.pk %}" method="post">
+            {{ cart_product_form}}
+            {% csrf_token %}
+            <input type="submit" value="{% trans 'Add to cart' %}">
+          </form>
+        </div>
+      </div>
+      {% if product.description %}
+      <div class="col-md-5">
+        <div class="drop_shadow border rounded-2 p-3">
+          <div class="bg-light p-2">
+            <p class="">product.description</p>
           </div>
         </div>
       </div>
+      {% endif %}
     </div>
-  </div>
+    <div class="row mt-3">
+      <div class="col-md-12">
+        <div class="drop_shadow border rounded-2 p-3">
+          <!-- Info buttons -->
+          <a class="btn btn-light btn-outline-secondary" data-bs-toggle="collapse" href="#info-1" role="button" aria-expanded="true" aria-controls="info-1">
+            Info 1
+          </a>
+          <a class="btn btn-light btn-outline-secondary" data-bs-toggle="collapse" href="#info-2" role="button" aria-expanded="false" aria-controls="info-2">
+            Info 2
+          </a>
 
-  <div class="row text-center">
+          {% comment %}
+          <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Button with data-bs-target
+          </button>
+          {% endcomment %}
+          <div class="row">
+            <div class="col">
+              <div class="collapse" id="info-1">
+                <div class="card card-body">
+                  <p>{% trans 'ISBN' %} : {{ product.isbn }}</p>
+                  <p>{% trans 'Publish year' %} : {{ product.publish_year }}</p>
+                  <p>{% trans 'Edition' %} : {{ product.edition }}</p>
 
-    {% for good in goods %}
-    <div class="col-md-3">
-      <div class="">
-        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class=" p-4" height="150px" width="auto" alt="{{ product.image_alt }}">
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="collapse" id="info-2">
+                <div class="card card-body">
+                  <p>{% trans 'Size' %} : {{ product.size }}</p>
+                  <p>{% trans 'Weight' %} : {{ product.weight }}</p>
+                  <p>{% trans 'Cover type' %} : {{ product.cover_type }}</p>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <p><span class="badge {% if good.state == "new" %}bg-success{% else %}bg-warning{% endif %} rounded-pill ms-4 mt-2">{{ good.state }}</span></p>
-      <p>{{ good.price }}</p>
-      <button type="button" class="btn btn-outline-secondary" name="button">{% trans 'Add to cart'%}</button>
-
     </div>
-    {% endfor %}
-  </div>
+  </div> <!-- end of schema div -->
+    <div class="row text-center">
 
-</div>
+      {% for good in goods %}
+      <div class="col-md-3">
+        <div class="">
+          <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class=" p-4" height="150px" width="auto" alt="{{ product.image_alt }}">
+        </div>
+        <p><span class="badge {% if good.state == "new" %}bg-success{% else %}bg-warning{% endif %} rounded-pill ms-4 mt-2">{{ good.state }}</span></p>
+        <p>{{ good.price }}</p>
+        <button type="button" class="btn btn-outline-secondary" name="button">{% trans 'Add to cart'%}</button>
+
+      </div>
+      {% endfor %}
+    </div>
+
+</div> <!-- end of container div -->
 
 {% endblock %}
