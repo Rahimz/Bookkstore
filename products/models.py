@@ -168,7 +168,7 @@ class Product(models.Model):
     )
 
     class Meta:
-        ordering = ('-created',)
+        ordering = ('-updated', '-created',)
         index_together = (('id', 'slug'),)
 
     def get_absolute_url(self):
