@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'files.apps.FilesConfig',
     'search.apps.SearchConfig',
     'orders.apps.OrdersConfig',
+    'cart.apps.CartConfig',
 
 ]
 
@@ -82,6 +83,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.cart',
             ],
         },
     },
@@ -162,3 +164,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #  Decimal numbers settings
 DEFAULT_MAX_DIGITS = 12
 DEFAULT_DECIMAL_PLACES = 0
+
+# settings for session to make cart system
+CART_SESSION_ID = 'cart'

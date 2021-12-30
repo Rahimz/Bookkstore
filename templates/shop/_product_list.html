@@ -1,0 +1,13 @@
+{% load i18n %}
+
+<div class="booklist drop_shadow border border-1 rounded-2">
+  <h2 class="border-bottom">{{ page_title }}</h2>
+  <div class="row">
+    {% for product in products %}
+    <div class="col-md-3">
+      {% include 'shop/product_card.html' %}
+    </div>
+    {% endfor %}
+    {% include "shop/pagination.html" with page=products %}
+  </div>
+</div>

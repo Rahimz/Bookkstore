@@ -5,14 +5,14 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.views import View
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from .forms import ProductCreateForm
+from .forms import ProductCreateForm, OrderCreateForm
 from products.models import Product, Category
 
 
 def orders(request):
     return render(
         request,
-        'staff/staff_orders.html',
+        'staff/orders.html',
         {}
     )
 
@@ -20,7 +20,7 @@ def orders(request):
 def purchases(request):
     return render(
         request,
-        'staff/purchase_orders.html',
+        'staff/purchases.html',
         {}
     )
 
@@ -76,6 +76,13 @@ def product_create(request):
     )
 
 
+def order_create(request):
+    form = OrderCreateForm()
+    return render(
+        request,
+        'staff/order_create.html',
+        {'form': form}
+    )
 
 class ProductCreate(View):
     # template = 'staff/product_create.html'

@@ -7,6 +7,8 @@ import string
 import random
 
 from files.models import ImportSession
+# from discount.models import Cupon
+# from warehouse.models import warehouse
 
 
 def rand_slug():
@@ -38,6 +40,23 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    STATE_CHOICES = [
+        ('new', _('New')),
+        ('used', _('Used')),
+    ]
+    AGE_RANGE_CHOICES = [
+        ('-', ''),
+        ('1', '0-2'),
+        ('2', '2-4'),
+        ('3', '4-6'),
+        ('4', '6-8'),
+        ('5', '8-10'),
+    ]
+    PRODUCT_TYPE_CHOICES = [
+        ('book', _('Book')),
+        ('craft', _('Craft')),
+    ]
+
     # Meta data for an object
     import_session = models.ForeignKey(
         ImportSession,
@@ -45,11 +64,6 @@ class Product(models.Model):
         blank=True,
         null=True,
     )
-
-    STATE_CHOICES = [
-        ('new', _('New')),
-        ('used', _('Used')),
-    ]
 
     category = models.ForeignKey(
         Category,
@@ -90,6 +104,16 @@ class Product(models.Model):
         blank=True,
         null=True
     )
+    latin_name = models.CharField(
+        max_length=300,
+        blank=True,
+        null=True
+    )
+    author_latin_name = models.CharField(
+        max_length=300,
+        blank=True,
+        null=True
+    )
     image = models.ImageField(
         upload_to='products/images/',
         blank=True
@@ -99,15 +123,39 @@ class Product(models.Model):
         blank=True,
         null=True
     )
+    about = models.CharField(
+        max_length=150,
+        blank=True,
+        null=True
+    )
     description = models.TextField(
         blank=True,
         null=True
     )
+    age_range = models.CharField(
+        max_length=150,
+        default='',
+        choices=AGE_RANGE_CHOICES,
+    )
     stock = models.IntegerField(
         default=0,
     )
+    # warehouse = models.ForeignKey(
+    #     Warehouse,
+    #     on_delete=SET_NULL,
+    #     blank=True,
+    #     null=True,
+    # )
+    zero_stock = models.BooleanField(
+        default=False,
+    )
+    zero_stock_limit=models.IntegerField(
+        null=True,
+        blank=True
+    )
     product_type = models.CharField(
-        max_length=250,
+        max_length=100,
+        choices=PRODUCT_TYPE_CHOICES,
         null=True,
         blank=True
     )
@@ -130,6 +178,9 @@ class Product(models.Model):
         max_length=250,
         null=True,
         blank=True
+    )
+    page_number = models.IntegerField(
+        default=0,
     )
     publisher = models.CharField(
         max_length=250,
@@ -157,6 +208,16 @@ class Product(models.Model):
         decimal_places=0,
         default=0
     )
+    # discount = models.ForeignKey(
+    #     Coupon,
+    #     on_delete=models.SET_NULL,
+    #     blank=True,
+    #     null=True,
+    # )
+    admin_note = models.TextField(
+        blank=True,
+        null=True,
+    )
     available = models.BooleanField(
         default=True
     )
@@ -168,7 +229,7 @@ class Product(models.Model):
     )
 
     class Meta:
-        ordering = ('-created',)
+        ordering = ('-updated', '-created',)
         index_together = (('id', 'slug'),)
 
     def get_absolute_url(self):

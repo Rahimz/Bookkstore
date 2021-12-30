@@ -4,7 +4,7 @@
 
 {% load static %}
 
-{% block title %}{% trans 'Home' %}{% endblock %}
+{% block title %}{{page_title}}{% endblock %}
 
 {% block content %}
 <div class="row m-4 text-center">
@@ -16,7 +16,7 @@
 <div class="container-fluid overflow-hidden">
     <div class="row gy-2">
     <div class="col-md-3">
-    {% include 'shop/_filter_sidebar.html'%}
+    {% include 'shop/_filter_sidebar.html' %}
     </div>
     <div class="col-md-9">
       {% include 'shop/_product_list.html' %}
