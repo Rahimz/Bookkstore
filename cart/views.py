@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from products.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
-# from coupons.forms import CouponApplyForm
+from discounts.forms import CouponApplyForm
 # from shop.recommender import Recommender
 
 
@@ -46,11 +46,11 @@ def cart_detail(request):
     # it sets override True to use cart add method to update it
     for item in cart:
         item['update_quantity_form'] = CartAddProductForm(
-                                            initial={
-                                                'quantity': item['quantity'],
-                                                'override': True
-                                            })
-    # coupon_apply_form = CouponApplyForm()
+            initial={
+                'quantity': item['quantity'],
+                'override': True
+            })
+    coupon_apply_form = CouponApplyForm()
 
     # r = Recommender()
     cart_products = [item['product'] for item in cart]
@@ -60,6 +60,6 @@ def cart_detail(request):
         request,
         'cart/detail.html',
         {'cart': cart,
-         # 'coupon_apply_form': coupon_apply_form,
+         'coupon_apply_form': coupon_apply_form,
          # 'recommended_products': recommended_products
          })
