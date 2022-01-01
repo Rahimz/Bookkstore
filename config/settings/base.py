@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # 3rd party
     'phonenumber_field',
     'django_countries',
+    'debug_toolbar',
 
     # Local
     'account.apps.AccountConfig',
@@ -66,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -167,3 +169,8 @@ DEFAULT_DECIMAL_PLACES = 0
 
 # settings for session to make cart system
 CART_SESSION_ID = 'cart'
+
+# IP's for django debug toolbar
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
