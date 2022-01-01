@@ -5,7 +5,7 @@ import uuid
 from phonenumber_field.modelfields import PhoneNumberField
 
 from account.models import Address
-from products.models import Good
+from products.models import Product
 
 
 class Order(models.Model):
@@ -43,6 +43,9 @@ class Order(models.Model):
     created = models.DateTimeField(
         auto_now_add=True,
         editable=False,
+    )
+    updated = models.DateTimeField(
+        auto_now=True
     )
     status = models.CharField(
         max_length=32,
@@ -111,6 +114,7 @@ class Order(models.Model):
         default=0,
         blank=True,
     )
+    paid = models.BooleanField(default=False)
 
     class Meta:
         ordering = ("-pk",)
@@ -122,6 +126,12 @@ class Order(models.Model):
 
     def __str__(self):
         return "#%d" % (self.id,)
+
+    def get_total_cost(self):
+        return sum(item.get_cost() for item in self.lines.all())
+
+    def get_total_weight(self):
+        return sum(item.get_weight() for item in self.lines.all())
 
     # def get_absolute_url(self):
     #     return reverse('shop:product_detail',
@@ -135,8 +145,8 @@ class OrderLine(models.Model):
         editable=False,
         on_delete=models.CASCADE,
     )
-    good = models.ForeignKey(
-        Good,
+    product = models.ForeignKey(
+        Product,
         related_name='order_lines',
         on_delete=models.SET_NULL,
         blank=True,
@@ -160,4 +170,7 @@ class OrderLine(models.Model):
         return str(self.id)
 
     def get_cost(self):
-        return self.price * self.quantity
+        return self.price * self.quantity - self.discount
+
+    def get_weight(self):
+        return self.product.weight
