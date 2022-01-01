@@ -1,0 +1,70 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block title %}{% trans 'Order created' %}{% endblock %}
+
+{% block content %}
+<div class="row m-4 text-center">
+
+</div>
+<div class="container-fluid overflow-hidden">
+    <div class="row gy-2">
+    <div class="col-md-3">
+      {{ order.id }} created
+
+    </div>
+    <div class="col-md-9">
+
+    </div>
+  </div>
+</div>
+
+<div class="container text-center">
+  <h1 class="text-center">{% trans 'Checkout' %}</h1>
+  <div class="row m-4 justify-content-center">
+    <div class="order-info">
+      <h3>{% trans "Your order" %}</h3>
+      <ul>
+        {% for item in cart %}
+        <li>{{ item.product.name }} * {{ item.quantity }} :
+          <span>{{ item.total_price|floatformat:0 }} {% trans 'Toman' %} </span>
+        </li>
+        {% endfor %}
+        <br />
+        <li>
+          {% trans 'Shipping'%} :
+          {% if cart.get_total_price >= 400000 %}
+          {% trans 'Free' %}
+          {% else %}
+          25000 {% trans 'Toman' %}
+          {% endif %}
+          {% if cart.coupon %}
+        </li>
+        <li>
+          {% blocktrans with code=cart.coupon.code discount=cart.coupon.discount %}
+          "{{ code }}" ({{ discount }}% off)
+          {% endblocktrans %}
+          <span class="neg">- {{ cart.get_discount|floatformat:0 }} {% trans 'Toman' %} </span>
+        </li>
+        {% endif %}
+      </ul>
+      <p>{% trans "Total" %}: {{ cart.get_total_price_after_discount|floatformat:0 }} {% trans 'Toman' %} </p>
+    </div>
+  </div>
+
+  <div class="d-inline-flex">
+
+    <form method="post" class="">
+      {{ form.as_p }}
+      <p><input type="submit" value="{% trans 'Place order' %}"></p>
+      {% csrf_token %}
+    </form>
+
+  </div>
+  <p class="text-muted p-1">{% trans 'Into payment port' %}</p>
+
+</div>
+{% endblock %}

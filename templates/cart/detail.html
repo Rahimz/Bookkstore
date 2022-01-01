@@ -124,8 +124,6 @@
 {% endcomment %}
 <p class="text-right mt-3">
   <a href="{% url 'shop:home' %}" class="btn btn-outline-secondary">{% trans "Continue shopping" %}</a>
-  {% comment %}
-  <a href="{% url 'orders:order_create' %}" class="btn btn-outline-secondary">{% trans "Checkout" %}</a>
-  {% endcomment %}
+  <a href="{% url 'orders:order_create' %}" class="btn btn-outline-secondary">{% trans "Checkout" %}</a>  
 </p>
 {% endblock %}
