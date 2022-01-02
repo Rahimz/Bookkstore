@@ -55,11 +55,16 @@
         <div class="drop_shadow border rounded-2 p-3">
           <!-- Info buttons -->
           <a class="btn btn-light btn-outline-secondary" data-bs-toggle="collapse" href="#info-1" role="button" aria-expanded="true" aria-controls="info-1">
-            Info 1
+            {% trans 'Book informations' %}
           </a>
           <a class="btn btn-light btn-outline-secondary" data-bs-toggle="collapse" href="#info-2" role="button" aria-expanded="false" aria-controls="info-2">
-            Info 2
+            {% trans 'Book Features' %}
           </a>
+          {% if request.user.is_staff %}
+          <a class="btn btn-light btn-outline-secondary" data-bs-toggle="collapse" href="#admin-info" role="button" aria-expanded="false" aria-controls="admin-info">
+            {% trans 'Admin info' %}
+          </a>
+          {% endif %}
 
           {% comment %}
           <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -67,13 +72,13 @@
           </button>
           {% endcomment %}
           <div class="row">
+
             <div class="col">
-              <div class="collapse" id="info-1">
+              <div class="" id="info-1">
                 <div class="card card-body">
                   <p>{% trans 'ISBN' %} : {{ product.isbn }}</p>
                   <p>{% trans 'Publish year' %} : {{ product.publish_year }}</p>
                   <p>{% trans 'Edition' %} : {{ product.edition }}</p>
-
                 </div>
               </div>
             </div>
@@ -84,11 +89,29 @@
                   <p>{% trans 'Size' %} : {{ product.size }}</p>
                   <p>{% trans 'Weight' %} : {{ product.weight }}</p>
                   <p>{% trans 'Cover type' %} : {{ product.cover_type }}</p>
+                </div>
+              </div>
+            </div>
 
+          </div>
+
+          {% if request.user.is_staff %}
+          <div class="row">
+            <div class="col">
+              <div class="collapse" id="admin-info">
+                <div class="card card-body">
+                  <p>{% trans 'zero stock' %} : {{ product.zero_stock }}</p>
+                  <p>{% trans 'zero stock limit' %} : {{ product.zero_stock_limit }}</p>
+                  <p>{% trans 'admin note' %} : {{ product.admin_note  }}</p>
+                  <p>{% trans 'Bookstore position' %} : </p>
+                  <p>{% trans 'Warehouse' %} : </p>
+                  <p>{% trans 'Just for online sales' %} : </p>
                 </div>
               </div>
             </div>
           </div>
+          {% endif %}
+
         </div>
       </div>
     </div>
