@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 
 from products.models import Product, Good, Category
 from search.forms import SearchForm
@@ -33,10 +34,17 @@ def home(request):
 
 def product_list(request, category_slug=None, ):
     search_form = SearchForm()
+    category = None
 
-    category = get_object_or_404(Category, slug=category_slug)
+    if category_slug == 'new' or category_slug == 'used':
+        products_object = Product.objects.filter(state=category_slug)
+        page_title = category_slug
+    else:
+        category = get_object_or_404(Category, slug=category_slug)
+        products_object = Product.objects.filter(category=category)
+        page_title = category.name
 
-    products_object = Product.objects.filter(category=category)
+
     paginator = Paginator(products_object, 20) # 20 posts in each page
     page = request.GET.get('page')
     try:
@@ -55,7 +63,7 @@ def product_list(request, category_slug=None, ):
         'page': page,
         'search_form': search_form,
         'category': category,
-        'page_title': category.name,
+        'page_title': page_title,
         }
     )
 
