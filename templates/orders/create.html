@@ -11,7 +11,7 @@
 
 </div>
 <div class="container-fluid overflow-hidden">
-    <div class="row gy-2">
+  <div class="row gy-2">
     <div class="col-md-3">
       {{ order.id }} created
 
@@ -35,15 +35,7 @@
         {% endfor %}
         <br />
         <li>
-          {% trans 'Shipping'%} :
-          {% if cart.get_total_price >= 400000 %}
-          {% trans 'Free' %}
-          {% else %}
-          25000 {% trans 'Toman' %}
-          {% endif %}
           {% if cart.coupon %}
-        </li>
-        <li>
           {% blocktrans with code=cart.coupon.code discount=cart.coupon.discount %}
           "{{ code }}" ({{ discount }}% off)
           {% endblocktrans %}

@@ -67,24 +67,7 @@
     </tr>
     {% endif %}
 
-    <tr class="subtotal">
-      <td>{% trans "Shipping" %}</td>
-      <td colspan="4"></td>
-      <td class="num"></td>
-    </tr>
-    <tr>
-      <td>{% trans "Shipping" %}</td>
-      <td colspan="4"></td>
-      {% if cart.get_total_price >= 400000 %}
-      <td class="num">
-        {% trans  'Free' %}
-      </td>
-      {% else %}
-      <td class="num">
-        + 25000
-      </td>
-      {% endif %}
-    </tr>
+
     <tr class="total">
       <td>{% trans "Total" %}</td>
       <td colspan="4"></td>
