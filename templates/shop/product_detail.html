@@ -27,11 +27,17 @@
           </div>
         </div>
         <div class="mt-4">
+          {% if product.stock >= 1 %}
           <form action="{% url 'cart:cart_add' product.pk %}" method="post">
             {{ cart_product_form}}
             {% csrf_token %}
             <input type="submit" value="{% trans 'Add to cart' %}">
           </form>
+          {% else %}
+          <form action="#" method="get">
+            <input type="submit" value="{% trans 'Let me know if becomes available' %}">
+          </form>
+          {% endif %}
         </div>
       </div>
       {% if product.description %}
@@ -87,20 +93,20 @@
       </div>
     </div>
   </div> <!-- end of schema div -->
-    <div class="row text-center">
+  <div class="row text-center">
 
-      {% for good in goods %}
-      <div class="col-md-3">
-        <div class="">
-          <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class=" p-4" height="150px" width="auto" alt="{{ product.image_alt }}">
-        </div>
-        <p><span class="badge {% if good.state == "new" %}bg-success{% else %}bg-warning{% endif %} rounded-pill ms-4 mt-2">{{ good.state }}</span></p>
-        <p>{{ good.price }}</p>
-        <button type="button" class="btn btn-outline-secondary" name="button">{% trans 'Add to cart'%}</button>
-
+    {% for good in goods %}
+    <div class="col-md-3">
+      <div class="">
+        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class=" p-4" height="150px" width="auto" alt="{{ product.image_alt }}">
       </div>
-      {% endfor %}
+      <p><span class="badge {% if good.state == "new" %}bg-success{% else %}bg-warning{% endif %} rounded-pill ms-4 mt-2">{{ good.state }}</span></p>
+      <p>{{ good.price }}</p>
+      <button type="button" class="btn btn-outline-secondary" name="button">{% trans 'Add to cart'%}</button>
+
     </div>
+    {% endfor %}
+  </div>
 
 </div> <!-- end of container div -->
 
