@@ -123,3 +123,9 @@ class ProductCreate(View):
             'staff/product_create.html',
             {'form': form}
         )
+
+def invoice_create(request):
+    return render(
+        request,
+        'staff/invoice_create.html'
+    )
