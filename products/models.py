@@ -68,7 +68,9 @@ class Product(models.Model):
     category = models.ForeignKey(
         Category,
         related_name='product',
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True
     )
     name = models.CharField(
         max_length=500,
