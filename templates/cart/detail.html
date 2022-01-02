@@ -50,7 +50,6 @@
     </tr>
     {% endwith %}
     {% endfor %}
-    {% comment %}
     {% if cart.coupon %}
     <tr class="subtotal">
       <td>{% trans "Subtotal" %}</td>
@@ -68,32 +67,12 @@
     </tr>
     {% endif %}
 
-    <tr class="subtotal">
-      <td>{% trans "Shipping" %}</td>
-      <td colspan="4"></td>
-      <td class="num"></td>
-    </tr>
-    <tr>
-      <td>{% trans "Shipping" %}</td>
-      <td colspan="4"></td>
-      {% if cart.get_total_price >= 400000 %}
-      <td class="num">
-        {% trans  'Free' %}
-      </td>
-      {% else %}
-      <td class="num">
-        + 25000
-      </td>
-      {% endif %}
-      {% endcomment %}
-    </tr>
+
     <tr class="total">
       <td>{% trans "Total" %}</td>
       <td colspan="4"></td>
       <td class="num">
-        {% comment %}
-        {{ cart.get_total_price_after_discount|floatformat:0 }} {% trans 'Toman' %}
-        {% endcomment %}
+        {{ cart.get_total_price_after_discount }} {% trans 'Toman' %}
       </td>
     </tr>
   </tbody>
@@ -115,17 +94,13 @@
 {% endif %}
 
 <p>{% trans "Apply a coupon" %}:</p>
-{% comment %}
-<form action="{% url 'coupons:apply' %}" method="post">
+<form action="{% url 'discounts:apply' %}" method="post">
   {{ coupon_apply_form }}
   <input type="submit" value="{% trans 'Apply' %}">
   {% csrf_token %}
 </form>
-{% endcomment %}
 <p class="text-right mt-3">
   <a href="{% url 'shop:home' %}" class="btn btn-outline-secondary">{% trans "Continue shopping" %}</a>
-  {% comment %}
   <a href="{% url 'orders:order_create' %}" class="btn btn-outline-secondary">{% trans "Checkout" %}</a>
-  {% endcomment %}
 </p>
 {% endblock %}

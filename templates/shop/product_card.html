@@ -4,11 +4,18 @@
 <div class="m-1">
   <a href="{{ product.get_absolute_url }}">
     <div class="card col-md-12 text-center">
-      <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top p-4" alt="{{ product.image_alt }}">
+      <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top p-4 position-relative" alt="{{ product.image_alt }}">
+      {% if product.stock == 0 %}
+      <span class="position-absolute top-50 start-50 translate-middle badge rounded bg-secondary">
+
+        {% trans 'Out of stock' %}
+        <span class="visually-hidden">{% trans 'Out of stock' %}</span>
+      </span>
+      {% endif %}
       <div class="card-body m-2 p-2">
         <h5 class="card-title">{{ product.name | truncatechars:25 }}</h5>
-        <h6 class="cart-subtitle text-muted">{% if product.stock == 0 %}<span class="unavailable">{% trans 'unavailable' %}</span>{% else %}{{ product.price  }} {% trans 'Toman' %}{% endif %}</h6>
-        {% if product.author %}<p class="p-1">{{ product.author }} {{ product.ahthor | truncatechars:25 }}{% else %} __ {% endif %}</p>
+        <h6 class="cart-subtitle text-muted">{% if product.stock == 0 %}<span class="unavailable">{% trans 'Out of stock' %}</span>{% else %}{{ product.price  }} {% trans 'Toman' %}{% endif %}</h6>
+        {% if product.author %}<p class="p-1">{{ product.author }} {{ product.ahthor | truncatechars:25 }}{% else %} <br /> {% endif %}</p>
 
       </div>
     </div>

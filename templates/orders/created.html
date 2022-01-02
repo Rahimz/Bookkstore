@@ -4,23 +4,20 @@
 
 {% load static %}
 
-{% block title %}{{page_title}}{% endblock %}
-
+{% block title %}{% trans 'Order created' %}{% endblock %}
 
 {% block content %}
 <div class="row m-4 text-center">
-  <form action="{% url 'search:product_search'%}" method="get">
-    {{ form.query }}
-    <input type="submit" value="{% trans 'Search' %}">
-  </form>
+
 </div>
 <div class="container-fluid overflow-hidden">
     <div class="row gy-2">
     <div class="col-md-3">
-    {% include 'shop/_filter_sidebar.html' %}
+      {{ order.id }} created 
+
     </div>
     <div class="col-md-9">
-      {% include 'shop/_product_list.html' %}
+
     </div>
   </div>
 </div>
