@@ -7,6 +7,7 @@ app_name = 'staff'
 
 
 urlpatterns = [
+    path('sales/', views.sales, name='sales_list'),
     path('orders/', views.orders, name='order_list'),
     path('orders/create/', views.order_create, name='order_create'),
     path('invoice/create/', views.invoice_create, name='invoice_create'),

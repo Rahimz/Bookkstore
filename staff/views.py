@@ -9,13 +9,20 @@ from .forms import ProductCreateForm, OrderCreateForm
 from products.models import Product, Category
 
 
+def sales(request):
+    return render(
+        request,
+        'staff/sales.html',
+        {}
+    )
+
+
 def orders(request):
     return render(
         request,
         'staff/orders.html',
         {}
     )
-
 
 def purchases(request):
     return render(
