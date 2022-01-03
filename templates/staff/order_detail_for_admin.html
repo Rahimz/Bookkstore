@@ -1,0 +1,47 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block title %}{% trans 'Orders' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="orders" %}
+    </div>
+    <div class="col-md-10">
+      <h2>{% trans 'Order details' %}</h2>
+      <p>{%trans 'Registrar' %} : {{ order.user }}</p>
+      <p>{%trans 'Client' %} : {{ order.client }}</p>
+      <p>{%trans 'Order Status' %} : {{ order.status }}</p>
+      <p>{%trans 'Shipping method' %} : {{ order.shipping_method }}</p>
+      <p>{%trans 'Note' %} : {{ order.customer_note }}</p>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">{% trans 'Name' %}</th>
+            <th scope="col">{% trans 'Quantity' %}</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {% for line in order.lines.all %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</td>
+            <td>{{ line.product.name }}</td>
+            <td>xx</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

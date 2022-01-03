@@ -14,6 +14,7 @@ django-countries = "*"
 django-phonenumber-field = "*"
 phonenumberslite = "*"
 django-debug-toolbar = "*"
+django-rosetta = "*"
 
 [dev-packages]
 

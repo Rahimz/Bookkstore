@@ -1,4 +1,4 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, get_object_or_404
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
@@ -7,15 +7,32 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .forms import ProductCreateForm, OrderCreateForm
 from products.models import Product, Category
+from orders.models import Order
 
 
-def orders(request):
+def sales(request):
     return render(
         request,
-        'staff/orders.html',
+        'staff/sales.html',
         {}
     )
 
+
+def orders(request):
+    orders = Order.objects.filter(paid=True)
+    return render(
+        request,
+        'staff/orders.html',
+        {'orders': orders}
+    )
+
+def order_detail_for_admin(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+    return render(
+        request,
+        'staff/order_detail_for_admin.html',
+        {'order': order}
+    )
 
 def purchases(request):
     return render(

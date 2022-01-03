@@ -13,27 +13,41 @@
       {% include "staff/sidebar_staff.html" with barName="orders" %}
     </div>
     <div class="col-md-10">
-      <h2>List of orders</h2>
+      <h2>{% trans 'List of orders' %}</h2>
       <table class="table table-striped">
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">{% trans 'order' %}</th>
-            <th scope="col">{% trans 'user' %}</th>
-            <th scope="col">{% trans 'paid' %}</th>
+            <th scope="col">{% trans 'Order No' %}</th>
+            <th scope="col">{% trans 'Client' %}</th>
+            <th scope="col">{% trans 'Quantity' %}</th>
+            <th scope="col">{% trans 'Weight' %}</th>
+            <th scope="col">{% trans 'Location' %}</th>
+            <th scope="col">{% trans 'Shipping method' %}</th>
+            <th scope="col">{% trans 'Is a gift' %}</th>
           </tr>
         </thead>
         <tbody>
+          {% for order in orders %}
           <tr>
-            <th scope="row">1</th>
-            <td><a href="#">1234</a></td>
-            <td>rahim</td>
+            <th scope="row">{{ forloop.counter}}</th>
+            <td><a href="{% url 'staff:order_detail_for_admin' order.pk %}">{{ order.pk }}</a></td>
+            <td>{{ order.client }}</td>
+            <td>8</td>
+            <td>{{ order.get_total_weight }} gr</td>
+            <td>Ahvaz</td>
+            <td>{{ order.shipping_method }}</td>
             <td>&#10004</td>
           </tr>
+          {% endfor %}
           <tr>
-            <th scope="row">1</th>
+            <th scope="row">##</th>
             <td><a href="#">1235</a></td>
             <td>sorme</td>
+            <td>3</td>
+            <td>1200 gr</td>
+            <td>Tehran</td>
+            <td>Bike deliver</td>
             <td>&#10008</td>
           </tr>
         </tbody>
