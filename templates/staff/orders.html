@@ -28,21 +28,23 @@
           </tr>
         </thead>
         <tbody>
+          {% for order in orders %}
           <tr>
-            <th scope="row">1</th>
-            <td><a href="#">1234</a></td>
-            <td>rahim</td>
+            <th scope="row">{{ forloop.counter}}</th>
+            <td><a href="{% url 'staff:order_detail_for_admin' order.pk %}">{{ order.pk }}</a></td>
+            <td>{{ order.client }}</td>
             <td>8</td>
-            <td>3500 gr</td>
+            <td>{{ order.get_total_weight }} gr</td>
             <td>Ahvaz</td>
-            <td>IR Post</td>
+            <td>{{ order.shipping_method }}</td>
             <td>&#10004</td>
           </tr>
+          {% endfor %}
           <tr>
-            <th scope="row">2</th>
+            <th scope="row">##</th>
             <td><a href="#">1235</a></td>
             <td>sorme</td>
-            <td>۳</td>
+            <td>3</td>
             <td>1200 gr</td>
             <td>Tehran</td>
             <td>Bike deliver</td>
