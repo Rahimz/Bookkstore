@@ -1,0 +1,755 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-01-03 13:28+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: account/forms.py:13
+msgid "Password"
+msgstr ""
+
+#: account/forms.py:14
+msgid "Repeat password"
+msgstr ""
+
+#: account/forms.py:26
+msgid "Passwords don't match."
+msgstr ""
+
+#: cart/views.py:27
+msgid "Product added to cart!"
+msgstr ""
+
+#: cart/views.py:30
+msgid "There are not enough products in stock!"
+msgstr ""
+
+#: products/models.py:44 products/models.py:255 templates/_base.html:51
+msgid "New"
+msgstr ""
+
+#: products/models.py:45 products/models.py:256 templates/_base.html:54
+msgid "Used"
+msgstr ""
+
+#: products/models.py:56
+msgid "Book"
+msgstr ""
+
+#: products/models.py:57
+msgid "Craft"
+msgstr ""
+
+#: templates/_base.html:11 templates/_base.html:12 templates/_base.html:36
+#: templates/_base.html:43 templates/_temp_base.html:11
+#: templates/_temp_base.html:12 templates/_temp_base.html:35
+#: templates/registration/password_reset_email.html:15
+msgid "Ketab Damavand"
+msgstr ""
+
+#: templates/_base.html:14 templates/_temp_base.html:14
+msgid "Ketab Damavand logo"
+msgstr ""
+
+#: templates/_base.html:57
+msgid "Children & Youth"
+msgstr ""
+
+#: templates/_base.html:70
+msgid "items in cart"
+msgstr ""
+
+#: templates/_base.html:125 templates/staff/sales.html:7
+msgid "Sales"
+msgstr ""
+
+#: templates/_base.html:126 templates/staff/order_create.html:7
+#: templates/staff/order_detail_for_admin.html:7 templates/staff/orders.html:7
+msgid "Orders"
+msgstr ""
+
+#: templates/_base.html:127
+msgid "Purchase"
+msgstr ""
+
+#: templates/_base.html:128 templates/shop/product_detail.html:108
+#: templates/staff/warehouse.html:7
+msgid "Warehouse"
+msgstr ""
+
+#: templates/_base.html:129 templates/staff/products.html:7
+msgid "Products"
+msgstr ""
+
+#: templates/_base.html:154
+msgid "Social Media"
+msgstr ""
+
+#: templates/account/dashboard.html:7 templates/account/dashboard.html:12
+msgid "Profile"
+msgstr ""
+
+#: templates/account/dashboard.html:14 templates/account/register_done.html:10
+msgid "Welcome"
+msgstr ""
+
+#: templates/account/dashboard.html:16
+msgid "Your profile details:"
+msgstr ""
+
+#: templates/account/dashboard.html:21
+msgid "First name:"
+msgstr ""
+
+#: templates/account/dashboard.html:25
+msgid "Last name:"
+msgstr ""
+
+#: templates/account/dashboard.html:29
+msgid "Email:"
+msgstr ""
+
+#: templates/account/dashboard.html:38
+msgid "Edit profile"
+msgstr ""
+
+#: templates/account/dashboard.html:39
+msgid "Change  password"
+msgstr ""
+
+#: templates/account/edit.html:5
+msgid "Dashboard"
+msgstr ""
+
+#: templates/account/edit.html:5 templates/account/edit.html:13
+msgid "Edit your account"
+msgstr ""
+
+#: templates/account/edit.html:14
+msgid "You can edit your account using the following form:"
+msgstr ""
+
+#: templates/account/edit.html:21
+msgid "Save changes"
+msgstr ""
+
+#: templates/account/register.html:5
+msgid "User registeration"
+msgstr ""
+
+#: templates/account/register.html:10
+msgid "Create an account"
+msgstr ""
+
+#: templates/account/register.html:11
+msgid "Please, sign up using the following form:"
+msgstr ""
+
+#: templates/account/register.html:20
+msgid "Create my account"
+msgstr ""
+
+#: templates/account/register_done.html:11
+msgid "Your account has been successfully created. Now you can"
+msgstr ""
+
+#: templates/account/register_done.html:11
+msgid "log in"
+msgstr ""
+
+#: templates/cart/detail.html:6 templates/cart/detail.html:10
+msgid "Your shopping cart"
+msgstr ""
+
+#: templates/cart/detail.html:15 templates/staff/invoice_create.html:37
+msgid "Image"
+msgstr ""
+
+#: templates/cart/detail.html:16
+msgid "Product"
+msgstr ""
+
+#: templates/cart/detail.html:17 templates/staff/invoice_create.html:41
+#: templates/staff/order_detail_for_admin.html:27
+#: templates/staff/orders.html:23
+msgid "Quantity"
+msgstr ""
+
+#: templates/cart/detail.html:18 templates/cart/detail.html:44
+#: templates/staff/invoice_create.html:40
+#: templates/staff/invoice_create.html:55
+#: templates/staff/invoice_create.html:88
+msgid "Remove"
+msgstr ""
+
+#: templates/cart/detail.html:19
+msgid "Unit price"
+msgstr ""
+
+#: templates/cart/detail.html:20 templates/shop/product_detail.html:25
+#: templates/staff/invoice_create.html:43 templates/staff/products.html:23
+msgid "Price"
+msgstr ""
+
+#: templates/cart/detail.html:38 templates/staff/invoice_create.html:67
+#: templates/staff/invoice_create.html:100
+msgid "Update"
+msgstr ""
+
+#: templates/cart/detail.html:48 templates/cart/detail.html:49
+#: templates/cart/detail.html:57 templates/cart/detail.html:65
+#: templates/cart/detail.html:75 templates/orders/create.html:33
+#: templates/orders/create.html:42 templates/orders/create.html:46
+#: templates/shop/product_card.html:17
+msgid "Toman"
+msgstr ""
+
+#: templates/cart/detail.html:55
+msgid "Subtotal"
+msgstr ""
+
+#: templates/cart/detail.html:60
+#, python-format
+msgid ""
+"\n"
+"      <td>\"%(code)s\" coupon (%(discount)s%% off)</td>\n"
+"      "
+msgstr ""
+
+#: templates/cart/detail.html:72 templates/orders/create.html:46
+msgid "Total"
+msgstr ""
+
+#: templates/cart/detail.html:83
+msgid "People who bought this also bought"
+msgstr ""
+
+#: templates/cart/detail.html:96
+msgid "Apply a coupon"
+msgstr ""
+
+#: templates/cart/detail.html:99
+msgid "Apply"
+msgstr ""
+
+#: templates/cart/detail.html:103
+msgid "Continue shopping"
+msgstr ""
+
+#: templates/cart/detail.html:104 templates/orders/create.html:26
+msgid "Checkout"
+msgstr ""
+
+#: templates/home.html:7 templates/shop/product_detail.html:7
+#: templates/temp_home.html:7
+msgid "Home"
+msgstr ""
+
+#: templates/home.html:13 templates/search/search.html:7
+#: templates/search/search.html:43 templates/shop/product_list.html:14
+msgid "Search"
+msgstr ""
+
+#: templates/orders/create.html:7 templates/orders/created.html:7
+msgid "Order created"
+msgstr ""
+
+#: templates/orders/create.html:29
+msgid "Your order"
+msgstr ""
+
+#: templates/orders/create.html:39
+#, python-format
+msgid ""
+"\n"
+"          \"%(code)s\" (%(discount)s%% off)\n"
+"          "
+msgstr ""
+
+#: templates/orders/create.html:54
+msgid "Place order"
+msgstr ""
+
+#: templates/orders/create.html:59
+msgid "Into payment port"
+msgstr ""
+
+#: templates/registration/logged_out.html:12
+msgid "Logged out"
+msgstr ""
+
+#: templates/registration/logged_out.html:13
+msgid "You have been successfully logged out. You can"
+msgstr ""
+
+#: templates/registration/logged_out.html:14
+msgid "log-in again"
+msgstr ""
+
+#: templates/registration/login.html:14 templates/registration/login.html:35
+msgid "Log-in"
+msgstr ""
+
+#: templates/registration/login.html:17
+msgid "Your username and password didn't match.Please try again."
+msgstr ""
+
+#: templates/registration/login.html:22
+msgid "Please, use the following form to log-in."
+msgstr ""
+
+#: templates/registration/login.html:24
+msgid "If you don't have an account"
+msgstr ""
+
+#: templates/registration/login.html:24
+msgid "register here"
+msgstr ""
+
+#: templates/registration/login.html:37
+#: templates/registration/password_reset_form.html:12
+msgid "Forgotten your password?"
+msgstr ""
+
+#: templates/registration/password_change_done.html:12
+msgid "Password changed"
+msgstr ""
+
+#: templates/registration/password_change_done.html:13
+msgid "Your password has been successfully changed."
+msgstr ""
+
+#: templates/registration/password_change_form.html:5
+msgid "Password change form"
+msgstr ""
+
+#: templates/registration/password_change_form.html:12
+msgid "Change your password"
+msgstr ""
+
+#: templates/registration/password_change_form.html:13
+msgid "Use the form below to change your password."
+msgstr ""
+
+#: templates/registration/password_change_form.html:18
+msgid "Change"
+msgstr ""
+
+#: templates/registration/password_reset_complete.html:12
+msgid "Password set"
+msgstr ""
+
+#: templates/registration/password_reset_complete.html:13
+msgid "Your password has been set. You can "
+msgstr ""
+
+#: templates/registration/password_reset_complete.html:13
+msgid "log in now"
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:5
+msgid "Set new passwoerd"
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:12
+#: templates/registration/password_reset_done.html:12
+msgid "Reset your password"
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:14
+msgid "Please enter your new password twice"
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:20
+msgid "Change my password"
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:24
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used. Please request a new password reset."
+msgstr ""
+
+#: templates/registration/password_reset_done.html:5
+msgid "Password reset"
+msgstr ""
+
+#: templates/registration/password_reset_done.html:13
+msgid "We've emailed you instructions for setting your password."
+msgstr ""
+
+#: templates/registration/password_reset_done.html:14
+msgid ""
+"If you don't receive an email, please make sure you've entered the address "
+"you registered with."
+msgstr ""
+
+#: templates/registration/password_reset_email.html:3
+msgid "Pasword reset request in Ketab Damavend store"
+msgstr ""
+
+#: templates/registration/password_reset_email.html:5
+msgid "Someone asked for password reset for email"
+msgstr ""
+
+#: templates/registration/password_reset_email.html:7
+msgid "Follow the link below"
+msgstr ""
+
+#: templates/registration/password_reset_email.html:10
+msgid "Your username, in case you've forgotten"
+msgstr ""
+
+#: templates/registration/password_reset_email.html:13
+msgid "If you do not ask for password reset, do nothing and ignore this email."
+msgstr ""
+
+#: templates/registration/password_reset_form.html:5
+msgid "Password reset form"
+msgstr ""
+
+#: templates/registration/password_reset_form.html:13
+msgid "Enter your e-mail address to obtain a new password."
+msgstr ""
+
+#: templates/registration/password_reset_form.html:16
+msgid "Send e-mail"
+msgstr ""
+
+#: templates/search/search.html:14
+msgid "Products containing"
+msgstr ""
+
+#: templates/search/search.html:17
+#, python-format
+msgid ""
+"\n"
+"      Found %(total_results)s "
+msgstr ""
+
+#: templates/search/search.html:29
+msgid "There are no results for your query."
+msgstr ""
+
+#: templates/search/search.html:34
+msgid "Search again"
+msgstr ""
+
+#: templates/search/search.html:38
+msgid "Search for products"
+msgstr ""
+
+#: templates/shop/_filter_sidebar.html:3
+msgid "Filter 1"
+msgstr ""
+
+#: templates/shop/_filter_sidebar.html:4
+msgid "Filter 2"
+msgstr ""
+
+#: templates/shop/_filter_sidebar.html:5
+msgid "Filter 3"
+msgstr ""
+
+#: templates/shop/_filter_sidebar.html:6
+msgid "Filter 4"
+msgstr ""
+
+#: templates/shop/pagination.html:5
+msgid "first"
+msgstr ""
+
+#: templates/shop/pagination.html:6
+msgid "Previous"
+msgstr ""
+
+#: templates/shop/pagination.html:9
+msgid "Page"
+msgstr ""
+
+#: templates/shop/pagination.html:9
+msgid "of"
+msgstr ""
+
+#: templates/shop/pagination.html:12
+msgid "Next"
+msgstr ""
+
+#: templates/shop/pagination.html:13
+msgid "last"
+msgstr ""
+
+#: templates/shop/product_card.html:11 templates/shop/product_card.html:12
+#: templates/shop/product_card.html:17
+msgid "Out of stock"
+msgstr ""
+
+#: templates/shop/product_detail.html:22 templates/staff/invoice_create.html:38
+#: templates/staff/order_detail_for_admin.html:26
+#: templates/staff/products.html:21
+msgid "Name"
+msgstr ""
+
+#: templates/shop/product_detail.html:23 templates/staff/invoice_create.html:39
+#: templates/staff/products.html:22
+msgid "Author"
+msgstr ""
+
+#: templates/shop/product_detail.html:24
+msgid "Translator"
+msgstr ""
+
+#: templates/shop/product_detail.html:26
+msgid "Publisher"
+msgstr ""
+
+#: templates/shop/product_detail.html:34 templates/shop/product_detail.html:129
+msgid "Add to cart"
+msgstr ""
+
+#: templates/shop/product_detail.html:38
+msgid "Let me know if becomes available"
+msgstr ""
+
+#: templates/shop/product_detail.html:58
+msgid "Book informations"
+msgstr ""
+
+#: templates/shop/product_detail.html:61
+msgid "Book Features"
+msgstr ""
+
+#: templates/shop/product_detail.html:65
+msgid "Admin info"
+msgstr ""
+
+#: templates/shop/product_detail.html:80
+msgid "ISBN"
+msgstr ""
+
+#: templates/shop/product_detail.html:81
+msgid "Publish year"
+msgstr ""
+
+#: templates/shop/product_detail.html:82
+msgid "Edition"
+msgstr ""
+
+#: templates/shop/product_detail.html:90
+msgid "Size"
+msgstr ""
+
+#: templates/shop/product_detail.html:91 templates/staff/orders.html:24
+msgid "Weight"
+msgstr ""
+
+#: templates/shop/product_detail.html:92
+msgid "Cover type"
+msgstr ""
+
+#: templates/shop/product_detail.html:104
+msgid "zero stock"
+msgstr ""
+
+#: templates/shop/product_detail.html:105
+msgid "zero stock limit"
+msgstr ""
+
+#: templates/shop/product_detail.html:106
+msgid "admin note"
+msgstr ""
+
+#: templates/shop/product_detail.html:107
+msgid "Bookstore position"
+msgstr ""
+
+#: templates/shop/product_detail.html:109
+msgid "Just for online sales"
+msgstr ""
+
+#: templates/staff/invoice_create.html:7
+msgid "Invoice create"
+msgstr ""
+
+#: templates/staff/invoice_create.html:16
+msgid "Create invoice"
+msgstr ""
+
+#: templates/staff/invoice_create.html:24
+msgid "Add products"
+msgstr ""
+
+#: templates/staff/invoice_create.html:28
+#: templates/staff/invoice_create.html:171 templates/staff/order_create.html:21
+#: templates/staff/product_create.html:22
+msgid "Submit"
+msgstr ""
+
+#: templates/staff/invoice_create.html:32
+msgid "Invoice"
+msgstr ""
+
+#: templates/staff/invoice_create.html:36
+msgid "isbn"
+msgstr ""
+
+#: templates/staff/invoice_create.html:44
+msgid "Discount"
+msgstr ""
+
+#: templates/staff/invoice_create.html:45
+msgid "Cost"
+msgstr ""
+
+#: templates/staff/invoice_create.html:118
+msgid "SUM"
+msgstr ""
+
+#: templates/staff/invoice_create.html:130
+msgid "DISCOUNT"
+msgstr ""
+
+#: templates/staff/invoice_create.html:142
+msgid "PAYABLE"
+msgstr ""
+
+#: templates/staff/invoice_create.html:165
+msgid "Notes"
+msgstr ""
+
+#: templates/staff/invoice_create.html:170 templates/staff/orders.html:27
+msgid "Is a gift"
+msgstr ""
+
+#: templates/staff/order_detail_for_admin.html:16
+msgid "Order details"
+msgstr ""
+
+#: templates/staff/order_detail_for_admin.html:17
+msgid "Registrar"
+msgstr ""
+
+#: templates/staff/order_detail_for_admin.html:18
+#: templates/staff/orders.html:22
+msgid "Client"
+msgstr ""
+
+#: templates/staff/order_detail_for_admin.html:19
+msgid "Order Status"
+msgstr ""
+
+#: templates/staff/order_detail_for_admin.html:20
+#: templates/staff/orders.html:26
+msgid "Shipping method"
+msgstr ""
+
+#: templates/staff/order_detail_for_admin.html:21
+msgid "Note"
+msgstr ""
+
+#: templates/staff/orders.html:16 templates/staff/sales.html:16
+#: templates/staff/sidebar_staff.html:22
+msgid "List of orders"
+msgstr ""
+
+#: templates/staff/orders.html:21
+msgid "Order No"
+msgstr ""
+
+#: templates/staff/orders.html:25
+msgid "Location"
+msgstr ""
+
+#: templates/staff/product_create.html:7 templates/staff/product_create.html:16
+msgid "Product create"
+msgstr ""
+
+#: templates/staff/product_create.html:21
+msgid "Cancel"
+msgstr ""
+
+#: templates/staff/product_create.html:23
+msgid "Save and add another"
+msgstr ""
+
+#: templates/staff/purchases.html:7
+msgid "Purchases"
+msgstr ""
+
+#: templates/staff/purchases.html:16 templates/staff/sidebar_staff.html:33
+msgid "List of purchases"
+msgstr ""
+
+#: templates/staff/sales.html:21
+msgid "order"
+msgstr ""
+
+#: templates/staff/sales.html:22
+msgid "user"
+msgstr ""
+
+#: templates/staff/sales.html:23
+msgid "paid"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:4
+msgid "Create product"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:5
+msgid "List of products"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:6
+msgid "Create a new category"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:7
+msgid "List of categories"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:13
+msgid "New invoice"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:14
+msgid "List of draft invoices"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:15
+msgid "List of proved invoices"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:23
+msgid "Last day"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:24
+msgid "Last week"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:25
+msgid "Last month"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:32
+msgid "New purchase invoice"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:39
+msgid "Warehouse Managment"
+msgstr ""
