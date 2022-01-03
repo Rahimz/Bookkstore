@@ -13,7 +13,7 @@
       {% include "staff/sidebar_staff.html" with barName="orders" %}
     </div>
     <div class="col-md-10">
-      <h2>Create invoice</h2>
+      <h2>{% trans 'Create invoice' %}</h2>
       <div class="">
         <form class="" action="index.html" method="post">
 
@@ -39,7 +39,7 @@
                 <th scope="col">{% trans 'Author' %}</th>
                 <th scope="col">{% trans 'Remove' %}</th>
                 <th scope="col">{% trans 'Quantity' %}</th>
-                <th scope="col">{% trans '' %}</th>
+                <th scope="col"></th>
                 <th scope="col">{% trans 'Price' %}</th>
                 <th scope="col">{% trans 'Discount' %}</th>
                 <th scope="col">{% trans 'Cost' %}</th>
@@ -111,7 +111,7 @@
 
               <tr>
                 <th scope="row"></th>
-                <td>SUM</td>
+                <td>{% trans 'SUM' %}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -123,7 +123,7 @@
               </tr>
               <tr>
                 <th scope="row"></th>
-                <td>DISCOUNT</td>
+                <td>{% trans 'DISCOUNT' %}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -135,7 +135,7 @@
               </tr>
               <tr>
                 <th scope="row"></th>
-                <td class="fw-bolder">PAYABLE</td>
+                <td class="fw-bolder">{% trans 'PAYABLE' %}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -162,7 +162,7 @@
             <input type="text" name="client" value="Note">
             <br>
             <input type="checkbox" id="present" name="vehicle1" value="Bike">
-            <label for="present"> Is a present</label><br>
+            <label for="present">{% trans 'Is a gift' %}</label><br>
             <input type="submit" name="" value="{% trans 'Submit' %}" class="btn btn-outline-secondary">
           </form>
 
