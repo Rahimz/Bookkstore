@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
+from .models import CustomUser
+
 
 
 class LoginForm(forms.Form):
@@ -16,7 +18,7 @@ class UserRegistrationForm(forms.ModelForm):
 
 
     class Meta:
-        model = User
+        model = CustomUser
         fields = ('username', 'first_name', 'email')
 
 
@@ -29,5 +31,5 @@ class UserRegistrationForm(forms.ModelForm):
 
 class UserEditForm(forms.ModelForm):
     class Meta:
-        model = User
+        model = CustomUser
         fields = ('first_name', 'last_name', 'email')
