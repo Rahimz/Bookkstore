@@ -242,15 +242,14 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('shop:product_detail',
-                       args=[self.id])
+                       args=[self.id, self.slug])
 
     def save(self, *args, **kwargs):
         if self.image and not self.image_alt:
             self.image_alt = self.name
 
         if not self.slug:
-            self.slug = slugify(rand_slug() + "-" +
-                                self.name, allow_unicode=True)
+            self.slug = slugify(self.name, allow_unicode=True)
         super(Product, self).save(*args, **kwargs)
 
     def __str__(self):
