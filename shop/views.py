@@ -67,8 +67,9 @@ def product_list(request, category_slug=None, ):
         }
     )
 
-def product_detail(request, pk):
+def product_detail(request, pk, slug=None):
     product = get_object_or_404(Product, pk=pk)
+    slug = product.slug
     goods = Good.objects.filter(product=product)
     cart_product_form = CartAddProductForm()
     return render(
