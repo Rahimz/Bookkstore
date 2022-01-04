@@ -7,3 +7,5 @@ ADMINS = (
 )
 
 ALLOWED_HOSTS = ['ketabedamavand.com', 'www.ketabedamavand.com',  'localhost',]
+
+CSRF_TRUSTED_ORIGINS = ['https://*.ketabedamavand.com']
