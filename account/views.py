@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordResetForm
+from django.core.mail import send_mail
+
 from .forms import LoginForm, UserRegistrationForm, UserEditForm
+
 
 def dashboard(request):
     user = request.user
@@ -52,28 +56,14 @@ def edit(request):
                 {'user_form': user_form,
                 })
 
-# @login_required
-# def create(request):
-#     if request.method == 'POST':
-#         user_form = UserEditForm(instance=request.user,
-#                                 data=request.POST)
-#
-#         if user_form.is_valid():
-#             user_form.save()
-#
-#             messages.success(request,
-#                             'User details added successfully')
-#             return render(request,
-#                           'account/dashboard.html',
-#                           {}
-#                           )
-#         else:
-#             messages.error(request, 'Error updating your user details')
-#     else:
-#         user_form = UserEditForm(instance=request.user)
-#
-#
-#     return render(request,
-#                 'account/create_profile.html',
-#                 {'user_form': user_form,
-#                  })
+# def password_reset(request):
+#     form = PasswordResetForm()
+#     if request.method == "POST":
+#         form = PasswordResetForm(data=request.POST)
+#         if form.is_valid():
+#             send_mail(to_email=form.email)
+#     return render(
+#         request,
+#         'registration/password_reset_form.html',
+#         {'form': form}
+#     )
