@@ -185,3 +185,12 @@ CART_SESSION_ID = 'cart'
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+# settings for email
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = email_host
+EMAIL_HOST_USER = email_host_user
+EMAIL_HOST_PASSWORD = email_host_password
