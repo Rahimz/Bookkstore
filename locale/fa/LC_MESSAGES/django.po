@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-03 13:28+0330\n"
-"PO-Revision-Date: 2022-01-03 09:59+0000\n"
+"PO-Revision-Date: 2022-01-06 07:27+0000\n"
 "Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -638,7 +638,7 @@ msgstr "جمع"
 
 #: templates/staff/invoice_create.html:130
 msgid "DISCOUNT"
-msgstr "نخفیف"
+msgstr "تخفیف"
 
 #: templates/staff/invoice_create.html:142
 msgid "PAYABLE"
