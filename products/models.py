@@ -34,15 +34,18 @@ class Category(models.Model):
     active = models.BooleanField(
         default=True,
     )
-    
+
     class Meta:
         ordering = ('name',)
         verbose_name = 'category'
         verbose_name_plural = 'categories'
 
-    # def get_absolute_url(self):
-    #     return reverse('shop:product_list_by_category',
-    #                    args=[self.slug])
+    def get_sub_category(self):
+        return self.category_set.all()
+
+    def get_absolute_url(self):
+        return reverse('shop:products_list',
+                       args=[self.slug])
 
     def __str__(self):
         return self.name

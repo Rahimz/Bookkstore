@@ -13,5 +13,8 @@ urlpatterns = [
     # path('', views.home, name='home'),
     path('home/', views.home, name='home'),
     path('products/<str:category_slug>/', views.product_list, name='products_list'),
+
     path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
+
+    path('categories/', views.category_list, name="category_list"),
 ]

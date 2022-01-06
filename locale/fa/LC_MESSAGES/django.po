@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-03 13:28+0330\n"
-"PO-Revision-Date: 2022-01-06 07:27+0000\n"
+"POT-Creation-Date: 2022-01-06 17:13+0330\n"
+"PO-Revision-Date: 2022-01-06 13:59+0000\n"
 "Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,15 +19,15 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Translated-Using: django-rosetta 0.9.8\n"
 
-#: account/forms.py:13
+#: account/forms.py:15
 msgid "Password"
 msgstr "پسورد"
 
-#: account/forms.py:14
+#: account/forms.py:16
 msgid "Repeat password"
 msgstr "تکرار پسورد"
 
-#: account/forms.py:26
+#: account/forms.py:28
 msgid "Passwords don't match."
 msgstr "پسوردها یکسان نیستند"
 
@@ -39,19 +39,19 @@ msgstr "محصول به سبد خرید اضافه شد!"
 msgid "There are not enough products in stock!"
 msgstr "برای این محصول موجودی کافی نداریم."
 
-#: products/models.py:44 products/models.py:255 templates/_base.html:51
+#: products/models.py:56 products/models.py:267 templates/_base.html:51
 msgid "New"
 msgstr "نو"
 
-#: products/models.py:45 products/models.py:256 templates/_base.html:54
+#: products/models.py:57 products/models.py:268 templates/_base.html:54
 msgid "Used"
 msgstr "دست دوم"
 
-#: products/models.py:56
+#: products/models.py:68
 msgid "Book"
 msgstr "کتاب"
 
-#: products/models.py:57
+#: products/models.py:69
 msgid "Craft"
 msgstr "صنایع دستی"
 
@@ -70,33 +70,43 @@ msgstr "لوگو کتاب دماوند "
 msgid "Children & Youth"
 msgstr "کودک و نوجوان"
 
-#: templates/_base.html:70
+#: templates/_base.html:60 templates/shop/category_list.html:7
+#| msgid "List of categories"
+msgid "Categories"
+msgstr "دسته‌بندی‌ها"
+
+#: templates/_base.html:73
 msgid "items in cart"
 msgstr "موارد موجود در سبدخرید"
 
-#: templates/_base.html:125 templates/staff/sales.html:7
+#: templates/_base.html:128 templates/staff/sales.html:7
 msgid "Sales"
 msgstr "فروش‌ها"
 
-#: templates/_base.html:126 templates/staff/order_create.html:7
+#: templates/_base.html:129 templates/staff/order_create.html:7
 #: templates/staff/order_detail_for_admin.html:7 templates/staff/orders.html:7
 msgid "Orders"
 msgstr "سفارش‌ها"
 
-#: templates/_base.html:127
+#: templates/_base.html:130
 msgid "Purchase"
 msgstr "خریدها"
 
-#: templates/_base.html:128 templates/shop/product_detail.html:108
+#: templates/_base.html:131 templates/shop/product_detail.html:108
 #: templates/staff/warehouse.html:7
 msgid "Warehouse"
 msgstr "انبار"
 
-#: templates/_base.html:129 templates/staff/products.html:7
+#: templates/_base.html:132 templates/staff/products.html:7
 msgid "Products"
 msgstr "محصولات"
 
-#: templates/_base.html:154
+#: templates/_base.html:134
+#| msgid "Admin info"
+msgid "Admin"
+msgstr "مدیر"
+
+#: templates/_base.html:160
 msgid "Social Media"
 msgstr "رسانه‌های اجتماعی"
 
@@ -263,7 +273,8 @@ msgid "Home"
 msgstr "خانه"
 
 #: templates/home.html:13 templates/search/search.html:7
-#: templates/search/search.html:43 templates/shop/product_list.html:14
+#: templates/search/search.html:43 templates/shop/category_list.html:14
+#: templates/shop/product_list.html:14
 msgid "Search"
 msgstr "جستجو"
 
@@ -602,7 +613,6 @@ msgid "Invoice create"
 msgstr "ایجاد فاکتور"
 
 #: templates/staff/invoice_create.html:16
-#| msgid "New invoice"
 msgid "Create invoice"
 msgstr "فاکتور جدید"
 
@@ -693,7 +703,6 @@ msgstr "موقعیت"
 
 #: templates/staff/product_create.html:7
 #: templates/staff/product_create.html:16
-#| msgid "Product"
 msgid "Product create"
 msgstr "محصول جدید"
 
@@ -704,6 +713,10 @@ msgstr "لغو"
 #: templates/staff/product_create.html:23
 msgid "Save and add another"
 msgstr "ذخیره و اضافه کردن یکی دیگر"
+
+#: templates/staff/products.html:16 templates/staff/sidebar_staff.html:5
+msgid "List of products"
+msgstr "لیست محصولات"
 
 #: templates/staff/purchases.html:7
 msgid "Purchases"
@@ -728,10 +741,6 @@ msgstr "پرداخت شده"
 #: templates/staff/sidebar_staff.html:4
 msgid "Create product"
 msgstr "ایجاد محصول"
-
-#: templates/staff/sidebar_staff.html:5
-msgid "List of products"
-msgstr "لیست محصولات"
 
 #: templates/staff/sidebar_staff.html:6
 msgid "Create a new category"
@@ -772,6 +781,11 @@ msgstr "فاکتور خرید جدید"
 #: templates/staff/sidebar_staff.html:39
 msgid "Warehouse Managment"
 msgstr "مدیریت انبار"
+
+#: templates/staff/warehouse.html:16
+#| msgid "List of products"
+msgid "List of warhouse"
+msgstr "لیست انبارها"
 
 #~ msgid "Shippint method"
 #~ msgstr "روش ارسال"

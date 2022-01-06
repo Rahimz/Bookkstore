@@ -88,3 +88,12 @@ def temp_home(request):
         'temp_home.html',
         {}
     )
+
+def category_list(request):
+    main_categories = Category.objects.filter(active=True, parent_category=None)
+    
+    return render(
+        request,
+        'shop/category_list.html',
+        {'main_categories': main_categories }
+    )
