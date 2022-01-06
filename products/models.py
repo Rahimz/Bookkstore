@@ -31,7 +31,10 @@ class Category(models.Model):
         unique=True,
         allow_unicode=True
     )
-
+    active = models.BooleanField(
+        default=True,
+    )
+    
     class Meta:
         ordering = ('name',)
         verbose_name = 'category'
