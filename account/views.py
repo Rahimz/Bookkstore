@@ -4,6 +4,7 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.core.mail import send_mail
 
 from .forms import LoginForm, UserRegistrationForm, UserEditForm
+from .models import CustomUser
 
 
 def dashboard(request):
@@ -67,3 +68,11 @@ def edit(request):
 #         'registration/password_reset_form.html',
 #         {'form': form}
 #     )
+
+def client_list(request):
+    clients = CustomUser.objects.filter(is_client=True)
+    return render(
+        request,
+        'account/clients/client_list.html',
+        {'clients': clients}
+    )

@@ -1,0 +1,43 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block title %}{% trans 'Clients' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+      <div class="col-md-2">
+        {% include "staff/sidebar_staff.html" with barName="clients" %}
+      </div>
+      <div class="col-md-10">
+    <h2>{% trans 'Clients' %}</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">{% trans 'Name' %}</th>
+          <th scope="col">{% trans 'Phone' %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for client in clients %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{ client }}</td>
+          <td>{{ client.phone }}</td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+    {% include "shop/pagination.html" with page=clients %}
+    </div>
+
+
+  </div>
+
+</div>
+{% endblock %}
