@@ -200,4 +200,4 @@ EMAIL_HOST_PASSWORD = email_host_password
 DEFAULT_FROM_EMAIL = 'noreply@ketabedamavand.com'
 
 #  Django drispy form settings
-CRISPY_TEMPLATE_PACK = 'uni_form'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
