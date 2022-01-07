@@ -95,7 +95,7 @@ def client_add(request):
                 messages.success(request, 'Client added!')
                 return redirect('/account/clients')
         except:
-            form = form = ClientAddForm(data=request.POST)
+            form = ClientAddForm(data=request.POST)
             messages.error(request, 'the phone number is already used!')
     else:
         form = ClientAddForm()
