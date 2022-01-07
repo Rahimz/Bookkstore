@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django_countries',
     'debug_toolbar',
     'rosetta',
+    'crispy_forms',
 
     # Local
     'account.apps.AccountConfig',
@@ -197,3 +198,6 @@ EMAIL_HOST = email_host
 EMAIL_HOST_USER = email_host_user
 EMAIL_HOST_PASSWORD = email_host_password
 DEFAULT_FROM_EMAIL = 'noreply@ketabedamavand.com'
+
+#  Django drispy form settings
+CRISPY_TEMPLATE_PACK = 'uni_form'
