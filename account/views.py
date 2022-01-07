@@ -1,9 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordResetForm
 from django.core.mail import send_mail
+from django.contrib import messages
+import uuid
+from django.urls import reverse
 
-from .forms import LoginForm, UserRegistrationForm, UserEditForm
+from .forms import LoginForm, UserRegistrationForm, UserEditForm, ClientAddForm
 from .models import CustomUser
 
 
@@ -75,4 +78,29 @@ def client_list(request):
         request,
         'account/clients/client_list.html',
         {'clients': clients}
+    )
+
+def client_add(request):
+    form = ClientAddForm()
+    if request.method == "POST":
+        form = ClientAddForm(data=request.POST)
+        try:
+            if form.is_valid():
+                new_client = form.save(commit=False)
+                new_client.is_client = True
+                new_client.username = form.cleaned_data['phone']
+                new_client.password = str(uuid.uuid4())
+                new_client.email = "{}@ketabedamavand.com".format(new_client.username)
+                new_client.save()
+                messages.success(request, 'Client added!')
+                return redirect('/account/clients')
+        except:
+            form = form = ClientAddForm(data=request.POST)
+            messages.error(request, 'the phone number is already used!')
+    else:
+        form = ClientAddForm()
+    return render(
+        request,
+        'account/clients/client_add.html',
+        {'form': form}
     )

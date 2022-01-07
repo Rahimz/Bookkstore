@@ -58,6 +58,10 @@ class Address(models.Model):
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
+    phone = PhoneNumberField(
+        blank=True,
+        default=""
+    )
     is_client= models.BooleanField(
         default=False
     )
