@@ -4,6 +4,8 @@
 
 {% load static %}
 
+{% load crispy_forms_tags %}
+
 {% block title %}{% trans 'Invoice create' %}{% endblock %}
 
 {% block content %}
@@ -13,14 +15,20 @@
       {% include "staff/sidebar_staff.html" with barName="sales" %}
     </div>
     <div class="col-md-10">
+
       <h2>{% trans 'Create invoice' %}</h2>
       <div class="">
-        <form class="" action="index.html" method="post">
-
-          <input type="text" name="client" value="client  name or phone">
-          <input type="button" name="client" value="submit">
-          <input type="button" name="client" value="Add new client">
+        <form class="" action="." method="post">
+          {{ client_search_form | crispy }}
+          {% csrf_token %}
+          <input class="btn btn-outline-secondary"  type="submit" name="client" value="submit">
         </form>
+
+        <a href="{% url 'client_add' %}/#addClient" onclick="return popitup('/account/client_add/#addClient')" class="btn btn-outline-secondary" >{% trans 'Add client' %}</a>
+        {% if client %}
+        <h4>{% trans 'Client' %}</h4>
+        {% trans 'Name' %} : {{ client }} - {% trans 'Phone' %} : {{ client.phone }}
+        {% endif %}
         <h2 class="my-4">{% trans 'Add products' %}</h2>
         <form class="" action="." method="post">
           <input type="text" name="client" value="isbn">
@@ -185,4 +193,14 @@
   </div>
 
 </div>
+{% endblock %}
+
+{% block script %}
+<script language="javascript" type="text/javascript">
+function popitup(url) {
+    newwindow=window.open(url,'{{title}}','height=350,width=150');
+    if (window.focus) {newwindow.focus()}
+    return false;
+}
+</script>
 {% endblock %}

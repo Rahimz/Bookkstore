@@ -4,10 +4,14 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views import View
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.postgres.search import SearchVector
+from django.db.models import Q
 
 from .forms import ProductCreateForm, OrderCreateForm
 from products.models import Product, Category
 from orders.models import Order
+from search.forms import ClientSearchForm
+from account.models import CustomUser
 
 
 def sales(request):
@@ -142,7 +146,24 @@ class ProductCreate(View):
         )
 
 def invoice_create(request):
+    client_search_form = ClientSearchForm()
+    client = None
+    if request.method == 'POST':
+        client_form = ClientSearchForm(data=request.POST)
+        if client_form.is_valid():
+            query = client_form.cleaned_data['query']
+            # client = CustomUser.objects.all().annotate(
+            #     search=SearchVector('phone')).get(search=query)
+            try:
+                client = CustomUser.objects.get(
+                    Q(phone=query) | Q(first_name=query) | Q(last_name=query) | Q(username=query)
+                )
+            except:
+                message.error(request, 'Client does not exist!')
+
     return render(
         request,
-        'staff/invoice_create.html'
-    )
+        'staff/invoice_create.html',
+        {'client_search_form': client_search_form,
+         'client': client,
+    })
