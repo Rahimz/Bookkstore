@@ -9,8 +9,8 @@ from django.db.models import Q
 
 from .forms import ProductCreateForm, OrderCreateForm
 from products.models import Product, Category
-from orders.models import Order
-from search.forms import ClientSearchForm
+from orders.models import Order, OrderLine
+from search.forms import ClientSearchForm, BookIsbnSearchForm
 from account.models import CustomUser
 
 
@@ -116,7 +116,7 @@ class ProductCreate(View):
             if form.is_valid:
                 product = form.save(commit=False)
                 product.save()
-                message.success(request, 'Product is created!')
+                messages.success(request, 'Product is created!')
         if "cancel" in request.POST:
             return HttpResponseRedirect(reverse('staff:products'))
         return super(ProductCreate, self).post(request, *args, **kwargs)
@@ -147,9 +147,15 @@ class ProductCreate(View):
 
 def invoice_create(request):
     client_search_form = ClientSearchForm()
+    isbn_search_form = BookIsbnSearchForm()
     client = None
+    books = None
+    book = None
+    isbn = ''
+    book_ids = []
     if request.method == 'POST':
         client_form = ClientSearchForm(data=request.POST)
+        isbn_search_form =BookIsbnSearchForm(data=request.POST)
         if client_form.is_valid():
             query = client_form.cleaned_data['query']
             # client = CustomUser.objects.all().annotate(
@@ -159,11 +165,25 @@ def invoice_create(request):
                     Q(phone=query) | Q(first_name=query) | Q(last_name=query) | Q(username=query)
                 )
             except:
-                message.error(request, 'Client does not exist!')
+                messages.error(request, 'Client does not exist!')
+        if isbn_search_form.is_valid():
+            isbn = isbn_search_form.cleaned_data['query']
 
+            try:
+                book = Product.objects.get(isbn=str(isbn))
+                print(book)
+                book_ids.append(book.id)
+                isbn_search_form = BookIsbnSearchForm()
+            except:
+                messages.error(request, 'Book does not exist!')
+    books = Product.objects.filter(id__in=book_ids)
     return render(
         request,
         'staff/invoice_create.html',
         {'client_search_form': client_search_form,
          'client': client,
+         'isbn_search_form': isbn_search_form,
+         'book': book,
+         'isbn': isbn,
+         'books': books,
     })

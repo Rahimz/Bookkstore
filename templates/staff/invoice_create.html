@@ -21,7 +21,7 @@
         <form class="" action="." method="post">
           {{ client_search_form | crispy }}
           {% csrf_token %}
-          <input class="btn btn-outline-secondary"  type="submit" name="client" value="submit">
+          <input class="btn btn-outline-secondary"  type="submit" name="client" value="{% trans 'Submit' %}">
         </form>
 
         <a href="{% url 'client_add' %}/#addClient" onclick="return popitup('/account/client_add/#addClient')" class="btn btn-outline-secondary" >{% trans 'Add client' %}</a>
@@ -29,18 +29,23 @@
         <h4>{% trans 'Client' %}</h4>
         {% trans 'Name' %} : {{ client }} - {% trans 'Phone' %} : {{ client.phone }}
         {% endif %}
+
         <h2 class="my-4">{% trans 'Add products' %}</h2>
         <form class="" action="." method="post">
-          <input type="text" name="client" value="isbn">
-          <input type="number" name="isbn" value="isbn">
-          <input type="submit" name="" value="{% trans 'Submit' %}" class="btn btn-outline-secondary">
+          {{ isbn_search_form | crispy }}
+          {% csrf_token %}
+          <input class="btn btn-outline-secondary"  type="submit" name="book" value="{% trans 'Submit' %}">
+
         </form>
+
       </div>
+
       <div class="">
           <h2 class="my-4">{% trans 'Invoice' %}</h2>
           <table class="table table-striped">
             <thead>
               <tr>
+                <th scope="col">#</th>
                 <th scope="col">{% trans 'isbn' %}</th>
                 <th scope="col">{% trans 'Image' %}</th>
                 <th scope="col">{% trans 'Name' %}</th>
@@ -54,11 +59,13 @@
               </tr>
             </thead>
             <tbody>
+              {% for product in books %}              
               <tr>
-                <th scope="row">123-456-789-123-4</th>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ product.isbn }}</td>
                 <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="60px" height="auto"></td>
-                <td>1984</td>
-                <td>orwell</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.author }}</td>
                 <td>
                   <input type="checkbox" value="{% trans 'Remove' %}">
                   {% comment %}
@@ -68,7 +75,7 @@
                   </form>
                   {% endcomment %}
                 </td>
-                <td>3</td>
+                <td>1</td>
                 <td>
                   <input type="number" value="" min="1" max="10">
                   <input type="submit" value="{% trans 'Update' %}">
@@ -81,41 +88,13 @@
                   </form>
                   {% endcomment %}
                 </td>
-                <td>29000</td>
+                <td>{{ product.price }}</td>
                 <td>2000</td>
                 <td>27000</td>
               </tr>
-              <tr>
-                <th scope="row">123-456-789-123-4</th>
-                <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="60px" height="auto"></td>
-                <td>1984</td>
-                <td>orwell</td>
-                <td>
-                  <input type="checkbox" value="{% trans 'Remove' %}">
-                  {% comment %}
-                  <form action="{% url 'cart:cart_remove' product.pk %}" method="post">
-                    <input type="submit" value="{% trans 'Remove' %}">
-                    {% csrf_token %}
-                  </form>
-                  {% endcomment %}
-                </td>
-                <td>3</td>
-                <td>
-                  <input type="number" value="" min="1" max="10">
-                  <input type="submit" value="{% trans 'Update' %}">
-                  {% comment %}
-                  <form action="{% url 'cart:cart_add' product.pk %}" method="post">
-                    {{ item.update_quantity_form.quantity }}
-                    {{ item.update_quantity_form.override }}
-                    <input type="submit" value="{% trans 'Update' %}">
-                    {% csrf_token %}
-                  </form>
-                  {% endcomment %}
-                </td>
-                <td>29000</td>
-                <td>2000</td>
-                <td>27000</td>
-              </tr>
+              {% endfor %}
+
+
 
               <tr>
                 <th scope="row"></th>
@@ -123,8 +102,8 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>9</td>
                 <td></td>
+                <td>9</td>
                 <td></td>
                 <td></td>
                 <td>71000</td>
@@ -153,16 +132,7 @@
                 <td></td>
                 <td class="fw-bolder">50000</td>
               </tr>
-              {% comment %}
-              {% for product in products %}
-              <tr>
-                <th scope="row">{{ product.pk }}</th>
-                <td><a href="{% url 'shop:product_detail' product.pk %}">{{ product.name }}</a></td>
-                <td>{{ product.author }}</td>
-                <td>{{ product.price }}</td>
-              </tr>
-              {% endfor %}
-              {% endcomment %}
+
             </tbody>
           </table>
           <h2 class="my-4">{% trans 'Notes' %}</h2>
