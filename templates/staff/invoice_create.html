@@ -95,39 +95,23 @@
 
             <tr>
               <th scope="row"></th>
-              <td>{% trans 'SUM' %}</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td colspan="5">{% trans 'SUM' %}</td>
               <td>9</td>
               <td></td>
               <td></td>
-              <td>71000</td>
+              <td></td>
+              <td>{{ order.get_total_cost }}</td>
             </tr>
             <tr>
               <th scope="row"></th>
-              <td>{% trans 'DISCOUNT' %}</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td colspan="8">{% trans 'DISCOUNT' %}</td>
               <td class="text-danger">21000 - </td>
+              <td></td>
             </tr>
             <tr>
               <th scope="row"></th>
-              <td class="fw-bolder">{% trans 'PAYABLE' %}</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td class="fw-bolder">50000</td>
+              <td colspan="9" class="fw-bolder">{% trans 'PAYABLE' %}</td>
+              <td class="fw-bolder">{{ order.get_cost_after_discount }}</td>
             </tr>
 
           </tbody>
@@ -152,13 +136,12 @@
       </div>
       <div class="my-5">
         <form class="" action="" method="post">
-          <input type="button" name="" value="Save draft">
-          <input type="button" name="" value="Submit">
-          <input type="button" name="" value="Print">
-          <input type="button" name="" value="cancel">
-
-
+          <a href="{% url 'staff:draft_orders' %}" class="btn btn-outline-secondary">{% trans 'Save draft' %}</a>
+          <input type="button" name="" class="btn btn-outline-secondary" value="{% trans 'Submit' %}">
+          <input type="button" name="" class="btn btn-outline-secondary" value="{% trans 'Print' %}">
+          <a href="{% url 'staff:invoice_create' %}" class="btn btn-outline-secondary">{% trans 'Clear' %}</a>
         </form>
+
 
       </div>
     </div>
