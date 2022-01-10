@@ -145,7 +145,11 @@ class ProductCreate(View):
             {'form': form}
         )
 
-def invoice_create(request):
+def invoice_create(request, order_id=None):
+    if order_id:
+        order = Order.objects.get(pk=order_id)
+    else:
+        order = None
     client_search_form = ClientSearchForm()
     isbn_search_form = BookIsbnSearchForm()
     client = None
@@ -154,36 +158,61 @@ def invoice_create(request):
     isbn = ''
     book_ids = []
     if request.method == 'POST':
-        client_form = ClientSearchForm(data=request.POST)
         isbn_search_form =BookIsbnSearchForm(data=request.POST)
-        if client_form.is_valid():
-            query = client_form.cleaned_data['query']
-            # client = CustomUser.objects.all().annotate(
-            #     search=SearchVector('phone')).get(search=query)
-            try:
-                client = CustomUser.objects.get(
-                    Q(phone=query) | Q(first_name=query) | Q(last_name=query) | Q(username=query)
-                )
-            except:
-                messages.error(request, 'Client does not exist!')
+        client_form = ClientSearchForm(data=request.POST)
+        # if client_form.is_valid() and not order:
+        #     query = client_form.cleaned_data['query']
+        #     # client = CustomUser.objects.all().annotate(
+        #     #     search=SearchVector('phone')).get(search=query)
+        #     try:
+        #         client = CustomUser.objects.get(
+        #             Q(phone=query) | Q(first_name=query) | Q(last_name=query) | Q(username=query)
+        #         )
+        #         order = Order.objects.create(
+        #             user = request.user,
+        #             client = client,
+        #             status = 'draft',
+        #             shipping_method = 'pickup',
+        #             client_phone = query,
+        #         )
+        #     except:
+        #         messages.error(request, 'Client does not exist!')
+
+
         if isbn_search_form.is_valid():
             isbn = isbn_search_form.cleaned_data['query']
+            if not order:
+                order = Order.objects.create(
+                            user = request.user,
+                            status = 'draft',
+                            shipping_method = 'pickup',
+                        )
+                messages.success(request, 'order No. {} is created'.format(order.id))
 
             try:
-                book = Product.objects.get(isbn=str(isbn))
-                print(book)
-                book_ids.append(book.id)
+                book = Product.objects.get(isbn=isbn)
+                messages.success(request, 'Book {} found'.format(book.id))
+                order_line = OrderLine.objects.create(
+                    order = order,
+                    product = book,
+                    quantity = 1,
+                    price = book.price,
+                )
+                messages.success(request,'order line No. {} with {} is added'.format(order.id, book))
+
                 isbn_search_form = BookIsbnSearchForm()
+                
             except:
-                messages.error(request, 'Book does not exist!')
-    books = Product.objects.filter(id__in=book_ids)
+                messages.error(request, 'Book {} does not exist!'.format(isbn))
+
+
+
     return render(
         request,
         'staff/invoice_create.html',
         {'client_search_form': client_search_form,
-         'client': client,
+         'order': order,
          'isbn_search_form': isbn_search_form,
          'book': book,
          'isbn': isbn,
-         'books': books,
     })

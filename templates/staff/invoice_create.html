@@ -15,162 +15,169 @@
       {% include "staff/sidebar_staff.html" with barName="sales" %}
     </div>
     <div class="col-md-10">
+      <div>
+        <h2>{% trans 'Create invoice' %}</h2>
 
-      <h2>{% trans 'Create invoice' %}</h2>
-      <div class="">
-        <form class="" action="." method="post">
-          {{ client_search_form | crispy }}
-          {% csrf_token %}
-          <input class="btn btn-outline-secondary"  type="submit" name="client" value="{% trans 'Submit' %}">
-        </form>
-
-        <a href="{% url 'client_add' %}/#addClient" onclick="return popitup('/account/client_add/#addClient')" class="btn btn-outline-secondary" >{% trans 'Add client' %}</a>
-        {% if client %}
+        {% if order %}
         <h4>{% trans 'Client' %}</h4>
-        {% trans 'Name' %} : {{ client }} - {% trans 'Phone' %} : {{ client.phone }}
+        {% trans 'Name' %} : {{ order.client }} - {% trans 'Phone' %} : {{ order.client_phone }}
         {% endif %}
 
         <h2 class="my-4">{% trans 'Add products' %}</h2>
-        <form class="" action="." method="post">
-          {{ isbn_search_form | crispy }}
-          {% csrf_token %}
-          <input class="btn btn-outline-secondary"  type="submit" name="book" value="{% trans 'Submit' %}">
+        {% if order %}
+        <form class="" action="{% url 'staff:invoice_create' order.id %}" method="post">
+        {% else %}
+        <form class="" action="{% url 'staff:invoice_create' %}" method="post">
+        {% endif %}
+            {{ isbn_search_form | crispy }}
+            {% csrf_token %}
+            <input class="btn btn-outline-secondary" type="submit" name="book" value="{% trans 'Submit' %}">
 
-        </form>
+          </form>
 
       </div>
 
       <div class="">
-          <h2 class="my-4">{% trans 'Invoice' %}</h2>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">{% trans 'isbn' %}</th>
-                <th scope="col">{% trans 'Image' %}</th>
-                <th scope="col">{% trans 'Name' %}</th>
-                <th scope="col">{% trans 'Author' %}</th>
-                <th scope="col">{% trans 'Remove' %}</th>
-                <th scope="col">{% trans 'Quantity' %}</th>
-                <th scope="col"></th>
-                <th scope="col">{% trans 'Price' %}</th>
-                <th scope="col">{% trans 'Discount' %}</th>
-                <th scope="col">{% trans 'Cost' %}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for product in books %}              
-              <tr>
-                <th scope="row">{{ forloop.counter }}</th>
-                <td>{{ product.isbn }}</td>
-                <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="60px" height="auto"></td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.author }}</td>
-                <td>
-                  <input type="checkbox" value="{% trans 'Remove' %}">
-                  {% comment %}
-                  <form action="{% url 'cart:cart_remove' product.pk %}" method="post">
-                    <input type="submit" value="{% trans 'Remove' %}">
-                    {% csrf_token %}
-                  </form>
-                  {% endcomment %}
-                </td>
-                <td>1</td>
-                <td>
-                  <input type="number" value="" min="1" max="10">
+        <h2 class="my-4">{% trans 'Invoice' %}</h2>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">{% trans 'isbn' %}</th>
+              <th scope="col">{% trans 'Image' %}</th>
+              <th scope="col">{% trans 'Name' %}</th>
+              <th scope="col">{% trans 'Author' %}</th>
+              <th scope="col">{% trans 'Remove' %}</th>
+              <th scope="col">{% trans 'Quantity' %}</th>
+              <th scope="col"></th>
+              <th scope="col">{% trans 'Price' %}</th>
+              <th scope="col">{% trans 'Discount' %}</th>
+              <th scope="col">{% trans 'Cost' %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for product in order.lines.all %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="60px" height="auto"></td>
+              <td>{{ product.product.isbn }}</td>
+              <td>{{ product.product.name }}</td>
+              <td>{{ product.product.author }}</td>
+              <td>
+                <input type="checkbox" value="{% trans 'Remove' %}">
+                {% comment %}
+                <form action="{% url 'cart:cart_remove' product.pk %}" method="post">
+                  <input type="submit" value="{% trans 'Remove' %}">
+                  {% csrf_token %}
+                </form>
+                {% endcomment %}
+              </td>
+              <td>1</td>
+              <td>
+                <input type="number" value="" min="1" max="10">
+                <input type="submit" value="{% trans 'Update' %}">
+                {% comment %}
+                <form action="{% url 'cart:cart_add' product.pk %}" method="post">
+                  {{ item.update_quantity_form.quantity }}
+                  {{ item.update_quantity_form.override }}
                   <input type="submit" value="{% trans 'Update' %}">
-                  {% comment %}
-                  <form action="{% url 'cart:cart_add' product.pk %}" method="post">
-                    {{ item.update_quantity_form.quantity }}
-                    {{ item.update_quantity_form.override }}
-                    <input type="submit" value="{% trans 'Update' %}">
-                    {% csrf_token %}
-                  </form>
-                  {% endcomment %}
-                </td>
-                <td>{{ product.price }}</td>
-                <td>2000</td>
-                <td>27000</td>
-              </tr>
-              {% endfor %}
+                  {% csrf_token %}
+                </form>
+                {% endcomment %}
+              </td>
+              <td>{{ product.price }}</td>
+              <td>2000</td>
+              <td>27000</td>
+            </tr>
+            {% endfor %}
 
 
 
-              <tr>
-                <th scope="row"></th>
-                <td>{% trans 'SUM' %}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>9</td>
-                <td></td>
-                <td></td>
-                <td>71000</td>
-              </tr>
-              <tr>
-                <th scope="row"></th>
-                <td>{% trans 'DISCOUNT' %}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="text-danger">21000 - </td>
-              </tr>
-              <tr>
-                <th scope="row"></th>
-                <td class="fw-bolder">{% trans 'PAYABLE' %}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="fw-bolder">50000</td>
-              </tr>
+            <tr>
+              <th scope="row"></th>
+              <td>{% trans 'SUM' %}</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>9</td>
+              <td></td>
+              <td></td>
+              <td>71000</td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td>{% trans 'DISCOUNT' %}</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="text-danger">21000 - </td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td class="fw-bolder">{% trans 'PAYABLE' %}</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="fw-bolder">50000</td>
+            </tr>
 
-            </tbody>
-          </table>
-          <h2 class="my-4">{% trans 'Notes' %}</h2>
+          </tbody>
+        </table>
+        <h2 class="my-4">{% trans 'Notes' %}</h2>
+        <div class="client">
           <form class="" action="." method="post">
-            <input type="text" name="client" value="Note">
-            <br>
-            <input type="checkbox" id="present" name="vehicle1" value="Bike">
-            <label for="present">{% trans 'Is a gift' %}</label><br>
-            <input type="submit" name="" value="{% trans 'Submit' %}" class="btn btn-outline-secondary">
+            {{ client_search_form | crispy }}
+            {% csrf_token %}
+            <input class="btn btn-outline-secondary" type="submit" name="client" value="{% trans 'Submit' %}">
           </form>
-
+          <a href="{% url 'client_add' %}/#addClient" onclick="return popitup('/account/client_add/#addClient')" class="btn btn-outline-secondary">{% trans 'Add client' %}</a>
         </div>
-        <div class="my-5">
-          <form class="" action="" method="post">
-            <input type="button" name="" value="Save draft">
-            <input type="button" name="" value="Submit">
-            <input type="button" name="" value="Print">
-            <input type="button" name="" value="cancel">
+        <form class="" action="." method="post">
+          <input type="text" name="client" value="Note">
+          <br>
+          <input type="checkbox" id="present" name="vehicle1" value="Bike">
+          <label for="present">{% trans 'Is a gift' %}</label><br>
+          <input type="submit" name="" value="{% trans 'Submit' %}" class="btn btn-outline-secondary">
+        </form>
 
-
-          </form>
-
-        </div>
       </div>
+      <div class="my-5">
+        <form class="" action="" method="post">
+          <input type="button" name="" value="Save draft">
+          <input type="button" name="" value="Submit">
+          <input type="button" name="" value="Print">
+          <input type="button" name="" value="cancel">
 
+
+        </form>
+
+      </div>
     </div>
 
   </div>
+
+</div>
 
 </div>
 {% endblock %}
 
 {% block script %}
 <script language="javascript" type="text/javascript">
-function popitup(url) {
-    newwindow=window.open(url,'{{title}}','height=350,width=150');
-    if (window.focus) {newwindow.focus()}
+  function popitup(url) {
+    newwindow = window.open(url, '{{title}}', 'height=350,width=150');
+    if (window.focus) {
+      newwindow.focus()
+    }
     return false;
-}
+  }
 </script>
 {% endblock %}
