@@ -11,7 +11,7 @@
 {% if barName == "sales" %}
 <div class="sidebar drop_shadow border border-1 rounded-2">
   <p><a href="{% url 'staff:invoice_create' %}">{% trans 'New invoice' %}</a></p>
-  <p><a href="">{% trans 'List of draft invoices' %}</a></p>
+  <p><a href="{% url 'staff:draft_orders' %}">{% trans 'List of draft orders' %}</a></p>
   <p><a href="">{% trans 'List of proved invoices' %}</a></p>
 
 </div>

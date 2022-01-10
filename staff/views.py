@@ -201,7 +201,7 @@ def invoice_create(request, order_id=None):
                 messages.success(request,'order line No. {} with {} is added'.format(order.id, book))
 
                 isbn_search_form = BookIsbnSearchForm()
-                
+
             except:
                 messages.error(request, 'Book {} does not exist!'.format(isbn))
 
@@ -216,3 +216,12 @@ def invoice_create(request, order_id=None):
          'book': book,
          'isbn': isbn,
     })
+
+
+def draft_orders(request):
+    draft_orders = Order.objects.filter(status='draft')
+    return render(
+        request,
+        'staff/draft_orders.html',
+        {'draft_orders': draft_orders}
+    )

@@ -1,0 +1,60 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Invoice create' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="sales" %}
+    </div>
+    <div class="col-md-10">
+      <div>
+        <h2 class="my-4">{% trans 'List of draft orders' %}</h2>
+
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">{% trans 'Order ID' %}</th>
+              <th scope="col">{% trans 'Quantity' %}</th>
+              <th scope="col">{% trans 'Price' %}</th>
+              <th scope="col">{% trans 'Discount' %}</th>
+              <th scope="col">{% trans 'Cost' %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in draft_orders %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{ order.id }}</td>
+              <td></td>
+              <td>{{ order.get_total_cost }}</td>
+              <td>{{ order.discount }}</td>
+              <td>{{ order.get_total_cost_after_discount }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}
