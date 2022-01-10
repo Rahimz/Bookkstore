@@ -162,14 +162,16 @@ class OrderLine(models.Model):
     discount = models.DecimalField(
         max_digits=settings.DEFAULT_MAX_DIGITS,
         decimal_places=settings.DEFAULT_DECIMAL_PLACES,
-        blank=True,
-        null=True,
+        default=0
     )
 
     def __str__(self):
         return str(self.id)
 
     def get_cost(self):
+        return self.price * self.quantity
+
+    def get_cost_after_discount(self):
         return self.price * self.quantity - self.discount
 
     def get_weight(self):

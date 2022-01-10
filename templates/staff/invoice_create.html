@@ -56,13 +56,13 @@
             </tr>
           </thead>
           <tbody>
-            {% for product in order.lines.all %}
+            {% for order_line in order.lines.all %}
             <tr>
               <th scope="row">{{ forloop.counter }}</th>
               <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="60px" height="auto"></td>
-              <td>{{ product.product.isbn }}</td>
-              <td>{{ product.product.name }}</td>
-              <td>{{ product.product.author }}</td>
+              <td>{{ order_line.product.isbn }}</td>
+              <td>{{ order_line.product.name }}</td>
+              <td>{{ order_line.product.author }}</td>
               <td>
                 <input type="checkbox" value="{% trans 'Remove' %}">
                 {% comment %}
@@ -85,9 +85,9 @@
                 </form>
                 {% endcomment %}
               </td>
-              <td>{{ product.price }}</td>
-              <td>2000</td>
-              <td>27000</td>
+              <td>{{ order_line.get_cost }}</td>
+              <td>{{ order_line.discount }}</td>
+              <td>{{ order_line.get_cost_after_discount }}</td>
             </tr>
             {% endfor %}
 
