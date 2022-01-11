@@ -16,24 +16,15 @@
     </div>
     <div class="col-md-10">
       <div>
-        <h2>{% trans 'Create invoice' %}</h2>
-
-        {% if order %}
-        <h4>{% trans 'Client' %}</h4>
-        {% trans 'Name' %} : {{ order.client }} - {% trans 'Phone' %} : {{ order.client_phone }}
-        {% endif %}
-
-        <h2 class="my-4">{% trans 'Add products' %}</h2>
-        {% if order %}
-        <form class="" action="{% url 'staff:invoice_create' order.id %}" method="post">
-          {% else %}
-          <form class="" action="{% url 'staff:invoice_create' %}" method="post">
-            {% endif %}
-            {{ isbn_search_form | crispy }}
+        <h2 class="my-4">{% trans 'Checkout' %}</h2>
+        <div class="client">
+          <form class="" action="." method="post">
+            {{ client_search_form | crispy }}
+            {{ checkout_form | crispy }}
             {% csrf_token %}
-            <input class="btn btn-outline-secondary" type="submit" name="book" value="{% trans 'Submit' %}">
-
+            <input class="btn btn-outline-secondary" type="submit" name="client" value="{% trans 'Submit' %}">
           </form>
+        </div>
 
       </div>
 
@@ -63,28 +54,9 @@
               <td>{{ order_line.product.isbn }}</td>
               <td>{{ order_line.product.name }}</td>
               <td>{{ order_line.product.author }}</td>
-              <td>
-                <input type="checkbox" value="{% trans 'Remove' %}">
-                {% comment %}
-                <form action="{% url 'cart:cart_remove' product.pk %}" method="post">
-                  <input type="submit" value="{% trans 'Remove' %}">
-                  {% csrf_token %}
-                </form>
-                {% endcomment %}
-              </td>
+              <td> </td>
               <td>1</td>
-              <td>
-                <input type="number" value="" min="1" max="10">
-                <input type="submit" value="{% trans 'Update' %}">
-                {% comment %}
-                <form action="{% url 'cart:cart_add' product.pk %}" method="post">
-                  {{ item.update_quantity_form.quantity }}
-                  {{ item.update_quantity_form.override }}
-                  <input type="submit" value="{% trans 'Update' %}">
-                  {% csrf_token %}
-                </form>
-                {% endcomment %}
-              </td>
+              <td></td>
               <td>{{ order_line.get_cost }}</td>
               <td>{{ order_line.discount }}</td>
               <td>{{ order_line.get_cost_after_discount }}</td>
@@ -116,16 +88,11 @@
 
           </tbody>
         </table>
-    
+
 
 
       </div>
-      <div class="my-5">
-        <a href="{% url 'staff:draft_orders' %}" class="btn btn-outline-secondary">{% trans 'Save draft' %}</a>
-        <a {% if order %}href="{% url 'staff:invoice_checkout' order.id %}" class="btn btn-outline-success"{% else %}href="" class="btn btn-outline-success disabled"{% endif%} >{% trans 'Submit' %}</a>
-        <a onclick="window.print();return false;" class="btn btn-outline-secondary">{% trans 'Print' %}</a>
-        <a href="{% url 'staff:invoice_create' %}" class="btn btn-outline-secondary">{% trans 'Clear' %}</a>
-      </div>
+
     </div>
 
   </div>

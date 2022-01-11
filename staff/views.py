@@ -1,4 +1,4 @@
-from django.shortcuts import render, reverse, get_object_or_404
+from django.shortcuts import render, reverse, get_object_or_404, redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
@@ -6,10 +6,12 @@ from django.views import View
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
+import uuid
 
 from .forms import ProductCreateForm, OrderCreateForm
 from products.models import Product, Category
 from orders.models import Order, OrderLine
+from orders.forms import OrderAdminCheckoutForm
 from search.forms import ClientSearchForm, BookIsbnSearchForm
 from account.models import CustomUser
 
@@ -150,37 +152,18 @@ def invoice_create(request, order_id=None):
         order = Order.objects.get(pk=order_id)
     else:
         order = None
-    client_search_form = ClientSearchForm()
+
     isbn_search_form = BookIsbnSearchForm()
-    client = None
+
     books = None
     book = None
     isbn = ''
-    book_ids = []
     if request.method == 'POST':
         isbn_search_form =BookIsbnSearchForm(data=request.POST)
         client_form = ClientSearchForm(data=request.POST)
-        # if client_form.is_valid() and not order:
-        #     query = client_form.cleaned_data['query']
-        #     # client = CustomUser.objects.all().annotate(
-        #     #     search=SearchVector('phone')).get(search=query)
-        #     try:
-        #         client = CustomUser.objects.get(
-        #             Q(phone=query) | Q(first_name=query) | Q(last_name=query) | Q(username=query)
-        #         )
-        #         order = Order.objects.create(
-        #             user = request.user,
-        #             client = client,
-        #             status = 'draft',
-        #             shipping_method = 'pickup',
-        #             client_phone = query,
-        #         )
-        #     except:
-        #         messages.error(request, 'Client does not exist!')
-
 
         if isbn_search_form.is_valid():
-            isbn = isbn_search_form.cleaned_data['query']
+            isbn = isbn_search_form.cleaned_data['isbn_query']
             if not order:
                 order = Order.objects.create(
                             user = request.user,
@@ -205,16 +188,47 @@ def invoice_create(request, order_id=None):
             except:
                 messages.error(request, 'Book {} does not exist!'.format(isbn))
 
-
-
     return render(
         request,
         'staff/invoice_create.html',
+        {'order': order,
+         'isbn_search_form': isbn_search_form,
+         'isbn': isbn,
+    })
+
+
+def invoice_checkout(request, order_id):
+    checkout_form = OrderAdminCheckoutForm()
+    client_search_form = ClientSearchForm()
+    client = CustomUser.objects.get(username='guest')
+    order = Order.objects.get(pk=order_id)
+    if request.method == 'POST':
+        checkout_form = OrderAdminCheckoutForm(data=request.POST)
+        client_search_form = ClientSearchForm(data=request.POST)
+        if client_search_form.is_valid():
+            messages.debug(request, 'client_search_form.is_valid')
+            query = client_search_form.cleaned_data['query']
+            try:
+                client = CustomUser.objects.get(
+                    Q(phone=query) | Q(first_name=query) | Q(last_name=query) | Q(username=query) | Q(username="guest")
+                )
+                messages.success(request, 'client found')
+            except:
+                pass
+        if checkout_form.is_valid():
+            messages.debug(request, 'checkout_form.is_valid')
+            order.client = client
+            order.paid = checkout_form.cleaned_data['paid']
+            order.customer_note = checkout_form.cleaned_data['customer_note']
+            order.save()
+            messages.success(request, 'Order approved')
+            return redirect('staff:order_list')
+    return render(
+        request,
+        'staff/invoice_checkout.html',
         {'client_search_form': client_search_form,
          'order': order,
-         'isbn_search_form': isbn_search_form,
-         'book': book,
-         'isbn': isbn,
+         'checkout_form': checkout_form,
     })
 
 
