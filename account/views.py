@@ -84,17 +84,19 @@ def client_add(request):
     form = ClientAddForm()
     if request.method == "POST":
         form = ClientAddForm(data=request.POST)
-        try:
-            if form.is_valid():
-                new_client = form.save(commit=False)
-                new_client.is_client = True
-                new_client.username = form.cleaned_data['phone']
-                new_client.password = str(uuid.uuid4())
-                new_client.email = "{}@ketabedamavand.com".format(new_client.username)
-                new_client.save()
-                messages.success(request, 'Client added!')
-                return redirect('/account/clients')
-        except:
+
+        if form.is_valid():
+            new_client = form.save(commit=False)
+            new_client.is_client = True
+            new_client.username = form.cleaned_data['phone']
+            new_client.first_name = form.cleaned_data['first_name']
+            new_client.last_name = form.cleaned_data['last_name']
+            new_client.password = str(uuid.uuid4())
+            new_client.email = "{}@ketabedamavand.com".format(new_client.username)
+            new_client.save()
+            messages.success(request, 'Client added!')
+            return redirect('/account/clients')
+        else:
             form = ClientAddForm(data=request.POST)
             messages.error(request, 'the phone number is already used!')
     else:

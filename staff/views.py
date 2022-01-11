@@ -25,7 +25,8 @@ def sales(request):
 
 
 def orders(request):
-    orders = Order.objects.filter(paid=True)
+    orders = Order.objects.filter(
+        Q(status='approved') | Q(paid=True))
     return render(
         request,
         'staff/orders.html',
@@ -210,8 +211,8 @@ def invoice_checkout(request, order_id):
             query = client_search_form.cleaned_data['query']
             try:
                 client = CustomUser.objects.get(
-                    Q(phone=query) | Q(first_name=query) | Q(last_name=query) | Q(username=query) | Q(username="guest")
-                )
+                    Q(phone=query) | Q(first_name=query) | Q(last_name=query) | Q(username=query)
+                    )
                 messages.success(request, 'client found')
             except:
                 pass
