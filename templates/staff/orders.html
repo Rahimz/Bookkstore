@@ -24,6 +24,7 @@
             <th scope="col">{% trans 'Weight' %}</th>
             <th scope="col">{% trans 'Location' %}</th>
             <th scope="col">{% trans 'Shipping method' %}</th>
+            <th scope="col">{% trans 'Paid' %}</th>
             <th scope="col">{% trans 'Is a gift' %}</th>
           </tr>
         </thead>
@@ -33,29 +34,17 @@
             <th scope="row">{{ forloop.counter}}</th>
             <td><a href="{% url 'staff:order_detail_for_admin' order.pk %}">{{ order.pk }}</a></td>
             <td>{{ order.client }}</td>
-            <td>8</td>
+            <td></td>
             <td>{{ order.get_total_weight }} gr</td>
-            <td>Ahvaz</td>
+            <td></td>
             <td>{{ order.shipping_method }}</td>
-            <td>&#10004</td>
+            <td>{% if order.paid %}&#10004{% else %}&#10008{% endif %}</td>
+            <td>{% if order.is_gift %}&#10004{% else %}&#10008{% endif %}</td>
           </tr>
           {% endfor %}
-          <tr>
-            <th scope="row">##</th>
-            <td><a href="#">1235</a></td>
-            <td>sorme</td>
-            <td>3</td>
-            <td>1200 gr</td>
-            <td>Tehran</td>
-            <td>Bike deliver</td>
-            <td>&#10008</td>
-          </tr>
         </tbody>
       </table>
-
     </div>
-
   </div>
-
 </div>
 {% endblock %}
