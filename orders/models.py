@@ -114,6 +114,7 @@ class Order(models.Model):
         default=0,
         blank=True,
     )
+    is_gift = models.BooleanField(default=False)
     paid = models.BooleanField(default=False)
 
     class Meta:
