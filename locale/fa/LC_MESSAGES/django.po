@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-11 15:00+0330\n"
-"PO-Revision-Date: 2022-01-11 11:31+0000\n"
+"POT-Creation-Date: 2022-01-11 16:07+0330\n"
+"PO-Revision-Date: 2022-01-11 12:37+0000\n"
 "Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -103,7 +103,6 @@ msgstr "محصولات"
 #: templates/_base.html:133 templates/account/clients/client_add.html:9
 #: templates/account/clients/client_list.html:7
 #: templates/account/clients/client_list.html:16
-#| msgid "Client"
 msgid "Clients"
 msgstr "مشتری‌ها "
 
@@ -120,8 +119,7 @@ msgid "Social Media"
 msgstr "رسانه‌های اجتماعی"
 
 #: templates/account/clients/client_add.html:18
-#: templates/staff/sidebar_staff.html:16 templates/staff/sidebar_staff.html:48
-#| msgid "Client"
+#: templates/staff/sidebar_staff.html:15 templates/staff/sidebar_staff.html:47
 msgid "Add client"
 msgstr "اضافه کردن مشتری"
 
@@ -651,12 +649,10 @@ msgid "Invoice create"
 msgstr "ایجاد فاکتور"
 
 #: templates/staff/draft_orders.html:19 templates/staff/sidebar_staff.html:14
-#| msgid "List of orders"
 msgid "List of draft orders"
 msgstr "لیست سفارش‌های پیش‌نویس"
 
 #: templates/staff/draft_orders.html:26
-#| msgid "Order No"
 msgid "Order ID"
 msgstr "شماره سفارش"
 
@@ -745,7 +741,7 @@ msgid "Note"
 msgstr "یادداشت"
 
 #: templates/staff/orders.html:16 templates/staff/sales.html:16
-#: templates/staff/sidebar_staff.html:22
+#: templates/staff/sidebar_staff.html:21
 msgid "List of orders"
 msgstr "لیست سفارش‌ها "
 
@@ -758,6 +754,10 @@ msgid "Location"
 msgstr "موقعیت"
 
 #: templates/staff/orders.html:27
+msgid "Paid"
+msgstr "پرداخت شده"
+
+#: templates/staff/orders.html:28
 msgid "Is a gift"
 msgstr "هدیه است"
 
@@ -782,7 +782,7 @@ msgstr "لیست محصولات"
 msgid "Purchases"
 msgstr "خریدها"
 
-#: templates/staff/purchases.html:16 templates/staff/sidebar_staff.html:33
+#: templates/staff/purchases.html:16 templates/staff/sidebar_staff.html:32
 msgid "List of purchases"
 msgstr "لیست خریدها"
 
@@ -814,38 +814,36 @@ msgstr "لیست دسته‌بندی‌ها"
 msgid "New invoice"
 msgstr "فاکتور جدید"
 
-#: templates/staff/sidebar_staff.html:15
-msgid "List of proved invoices"
-msgstr "لیست فاکتورهای تایید شده"
-
-#: templates/staff/sidebar_staff.html:23
+#: templates/staff/sidebar_staff.html:22
 msgid "Last day"
 msgstr "روز گذشته"
 
-#: templates/staff/sidebar_staff.html:24
+#: templates/staff/sidebar_staff.html:23
 msgid "Last week"
 msgstr "هفته کذشته"
 
-#: templates/staff/sidebar_staff.html:25
+#: templates/staff/sidebar_staff.html:24
 msgid "Last month"
 msgstr "ماه گذشته"
 
-#: templates/staff/sidebar_staff.html:32
+#: templates/staff/sidebar_staff.html:31
 msgid "New purchase invoice"
 msgstr "فاکتور خرید جدید"
 
-#: templates/staff/sidebar_staff.html:39
+#: templates/staff/sidebar_staff.html:38
 msgid "Warehouse Managment"
 msgstr "مدیریت انبار"
 
-#: templates/staff/sidebar_staff.html:47
-#| msgid "List of categories"
+#: templates/staff/sidebar_staff.html:46
 msgid "List of clients"
 msgstr "لیست مشتریان"
 
 #: templates/staff/warehouse.html:16
 msgid "List of warhouse"
 msgstr "لیست انبارها"
+
+#~ msgid "List of proved invoices"
+#~ msgstr "لیست فاکتورهای تایید شده"
 
 #~ msgid "Notes"
 #~ msgstr "یادداشت‌ها"

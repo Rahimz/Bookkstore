@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-11 15:00+0330\n"
+"POT-Creation-Date: 2022-01-11 16:07+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,7 +118,7 @@ msgid "Social Media"
 msgstr ""
 
 #: templates/account/clients/client_add.html:18
-#: templates/staff/sidebar_staff.html:16 templates/staff/sidebar_staff.html:48
+#: templates/staff/sidebar_staff.html:15 templates/staff/sidebar_staff.html:47
 msgid "Add client"
 msgstr ""
 
@@ -726,7 +726,7 @@ msgid "Note"
 msgstr ""
 
 #: templates/staff/orders.html:16 templates/staff/sales.html:16
-#: templates/staff/sidebar_staff.html:22
+#: templates/staff/sidebar_staff.html:21
 msgid "List of orders"
 msgstr ""
 
@@ -739,6 +739,10 @@ msgid "Location"
 msgstr ""
 
 #: templates/staff/orders.html:27
+msgid "Paid"
+msgstr ""
+
+#: templates/staff/orders.html:28
 msgid "Is a gift"
 msgstr ""
 
@@ -762,7 +766,7 @@ msgstr ""
 msgid "Purchases"
 msgstr ""
 
-#: templates/staff/purchases.html:16 templates/staff/sidebar_staff.html:33
+#: templates/staff/purchases.html:16 templates/staff/sidebar_staff.html:32
 msgid "List of purchases"
 msgstr ""
 
@@ -794,31 +798,27 @@ msgstr ""
 msgid "New invoice"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:15
-msgid "List of proved invoices"
-msgstr ""
-
-#: templates/staff/sidebar_staff.html:23
+#: templates/staff/sidebar_staff.html:22
 msgid "Last day"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:24
+#: templates/staff/sidebar_staff.html:23
 msgid "Last week"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:25
+#: templates/staff/sidebar_staff.html:24
 msgid "Last month"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:32
+#: templates/staff/sidebar_staff.html:31
 msgid "New purchase invoice"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:39
+#: templates/staff/sidebar_staff.html:38
 msgid "Warehouse Managment"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:47
+#: templates/staff/sidebar_staff.html:46
 msgid "List of clients"
 msgstr ""
 
