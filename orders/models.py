@@ -11,6 +11,8 @@ from products.models import Product
 class Order(models.Model):
     STATUS_CHOICES = [
         ('draft', 'Draft'),
+        ('paid', 'paid'),
+        ('approved', 'approved'),
         ('unfulfilled', 'Unfulfilled'),
         ('fulfilled', 'Fulfilled'),
         ('canceled', 'Canceled'),

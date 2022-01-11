@@ -220,6 +220,8 @@ def invoice_checkout(request, order_id):
             order.client = client
             order.paid = checkout_form.cleaned_data['paid']
             order.customer_note = checkout_form.cleaned_data['customer_note']
+            order.status = 'approved'
+            shipping_method = 'pickup'
             order.save()
             messages.success(request, 'Order approved')
             return redirect('staff:order_list')

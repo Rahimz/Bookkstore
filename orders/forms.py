@@ -17,8 +17,9 @@ class OrderAdminCheckoutForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = [
-            'customer_note', 'paid',
+            'customer_note', 'is_gift', 'paid',
         ]
         labels ={
-            'customer_note': 'Notes'
+            'customer_note': 'Notes',
+            'is_gift': 'Is a gift',
         }
