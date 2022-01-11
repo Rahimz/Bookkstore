@@ -56,6 +56,9 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'shop:products_list' 'children' %}">{% trans 'Children & Youth' %}</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'shop:category_list' %}">{% trans 'Categories' %}</a>
+            </li>
           </ul>
 
         </div>
@@ -125,8 +128,10 @@
       <a href="{% url 'staff:purchase_list' %}" class="btn btn-outline-secondary ">{% trans 'Purchase' %}</a>
       <a href="{% url 'staff:warehouse' %}" class="btn btn-outline-secondary ">{% trans 'Warehouse' %}</a>
       <a href="{% url 'staff:products' %}" class="btn btn-outline-secondary ">{% trans 'Products' %}</a>
+      <a href="{% url 'client_list' %}" class="btn btn-outline-secondary ">{% trans 'Clients' %}</a>
       {% if user.is_superuser %}
       <a href="{% url 'admin:index' %}" class="btn btn-dark btn-outline-secondary ">{% trans 'Admin' %}</a>
+      <a href="{% url 'rosetta-old-home-redirect' %}" class="btn btn-dark btn-outline-secondary ">{% trans 'Rosetta' %}</a>
       {% endif  %}
     </div>
     {% endif %}
@@ -165,6 +170,8 @@
   </footer>
 
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  {% block script %}
+  {% endblock %}
 </body>
 
 </html>

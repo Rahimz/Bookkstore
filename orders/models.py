@@ -11,6 +11,8 @@ from products.models import Product
 class Order(models.Model):
     STATUS_CHOICES = [
         ('draft', 'Draft'),
+        ('paid', 'paid'),
+        ('approved', 'approved'),
         ('unfulfilled', 'Unfulfilled'),
         ('fulfilled', 'Fulfilled'),
         ('canceled', 'Canceled'),
@@ -114,6 +116,7 @@ class Order(models.Model):
         default=0,
         blank=True,
     )
+    is_gift = models.BooleanField(default=False)
     paid = models.BooleanField(default=False)
 
     class Meta:
@@ -162,14 +165,16 @@ class OrderLine(models.Model):
     discount = models.DecimalField(
         max_digits=settings.DEFAULT_MAX_DIGITS,
         decimal_places=settings.DEFAULT_DECIMAL_PLACES,
-        blank=True,
-        null=True,
+        default=0
     )
 
     def __str__(self):
         return str(self.id)
 
     def get_cost(self):
+        return self.price * self.quantity
+
+    def get_cost_after_discount(self):
         return self.price * self.quantity - self.discount
 
     def get_weight(self):

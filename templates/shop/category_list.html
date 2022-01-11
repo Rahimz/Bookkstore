@@ -1,0 +1,56 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block title %}{% trans 'Categories' %}{% endblock %}
+
+
+{% block content %}
+<div class="row m-4 text-center">
+  <form action="{% url 'search:product_search'%}" method="get">
+    {{ form.as_p }}
+    <input type="submit" value="{% trans 'Search' %}">
+  </form>
+</div>
+<div class="container-fluid overflow-hidden">
+  <div class="row gy-2">
+    <div class="col-md-3">
+      {% include 'shop/_filter_sidebar.html' %}
+    </div>
+    <div class="col-md-9">
+      <ul>
+        {% for category in main_categories %}
+        <li>
+          <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+          {% if category.get_sub_category %}
+          <ul>
+            {% for sub in category.get_sub_category %}
+            <a href="{{ sub.get_absolute_url }}">
+              <li>{{ sub.name }}</li>
+            </a>
+            {% if sub.get_sub_category %}
+            <ul>
+
+              {% for second_sub in sub.get_sub_category %}
+              <a href="{{ second_sub.get_absolute_url }}">
+                <li>{{ second_sub.name }}</li>
+              </a>
+              {% endfor %}
+            </ul>
+
+            {% endif %}
+
+            {% endfor %}
+          </ul>
+
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

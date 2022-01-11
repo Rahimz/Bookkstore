@@ -58,12 +58,32 @@ class Address(models.Model):
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
+    phone = PhoneNumberField(
+        blank=True,
+        default=""
+    )
+    is_client= models.BooleanField(
+        default=False
+    )
     addresses = models.ManyToManyField(
-        Address, blank=True, related_name="user_addresses")
+        Address, blank=True,
+        related_name="user_addresses"
+    )
     default_shipping_address = models.ForeignKey(
-        Address, related_name="+", null=True, blank=True, on_delete=models.SET_NULL
+        Address,
+        related_name="+",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
     )
     default_billing_address = models.ForeignKey(
-        Address, related_name="+", null=True, blank=True, on_delete=models.SET_NULL
+        Address,
+        related_name="+",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
     )
-    date_joined = models.DateTimeField(default=timezone.now, editable=False)
+    date_joined = models.DateTimeField(
+        default=timezone.now,
+        editable=False
+    )
