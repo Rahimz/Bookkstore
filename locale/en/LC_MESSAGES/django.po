@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-06 17:13+0330\n"
+"POT-Creation-Date: 2022-01-11 15:00+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -99,12 +99,50 @@ msgstr ""
 msgid "Products"
 msgstr ""
 
-#: templates/_base.html:134
+#: templates/_base.html:133 templates/account/clients/client_add.html:9
+#: templates/account/clients/client_list.html:7
+#: templates/account/clients/client_list.html:16
+msgid "Clients"
+msgstr ""
+
+#: templates/_base.html:135
 msgid "Admin"
 msgstr ""
 
-#: templates/_base.html:160
+#: templates/_base.html:136
+msgid "Rosetta"
+msgstr ""
+
+#: templates/_base.html:162
 msgid "Social Media"
+msgstr ""
+
+#: templates/account/clients/client_add.html:18
+#: templates/staff/sidebar_staff.html:16 templates/staff/sidebar_staff.html:48
+msgid "Add client"
+msgstr ""
+
+#: templates/account/clients/client_add.html:22
+#: templates/staff/invoice_checkout.html:25
+#: templates/staff/invoice_create.html:34
+#: templates/staff/invoice_create.html:127 templates/staff/order_create.html:21
+#: templates/staff/product_create.html:22
+msgid "Submit"
+msgstr ""
+
+#: templates/account/clients/client_list.html:21
+#: templates/shop/product_detail.html:22
+#: templates/staff/invoice_checkout.html:39
+#: templates/staff/invoice_create.html:23
+#: templates/staff/invoice_create.html:48
+#: templates/staff/order_detail_for_admin.html:26
+#: templates/staff/products.html:21
+msgid "Name"
+msgstr ""
+
+#: templates/account/clients/client_list.html:22
+#: templates/staff/invoice_create.html:23
+msgid "Phone"
 msgstr ""
 
 #: templates/account/dashboard.html:7 templates/account/dashboard.html:12
@@ -183,7 +221,8 @@ msgstr ""
 msgid "Your shopping cart"
 msgstr ""
 
-#: templates/cart/detail.html:15 templates/staff/invoice_create.html:37
+#: templates/cart/detail.html:15 templates/staff/invoice_checkout.html:38
+#: templates/staff/invoice_create.html:47
 msgid "Image"
 msgstr ""
 
@@ -191,16 +230,18 @@ msgstr ""
 msgid "Product"
 msgstr ""
 
-#: templates/cart/detail.html:17 templates/staff/invoice_create.html:41
+#: templates/cart/detail.html:17 templates/staff/draft_orders.html:27
+#: templates/staff/invoice_checkout.html:42
+#: templates/staff/invoice_create.html:51
 #: templates/staff/order_detail_for_admin.html:27
 #: templates/staff/orders.html:23
 msgid "Quantity"
 msgstr ""
 
 #: templates/cart/detail.html:18 templates/cart/detail.html:44
-#: templates/staff/invoice_create.html:40
-#: templates/staff/invoice_create.html:55
-#: templates/staff/invoice_create.html:88
+#: templates/staff/invoice_checkout.html:41
+#: templates/staff/invoice_create.html:50
+#: templates/staff/invoice_create.html:67
 msgid "Remove"
 msgstr ""
 
@@ -209,12 +250,13 @@ msgid "Unit price"
 msgstr ""
 
 #: templates/cart/detail.html:20 templates/shop/product_detail.html:25
-#: templates/staff/invoice_create.html:43 templates/staff/products.html:23
+#: templates/staff/draft_orders.html:28
+#: templates/staff/invoice_checkout.html:44
+#: templates/staff/invoice_create.html:53 templates/staff/products.html:23
 msgid "Price"
 msgstr ""
 
-#: templates/cart/detail.html:38 templates/staff/invoice_create.html:67
-#: templates/staff/invoice_create.html:100
+#: templates/cart/detail.html:38 templates/staff/invoice_create.html:79
 msgid "Update"
 msgstr ""
 
@@ -259,6 +301,7 @@ msgid "Continue shopping"
 msgstr ""
 
 #: templates/cart/detail.html:104 templates/orders/create.html:26
+#: templates/staff/invoice_checkout.html:19
 msgid "Checkout"
 msgstr ""
 
@@ -507,14 +550,9 @@ msgstr ""
 msgid "Out of stock"
 msgstr ""
 
-#: templates/shop/product_detail.html:22 templates/staff/invoice_create.html:38
-#: templates/staff/order_detail_for_admin.html:26
-#: templates/staff/products.html:21
-msgid "Name"
-msgstr ""
-
-#: templates/shop/product_detail.html:23 templates/staff/invoice_create.html:39
-#: templates/staff/products.html:22
+#: templates/shop/product_detail.html:23
+#: templates/staff/invoice_checkout.html:40
+#: templates/staff/invoice_create.html:49 templates/staff/products.html:22
 msgid "Author"
 msgstr ""
 
@@ -590,58 +628,80 @@ msgstr ""
 msgid "Just for online sales"
 msgstr ""
 
-#: templates/staff/invoice_create.html:7
+#: templates/staff/draft_orders.html:9 templates/staff/invoice_checkout.html:9
+#: templates/staff/invoice_create.html:9
 msgid "Invoice create"
 msgstr ""
 
-#: templates/staff/invoice_create.html:16
-msgid "Create invoice"
+#: templates/staff/draft_orders.html:19 templates/staff/sidebar_staff.html:14
+msgid "List of draft orders"
 msgstr ""
 
-#: templates/staff/invoice_create.html:24
-msgid "Add products"
+#: templates/staff/draft_orders.html:26
+msgid "Order ID"
 msgstr ""
 
-#: templates/staff/invoice_create.html:28
-#: templates/staff/invoice_create.html:171 templates/staff/order_create.html:21
-#: templates/staff/product_create.html:22
-msgid "Submit"
-msgstr ""
-
-#: templates/staff/invoice_create.html:32
-msgid "Invoice"
-msgstr ""
-
-#: templates/staff/invoice_create.html:36
-msgid "isbn"
-msgstr ""
-
-#: templates/staff/invoice_create.html:44
+#: templates/staff/draft_orders.html:29
+#: templates/staff/invoice_checkout.html:45
+#: templates/staff/invoice_create.html:54
 msgid "Discount"
 msgstr ""
 
-#: templates/staff/invoice_create.html:45
+#: templates/staff/draft_orders.html:30
+#: templates/staff/invoice_checkout.html:46
+#: templates/staff/invoice_create.html:55
 msgid "Cost"
 msgstr ""
 
-#: templates/staff/invoice_create.html:118
+#: templates/staff/invoice_checkout.html:32
+#: templates/staff/invoice_create.html:41
+msgid "Invoice"
+msgstr ""
+
+#: templates/staff/invoice_checkout.html:37
+#: templates/staff/invoice_create.html:46
+msgid "isbn"
+msgstr ""
+
+#: templates/staff/invoice_checkout.html:70
+#: templates/staff/invoice_create.html:100
 msgid "SUM"
 msgstr ""
 
-#: templates/staff/invoice_create.html:130
+#: templates/staff/invoice_checkout.html:79
+#: templates/staff/invoice_create.html:109
 msgid "DISCOUNT"
 msgstr ""
 
-#: templates/staff/invoice_create.html:142
+#: templates/staff/invoice_checkout.html:85
+#: templates/staff/invoice_create.html:115
 msgid "PAYABLE"
 msgstr ""
 
-#: templates/staff/invoice_create.html:165
-msgid "Notes"
+#: templates/staff/invoice_create.html:19
+msgid "Create invoice"
 msgstr ""
 
-#: templates/staff/invoice_create.html:170 templates/staff/orders.html:27
-msgid "Is a gift"
+#: templates/staff/invoice_create.html:22
+#: templates/staff/order_detail_for_admin.html:18
+#: templates/staff/orders.html:22
+msgid "Client"
+msgstr ""
+
+#: templates/staff/invoice_create.html:26
+msgid "Add products"
+msgstr ""
+
+#: templates/staff/invoice_create.html:126
+msgid "Save draft"
+msgstr ""
+
+#: templates/staff/invoice_create.html:128
+msgid "Print"
+msgstr ""
+
+#: templates/staff/invoice_create.html:129
+msgid "Clear"
 msgstr ""
 
 #: templates/staff/order_detail_for_admin.html:16
@@ -650,11 +710,6 @@ msgstr ""
 
 #: templates/staff/order_detail_for_admin.html:17
 msgid "Registrar"
-msgstr ""
-
-#: templates/staff/order_detail_for_admin.html:18
-#: templates/staff/orders.html:22
-msgid "Client"
 msgstr ""
 
 #: templates/staff/order_detail_for_admin.html:19
@@ -681,6 +736,10 @@ msgstr ""
 
 #: templates/staff/orders.html:25
 msgid "Location"
+msgstr ""
+
+#: templates/staff/orders.html:27
+msgid "Is a gift"
 msgstr ""
 
 #: templates/staff/product_create.html:7 templates/staff/product_create.html:16
@@ -735,10 +794,6 @@ msgstr ""
 msgid "New invoice"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:14
-msgid "List of draft invoices"
-msgstr ""
-
 #: templates/staff/sidebar_staff.html:15
 msgid "List of proved invoices"
 msgstr ""
@@ -761,6 +816,10 @@ msgstr ""
 
 #: templates/staff/sidebar_staff.html:39
 msgid "Warehouse Managment"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:47
+msgid "List of clients"
 msgstr ""
 
 #: templates/staff/warehouse.html:16

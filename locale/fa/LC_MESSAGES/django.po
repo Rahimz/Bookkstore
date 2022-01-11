@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-06 17:13+0330\n"
-"PO-Revision-Date: 2022-01-06 13:59+0000\n"
+"POT-Creation-Date: 2022-01-11 15:00+0330\n"
+"PO-Revision-Date: 2022-01-11 11:31+0000\n"
 "Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -71,7 +71,6 @@ msgid "Children & Youth"
 msgstr "کودک و نوجوان"
 
 #: templates/_base.html:60 templates/shop/category_list.html:7
-#| msgid "List of categories"
 msgid "Categories"
 msgstr "دسته‌بندی‌ها"
 
@@ -101,14 +100,53 @@ msgstr "انبار"
 msgid "Products"
 msgstr "محصولات"
 
-#: templates/_base.html:134
-#| msgid "Admin info"
+#: templates/_base.html:133 templates/account/clients/client_add.html:9
+#: templates/account/clients/client_list.html:7
+#: templates/account/clients/client_list.html:16
+#| msgid "Client"
+msgid "Clients"
+msgstr "مشتری‌ها "
+
+#: templates/_base.html:135
 msgid "Admin"
 msgstr "مدیر"
 
-#: templates/_base.html:160
+#: templates/_base.html:136
+msgid "Rosetta"
+msgstr ""
+
+#: templates/_base.html:162
 msgid "Social Media"
 msgstr "رسانه‌های اجتماعی"
+
+#: templates/account/clients/client_add.html:18
+#: templates/staff/sidebar_staff.html:16 templates/staff/sidebar_staff.html:48
+#| msgid "Client"
+msgid "Add client"
+msgstr "اضافه کردن مشتری"
+
+#: templates/account/clients/client_add.html:22
+#: templates/staff/invoice_checkout.html:25
+#: templates/staff/invoice_create.html:34
+#: templates/staff/invoice_create.html:127
+#: templates/staff/order_create.html:21 templates/staff/product_create.html:22
+msgid "Submit"
+msgstr "تایید"
+
+#: templates/account/clients/client_list.html:21
+#: templates/shop/product_detail.html:22
+#: templates/staff/invoice_checkout.html:39
+#: templates/staff/invoice_create.html:23
+#: templates/staff/invoice_create.html:48
+#: templates/staff/order_detail_for_admin.html:26
+#: templates/staff/products.html:21
+msgid "Name"
+msgstr "نام"
+
+#: templates/account/clients/client_list.html:22
+#: templates/staff/invoice_create.html:23
+msgid "Phone"
+msgstr "تلفن"
 
 #: templates/account/dashboard.html:7 templates/account/dashboard.html:12
 msgid "Profile"
@@ -186,7 +224,8 @@ msgstr "وارد شوید"
 msgid "Your shopping cart"
 msgstr "سبد خرید شما"
 
-#: templates/cart/detail.html:15 templates/staff/invoice_create.html:37
+#: templates/cart/detail.html:15 templates/staff/invoice_checkout.html:38
+#: templates/staff/invoice_create.html:47
 msgid "Image"
 msgstr "تصویر"
 
@@ -194,16 +233,18 @@ msgstr "تصویر"
 msgid "Product"
 msgstr "محصول"
 
-#: templates/cart/detail.html:17 templates/staff/invoice_create.html:41
+#: templates/cart/detail.html:17 templates/staff/draft_orders.html:27
+#: templates/staff/invoice_checkout.html:42
+#: templates/staff/invoice_create.html:51
 #: templates/staff/order_detail_for_admin.html:27
 #: templates/staff/orders.html:23
 msgid "Quantity"
 msgstr "تعداد"
 
 #: templates/cart/detail.html:18 templates/cart/detail.html:44
-#: templates/staff/invoice_create.html:40
-#: templates/staff/invoice_create.html:55
-#: templates/staff/invoice_create.html:88
+#: templates/staff/invoice_checkout.html:41
+#: templates/staff/invoice_create.html:50
+#: templates/staff/invoice_create.html:67
 msgid "Remove"
 msgstr "حذف"
 
@@ -212,12 +253,13 @@ msgid "Unit price"
 msgstr "قیمت واحد"
 
 #: templates/cart/detail.html:20 templates/shop/product_detail.html:25
-#: templates/staff/invoice_create.html:43 templates/staff/products.html:23
+#: templates/staff/draft_orders.html:28
+#: templates/staff/invoice_checkout.html:44
+#: templates/staff/invoice_create.html:53 templates/staff/products.html:23
 msgid "Price"
 msgstr "قیمت"
 
-#: templates/cart/detail.html:38 templates/staff/invoice_create.html:67
-#: templates/staff/invoice_create.html:100
+#: templates/cart/detail.html:38 templates/staff/invoice_create.html:79
 msgid "Update"
 msgstr "به‌روزرسانی"
 
@@ -264,6 +306,7 @@ msgid "Continue shopping"
 msgstr "ادامه خرید"
 
 #: templates/cart/detail.html:104 templates/orders/create.html:26
+#: templates/staff/invoice_checkout.html:19
 msgid "Checkout"
 msgstr "ثبت سفارش"
 
@@ -523,15 +566,9 @@ msgstr "آخرین"
 msgid "Out of stock"
 msgstr "ناموجود"
 
-#: templates/shop/product_detail.html:22
-#: templates/staff/invoice_create.html:38
-#: templates/staff/order_detail_for_admin.html:26
-#: templates/staff/products.html:21
-msgid "Name"
-msgstr "نام"
-
 #: templates/shop/product_detail.html:23
-#: templates/staff/invoice_create.html:39 templates/staff/products.html:22
+#: templates/staff/invoice_checkout.html:40
+#: templates/staff/invoice_create.html:49 templates/staff/products.html:22
 msgid "Author"
 msgstr "نویسنده"
 
@@ -608,59 +645,83 @@ msgstr "موقعیت در فروشگاه"
 msgid "Just for online sales"
 msgstr "فقط برای فروش آنلاین"
 
-#: templates/staff/invoice_create.html:7
+#: templates/staff/draft_orders.html:9 templates/staff/invoice_checkout.html:9
+#: templates/staff/invoice_create.html:9
 msgid "Invoice create"
 msgstr "ایجاد فاکتور"
 
-#: templates/staff/invoice_create.html:16
-msgid "Create invoice"
-msgstr "فاکتور جدید"
+#: templates/staff/draft_orders.html:19 templates/staff/sidebar_staff.html:14
+#| msgid "List of orders"
+msgid "List of draft orders"
+msgstr "لیست سفارش‌های پیش‌نویس"
 
-#: templates/staff/invoice_create.html:24
-msgid "Add products"
-msgstr "اضافه کردن محصول"
+#: templates/staff/draft_orders.html:26
+#| msgid "Order No"
+msgid "Order ID"
+msgstr "شماره سفارش"
 
-#: templates/staff/invoice_create.html:28
-#: templates/staff/invoice_create.html:171
-#: templates/staff/order_create.html:21 templates/staff/product_create.html:22
-msgid "Submit"
-msgstr "تایید"
-
-#: templates/staff/invoice_create.html:32
-msgid "Invoice"
-msgstr "فاکتور"
-
-#: templates/staff/invoice_create.html:36
-msgid "isbn"
-msgstr "شابک"
-
-#: templates/staff/invoice_create.html:44
+#: templates/staff/draft_orders.html:29
+#: templates/staff/invoice_checkout.html:45
+#: templates/staff/invoice_create.html:54
 msgid "Discount"
 msgstr "تخفیف"
 
-#: templates/staff/invoice_create.html:45
+#: templates/staff/draft_orders.html:30
+#: templates/staff/invoice_checkout.html:46
+#: templates/staff/invoice_create.html:55
 msgid "Cost"
 msgstr "هزینه"
 
-#: templates/staff/invoice_create.html:118
+#: templates/staff/invoice_checkout.html:32
+#: templates/staff/invoice_create.html:41
+msgid "Invoice"
+msgstr "فاکتور"
+
+#: templates/staff/invoice_checkout.html:37
+#: templates/staff/invoice_create.html:46
+msgid "isbn"
+msgstr "شابک"
+
+#: templates/staff/invoice_checkout.html:70
+#: templates/staff/invoice_create.html:100
 msgid "SUM"
 msgstr "جمع"
 
-#: templates/staff/invoice_create.html:130
+#: templates/staff/invoice_checkout.html:79
+#: templates/staff/invoice_create.html:109
 msgid "DISCOUNT"
 msgstr "تخفیف"
 
-#: templates/staff/invoice_create.html:142
+#: templates/staff/invoice_checkout.html:85
+#: templates/staff/invoice_create.html:115
 msgid "PAYABLE"
 msgstr "قابل پرداخت"
 
-#: templates/staff/invoice_create.html:165
-msgid "Notes"
-msgstr "یادداشت‌ها"
+#: templates/staff/invoice_create.html:19
+msgid "Create invoice"
+msgstr "فاکتور جدید"
 
-#: templates/staff/invoice_create.html:170 templates/staff/orders.html:27
-msgid "Is a gift"
-msgstr "هدیه است"
+#: templates/staff/invoice_create.html:22
+#: templates/staff/order_detail_for_admin.html:18
+#: templates/staff/orders.html:22
+msgid "Client"
+msgstr "مشتری"
+
+#: templates/staff/invoice_create.html:26
+msgid "Add products"
+msgstr "اضافه کردن محصول"
+
+#: templates/staff/invoice_create.html:126
+msgid "Save draft"
+msgstr "ذخیره پیش‌نویس"
+
+#: templates/staff/invoice_create.html:128
+msgid "Print"
+msgstr "چاپ"
+
+#: templates/staff/invoice_create.html:129
+msgid "Clear"
+msgstr "پاک کردن"
 
 #: templates/staff/order_detail_for_admin.html:16
 msgid "Order details"
@@ -669,11 +730,6 @@ msgstr "جزییات سفارش"
 #: templates/staff/order_detail_for_admin.html:17
 msgid "Registrar"
 msgstr "ثبت کننده"
-
-#: templates/staff/order_detail_for_admin.html:18
-#: templates/staff/orders.html:22
-msgid "Client"
-msgstr "مشتری"
 
 #: templates/staff/order_detail_for_admin.html:19
 msgid "Order Status"
@@ -700,6 +756,10 @@ msgstr "شماره سفارش"
 #: templates/staff/orders.html:25
 msgid "Location"
 msgstr "موقعیت"
+
+#: templates/staff/orders.html:27
+msgid "Is a gift"
+msgstr "هدیه است"
 
 #: templates/staff/product_create.html:7
 #: templates/staff/product_create.html:16
@@ -754,10 +814,6 @@ msgstr "لیست دسته‌بندی‌ها"
 msgid "New invoice"
 msgstr "فاکتور جدید"
 
-#: templates/staff/sidebar_staff.html:14
-msgid "List of draft invoices"
-msgstr "لیست فاکتورهای پیش‌نویس"
-
 #: templates/staff/sidebar_staff.html:15
 msgid "List of proved invoices"
 msgstr "لیست فاکتورهای تایید شده"
@@ -782,10 +838,20 @@ msgstr "فاکتور خرید جدید"
 msgid "Warehouse Managment"
 msgstr "مدیریت انبار"
 
+#: templates/staff/sidebar_staff.html:47
+#| msgid "List of categories"
+msgid "List of clients"
+msgstr "لیست مشتریان"
+
 #: templates/staff/warehouse.html:16
-#| msgid "List of products"
 msgid "List of warhouse"
 msgstr "لیست انبارها"
+
+#~ msgid "Notes"
+#~ msgstr "یادداشت‌ها"
+
+#~ msgid "List of draft invoices"
+#~ msgstr "لیست فاکتورهای پیش‌نویس"
 
 #~ msgid "Shippint method"
 #~ msgstr "روش ارسال"
