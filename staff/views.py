@@ -7,6 +7,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
 import uuid
+from datetime import datetime, timedelta
 
 from .forms import ProductCreateForm, OrderCreateForm
 from products.models import Product, Category
@@ -24,9 +25,11 @@ def sales(request):
     )
 
 
-def orders(request):
+def orders(request, period='all'):
+    duration = {'day': 1, 'week':7 , 'month':30, 'all': 365}
+
     orders = Order.objects.filter(
-        Q(status='approved') | Q(paid=True))
+        Q(status='approved') | Q(paid=True)).filter(created__gte=datetime.now() - timedelta(duration[period]))
     return render(
         request,
         'staff/orders.html',
@@ -221,11 +224,12 @@ def invoice_checkout(request, order_id):
             order.client = client
             order.paid = checkout_form.cleaned_data['paid']
             order.customer_note = checkout_form.cleaned_data['customer_note']
+            order.is_gift = checkout_form.cleaned_data['is_gift']
             order.status = 'approved'
             shipping_method = 'pickup'
             order.save()
             messages.success(request, 'Order approved')
-            return redirect('staff:order_list')
+            return redirect('staff:order_list', 'all')
     return render(
         request,
         'staff/invoice_checkout.html',
