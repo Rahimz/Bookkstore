@@ -36,9 +36,9 @@
               <th scope="row">{{ forloop.counter }}</th>
               <td><a href="{% url 'staff:invoice_checkout' order.id %}">{{ order.id }}</a></td>
               <td>{{ order.get_total_quantity}}</td>
-              <td>{{ order.get_total_cost }}</td>
+              <td>{{ order.get_cost_after_discount }}</td>
               <td>{{ order.discount }}</td>
-              <td>{{ order.payable }}</td>
+              <td>{{ order.get_payable }}</td>
             </tr>
             {% endfor %}
           </tbody>

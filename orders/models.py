@@ -130,7 +130,10 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         if not self.token:
             self.token = str(uuid.uuid4())
-        return super(Order, self).save(*args, **kwargs)
+
+        self.payable = self.get_cost_after_discount() - self.discount
+
+        super(Order, self).save(*args, **kwargs)
 
     def __str__(self):
         return "#%d" % (self.id,)
@@ -139,7 +142,10 @@ class Order(models.Model):
         return sum(item.get_cost() for item in self.lines.all())
 
     def get_cost_after_discount(self):
-        return sum(item.get_cost_after_discount for item in self.lines.all())
+        return sum(item.get_cost_after_discount() for item in self.lines.all())
+
+    def get_payable(self):
+        return self.get_cost_after_discount() - self.discount
 
     def get_total_weight(self):
         return sum(item.get_weight() for item in self.lines.all())
@@ -189,4 +195,4 @@ class OrderLine(models.Model):
         return self.price * self.quantity - self.discount
 
     def get_weight(self):
-        return self.product.weight
+        return self.product.weight * self.quantity

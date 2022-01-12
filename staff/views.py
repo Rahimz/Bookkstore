@@ -152,8 +152,10 @@ class ProductCreate(View):
         )
 
 def invoice_create(request, order_id=None):
+    book_ids = []
     if order_id:
         order = Order.objects.get(pk=order_id)
+        book_ids = [item.product.pk for item in order.lines.all()]
     else:
         order = None
 
@@ -179,12 +181,19 @@ def invoice_create(request, order_id=None):
             try:
                 book = Product.objects.get(isbn=isbn)
                 messages.success(request, 'Book {} found'.format(book.id))
-                order_line = OrderLine.objects.create(
-                    order = order,
-                    product = book,
-                    quantity = 1,
-                    price = book.price,
-                )
+                if book.pk in book_ids:
+                    print(book.pk)
+                    order_line = OrderLine.objects.get(order=order, product=book)
+                    print(order_line.id)
+                    order_line.quantity += 1
+                    order_line.save()
+                else:
+                    order_line = OrderLine.objects.create(
+                        order = order,
+                        product = book,
+                        quantity = 1,
+                        price = book.price,
+                    )
                 messages.success(request,'order line No. {} with {} is added'.format(order.id, book))
 
                 isbn_search_form = BookIsbnSearchForm()
@@ -198,6 +207,7 @@ def invoice_create(request, order_id=None):
         {'order': order,
          'isbn_search_form': isbn_search_form,
          'isbn': isbn,
+         'book_ids': book_ids,
     })
 
 
