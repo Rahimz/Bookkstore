@@ -34,7 +34,7 @@
             <th scope="row">{{ forloop.counter}}</th>
             <td><a href="{% url 'staff:order_detail_for_admin' order.pk %}">{{ order.pk }}</a></td>
             <td>{{ order.client }}</td>
-            <td></td>
+            <td>{{ order.get_total_quantity }}</td>
             <td>{{ order.get_total_weight }} gr</td>
             <td></td>
             <td>{{ order.shipping_method }}</td>

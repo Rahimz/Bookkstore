@@ -39,6 +39,7 @@
 
       <div class="">
         <h2 class="my-4">{% trans 'Invoice' %}</h2>
+        {{ book_ids }}
         <table class="table table-striped">
           <thead>
             <tr>
@@ -59,8 +60,8 @@
             {% for order_line in order.lines.all %}
             <tr>
               <th scope="row">{{ forloop.counter }}</th>
-              <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="60px" height="auto"></td>
               <td>{{ order_line.product.isbn }}</td>
+              <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="60px" height="auto"></td>
               <td>{{ order_line.product.name }}</td>
               <td>{{ order_line.product.author }}</td>
               <td>
@@ -72,7 +73,7 @@
                 </form>
                 {% endcomment %}
               </td>
-              <td>1</td>
+              <td>{{ order_line.quantity }}</td>
               <td>
                 <input type="number" value="" min="1" max="10">
                 <input type="submit" value="{% trans 'Update' %}">
@@ -85,7 +86,7 @@
                 </form>
                 {% endcomment %}
               </td>
-              <td>{{ order_line.get_cost }}</td>
+              <td>{{ order_line.product.price }}</td>
               <td>{{ order_line.discount }}</td>
               <td>{{ order_line.get_cost_after_discount }}</td>
             </tr>
@@ -96,22 +97,20 @@
             <tr>
               <th scope="row"></th>
               <td colspan="5">{% trans 'SUM' %}</td>
-              <td>9</td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td>{{ order.get_total_quantity }}</td>
+              <td colspan="3"></td>
               <td>{{ order.get_total_cost }}</td>
             </tr>
             <tr>
               <th scope="row"></th>
-              <td colspan="8">{% trans 'DISCOUNT' %}</td>
-              <td class="text-danger">21000 - </td>
+              <td colspan="9">{% trans 'DISCOUNT' %}</td>
+              <td class="text-danger">{{ order.discount }}</td>
               <td></td>
             </tr>
             <tr>
               <th scope="row"></th>
               <td colspan="9" class="fw-bolder">{% trans 'PAYABLE' %}</td>
-              <td class="fw-bolder">{{ order.get_cost_after_discount }}</td>
+              <td class="fw-bolder">{{ order.get_payable }}</td>
             </tr>
 
           </tbody>
