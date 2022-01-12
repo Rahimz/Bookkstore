@@ -96,22 +96,20 @@
             <tr>
               <th scope="row"></th>
               <td colspan="5">{% trans 'SUM' %}</td>
-              <td>9</td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td>{{ order.get_total_quantity }}</td>
+              <td colspan="3"></td>
               <td>{{ order.get_total_cost }}</td>
             </tr>
             <tr>
               <th scope="row"></th>
-              <td colspan="8">{% trans 'DISCOUNT' %}</td>
-              <td class="text-danger">21000 - </td>
+              <td colspan="9">{% trans 'DISCOUNT' %}</td>
+              <td class="text-danger">{{ order.discount }}</td>
               <td></td>
             </tr>
             <tr>
               <th scope="row"></th>
               <td colspan="9" class="fw-bolder">{% trans 'PAYABLE' %}</td>
-              <td class="fw-bolder">{{ order.get_cost_after_discount }}</td>
+              <td class="fw-bolder">{{ order.payable }}</td>
             </tr>
 
           </tbody>

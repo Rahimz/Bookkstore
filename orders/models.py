@@ -93,7 +93,12 @@ class Order(models.Model):
         default=0,
         editable=False,
     )
-    total_net_amount = models.DecimalField(
+    total_cost = models.DecimalField(
+        max_digits=settings.DEFAULT_MAX_DIGITS,
+        decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+        default=0,
+    )
+    total_cost_after_discount = models.DecimalField(
         max_digits=settings.DEFAULT_MAX_DIGITS,
         decimal_places=settings.DEFAULT_DECIMAL_PLACES,
         default=0,
@@ -103,7 +108,7 @@ class Order(models.Model):
         decimal_places=settings.DEFAULT_DECIMAL_PLACES,
         default=0,
     )
-    total = models.DecimalField(
+    payable = models.DecimalField(
         max_digits=settings.DEFAULT_MAX_DIGITS,
         decimal_places=settings.DEFAULT_DECIMAL_PLACES,
         default=0,
@@ -125,7 +130,7 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         if not self.token:
             self.token = str(uuid.uuid4())
-        return super().save(*args, **kwargs)
+        return super(Order, self).save(*args, **kwargs)
 
     def __str__(self):
         return "#%d" % (self.id,)
@@ -133,8 +138,14 @@ class Order(models.Model):
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.lines.all())
 
+    def get_cost_after_discount(self):
+        return sum(item.get_cost_after_discount for item in self.lines.all())
+
     def get_total_weight(self):
         return sum(item.get_weight() for item in self.lines.all())
+
+    def get_total_quantity(self):
+        return sum(item.quantity for item in self.lines.all())
 
     # def get_absolute_url(self):
     #     return reverse('shop:product_detail',
