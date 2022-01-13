@@ -16,6 +16,7 @@ phonenumberslite = "*"
 django-debug-toolbar = "*"
 django-rosetta = "*"
 django-crispy-forms = "*"
+zeep = "*"
 
 [dev-packages]
 

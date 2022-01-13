@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-11 16:07+0330\n"
+"POT-Creation-Date: 2022-01-13 15:50+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,11 +38,11 @@ msgstr ""
 msgid "There are not enough products in stock!"
 msgstr ""
 
-#: products/models.py:56 products/models.py:267 templates/_base.html:51
+#: products/models.py:56 products/models.py:267 templates/_base.html:52
 msgid "New"
 msgstr ""
 
-#: products/models.py:57 products/models.py:268 templates/_base.html:54
+#: products/models.py:57 products/models.py:268 templates/_base.html:55
 msgid "Used"
 msgstr ""
 
@@ -54,8 +54,8 @@ msgstr ""
 msgid "Craft"
 msgstr ""
 
-#: templates/_base.html:11 templates/_base.html:12 templates/_base.html:36
-#: templates/_base.html:43 templates/_temp_base.html:11
+#: templates/_base.html:11 templates/_base.html:12 templates/_base.html:37
+#: templates/_base.html:44 templates/_temp_base.html:11
 #: templates/_temp_base.html:12 templates/_temp_base.html:35
 #: templates/registration/password_reset_email.html:15
 msgid "Ketab Damavand"
@@ -65,55 +65,55 @@ msgstr ""
 msgid "Ketab Damavand logo"
 msgstr ""
 
-#: templates/_base.html:57
+#: templates/_base.html:58
 msgid "Children & Youth"
 msgstr ""
 
-#: templates/_base.html:60 templates/shop/category_list.html:7
+#: templates/_base.html:61 templates/shop/category_list.html:7
 msgid "Categories"
 msgstr ""
 
-#: templates/_base.html:73
+#: templates/_base.html:74
 msgid "items in cart"
 msgstr ""
 
-#: templates/_base.html:128 templates/staff/sales.html:7
+#: templates/_base.html:129 templates/staff/sales.html:7
 msgid "Sales"
 msgstr ""
 
-#: templates/_base.html:129 templates/staff/order_create.html:7
+#: templates/_base.html:130 templates/staff/order_create.html:7
 #: templates/staff/order_detail_for_admin.html:7 templates/staff/orders.html:7
 msgid "Orders"
 msgstr ""
 
-#: templates/_base.html:130
+#: templates/_base.html:131
 msgid "Purchase"
 msgstr ""
 
-#: templates/_base.html:131 templates/shop/product_detail.html:108
+#: templates/_base.html:132 templates/shop/product_detail.html:108
 #: templates/staff/warehouse.html:7
 msgid "Warehouse"
 msgstr ""
 
-#: templates/_base.html:132 templates/staff/products.html:7
+#: templates/_base.html:133 templates/staff/products.html:7
 msgid "Products"
 msgstr ""
 
-#: templates/_base.html:133 templates/account/clients/client_add.html:9
+#: templates/_base.html:134 templates/account/clients/client_add.html:9
 #: templates/account/clients/client_list.html:7
 #: templates/account/clients/client_list.html:16
 msgid "Clients"
 msgstr ""
 
-#: templates/_base.html:135
+#: templates/_base.html:136
 msgid "Admin"
 msgstr ""
 
-#: templates/_base.html:136
+#: templates/_base.html:137
 msgid "Rosetta"
 msgstr ""
 
-#: templates/_base.html:162
+#: templates/_base.html:163
 msgid "Social Media"
 msgstr ""
 
@@ -125,8 +125,9 @@ msgstr ""
 #: templates/account/clients/client_add.html:22
 #: templates/staff/invoice_checkout.html:25
 #: templates/staff/invoice_create.html:34
-#: templates/staff/invoice_create.html:127 templates/staff/order_create.html:21
+#: templates/staff/invoice_create.html:126 templates/staff/order_create.html:21
 #: templates/staff/product_create.html:22
+#: templates/zarinpal/form_payment.html:32
 msgid "Submit"
 msgstr ""
 
@@ -134,7 +135,7 @@ msgstr ""
 #: templates/shop/product_detail.html:22
 #: templates/staff/invoice_checkout.html:39
 #: templates/staff/invoice_create.html:23
-#: templates/staff/invoice_create.html:48
+#: templates/staff/invoice_create.html:49
 #: templates/staff/order_detail_for_admin.html:26
 #: templates/staff/products.html:21
 msgid "Name"
@@ -222,7 +223,7 @@ msgid "Your shopping cart"
 msgstr ""
 
 #: templates/cart/detail.html:15 templates/staff/invoice_checkout.html:38
-#: templates/staff/invoice_create.html:47
+#: templates/staff/invoice_create.html:48
 msgid "Image"
 msgstr ""
 
@@ -232,7 +233,7 @@ msgstr ""
 
 #: templates/cart/detail.html:17 templates/staff/draft_orders.html:27
 #: templates/staff/invoice_checkout.html:42
-#: templates/staff/invoice_create.html:51
+#: templates/staff/invoice_create.html:52
 #: templates/staff/order_detail_for_admin.html:27
 #: templates/staff/orders.html:23
 msgid "Quantity"
@@ -240,8 +241,8 @@ msgstr ""
 
 #: templates/cart/detail.html:18 templates/cart/detail.html:44
 #: templates/staff/invoice_checkout.html:41
-#: templates/staff/invoice_create.html:50
-#: templates/staff/invoice_create.html:67
+#: templates/staff/invoice_create.html:51
+#: templates/staff/invoice_create.html:68
 msgid "Remove"
 msgstr ""
 
@@ -252,11 +253,11 @@ msgstr ""
 #: templates/cart/detail.html:20 templates/shop/product_detail.html:25
 #: templates/staff/draft_orders.html:28
 #: templates/staff/invoice_checkout.html:44
-#: templates/staff/invoice_create.html:53 templates/staff/products.html:23
+#: templates/staff/invoice_create.html:54 templates/staff/products.html:23
 msgid "Price"
 msgstr ""
 
-#: templates/cart/detail.html:38 templates/staff/invoice_create.html:79
+#: templates/cart/detail.html:38 templates/staff/invoice_create.html:80
 msgid "Update"
 msgstr ""
 
@@ -306,7 +307,9 @@ msgid "Checkout"
 msgstr ""
 
 #: templates/home.html:7 templates/shop/product_detail.html:7
-#: templates/temp_home.html:7
+#: templates/temp_home.html:7 templates/zarinpal/fail.html:33
+#: templates/zarinpal/form_fail.html:31 templates/zarinpal/form_success.html:27
+#: templates/zarinpal/success.html:27
 msgid "Home"
 msgstr ""
 
@@ -552,7 +555,7 @@ msgstr ""
 
 #: templates/shop/product_detail.html:23
 #: templates/staff/invoice_checkout.html:40
-#: templates/staff/invoice_create.html:49 templates/staff/products.html:22
+#: templates/staff/invoice_create.html:50 templates/staff/products.html:22
 msgid "Author"
 msgstr ""
 
@@ -643,13 +646,13 @@ msgstr ""
 
 #: templates/staff/draft_orders.html:29
 #: templates/staff/invoice_checkout.html:45
-#: templates/staff/invoice_create.html:54
+#: templates/staff/invoice_create.html:55
 msgid "Discount"
 msgstr ""
 
 #: templates/staff/draft_orders.html:30
 #: templates/staff/invoice_checkout.html:46
-#: templates/staff/invoice_create.html:55
+#: templates/staff/invoice_create.html:56
 msgid "Cost"
 msgstr ""
 
@@ -659,22 +662,22 @@ msgid "Invoice"
 msgstr ""
 
 #: templates/staff/invoice_checkout.html:37
-#: templates/staff/invoice_create.html:46
+#: templates/staff/invoice_create.html:47
 msgid "isbn"
 msgstr ""
 
 #: templates/staff/invoice_checkout.html:70
-#: templates/staff/invoice_create.html:100
+#: templates/staff/invoice_create.html:101
 msgid "SUM"
 msgstr ""
 
-#: templates/staff/invoice_checkout.html:79
-#: templates/staff/invoice_create.html:109
+#: templates/staff/invoice_checkout.html:77
+#: templates/staff/invoice_create.html:108
 msgid "DISCOUNT"
 msgstr ""
 
-#: templates/staff/invoice_checkout.html:85
-#: templates/staff/invoice_create.html:115
+#: templates/staff/invoice_checkout.html:83
+#: templates/staff/invoice_create.html:114
 msgid "PAYABLE"
 msgstr ""
 
@@ -692,15 +695,15 @@ msgstr ""
 msgid "Add products"
 msgstr ""
 
-#: templates/staff/invoice_create.html:126
+#: templates/staff/invoice_create.html:125
 msgid "Save draft"
 msgstr ""
 
-#: templates/staff/invoice_create.html:128
+#: templates/staff/invoice_create.html:127
 msgid "Print"
 msgstr ""
 
-#: templates/staff/invoice_create.html:129
+#: templates/staff/invoice_create.html:128
 msgid "Clear"
 msgstr ""
 
@@ -725,12 +728,11 @@ msgstr ""
 msgid "Note"
 msgstr ""
 
-#: templates/staff/orders.html:16 templates/staff/sales.html:16
-#: templates/staff/sidebar_staff.html:21
+#: templates/staff/orders.html:16 templates/staff/sidebar_staff.html:21
 msgid "List of orders"
 msgstr ""
 
-#: templates/staff/orders.html:21
+#: templates/staff/orders.html:21 templates/zarinpal/fail.html:17
 msgid "Order No"
 msgstr ""
 
@@ -768,18 +770,6 @@ msgstr ""
 
 #: templates/staff/purchases.html:16 templates/staff/sidebar_staff.html:32
 msgid "List of purchases"
-msgstr ""
-
-#: templates/staff/sales.html:21
-msgid "order"
-msgstr ""
-
-#: templates/staff/sales.html:22
-msgid "user"
-msgstr ""
-
-#: templates/staff/sales.html:23
-msgid "paid"
 msgstr ""
 
 #: templates/staff/sidebar_staff.html:4
@@ -824,4 +814,87 @@ msgstr ""
 
 #: templates/staff/warehouse.html:16
 msgid "List of warhouse"
+msgstr ""
+
+#: templates/zarinpal/fail.html:5 templates/zarinpal/fail.html:10
+#: templates/zarinpal/form_fail.html:5 templates/zarinpal/form_fail.html:10
+msgid "Failed payment"
+msgstr ""
+
+#: templates/zarinpal/fail.html:15 templates/zarinpal/form_fail.html:15
+msgid "Your payment is failed!"
+msgstr ""
+
+#: templates/zarinpal/fail.html:22 templates/zarinpal/form_fail.html:22
+msgid ""
+"If your payment was successful and you see this message, do not re pay and "
+"contact us!"
+msgstr ""
+
+#: templates/zarinpal/fail.html:29
+msgid ""
+"Your order is registerd and available in your dashboard. Please try to re-"
+"pay this order from your dashboard"
+msgstr ""
+
+#: templates/zarinpal/fail.html:30
+msgid ""
+"You have 24 hours to pay the order and after that the order will be remove."
+msgstr ""
+
+#: templates/zarinpal/fail.html:34 templates/zarinpal/success.html:28
+msgid "My orders"
+msgstr ""
+
+#: templates/zarinpal/form_fail.html:17
+msgid "Payment No"
+msgstr ""
+
+#: templates/zarinpal/form_payment.html:6
+#: templates/zarinpal/form_payment.html:23
+msgid "Payment form"
+msgstr ""
+
+#: templates/zarinpal/form_payment.html:24
+msgid "Type your payment amount in Rial"
+msgstr ""
+
+#: templates/zarinpal/form_success.html:5
+#: templates/zarinpal/form_success.html:10 templates/zarinpal/success.html:5
+#: templates/zarinpal/success.html:10
+msgid "Successful payment"
+msgstr ""
+
+#: templates/zarinpal/form_success.html:15 templates/zarinpal/success.html:15
+msgid "Your payment was successful!"
+msgstr ""
+
+#: templates/zarinpal/form_success.html:16
+msgid "Payment No."
+msgstr ""
+
+#: templates/zarinpal/form_success.html:17
+msgid "Amount"
+msgstr ""
+
+#: templates/zarinpal/success.html:16
+msgid "Order No."
+msgstr ""
+
+#: templates/zarinpal/success.html:26
+msgid "We will contact you to send your order"
+msgstr ""
+
+#: zarinpal/views.py:106 zarinpal/views.py:219
+msgid ""
+"Transaction success.\n"
+"RefID: "
+msgstr ""
+
+#: zarinpal/views.py:119 zarinpal/views.py:237
+msgid "Transaction submitted : "
+msgstr ""
+
+#: zarinpal/views.py:140 zarinpal/views.py:258
+msgid "Transaction failed or canceled by user"
 msgstr ""

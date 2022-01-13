@@ -28,6 +28,7 @@ urlpatterns = [
     path('orders/', include('orders.urls', namespace='orders')),
     path('cart/', include('cart.urls', namespace='cart')),
     path('discounts/', include('discounts.urls', namespace='discounts')),
+    path('zarinpal/', include('zarinpal.urls', namespace='zarinpal')),
     path('rosetta/', include('rosetta.urls')),
     path('admin/', admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),

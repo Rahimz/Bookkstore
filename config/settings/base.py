@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
     'cart.apps.CartConfig',
     'discounts.apps.DiscountsConfig',
+    'zarinpal.apps.ZarinpalConfig',
 
 ]
 

@@ -1,0 +1,39 @@
+{% extends "_base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans 'Failed payment' %} {% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row mt-4 text-center">
+    <h1 class="">{% trans 'Failed payment' %}</h1>
+  </div> <!-- / end of row-->
+
+  <div class="row mt-5 pt-5 text-center">
+    <div class="col-md-12 ">
+      <h2 class="text-muted center">{% trans 'Your payment is failed!' %}</h2>
+
+      <p class="m-2">{% trans 'Order No' %} {{ request.session.order_id }}</p>
+
+      {% if message %}
+      {% if '-9' in message %}
+      <p class="text-muted h4 p-3">{{ message }}</p>
+      <p class="text-danger h4">{% trans 'If your payment was successful and you see this message, do not re pay and contact us!' %}</p>
+        {% if request.user.is_superuser %}
+          <p>amount: {{ amount }}</p>
+          <p>authority: {{ authority }}</p>
+        {% endif %}
+      {% else %}
+      <p class="text-muted h4 p-3">{{ message }}</p>
+      <p class="text-danger h4">{% trans 'Your order is registerd and available in your dashboard. Please try to re-pay this order from your dashboard' %}</p>
+      <p class="text-danger h5">{% trans 'You have 24 hours to pay the order and after that the order will be remove.' %}</p>
+      {% endif %}
+      {% endif %}
+      <a href="{% url 'shop:home' %}" class="btn btn-danger my-5 ">{% trans 'Home' %}</a>
+      <a href="{% url 'dashboard' %}" class="btn btn-danger my-5 ">{% trans 'My orders' %}</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

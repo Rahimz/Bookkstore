@@ -1,0 +1,32 @@
+{% extends "_base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans 'Successful payment' %} {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-4 text-center">
+        <h1 class="">{% trans 'Successful payment' %}</h1>
+    </div> <!-- / end of row-->
+
+    <div class="row mt-5 pt-5 text-center">
+        <div class="col-md-12 ">
+            <h2 class="text-muted center">{% trans 'Your payment was successful!' %}</h2>
+            <p>{% trans 'Payment No.' %} {{ payment.id }}</p>
+            <p>{% trans 'Amount' %} {{ payment.amount }}</p>
+            {% if request.user.is_superuser %}
+              <p>Payment id: {{ payment.id }}</p>
+              <p>Paid: {{ payment.paid }}</p>
+              <p>paid status in session: {{ request.session.payment_id }}</p>
+            {% endif %}
+            {% if message %}
+            <p class="text-warning h3 p-3">{{ message }}</p>
+            {% endif %}
+
+            <a href="{% url 'shop:home' %}" class="btn btn-danger my-5 ">{% trans 'Home' %}</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
