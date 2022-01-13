@@ -1,14 +1,17 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from zeep import Client
 import requests
 import json
 import datetime
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _
 
 from orders.models import Order
 # from .tasks import payment_completed
 from config.settings.secrets import *
+from .forms import PaymentForm
+from .models import Payment
 
 
 MERCHANT = merchant
@@ -29,7 +32,113 @@ paid_order = None
 # global_amount = [amount, order_id, order_paid]
 global_amount = [0, 0, None]
 
+
+payment_data = {'id': 0}
+
 global_description = ''
+
+
+def send_form_request(request):
+    request.session['paid'] = None
+    payment_id = request.session.get('payment_id')
+    payment = Payment.objects.get(pk=payment_id)
+
+    description = payment.client_name
+    amount = payment.amount
+    mobile = payment.client_phone
+
+    if settings.DEBUG:
+        CallbackURL = 'http://localhost:8000/zarinpal/form_verify/'
+    else:
+        CallbackURL = 'https://ketabedamavand.com/zarinpal/form_verify/'
+
+    # send request to payment system
+    req_data = {
+        "merchant_id": MERCHANT,
+        "amount": amount,
+        "callback_url": CallbackURL,
+        "description": description,
+        "metadata": {"mobile": str(mobile),}
+    }
+    req_header = {"accept": "application/json",
+                  "content-type": "application/json'"}
+    req = requests.post(url=ZP_API_REQUEST,
+                        data=json.dumps(req_data),
+                        headers=req_header)
+    authority = req.json()['data']['authority']
+
+    if len(req.json()['errors']) == 0:
+        return redirect(ZP_API_STARTPAY.format(authority=authority))
+    else:
+        e_code = req.json()['errors']['code']
+        e_message = req.json()['errors']['message']
+        return HttpResponse(f"Error code: {e_code}, Error Message: {e_message}")
+
+def form_verify(request):
+    payment = None
+
+    payment_id = payment_data['id']
+    payment = Payment.objects.get(pk=payment_id)
+    amount = payment.amount
+
+    t_status = request.GET.get('code')
+    t_authority = request.GET['Authority']
+
+    if request.GET.get('Status') == 'OK':
+        req_header = {"accept": "application/json",
+                      "content-type": "application/json'"}
+        req_data = {
+            "merchant_id": MERCHANT,
+            "amount": amount,
+            "authority": t_authority
+        }
+        req = requests.post(url=ZP_API_VERIFY, data=json.dumps(req_data), headers=req_header)
+        if len(req.json()['errors']) == 0:
+            t_status = req.json()['data']['code']
+            if t_status == 100:
+                # These modification should happen to paid order
+                request.session['paid'] = True
+                payment.ref_id = request.GET['Authority']
+                payment.paid = True
+                payment.save()
+
+                return render(request, 'zarinpal/form_success.html',
+                              {'message': _('Transaction success.\nRefID: ') +
+                                           str(req.json()['data']['ref_id']),
+                               'payment': payment})
+
+            elif t_status == 101:
+
+                # These modification should happen to paid order
+                request.session['paid'] = True
+                payment.ref_id = request.GET['Authority']
+                payment.paid = True
+                payment.save()
+
+                return render(request, 'zarinpal/form_success.html',
+                              {'message': _('Transaction submitted : ') +
+                                          str(req.json()['data']['message']),
+                               'payment': payment})
+
+            else:
+                return render(request,
+                              'zarinpal/form_fail.html',
+                              {'message': str (req.json()['data']['message'])})
+
+        else:
+            e_code = req.json()['errors']['code']
+            e_message = req.json()['errors']['message']
+
+            return render(request,
+                          'zarinpal/form_fail.html',
+                          {'message': f"Error code: {e_code}, Error Message: {e_message}",
+                          'amount': req_data['amount'],
+                          'authority': req_data['authority'],
+                           })
+    else:
+        return render(request, 'zarinpal/form_fail.html',
+                      {'message': _('Transaction failed or canceled by user')})
+
 
 def send_request(request):
     # we get the order detail from session
@@ -50,7 +159,7 @@ def send_request(request):
     request.session['order_paid'] = None
 
     description = "سفارش شماره {}".format(order.id)  # Required
-    # put the description in global_description to use in verify function
+    # put the description in global_description to use n verify function
     global_description = description
     email = order.email  if order.email else ''  # Optional
     mobile = order.phone if order.phone else ''  # Optional
@@ -76,6 +185,8 @@ def send_request(request):
         e_code = req.json()['errors']['code']
         e_message = req.json()['errors']['message']
         return HttpResponse(f"Error code: {e_code}, Error Message: {e_message}")
+
+
 
 
 def verify(request):
@@ -105,7 +216,7 @@ def verify(request):
                 order.save()
 
                 return render(request, 'zarinpal/success.html',
-                              {'message': 'Transaction success.\nRefID: ' +
+                              {'message': _('Transaction success.\nRefID: ') +
                                            str(req.json()['data']['ref_id']),
                                'order': order})
 
@@ -123,7 +234,7 @@ def verify(request):
                 #                            str(req.json()['data']['ref_id']),
                 #                'order': order})
                 return render(request, 'zarinpal/success.html',
-                              {'message': 'Transaction submitted : ' +
+                              {'message': _('Transaction submitted : ') +
                                           str(req.json()['data']['message']),
                                'order': order})
 
@@ -144,4 +255,23 @@ def verify(request):
                            })
     else:
         return render(request, 'zarinpal/fail.html',
-                      {'message': 'Transaction failed or canceled by user'})
+                      {'message': _('Transaction failed or canceled by user')})
+
+
+def form_payment(request):
+    form = PaymentForm()
+    if request.method == 'POST':
+        form = PaymentForm(data=request.POST)
+        if form.is_valid():
+            new_payment = form.save()
+            payment_data['id'] = new_payment.id
+            # return redirect(reverse('zarinpal:request'))
+            return send_form_request(request)
+    else:
+        form = PaymentForm()
+
+    return render(
+        request,
+        'zarinpal/form_payment.html',
+        {'form': form}
+    )
