@@ -40,9 +40,9 @@ global_description = ''
 
 def send_form_request(request):
     request.session['paid'] = None
-    payment_id = request.session.get('payment_id')
+    payment_id = payment_data['id']
     payment = Payment.objects.get(pk=payment_id)
-
+    request.session['payment_id'] = payment.id
     description = payment.client_name
     amount = payment.amount
     mobile = payment.client_phone
@@ -77,7 +77,7 @@ def send_form_request(request):
 def form_verify(request):
     payment = None
 
-    payment_id = payment_data['id']
+    payment_id = request.session['payment_id']
     payment = Payment.objects.get(pk=payment_id)
     amount = payment.amount
 
