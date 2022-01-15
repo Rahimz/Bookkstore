@@ -17,7 +17,14 @@ class OrderCreateForm(forms.ModelForm):
         exclude = ['user', 'token', 'checkout_token' ]
 
 class InvoiceAddForm(forms.ModelForm):
+    remove = forms.BooleanField(required=False)
 
     class Meta:
         model = OrderLine
-        fields = ['quantity', 'discount']
+        fields = ('quantity', 'discount',)
+        labels = {
+            'quantity': 'quantity'
+        }
+        widgets = {
+            'quantity': forms.TextInput(attrs={'placeholder': 'quantity'})
+        }

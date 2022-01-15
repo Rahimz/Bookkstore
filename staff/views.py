@@ -268,10 +268,20 @@ def orderline_update(request, order_id, orderline_id):
     if request.method == 'POST':
         update_form = InvoiceAddForm(data=request.POST)
         if update_form.is_valid():
-            # order_line_id = update_form.cleaned_data[orderline_id]
             order_line = OrderLine.objects.get(pk=orderline_id)
-            order_line.quantity = update_form.cleaned_data['quantity']
-            order_line.discount = update_form.cleaned_data['discount']
+
+
+            if update_form.cleaned_data['remove'] == True:
+                """
+                remove an orde line if remove checkbox is clicked
+                """
+                order_line.delete()
+                return redirect('staff:invoice_create', order.id)
+
+            if update_form.cleaned_data['quantity'] != 0:
+                order_line.quantity = update_form.cleaned_data['quantity']
+            if update_form.cleaned_data['discount'] != 0:
+                order_line.discount = update_form.cleaned_data['discount']
             order_line.save()
             update_form = InvoiceAddForm()
             return redirect('staff:invoice_create', order.id)
