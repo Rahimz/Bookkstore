@@ -17,5 +17,5 @@ class ClientSearchForm(forms.Form):
 
 class BookIsbnSearchForm(forms.Form):
     isbn_query = forms.IntegerField(label='ISBN',
-        widget=forms.TextInput(attrs={'placeholder': 'ISBN'})
+        widget=forms.TextInput(attrs={'placeholder': 'ISBN', 'autofocus': 'autofocus'})
     )
