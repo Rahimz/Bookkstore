@@ -38,7 +38,7 @@
       </div>
 
       <div class="">
-        <h2 class="my-4">{% trans 'Invoice' %}</h2>        
+        <h2 class="my-4">{% trans 'Invoice' %}</h2>
         <table class="table table-striped">
           <thead>
             <tr>
@@ -48,8 +48,8 @@
               <th scope="col">{% trans 'Name' %}</th>
               <th scope="col">{% trans 'Author' %}</th>
               <th scope="col">{% trans 'Remove' %}</th>
-              <th scope="col">{% trans 'Quantity' %}</th>
               <th scope="col"></th>
+              <th scope="col">{% trans 'Quantity' %}</th>
               <th scope="col">{% trans 'Price' %}</th>
               <th scope="col">{% trans 'Discount' %}</th>
               <th scope="col">{% trans 'Cost' %}</th>
@@ -72,19 +72,17 @@
                 </form>
                 {% endcomment %}
               </td>
-              <td>{{ order_line.quantity }}</td>
               <td>
-                <input type="number" value="" min="1" max="10">
-                <input type="submit" value="{% trans 'Update' %}">
-                {% comment %}
-                <form action="{% url 'cart:cart_add' product.pk %}" method="post">
-                  {{ item.update_quantity_form.quantity }}
-                  {{ item.update_quantity_form.override }}
-                  <input type="submit" value="{% trans 'Update' %}">
+                <form action="{% url 'staff:orderline_update' order_id=order.id orderline_id=order_line.id %}" method="post">
+                  {{ update_form.quantity }}
+                  {{ update_form.discount }}
                   {% csrf_token %}
+                   <input type='hidden' name="form_line_id" value="{{ order_line.id }}" />
+                  <input type="submit" id="{{ order_line.id }}" name="{{ order_line.id }}" value="{% trans 'Update' %}">
+                  <label for="{{ order_line.id }}"></label>
                 </form>
-                {% endcomment %}
               </td>
+              <td>{{ order_line.quantity }}</td>
               <td>{{ order_line.product.price }}</td>
               <td>{{ order_line.discount }}</td>
               <td>{{ order_line.get_cost_after_discount }}</td>

@@ -177,13 +177,17 @@ class OrderLine(models.Model):
         decimal_places=settings.DEFAULT_DECIMAL_PLACES
     )
     quantity = models.PositiveIntegerField(
-        default=1
+        default=0
     )
     discount = models.DecimalField(
         max_digits=settings.DEFAULT_MAX_DIGITS,
         decimal_places=settings.DEFAULT_DECIMAL_PLACES,
         default=0
     )
+
+    class Meta:
+        ordering = ("-product",)
+
 
     def __str__(self):
         return str(self.id)
@@ -196,3 +200,9 @@ class OrderLine(models.Model):
 
     def get_weight(self):
         return self.product.weight * self.quantity
+
+    def update_quantity(self, new_quantity):
+        self.quantity = new_quantity
+
+    def update_discount(self, new_discount):
+        self.discount = new_discount

@@ -9,7 +9,7 @@ from django.db.models import Q
 import uuid
 from datetime import datetime, timedelta
 
-from .forms import ProductCreateForm, OrderCreateForm
+from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm
 from products.models import Product, Category
 from orders.models import Order, OrderLine
 from orders.forms import OrderAdminCheckoutForm
@@ -152,10 +152,22 @@ class ProductCreate(View):
         )
 
 def invoice_create(request, order_id=None):
+    update_form = InvoiceAddForm()
     book_ids = []
+    update_forms = {}
     if order_id:
         order = Order.objects.get(pk=order_id)
         book_ids = [item.product.pk for item in order.lines.all()]
+
+        for item in order.lines.all():
+            # update_forms[item.id]
+            form  = InvoiceAddForm(
+            # initial={
+            #     'quantity': item.quantity,
+            #     'discount': item.discount }
+                )
+            update_forms[item.id] = form
+            print(update_forms)
     else:
         order = None
 
@@ -208,6 +220,8 @@ def invoice_create(request, order_id=None):
          'isbn_search_form': isbn_search_form,
          'isbn': isbn,
          'book_ids': book_ids,
+         'update_forms': update_forms,
+         'update_form': update_form,
     })
 
 
@@ -247,6 +261,26 @@ def invoice_checkout(request, order_id):
          'order': order,
          'checkout_form': checkout_form,
     })
+
+def orderline_update(request, order_id, orderline_id):
+    update_form = InvoiceAddForm(initial={'quantity':"0"})
+    order = Order.objects.get(pk=order_id)
+    if request.method == 'POST':
+        update_form = InvoiceAddForm(data=request.POST)
+        if update_form.is_valid():
+            # order_line_id = update_form.cleaned_data[orderline_id]
+            order_line = OrderLine.objects.get(pk=orderline_id)
+            order_line.quantity = update_form.cleaned_data['quantity']
+            order_line.discount = update_form.cleaned_data['discount']
+            order_line.save()
+            update_form = InvoiceAddForm()
+            return redirect('staff:invoice_create', order.id)
+
+    return render(
+        request,
+        'staff/invoice_create.html',
+        {'update_form': update_form}
+    )
 
 
 def draft_orders(request):
