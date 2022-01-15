@@ -15,7 +15,7 @@ def product_search(request):
         if form.is_valid():
             query = form.cleaned_data['query']
             results = Product.objects.all().annotate(
-                search=SearchVector('name', 'author', 'translator', 'publisher', ),
+                search=SearchVector('name', 'author', 'translator', 'publisher', 'isbn'),
             ).filter(search=query)
     return render(request,
                   'search/search.html',
