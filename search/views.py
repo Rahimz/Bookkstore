@@ -5,6 +5,15 @@ from products.models import Product
 from .forms import SearchForm
 
 
+def ProductSearch(object, query):
+    """
+    Search an object model base on a search query
+    """
+    results = object.objects.all().annotate(
+        search=SearchVector('name', 'author', 'translator', 'publisher', 'isbn'),
+    ).filter(search=query)
+    return results
+
 def product_search(request):
     form = SearchForm()
     query = None
@@ -14,9 +23,10 @@ def product_search(request):
         form = SearchForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data['query']
-            results = Product.objects.all().annotate(
-                search=SearchVector('name', 'author', 'translator', 'publisher', ),
-            ).filter(search=query)
+            results = ProductSearch(object=Product, query=query)
+            # results = Product.objects.all().annotate(
+            #     search=SearchVector('name', 'author', 'translator', 'publisher', 'isbn'),
+            # ).filter(search=query)
     return render(request,
                   'search/search.html',
                   {'form': form,

@@ -29,17 +29,29 @@
           {% else %}
           <form class="" action="{% url 'staff:invoice_create' %}" method="post">
             {% endif %}
+            {% comment %}
             {{ isbn_search_form | crispy }}
+            {% endcomment %}
+            {{ search_form | crispy }}
             {% csrf_token %}
-            <input class="btn btn-outline-secondary" type="submit" name="book" value="{% trans 'Submit' %}">
+            <input class="btn btn-outline-secondary my-3" type="submit" name="book" value="{% trans 'Submit' %}">
 
           </form>
+          
+          {% if results > 1 %}
+          {% for result in results %}
+          {% if order %}
+          <a href="{% url 'staff:invoice_add_book' order_id=order.id book_id=result.id %}" class="btn btn-sm btn-outline-secondary m-1">{{ result.name }} - {{ result.publisher  }}</a>
+          {% else %}
+          <a href="{% url 'staff:invoice_add_book' book_id=result.id %}" class="btn btn-sm btn-outline-secondary m-1">{{ result.name }} - {{ result.publisher  }}</a>
+          {% endif %}
+          {% endfor %}
+          {% endif%}
 
       </div>
 
       <div class="">
         <h2 class="my-4">{% trans 'Invoice' %}</h2>
-        {{ book_ids }}
         <table class="table table-striped">
           <thead>
             <tr>
@@ -48,9 +60,8 @@
               <th scope="col">{% trans 'Image' %}</th>
               <th scope="col">{% trans 'Name' %}</th>
               <th scope="col">{% trans 'Author' %}</th>
-              <th scope="col">{% trans 'Remove' %}</th>
+              <th scope="col" colspan="2">{% trans 'Update' %}</th>
               <th scope="col">{% trans 'Quantity' %}</th>
-              <th scope="col"></th>
               <th scope="col">{% trans 'Price' %}</th>
               <th scope="col">{% trans 'Discount' %}</th>
               <th scope="col">{% trans 'Cost' %}</th>
@@ -64,42 +75,31 @@
               <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="60px" height="auto"></td>
               <td>{{ order_line.product.name }}</td>
               <td>{{ order_line.product.author }}</td>
+              <td></td>
               <td>
-                <input type="checkbox" value="{% trans 'Remove' %}">
-                {% comment %}
-                <form action="{% url 'cart:cart_remove' product.pk %}" method="post">
-                  <input type="submit" value="{% trans 'Remove' %}">
+                <form action="{% url 'staff:orderline_update' order_id=order.id orderline_id=order_line.id %}" method="post">
+                  {{ update_form.remove }}
+                  {{ update_form.quantity }}
+                  {{ update_form.discount }}
                   {% csrf_token %}
+                  <input type="submit" id="{{ order_line.id }}" name="{{ order_line.id }}" value="{% trans 'Update' %}">
+                  <label for="{{ order_line.id }}"></label>
                 </form>
-                {% endcomment %}
               </td>
               <td>{{ order_line.quantity }}</td>
-              <td>
-                <input type="number" value="" min="1" max="10">
-                <input type="submit" value="{% trans 'Update' %}">
-                {% comment %}
-                <form action="{% url 'cart:cart_add' product.pk %}" method="post">
-                  {{ item.update_quantity_form.quantity }}
-                  {{ item.update_quantity_form.override }}
-                  <input type="submit" value="{% trans 'Update' %}">
-                  {% csrf_token %}
-                </form>
-                {% endcomment %}
-              </td>
               <td>{{ order_line.product.price }}</td>
               <td>{{ order_line.discount }}</td>
               <td>{{ order_line.get_cost_after_discount }}</td>
             </tr>
             {% endfor %}
-
-
-
+          </tbody>
+          <tfoot>
             <tr>
               <th scope="row"></th>
-              <td colspan="5">{% trans 'SUM' %}</td>
+              <td colspan="6">{% trans 'SUM' %}</td>
               <td>{{ order.get_total_quantity }}</td>
-              <td colspan="3"></td>
-              <td>{{ order.get_total_cost }}</td>
+              <td colspan="2"></td>
+              <td>{{ order.get_cost_after_discount }}</td>
             </tr>
             <tr>
               <th scope="row"></th>
@@ -112,8 +112,7 @@
               <td colspan="9" class="fw-bolder">{% trans 'PAYABLE' %}</td>
               <td class="fw-bolder">{{ order.get_payable }}</td>
             </tr>
-
-          </tbody>
+          </tfoot>
         </table>
 
 
@@ -121,7 +120,7 @@
       </div>
       <div class="my-5">
         <a href="{% url 'staff:draft_orders' %}" class="btn btn-outline-secondary">{% trans 'Save draft' %}</a>
-        <a {% if order %}href="{% url 'staff:invoice_checkout' order.id %}" class="btn btn-outline-success"{% else %}href="" class="btn btn-outline-success disabled"{% endif%} >{% trans 'Submit' %}</a>
+        <a {% if order %}href="{% url 'staff:invoice_checkout' order.id %}" class="btn btn-outline-success" {% else %}href="" class="btn btn-outline-success disabled" {% endif%}>{% trans 'Submit' %}</a>
         <a onclick="window.print();return false;" class="btn btn-outline-secondary">{% trans 'Print' %}</a>
         <a href="{% url 'staff:invoice_create' %}" class="btn btn-outline-secondary">{% trans 'Clear' %}</a>
       </div>
@@ -135,4 +134,13 @@
 {% endblock %}
 
 {% block script %}
+<script language="javascript" type="text/javascript">
+  function popitup(url) {
+    newwindow = window.open(url, '{{title}}', 'height=350,width=150');
+    if (window.focus) {
+      newwindow.focus()
+    }
+    return false;
+  }
+</script>
 {% endblock %}
