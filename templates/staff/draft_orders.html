@@ -28,17 +28,19 @@
               <th scope="col">{% trans 'Price' %}</th>
               <th scope="col">{% trans 'Discount' %}</th>
               <th scope="col">{% trans 'Cost' %}</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
             {% for order in draft_orders %}
             <tr>
               <th scope="row">{{ forloop.counter }}</th>
-              <td><a href="{% url 'staff:invoice_checkout' order.id %}">{{ order.id }}</a></td>
+              <td><a href="{% url 'staff:invoice_create' order.id %}">{{ order.id }}</a></td>
               <td>{{ order.get_total_quantity}}</td>
               <td>{{ order.get_cost_after_discount }}</td>
               <td>{{ order.discount }}</td>
               <td>{{ order.get_payable }}</td>
+              <td><a href="{% url 'staff:invoice_checkout' order.id %}" class="btn btn-sm btn-outline-secondary">{% trans 'Submit' %}</a></td>
             </tr>
             {% endfor %}
           </tbody>
