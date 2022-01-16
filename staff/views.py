@@ -13,7 +13,8 @@ from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm
 from products.models import Product, Category
 from orders.models import Order, OrderLine
 from orders.forms import OrderAdminCheckoutForm
-from search.forms import ClientSearchForm, BookIsbnSearchForm
+from search.forms import ClientSearchForm, BookIsbnSearchForm, SearchForm
+from search.views import ProductSearch
 from account.models import CustomUser
 
 
@@ -151,7 +152,8 @@ class ProductCreate(View):
             {'form': form}
         )
 
-def invoice_create(request, order_id=None):
+def invoice_create(request, order_id=None, book_id=None):
+    search_form = SearchForm()
     update_form = InvoiceAddForm()
     book_ids = []
     update_forms = {}
@@ -171,34 +173,84 @@ def invoice_create(request, order_id=None):
     else:
         order = None
 
+    if book_id:
+        book = Product.objects.get(pk=book_id)
+
+    # If the search result contains more than one results
+    #  we handle it in these if statement
+    if order_id and book_id:
+        if book.pk in book_ids:
+            order_line = OrderLine.objects.get(order=order, product=book)
+            order_line.quantity += 1
+            order_line.save()
+        else:
+            order_line = OrderLine.objects.create(
+                order = order,
+                product = book,
+                quantity = 1,
+                price = book.price,
+            )
+        messages.success(request,'order line No. {} with {} is added'.format(order.id, book))
+
+        return redirect('staff:invoice_create', order.id)
+
+    elif not order_id and book_id:
+        order = Order.objects.create(
+                    user = request.user,
+                    status = 'draft',
+                    shipping_method = 'pickup',
+                )
+        messages.success(request, 'order No. {} is created'.format(order.id))
+        order_line = OrderLine.objects.create(
+            order = order,
+            product = book,
+            quantity = 1,
+            price = book.price,
+        )
+        messages.success(request,'order line No. {} with {} is added'.format(order.id, book))
+        return redirect('staff:invoice_create', order.id)
+
+
     isbn_search_form = BookIsbnSearchForm()
 
     books = None
+    results = None
     book = None
     isbn = ''
+    popup_selector = False
+
+    # ::# TODO: should refactor shome of the codes does not use
     if request.method == 'POST':
         isbn_search_form =BookIsbnSearchForm(data=request.POST)
-        client_form = ClientSearchForm(data=request.POST)
+        search_form = SearchForm(data=request.POST)
+        if search_form.is_valid():
+            messages.success(request, 'form is valid')
+            search_query = search_form.cleaned_data['query']
 
-        if isbn_search_form.is_valid():
-            isbn = isbn_search_form.cleaned_data['isbn_query']
-            if not order:
-                order = Order.objects.create(
-                            user = request.user,
-                            status = 'draft',
-                            shipping_method = 'pickup',
-                        )
-                messages.success(request, 'order No. {} is created'.format(order.id))
+            # Here we grab the quey search from database and
+            # search the fields: name, author, translator, publisher, isbn
+            results = ProductSearch(object=Product, query=search_query)
 
-            try:
-                book = Product.objects.get(isbn=isbn)
-                messages.success(request, 'Book {} found'.format(book.id))
+            # if the results has only one item, the item automaticaly added to invoice
+            if len(results) == 1:
+                book = results.first()
+
+                # if the order has not created yet, we created it here
+                if not order:
+                    order = Order.objects.create(
+                                user = request.user,
+                                status = 'draft',
+                                shipping_method = 'pickup',
+                            )
+                    messages.success(request, 'order No. {} is created'.format(order.id))
+
+                # if the book is added in the invoice we will update the quantity in invoice
                 if book.pk in book_ids:
-                    print(book.pk)
                     order_line = OrderLine.objects.get(order=order, product=book)
-                    print(order_line.id)
                     order_line.quantity += 1
                     order_line.save()
+
+                # if the book is not in invoice we will create an invoice orderline
                 else:
                     order_line = OrderLine.objects.create(
                         order = order,
@@ -208,11 +260,48 @@ def invoice_create(request, order_id=None):
                     )
                 messages.success(request,'order line No. {} with {} is added'.format(order.id, book))
 
-                isbn_search_form = BookIsbnSearchForm()
+            # if the results contains more than one products
+            # we will show a new window and pick just one product from it
+            else:
+                popup_selector = True
+                search_form = SearchForm()
 
-            except:
-                messages.error(request, 'Book {} does not exist!'.format(isbn))
 
+
+        # if isbn_search_form.is_valid():
+        #     isbn = isbn_search_form.cleaned_data['isbn_query']
+        #
+        #     if not order:
+        #         order = Order.objects.create(
+        #                     user = request.user,
+        #                     status = 'draft',
+        #                     shipping_method = 'pickup',
+        #                 )
+        #         messages.success(request, 'order No. {} is created'.format(order.id))
+        #
+        #
+        #     try:
+        #         book = Product.objects.get(isbn=isbn)
+        #         messages.success(request, 'Book {} found'.format(book.id))
+        #         if book.pk in book_ids:
+        #             order_line = OrderLine.objects.get(order=order, product=book)
+        #             order_line.quantity += 1
+        #             order_line.save()
+        #         else:
+        #             order_line = OrderLine.objects.create(
+        #                 order = order,
+        #                 product = book,
+        #                 quantity = 1,
+        #                 price = book.price,
+        #             )
+        #         messages.success(request,'order line No. {} with {} is added'.format(order.id, book))
+        #
+        #         # isbn_search_form = BookIsbnSearchForm()
+        #
+        #
+        #     except:
+        #         messages.error(request, 'Book {} does not exist!'.format(isbn))
+    search_form = SearchForm()
     return render(
         request,
         'staff/invoice_create.html',
@@ -220,8 +309,10 @@ def invoice_create(request, order_id=None):
          'isbn_search_form': isbn_search_form,
          'isbn': isbn,
          'book_ids': book_ids,
-         'update_forms': update_forms,
          'update_form': update_form,
+         'search_form': search_form,
+         'results': results,
+         'popup_selector': popup_selector,
     })
 
 

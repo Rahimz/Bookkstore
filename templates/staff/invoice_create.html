@@ -29,11 +29,24 @@
           {% else %}
           <form class="" action="{% url 'staff:invoice_create' %}" method="post">
             {% endif %}
+            {% comment %}
             {{ isbn_search_form | crispy }}
+            {% endcomment %}
+            {{ search_form | crispy }}
             {% csrf_token %}
-            <input class="btn btn-outline-secondary" type="submit" name="book" value="{% trans 'Submit' %}">
+            <input class="btn btn-outline-secondary my-3" type="submit" name="book" value="{% trans 'Submit' %}">
 
           </form>
+          
+          {% if results > 1 %}
+          {% for result in results %}
+          {% if order %}
+          <a href="{% url 'staff:invoice_add_book' order_id=order.id book_id=result.id %}" class="btn btn-sm btn-outline-secondary m-1">{{ result.name }} - {{ result.publisher  }}</a>
+          {% else %}
+          <a href="{% url 'staff:invoice_add_book' book_id=result.id %}" class="btn btn-sm btn-outline-secondary m-1">{{ result.name }} - {{ result.publisher  }}</a>
+          {% endif %}
+          {% endfor %}
+          {% endif%}
 
       </div>
 
@@ -121,4 +134,13 @@
 {% endblock %}
 
 {% block script %}
+<script language="javascript" type="text/javascript">
+  function popitup(url) {
+    newwindow = window.open(url, '{{title}}', 'height=350,width=150');
+    if (window.focus) {
+      newwindow.focus()
+    }
+    return false;
+  }
+</script>
 {% endblock %}
