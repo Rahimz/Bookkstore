@@ -48,3 +48,7 @@ a:hover {
   top: px;
   left: 20px;
 }
+
+.social-network a {
+  text-decoration: none;
+}

@@ -17,6 +17,7 @@
   <link href="{% static 'css/bootstrap.rtl.min.css' %}" rel="stylesheet">
   <link href="{% static 'css/bootstrap-grid.rtl.css' %}" rel="stylesheet">
   <link href="{% static 'css/bootstrap-utilities.rtl.min.css' %}" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="{% static 'css/base.css' %}" rel="stylesheet">
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -73,12 +74,12 @@
               {{ total_items }}
               <span class="visually-hidden">{% trans 'items in cart' %}</span>
             </span>
-              {% comment %}
-              {{ total_items }} {% trans 'item' %}, {{ cart.get_total_price }} {% trans 'Toman' %}
-              {% blocktrans with total=cart.get_total_price count items=total_items %}
-              {{ total_items }} item, {{ cart.get_total_price }} {% trans 'Toman' %}
-              {% endblocktrans %}
-              {% endcomment %}
+            {% comment %}
+            {{ total_items }} {% trans 'item' %}, {{ cart.get_total_price }} {% trans 'Toman' %}
+            {% blocktrans with total=cart.get_total_price count items=total_items %}
+            {{ total_items }} item, {{ cart.get_total_price }} {% trans 'Toman' %}
+            {% endblocktrans %}
+            {% endcomment %}
           </a>
           {% else %}
 
@@ -148,24 +149,72 @@
     <div class="mt-3 container-fluid bg-second-color">
       <div class="row row-cols-md-3 p-5">
         <div class="col text-light">
-          <p class="fw-bold">Lorem ipsum 1</p>
-          <p>Lorem ipsum 1</p>
-          <p>Lorem ipsum 1</p>
+          <p>{% trans 'How to order books' %}</p>
+          <p>{% trans 'Website rules' %}</p>
+          <p>{% trans 'Q&A' %}</p>
+          <p>{% trans 'Contact us' %}</p>
+
         </div>
         <div class="col text-light">
-          <p class="fw-bold">Lorem ipsum 1</p>
-          <p>Lorem ipsum 1</p>
-          <p>Lorem ipsum 1</p>
+          <p>{% trans 'Ketabe Damavand' %}</p>
+          <p>{% trans 'Address' %} :
+          <br><span>{% trans 'No. Edward Brown St.' %}</span>
+          <br><span>{% trans '16 Azar St.' %}</span>
+          {% trans 'Tehran, Iran' %}</p>
+          <p>{% trans 'Phone' %} :
+          <br><span>{% trans 'Bookstore' %} :</span>
+          <br><a href="tel:+989123487091" dir="ltr">+98 912 3487091</a>
+          <br>
+          <br>
+          <span>{% trans 'Orders followup' %} :</span>
+          <br><a href="tel:+989123487091" dir="ltr">+98 912 3487091</a>
+
+        </p>
         </div>
-        <div class="col text-light">
-          <p class="text-center fw-bold">{% trans 'Social Media' %}</p>
-          <span>Lorem 1</span>
-          <span>Lorem 2</span>
+        <div class="col text-light social-network">
+          <p class="fw-bold">{% trans 'Social Media' %}</p>
+
+          <span>{% trans 'Ketabe Damavand' %}</span> <br>
+          <a href="https://t.me/bahmanbooks/">
+            <i class="fa fa-send"></i>
+          </a>
+          <br>
+          <br>
+
+          <span>{% trans 'Order books in social media' %}</span> <br>
+          <a href="https://instagram.com/bahmanbookz/">
+            <i class="fa fa-instagram"></i>
+          </a>
+          <a href="https://t.me/bahmanbookz/">
+            <i class="fa fa-send"></i>
+          </a>
+          <a href="https://twitter.com/bahmanbooks/">
+            <i class="fa fa-twitter"></i>
+          </a>
+          <br>
+          <br>
+
+          <span>{% trans 'Bahman Daroshafaei in social media' %}</span><br>
+          <a href="https://t.me/bahmanshafa/">
+            <i class="fa fa-send"></i>
+          </a>
+          <a href="https://instagram.com/bahman.daroshafaei/">
+            <i class="fa fa-instagram"></i>
+          </a>
+          <a href="https://twitter.com/bahmandaroshafa/">
+            <i class="fa fa-twitter"></i>
+          </a>
+          <br>
+          <br>
+
+          <p>
+            <i class="fa fa-envelope"></i>&nbsp;info@ketabedamavand.com
+          </p>
         </div>
       </div>
     </div>
     <div class="row bg-dark text-center">
-      <p class="text-light pt-3">copyright@ 2021</p>
+      <p class="text-light pt-3">{% trans 'Ketabe Damavand'%} 1400</p>
     </div>
 
   </footer>
