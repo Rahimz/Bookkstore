@@ -52,3 +52,12 @@ a:hover {
 .social-network a {
   text-decoration: none;
 }
+footer i {
+    padding: 5px;
+    /* color: #dc3545; */
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    transition: 800ms;
+}
