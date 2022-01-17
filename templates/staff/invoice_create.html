@@ -51,7 +51,7 @@
               {% if order %}
               <a href="{% url 'staff:invoice_add_book' order_id=order.id book_id=result.id %}" class="btn btn-sm btn-outline-success m-1">{{ result.name | truncatechars:50 }} - {{ result.publisher  }} - {{ result.price }}</a>
               {% else %}
-              <a href="{% url 'staff:invoice_add_book' book_id=result.id %}" class="btn btn-sm btn-outline-success m-1">{{ result.name | truncatechars:50 }} - {{ result.publisher  }} - {{ result.price }}</a>
+              <a href="{% url 'staff:invoice_new_add_book' book_id=result.id %}" class="btn btn-sm btn-outline-success m-1">{{ result.name | truncatechars:50 }} - {{ result.publisher  }} - {{ result.price }}</a>
               {% endif %}
             </div>
             {% endfor %}
