@@ -23,18 +23,23 @@
         {% trans 'Name' %} : {{ order.client }} - {% trans 'Phone' %} : {{ order.client_phone }}
         {% endif %}
 
-        <h2 class="my-4">{% trans 'Add products' %}</h2>
+        <h3 class="my-4">{% trans 'Add products' %}</h3>
         {% if order %}
         <form class="" action="{% url 'staff:invoice_create' order.id %}" method="post">
           {% else %}
           <form class="" action="{% url 'staff:invoice_create' %}" method="post">
             {% endif %}
-            {% comment %}
-            {{ isbn_search_form | crispy }}
-            {% endcomment %}
-            {{ search_form | crispy }}
-            {% csrf_token %}
-            <input class="btn btn-outline-secondary my-3" type="submit" name="book" value="{% trans 'Submit' %}">
+            <div class="row">
+
+            <div class="col-md-9">
+              {{ search_form | crispy }}
+              {% csrf_token %}
+            </div>
+
+            <div class="col-md-3">
+              <input class="btn btn-outline-secondary form-control" type="submit" name="book" value="{% trans 'Submit' %}">
+            </div>
+          </div>
 
           </form>
 
