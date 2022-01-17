@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 class SearchForm(forms.Form):
     query = forms.CharField(
-        label='Search',
+        label='',
         widget=forms.TextInput(attrs={
             'placeholder': _('Name, author, translator, publisher or isbn'),
             'autofocus': 'autofocus'
