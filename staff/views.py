@@ -222,12 +222,12 @@ def invoice_create(request, order_id=None, book_id=None):
     if request.method == 'POST':
         isbn_search_form =BookIsbnSearchForm(data=request.POST)
         search_form = SearchForm(data=request.POST)
-        if search_form.is_valid():            
+        if search_form.is_valid():
             search_query = search_form.cleaned_data['query']
 
             # Here we grab the quey search from database and
             # search the fields: name, author, translator, publisher, isbn
-            results = ProductSearch(object=Product, query=search_query)
+            results = ProductSearch(object=Product, query=search_query).order_by('name', 'publisher')
 
             # if the results has only one item, the item automaticaly added to invoice
             if len(results) == 1:
