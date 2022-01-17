@@ -153,6 +153,10 @@ class ProductCreate(View):
         )
 
 def invoice_create(request, order_id=None, book_id=None):
+    books = None
+    results = None
+    book = None
+    # isbn = ''
     search_form = SearchForm()
     update_form = InvoiceAddForm()
     book_ids = []
@@ -169,17 +173,21 @@ def invoice_create(request, order_id=None, book_id=None):
             #     'discount': item.discount }
                 )
             update_forms[item.id] = form
-            print(update_forms)
+
     else:
         order = None
 
     if book_id:
         book = Product.objects.get(pk=book_id)
 
+    isbn_search_form = BookIsbnSearchForm()
+
+
+
     # If the search result contains more than one results
     #  we handle it in these if statement
     if order_id and book_id:
-        if book.pk in book_ids:
+        if book.id in book_ids:
             order_line = OrderLine.objects.get(order=order, product=book)
             order_line.quantity += 1
             order_line.save()
@@ -210,21 +218,11 @@ def invoice_create(request, order_id=None, book_id=None):
         messages.success(request,'order line No. {} with {} is added'.format(order.id, book))
         return redirect('staff:invoice_create', order.id)
 
-
-    isbn_search_form = BookIsbnSearchForm()
-
-    books = None
-    results = None
-    book = None
-    isbn = ''
-    popup_selector = False
-
     # ::# TODO: should refactor shome of the codes does not use
     if request.method == 'POST':
         isbn_search_form =BookIsbnSearchForm(data=request.POST)
         search_form = SearchForm(data=request.POST)
-        if search_form.is_valid():
-            messages.success(request, 'form is valid')
+        if search_form.is_valid():            
             search_query = search_form.cleaned_data['query']
 
             # Here we grab the quey search from database and
@@ -259,12 +257,9 @@ def invoice_create(request, order_id=None, book_id=None):
                         price = book.price,
                     )
                 messages.success(request,'order line No. {} with {} is added'.format(order.id, book))
+        else:
+            pass
 
-            # if the results contains more than one products
-            # we will show a new window and pick just one product from it
-            else:
-                popup_selector = True
-                search_form = SearchForm()
 
 
 
@@ -307,12 +302,12 @@ def invoice_create(request, order_id=None, book_id=None):
         'staff/invoice_create.html',
         {'order': order,
          'isbn_search_form': isbn_search_form,
-         'isbn': isbn,
+         # 'isbn': isbn,
          'book_ids': book_ids,
          'update_form': update_form,
          'search_form': search_form,
          'results': results,
-         'popup_selector': popup_selector,
+
     })
 
 
