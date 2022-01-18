@@ -202,3 +202,7 @@ DEFAULT_FROM_EMAIL = 'noreply@ketabedamavand.com'
 
 #  Django drispy form settings
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+# wkhtmltopdf  settings for exportting pdf
+WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
