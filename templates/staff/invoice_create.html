@@ -71,7 +71,7 @@
               <th scope="col">{% trans 'Image' %}</th>
               <th scope="col">{% trans 'Name' %}</th>
               <th scope="col">{% trans 'Author' %}</th>
-              <th scope="col" colspan="2">{% trans 'Update' %}</th>
+              <th scope="col" colspan="2">{% trans 'Update' %} <span class="fw-lighter">({% trans 'Remove' %} - {% trans 'Quantity' %} - {% trans 'Discount' %})</span></th>
               <th scope="col">{% trans 'Quantity' %}</th>
               <th scope="col">{% trans 'Price' %}</th>
               <th scope="col">{% trans 'Discount' %}</th>
@@ -133,6 +133,7 @@
         <a href="{% url 'staff:draft_orders' %}" class="btn btn-outline-secondary">{% trans 'Save draft' %}</a>
         <a {% if order %}href="{% url 'staff:invoice_checkout' order.id %}" class="btn btn-outline-success" {% else %}href="" class="btn btn-outline-success disabled" {% endif%}>{% trans 'Submit' %}</a>
         <a onclick="window.print();return false;" class="btn btn-outline-secondary">{% trans 'Print' %}</a>
+        {#<a href="{% url 'tools:make_pdf' order.id %}" class="btn btn-outline-secondary">{% trans 'PDF' %}</a>#}
         <a href="{% url 'staff:invoice_create' %}" class="btn btn-outline-secondary">{% trans 'Clear' %}</a>
       </div>
     </div>

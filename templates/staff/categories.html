@@ -1,0 +1,24 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+{% block title %}{% trans 'Categories' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="products" %}
+    </div>
+    <div class="col-md-10">
+      <h2>{% trans 'Categories' %}</h2>
+      {% include 'shop/_category_list_block.html' %}
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

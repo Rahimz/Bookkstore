@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "17ac520889924ba65827a3740e30bbc18f2c81e9074b7f646fe9432149720a91"
+            "sha256": "2f1ef226e966ac93f1e45c9ad7f2af1334fc16f807362a34d682c9e1af65fe01"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -217,6 +217,15 @@
             "index": "pypi",
             "version": "==3.0.9"
         },
+        "pdfkit": {
+            "hashes": [
+                "sha256:992f821e1e18fc8a0e701ecae24b51a2d598296a180caee0a24c0af181da02a9",
+                "sha256:a7a4ca0d978e44fa8310c4909f087052430a6e8e0b1dd7ceef657f139789f96f",
+                "sha256:cc122e5aed594198ff7aaa566f2950d2163763576ab891c161bb1f6c630f5a8e"
+            ],
+            "index": "pypi",
+            "version": "==1.0.0"
+        },
         "phonenumberslite": {
             "hashes": [
                 "sha256:dd79978de1d75198ed5d5239a80e70458d420f8877c61340740fa61c5119ce5e",
@@ -390,11 +399,11 @@
         },
         "uvicorn": {
             "hashes": [
-                "sha256:d8c839231f270adaa6d338d525e2652a0b4a5f4c2430b5c4ef6ae4d11776b0d2",
-                "sha256:eacb66afa65e0648fcbce5e746b135d09722231ffffc61883d4fac2b62fbea8d"
+                "sha256:0b89c91bb8fe84c4bded9996af13c4b8c0de799d29bffeaa0c8ad298f2be0934",
+                "sha256:192c2422b056a3beb512c6c260bf77a7a884204a4ae41856719c1913ead63bbb"
             ],
             "index": "pypi",
-            "version": "==0.16.0"
+            "version": "==0.17.0"
         },
         "zeep": {
             "hashes": [

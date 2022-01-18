@@ -10,6 +10,13 @@ class ProductCreateForm(forms.ModelForm):
         exclude = ['import_session', ]
 
 
+class CategoryCreateForm(forms.ModelForm):
+
+    class Meta:
+        model = Category
+        exclude = ['slug', ]
+
+
 class OrderCreateForm(forms.ModelForm):
 
     class Meta:
