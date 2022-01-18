@@ -17,7 +17,6 @@ django-debug-toolbar = "*"
 django-rosetta = "*"
 django-crispy-forms = "*"
 zeep = "*"
-reportlab = "*"
 
 [dev-packages]
 
