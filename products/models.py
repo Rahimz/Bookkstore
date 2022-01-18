@@ -222,17 +222,36 @@ class Product(models.Model):
         decimal_places=0,
         default=0
     )
+    has_other_prices = models.BooleanField(
+        default=False
+    )
     # discount = models.ForeignKey(
     #     Coupon,
     #     on_delete=models.SET_NULL,
     #     blank=True,
     #     null=True,
     # )
+    store_positon = models.CharField(
+    max_length=8,
+    blank=True,
+    null=True
+    )
+    vendor = models.CharField(
+    max_length=100,
+    null=True,
+    blank=True
+    )
     admin_note = models.TextField(
         blank=True,
         null=True,
     )
     available = models.BooleanField(
+        default=True
+    )
+    available_in_store = models.BooleanField(
+        default=True
+    )
+    available_online = models.BooleanField(
         default=True
     )
     created = models.DateTimeField(

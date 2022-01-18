@@ -92,6 +92,8 @@ def product_create(request):
 
             product.save()
             messages.success(request, 'Product is created!')
+            if 'another' in request.POST:
+                return HttpResponseRedirect(reverse('staff:product_create'))
             return HttpResponseRedirect(reverse('staff:products'))
         else:
             messages.error(request, 'Form is not valid')
