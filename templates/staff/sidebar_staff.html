@@ -3,8 +3,8 @@
 <div class="sidebar drop_shadow border border-1 rounded-2">
   <p><a href="{% url 'staff:product_create'%}">{% trans 'Create product' %}</a></p>
   <p><a href="{% url 'staff:products'%}">{% trans 'List of products' %}</a></p>
-  <p><a href="#">{% trans 'Create a new category' %}</a></p>
-  <p><a href="#">{% trans 'List of categories' %}</a></p>
+  <p><a href="{% url 'staff:category_create'%}">{% trans 'Create a new category' %}</a></p>
+  <p><a href="{% url 'staff:categories' %}">{% trans 'List of categories' %}</a></p>
 </div>
 {% endif %}
 

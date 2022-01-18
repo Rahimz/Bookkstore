@@ -9,7 +9,7 @@ from django.db.models import Q
 import uuid
 from datetime import datetime, timedelta
 
-from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm
+from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm
 from products.models import Product, Category
 from orders.models import Order, OrderLine
 from orders.forms import OrderAdminCheckoutForm
@@ -104,6 +104,28 @@ def product_create(request):
         'staff/product_create.html',
         {'form': form }
     )
+
+
+def category_create(request):
+    if request.method == 'POST':
+        form = CategoryCreateForm(request.POST)
+        if form.is_valid():
+            category = form.save(commit=False)
+            category.save()
+            messages.success(request, 'Category is created!')
+            if 'another' in request.POST:
+                return HttpResponseRedirect(reverse('staff:category_create'))
+            return HttpResponseRedirect(reverse('staff:products'))
+        else:
+            messages.error(request, 'Form is not valid')
+    else:
+        form = CategoryCreateForm()
+    return render(
+        request,
+        'staff/category_create.html',
+        {'form': form }
+    )
+
 
 
 def order_create(request):
@@ -387,4 +409,14 @@ def draft_orders(request):
         request,
         'staff/draft_orders.html',
         {'draft_orders': draft_orders}
+    )
+
+
+def category_list(request):
+    main_categories = Category.objects.filter(active=True, parent_category=None)
+
+    return render(
+        request,
+        'staff/categories.html',
+        {'main_categories': main_categories }
     )

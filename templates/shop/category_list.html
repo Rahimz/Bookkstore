@@ -20,35 +20,7 @@
       {% include 'shop/_filter_sidebar.html' %}
     </div>
     <div class="col-md-9">
-      <ul>
-        {% for category in main_categories %}
-        <li>
-          <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
-          {% if category.get_sub_category %}
-          <ul>
-            {% for sub in category.get_sub_category %}
-            <a href="{{ sub.get_absolute_url }}">
-              <li>{{ sub.name }}</li>
-            </a>
-            {% if sub.get_sub_category %}
-            <ul>
-
-              {% for second_sub in sub.get_sub_category %}
-              <a href="{{ second_sub.get_absolute_url }}">
-                <li>{{ second_sub.name }}</li>
-              </a>
-              {% endfor %}
-            </ul>
-
-            {% endif %}
-
-            {% endfor %}
-          </ul>
-
-          {% endif %}
-        </li>
-        {% endfor %}
-      </ul>
+      {% include 'shop/_category_list_block.html' %}
     </div>
   </div>
 </div>

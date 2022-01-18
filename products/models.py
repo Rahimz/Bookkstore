@@ -24,6 +24,7 @@ class Category(models.Model):
     )
     name = models.CharField(
         max_length=250,
+        unique=True,
         db_index=True,
     )
     slug = models.SlugField(
@@ -49,6 +50,11 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name, allow_unicode=True)
+        super(Category, self).save(*args, **kwargs)
 
 
 class Product(models.Model):
