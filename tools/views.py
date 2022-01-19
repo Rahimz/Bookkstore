@@ -1,27 +1,23 @@
 from django.shortcuts import render
 from django.template.loader import get_template
 from django.conf import settings
-from django.http import FileResponse
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from django.contrib.admin.views.decorators import staff_member_required
 
-import pdfkit
+import weasyprint
 
 from orders.models import Order, OrderLine
 
 
-
-
-def make_pdf(request, order_id=None):
+@staff_member_required
+def make_invoice_pdf(request, order_id=None):
     order = Order.objects.get(pk=order_id)
 
-    # template = get_template("staff/invoice_create.html")
-    # context = {'order': order}
-    # html = template.render(context)
-    html = "<html><body><p>Hello world</p></body></html>"
-    string_sample = "Hello world"
-    pdf = pdfkit.from_string(string_sample, "output.pdf", configuration=settings.WKHTMLTOPDF_CMD)
-
-    response = HttpResponse(pdf, content_type='application/pdf')
-
-    response['Content-Disposition'] = 'attachment; filename=output.pdf'
-
+    html = render_to_string('tools/pdf/invoice_pdf.html',
+        {'order': order})
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=order_{order.id}.pdf'
+    weasyprint.HTML(string=html).write_pdf(response,
+        stylesheets=[weasyprint.CSS(settings.STATIC_ROOT + 'css/invoice_pdf.css')])
     return response

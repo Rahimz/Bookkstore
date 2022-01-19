@@ -133,7 +133,9 @@
         <a href="{% url 'staff:draft_orders' %}" class="btn btn-outline-secondary">{% trans 'Save draft' %}</a>
         <a {% if order %}href="{% url 'staff:invoice_checkout' order.id %}" class="btn btn-outline-success" {% else %}href="" class="btn btn-outline-success disabled" {% endif%}>{% trans 'Submit' %}</a>
         <a onclick="window.print();return false;" class="btn btn-outline-secondary">{% trans 'Print' %}</a>
-        {#<a href="{% url 'tools:make_pdf' order.id %}" class="btn btn-outline-secondary">{% trans 'PDF' %}</a>#}
+        {% if order %}
+        <a href="{% url 'tools:make_invoice_pdf' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF' %}</a>
+        {% endif %}
         <a href="{% url 'staff:invoice_create' %}" class="btn btn-outline-secondary">{% trans 'Clear' %}</a>
       </div>
     </div>
