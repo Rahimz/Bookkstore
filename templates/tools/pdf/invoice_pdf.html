@@ -1,0 +1,88 @@
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+
+<html dir="rtl">
+<body>
+  <h1>{% trans 'Ketabe Damavand' %}</h1>
+  <p>
+    {% trans 'Invoice no.' %} {{ order.id }}</br>
+    <span class="secondary">
+      {{ order.created|date:"M d, Y" }}
+    </span>
+  </p>
+   {% comment %}
+  <h3>{% trans 'Bill to' %}</h3>
+  <p>
+    {{ order.first_name }} {{ order.last_name }}
+    {{ order.email }}
+    {{ order.address }}
+    {{ order.postal_code }}, {{ order.city }}
+  </p>
+  {% endcomment %}
+  <table dir="rtl">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>{% trans 'Product' %}</th>
+        <th>{% trans 'Price' %} {% trans 'Rial' %} </th>
+        <th>{% trans 'Quantity' %}</th>
+        <th>{% trans 'Discount' %}</th>
+        <th>{% trans 'Total' %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in order.lines.all %}
+        <tr class="row{% cycle "1" "2" %}">
+          <td>{{ forloop.counter }}</td>
+          <td>{{ item.product.name }}</td>
+          <td class="num">{{ item.price | intcomma:False }}</td>
+          <td class="num">{{ item.quantity }}</td>
+          <td class="num">{{ item.discount | intcomma:False }}</td>
+          <td class="num">{{ item.get_cost_after_discount | intcomma:False }}</td>
+        </tr>
+      {% endfor %}
+
+    </tbody>
+    <tfoot>
+      <tr class="total">
+        <td colspan="5">{% trans 'Total'%} {% trans 'Rial' %}</td>
+        <td class="num">{{ order.get_cost_after_discount | intcomma:False }}</td>
+      </tr>
+      <tr class=discount>
+          <td colspan="5">{% trans 'Discount'%}</td>
+          <td class="num">{{ order.discount | intcomma:False }} </td>
+      </tr>
+      <tr class=total>
+          <td colspan="5">{% trans 'PAYABLE'%}</td>
+          <td class="num"><b>{{ order.get_payable | intcomma:False }}</b></td>
+      </tr>
+    </tfoot>
+  </table>
+  <br>
+  <p>{{ order.token }}</p>
+
+  {% comment %}
+  <span class="{% if order.paid %}paid{% else %}pending{% endif %}">
+    {% if order.paid %}Paid{% else %}{% trans 'Pending payment' %}{% endif %}
+  </span>
+  {% endcomment %}
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="">
+    <table>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+
+  </div>
+  <div>
+    <p></p>
+  </div>
+</body>
+</html>
