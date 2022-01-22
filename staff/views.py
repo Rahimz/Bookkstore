@@ -429,13 +429,23 @@ def orderline_update(request, order_id, orderline_id):
                 return redirect('staff:invoice_create', order.id)
 
             if update_form.cleaned_data['quantity'] != 0:
-                if product.stock <= update_form.cleaned_data['quantity']:
-                    messages.error(request, 'Not enough stock'+' The stock is{}'.format(product.stock))
-                    return redirect('staff:invoice_create', order.id)
+                if update_form.cleaned_data['quantity'] > order_line.quantity:
+                    if update_form.cleaned_data['quantity'] > order_line.quantity + product.stock:
+                        messages.error(request, 'Not enough stock'+' The stock is{}'.format(product.stock))
+                        return redirect('staff:invoice_create', order.id)
+                    else:
+                        # Update product stock
+                        product.stock -= update_form.cleaned_data['quantity'] - order_line.quantity
+                        product.save()
+
+
+                elif update_form.cleaned_data['quantity'] < order_line.quantity:
+                    # Update product stock
+                    product.stock += order_line.quantity - update_form.cleaned_data['quantity']
+
+
                 order_line.quantity = update_form.cleaned_data['quantity']
 
-                # Update product stock
-                product.stock -= update_form.cleaned_data['quantity']
                 product.save()
 
             if update_form.cleaned_data['discount'] != 0:
