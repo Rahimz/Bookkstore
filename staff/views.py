@@ -211,6 +211,13 @@ def invoice_create(request, order_id=None, book_id=None):
     # If the search result contains more than one results
     #  we handle it in these if statement
     if order_id and book_id:
+
+        # Check the stock of product
+        if book.stock <= 0:
+            messages.error(request, 'Not enough stock!')
+            return redirect('staff:invoice_create', order_id)
+
+        # add book to invoice
         if book.id in book_ids:
             order_line = OrderLine.objects.get(order=order, product=book)
             order_line.quantity += 1
@@ -232,6 +239,11 @@ def invoice_create(request, order_id=None, book_id=None):
 
     # When we add a book for first time and we dont have an order
     if (not order_id) and book_id:
+        # Check the stock of product
+        if book.stock <= 0:
+            messages.error(request, 'Not enough stock!')
+            return redirect('staff:invoice_create')
+
         # if book.stock >=1:
         order = Order.objects.create(
                     user = request.user,
@@ -268,7 +280,13 @@ def invoice_create(request, order_id=None, book_id=None):
             # if the results has only one item, the item automaticaly added to invoice
             if len(results) == 1:
                 book = results.first()
-
+                # Check the stock of product
+                if book.stock <= 0:
+                    messages.error(request, 'Not enough stock!')
+                    if not order:
+                        return redirect('staff:invoice_create')
+                    if order:
+                        return redirect('staff:invoice_create', order.id)
                 # if the order has not created yet, we created it here
                 if not order:
                     order = Order.objects.create(
@@ -411,6 +429,9 @@ def orderline_update(request, order_id, orderline_id):
                 return redirect('staff:invoice_create', order.id)
 
             if update_form.cleaned_data['quantity'] != 0:
+                if product.stock <= update_form.cleaned_data['quantity']:
+                    messages.error(request, 'Not enough stock'+' The stock is{}'.format(product.stock))
+                    return redirect('staff:invoice_create', order.id)
                 order_line.quantity = update_form.cleaned_data['quantity']
 
                 # Update product stock
