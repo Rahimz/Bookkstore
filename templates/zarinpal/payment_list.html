@@ -1,0 +1,54 @@
+{% extends "_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Payment list' %} {% endblock %}
+
+{% block head %}
+<style>
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="sales" %}
+    </div>
+
+
+    <div class="col-md-10 ">
+      <h1 class="">{% trans 'Payment list' %}</h1>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">{% trans 'Client name' %}</th>
+            <th scope="col">{% trans 'Amount' %}</th>
+            <th scope="col">{% trans 'Paid' %}</th>
+            <th scope="col">{% trans 'Ref. ID' %}</th>
+            <th scope="col">{% trans 'URL' %}</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for pay in payments %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ pay.client_name }}</td>
+            <td>{{ pay.amount }}</td>
+            <td>{% if pay.paid %}&#10004{% else %}&#10008{% endif %}</td>
+            <td>{% if pay.paid %}{{ pay.ref_id }}{% endif %}</td>
+            <td><a href="{% url 'zarinpal:payment_link_request' pay.id %}">link</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+
+      </table>
+    </div>
+  </div> <!-- / end of row-->
+</div>
+</div>
+{% endblock %}
