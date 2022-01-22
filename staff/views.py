@@ -222,11 +222,17 @@ def invoice_create(request, order_id=None, book_id=None):
                 quantity = 1,
                 price = book.price,
             )
+
+            # Update product stock
+            book.stock -= 1
+            book.save()
         messages.success(request,'order line No. {} with {} is added'.format(order.id, book))
 
         return redirect('staff:invoice_create', order.id)
 
-    elif not order_id and book_id:
+    # When we add a book for first time and we dont have an order
+    if (not order_id) and book_id:
+        # if book.stock >=1:
         order = Order.objects.create(
                     user = request.user,
                     status = 'draft',
@@ -239,8 +245,14 @@ def invoice_create(request, order_id=None, book_id=None):
             quantity = 1,
             price = book.price,
         )
+
+        # Update product stock
+        book.stock -= 1
+        book.save()
         messages.success(request,'order line No. {} with {} is added'.format(order.id, book))
         return redirect('staff:invoice_create', order.id)
+        # else:
+        #     messages.error(request,'Not enough stock!')
 
     # ::# TODO: should refactor shome of the codes does not use
     if request.method == 'POST':
@@ -272,6 +284,10 @@ def invoice_create(request, order_id=None, book_id=None):
                     order_line.quantity += 1
                     order_line.save()
 
+                    # Update product stock
+                    book.stock -=1
+                    book.save()
+
                 # if the book is not in invoice we will create an invoice orderline
                 else:
                     order_line = OrderLine.objects.create(
@@ -280,6 +296,8 @@ def invoice_create(request, order_id=None, book_id=None):
                         quantity = 1,
                         price = book.price,
                     )
+                    book.stock -= 1
+                    book.save()
                 messages.success(request,'order line No. {} with {} is added'.format(order.id, book))
         else:
             pass
@@ -379,7 +397,7 @@ def orderline_update(request, order_id, orderline_id):
         update_form = InvoiceAddForm(data=request.POST)
         if update_form.is_valid():
             order_line = OrderLine.objects.get(pk=orderline_id)
-
+            product = order_line.product
 
             if update_form.cleaned_data['remove'] == True:
                 """
@@ -390,6 +408,11 @@ def orderline_update(request, order_id, orderline_id):
 
             if update_form.cleaned_data['quantity'] != 0:
                 order_line.quantity = update_form.cleaned_data['quantity']
+
+                # Update product stock
+                product.stock -= update_form.cleaned_data['quantity']
+                product.save()
+
             if update_form.cleaned_data['discount'] != 0:
                 order_line.discount = update_form.cleaned_data['discount']
             order_line.save()
