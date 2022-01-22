@@ -238,14 +238,14 @@ class Product(models.Model):
     #     null=True,
     # )
     store_positon = models.CharField(
-    max_length=8,
-    blank=True,
-    null=True
+        max_length=8,
+        blank=True,
+        null=True
     )
     vendor = models.CharField(
-    max_length=100,
-    null=True,
-    blank=True
+        max_length=100,
+        null=True,
+        blank=True
     )
     admin_note = models.TextField(
         blank=True,
