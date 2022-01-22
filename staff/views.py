@@ -403,6 +403,10 @@ def orderline_update(request, order_id, orderline_id):
                 """
                 remove an orde line if remove checkbox is clicked
                 """
+                # Update product stock
+                product.stock += order_line.quantity
+                product.save()
+
                 order_line.delete()
                 return redirect('staff:invoice_create', order.id)
 
