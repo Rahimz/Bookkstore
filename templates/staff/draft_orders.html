@@ -17,8 +17,7 @@
     <div class="col-md-10">
       <div>
         <h2 class="my-4">{% trans 'List of draft orders' %}</h2>
-
-
+        <a href="{% url 'tools:draft_order_export_excel' %}" class="my-2"><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto"></a>
         <table class="table table-striped">
           <thead>
             <tr>

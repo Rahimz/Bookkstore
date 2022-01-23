@@ -32,19 +32,6 @@ def order_export_excel(request, *args, **kwargs):
 
     wb = openpyxl.Workbook()
     sheet = wb.active
-    # c1 = sheet.cell(row = 1, column = 1)
-    # c1.value = "ANKIT"
-    #
-    # c2 = sheet.cell(row= 1 , column = 2)
-    # c2.value = "RAI"
-    #
-    # c3 = sheet['A2']
-    # c3.value = "RAHUL"
-    #
-    # c4 = sheet['B2']
-    # c4.value = "RAI"
-    # c1 = sheet.cell(row= 1, column= 1)
-    # c1.value = 'Order ID'
 
     headers = [
         'Order ID', 'Client', 'Client Phone', 'Created', 'Status',
@@ -69,11 +56,49 @@ def order_export_excel(request, *args, **kwargs):
             c.value = title_list[i]
 
 
-    filename = 'media/excel/approved-order-{}.xlsx'.format(datetime.now().isoformat(sep='-'))
+    filename = 'media/excel/approved-orders-{}.xlsx'.format(datetime.now().isoformat(sep='-'))
     wb.save(filename)
     excel = open(filename, 'rb')
     response = FileResponse(excel)
 
 
     return response
-    # return FileResponse(wb, as_attachment=True, filename='tets.xlsx')
+
+
+def draft_order_export_excel(request):
+    # TODO: Should mix with order_export_excel
+    orders = Order.objects.filter(status='draft')
+
+    wb = openpyxl.Workbook()
+    sheet = wb.active
+
+    headers = [
+        'Order ID', 'Client', 'Client Phone', 'Created', 'Status',
+        'billing_address', 'shipping_address', 'shipping_method',  'Created by',
+        'Total cost', 'Tota cost after discount', 'discount', 'Payable', 'paid',
+        'Customer notes', 'Weight', 'Is gift',
+    ]
+
+    for i in range(len(headers)):
+        c = sheet.cell(row = 1, column = i + 1 )
+        c.value = headers[i]
+
+
+    for count , order in enumerate(orders):
+        title_list = [ order.id, str(order.client), str(order.client_phone),
+             str(order.created,), order.status, order.billing_address, order.shipping_address,
+            order.shipping_method, str(order.user), order.total_cost, order.total_cost_after_discount, order.discount,
+            order.payable, order.paid, order.customer_note, order.weight, order.is_gift,
+        ]
+        for i in range(len(headers)):
+            c = sheet.cell(row = count + 2 , column = i + 1)
+            c.value = title_list[i]
+
+
+    filename = 'media/excel/draft-orders-{}.xlsx'.format(datetime.now().isoformat(sep='-'))
+    wb.save(filename)
+    excel = open(filename, 'rb')
+    response = FileResponse(excel)
+
+
+    return response
