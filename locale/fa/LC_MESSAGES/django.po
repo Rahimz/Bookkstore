@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-23 11:44+0330\n"
-"PO-Revision-Date: 2022-01-23 11:45+0330\n"
+"POT-Creation-Date: 2022-01-23 20:18+0330\n"
+"PO-Revision-Date: 2022-01-23 20:20+0330\n"
 "Last-Translator:   <rahimaghareb@yahoo.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -128,13 +128,13 @@ msgid "Not enough stock"
 msgstr "موجودی کافی نیست"
 
 #: staff/views.py:435 templates/cart/detail.html:17
-#: templates/staff/draft_orders.html:27
+#: templates/staff/draft_orders.html:26
 #: templates/staff/invoice_checkout.html:42
 #: templates/staff/invoice_create.html:53
 #: templates/staff/invoice_create.html:77
 #: templates/staff/invoice_create.html:78
 #: templates/staff/order_detail_for_admin.html:27
-#: templates/staff/orders.html:23 templates/staff/sold_products.html:20
+#: templates/staff/orders.html:24 templates/staff/sold_products.html:20
 #: templates/tools/pdf/invoice_pdf.html:30
 msgid "Quantity"
 msgstr "تعداد"
@@ -255,21 +255,21 @@ msgstr "رسانه‌های اجتماعی"
 
 #: templates/_base.html:190
 msgid "Order books in social media"
-msgstr "سفارش کتاب در شبکه‌های اجتماعی"
+msgstr "سفارش کتاب "
 
 #: templates/_base.html:203
 msgid "Bahman Daroshafaei in social media"
-msgstr "بهمن دارالشفایی در رسانه‌های اجتماعی"
+msgstr "بهمن دارالشفایی "
 
 #: templates/account/clients/client_add.html:18
-#: templates/staff/sidebar_staff.html:15 templates/staff/sidebar_staff.html:50
+#: templates/staff/sidebar_staff.html:15 templates/staff/sidebar_staff.html:49
 msgid "Add client"
 msgstr "اضافه کردن مشتری"
 
 #: templates/account/clients/client_add.html:22
 #: templates/staff/category_create.html:23
 #: templates/staff/category_create.html:24
-#: templates/staff/draft_orders.html:43
+#: templates/staff/draft_orders.html:42
 #: templates/staff/invoice_checkout.html:25
 #: templates/staff/invoice_create.html:40
 #: templates/staff/invoice_create.html:137
@@ -386,7 +386,7 @@ msgid "Unit price"
 msgstr "قیمت واحد"
 
 #: templates/cart/detail.html:20 templates/shop/product_detail.html:25
-#: templates/staff/draft_orders.html:28
+#: templates/staff/draft_orders.html:27
 #: templates/staff/invoice_checkout.html:44
 #: templates/staff/invoice_create.html:79 templates/staff/products.html:23
 #: templates/tools/pdf/invoice_pdf.html:29
@@ -752,7 +752,7 @@ msgstr "دوره چاپ"
 msgid "Size"
 msgstr "سایز"
 
-#: templates/shop/product_detail.html:91 templates/staff/orders.html:24
+#: templates/shop/product_detail.html:91 templates/staff/orders.html:25
 msgid "Weight"
 msgstr "وزن"
 
@@ -804,11 +804,11 @@ msgstr "ایجاد فاکتور"
 msgid "List of draft orders"
 msgstr "لیست سفارش‌های پیش‌نویس"
 
-#: templates/staff/draft_orders.html:26
+#: templates/staff/draft_orders.html:25
 msgid "Order ID"
 msgstr "شماره سفارش"
 
-#: templates/staff/draft_orders.html:29
+#: templates/staff/draft_orders.html:28
 #: templates/staff/invoice_checkout.html:45
 #: templates/staff/invoice_create.html:77
 #: templates/staff/invoice_create.html:80
@@ -817,7 +817,7 @@ msgstr "شماره سفارش"
 msgid "Discount"
 msgstr "تخفیف"
 
-#: templates/staff/draft_orders.html:30
+#: templates/staff/draft_orders.html:29
 #: templates/staff/invoice_checkout.html:46
 #: templates/staff/invoice_create.html:81
 msgid "Cost"
@@ -855,7 +855,7 @@ msgstr "فاکتور جدید"
 
 #: templates/staff/invoice_create.html:22
 #: templates/staff/order_detail_for_admin.html:18
-#: templates/staff/orders.html:22
+#: templates/staff/orders.html:23
 msgid "Client"
 msgstr "مشتری"
 
@@ -892,7 +892,7 @@ msgid "Order Status"
 msgstr "وضعیت سفارش"
 
 #: templates/staff/order_detail_for_admin.html:20
-#: templates/staff/orders.html:26
+#: templates/staff/orders.html:27
 msgid "Shipping method"
 msgstr "روش ارسال"
 
@@ -904,19 +904,19 @@ msgstr "یادداشت"
 msgid "List of orders"
 msgstr "لیست سفارش‌ها "
 
-#: templates/staff/orders.html:21 templates/zarinpal/fail.html:17
+#: templates/staff/orders.html:22 templates/zarinpal/fail.html:17
 msgid "Order No"
 msgstr "شماره سفارش"
 
-#: templates/staff/orders.html:25
+#: templates/staff/orders.html:26
 msgid "Location"
 msgstr "موقعیت"
 
-#: templates/staff/orders.html:27 templates/zarinpal/payment_list.html:30
+#: templates/staff/orders.html:28 templates/zarinpal/payment_list.html:30
 msgid "Paid"
 msgstr "پرداخت شده"
 
-#: templates/staff/orders.html:28
+#: templates/staff/orders.html:29
 msgid "Is a gift"
 msgstr "هدیه است"
 
@@ -981,7 +981,6 @@ msgstr "فاکتور خرید جدید"
 
 #: templates/staff/sidebar_staff.html:40 templates/staff/sold_products.html:7
 #: templates/staff/sold_products.html:16
-#| msgid "Add products"
 msgid "Sold products"
 msgstr "محصولات فروخته شده"
 
@@ -989,7 +988,7 @@ msgstr "محصولات فروخته شده"
 msgid "Warehouse Managment"
 msgstr "مدیریت انبار"
 
-#: templates/staff/sidebar_staff.html:49
+#: templates/staff/sidebar_staff.html:48
 msgid "List of clients"
 msgstr "لیست مشتریان"
 
