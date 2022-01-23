@@ -479,3 +479,25 @@ def category_list(request):
         'staff/categories.html',
         {'main_categories': main_categories }
     )
+
+
+def sold_products(request):
+    order_lines = OrderLine.objects.all()
+    # order_lines = OrderLine.objects.all().values_list(product.id, flat=True)
+    products = dict()
+    for item in order_lines:
+        # key = products.get(item.product.id)
+        # print(item.product.id)
+        if  item.product.name in products:
+            products[item.product.name] += item.quantity
+        else:
+            products[item.product.name] = item.quantity
+    products = sorted(products.items(), key=lambda x: x[1], reverse=True)
+    
+    return render(
+        request,
+        'staff/sold_products.html',
+        {'order_lines': order_lines,
+        'products':products,
+        }
+    )
