@@ -87,3 +87,9 @@ class CustomUser(AbstractUser):
         default=timezone.now,
         editable=False
     )
+
+    def __str__(self):
+        if self.first_name or self.last_name:
+            return ' - '.join([self.first_name, self.last_name])
+        else:
+            return self.username

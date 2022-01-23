@@ -4,5 +4,7 @@ from . import views
 app_name = 'tools'
 
 urlpatterns = [
-    path('pdf/<int:order_id>/', views.make_invoice_pdf, name="make_invoice_pdf")
+    path('pdf/<int:order_id>/', views.make_invoice_pdf, name="make_invoice_pdf"),
+
+    path('order-export/', views.order_export_excel, name="order_export_excel"),    
 ]
