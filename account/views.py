@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.contrib import messages
 import uuid
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ClientAddForm
 from .models import CustomUser
@@ -47,10 +48,9 @@ def edit(request):
             user_form.save()
 
             # https://docs.djangoproject.com/en/2.0/ref/contrib/messages/
-            messages.success(request,
-                            'User details updated successfully')
+            messages.success(request, _('User details updated successfully'))
         else:
-            messages.error(request, 'Error updating your user details')
+            messages.error(request, _('Error updating your user details'))
     else:
         user_form = UserEditForm(instance=request.user)
 
@@ -94,11 +94,11 @@ def client_add(request):
             new_client.password = str(uuid.uuid4())
             new_client.email = "{}@ketabedamavand.com".format(new_client.username)
             new_client.save()
-            messages.success(request, 'Client added!')
+            messages.success(request, _('Client added!'))
             return redirect('/account/clients')
         else:
             form = ClientAddForm(data=request.POST)
-            messages.error(request, 'the phone number is already used!')
+            messages.error(request, _('The phone number is already used!'))
     else:
         form = ClientAddForm()
     return render(

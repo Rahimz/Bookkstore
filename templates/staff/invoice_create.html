@@ -48,10 +48,13 @@
 
             {% for result in results %}
             <div class="col-md-4">
-              {% if order %}
-              <a href="{% url 'staff:invoice_add_book' order_id=order.id book_id=result.id %}" class="btn btn-sm btn-outline-success m-1">{{ result.name | truncatechars:50 }} - {{ result.publisher  }} - {{ result.price }}</a>
-              {% else %}
-              <a href="{% url 'staff:invoice_new_add_book' book_id=result.id %}" class="btn btn-sm btn-outline-success m-1">{{ result.name | truncatechars:50 }} - {{ result.publisher  }} - {{ result.price }}</a>
+
+              <a href="{% if order %}{% url 'staff:invoice_add_book' order_id=order.id book_id=result.id %}{% else %}{% url 'staff:invoice_new_add_book' book_id=result.id %}{% endif %}" class="btn btn-sm btn-outline-success m-1 fs-10 text-right">
+                {{ result.name | truncatechars:30 }} - {{ result.publisher | truncatechars:15 }} - {{ result.size }} - {{ result.cover_type }} - {% trans 'Quantity' %} {{ result.stock}} - {{ result.price }}
+              </a>
+              {% if result.has_other_prices %}
+                <a href="#" class="btn btn-sm btn-outline-success">{{ result.price_1 }}</a>
+                <a href="#" class="btn btn-sm btn-outline-warning">{{ result.price_used }}</a>
               {% endif %}
             </div>
             {% endfor %}

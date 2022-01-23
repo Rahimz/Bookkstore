@@ -16,7 +16,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ['price', 'available', 'stock',]
     prepopulated_fields = {'slug': ('name',)}
     ordering = ['name', 'created', 'updated']
-    search_fields = ['name', 'author']
+    search_fields = ['name', 'author', 'isbn']
 
 @admin.register(Good)
 class GoodAdmin(admin.ModelAdmin):

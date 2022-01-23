@@ -13,6 +13,8 @@
   <p><a href="{% url 'staff:invoice_create' %}">{% trans 'New invoice' %}</a></p>
   <p><a href="{% url 'staff:draft_orders' %}">{% trans 'List of draft orders' %}</a></p>
   <p><a href="{% url 'client_add' %}/#addClient" onclick="return popitup('/account/client_add/#addClient')" class="">{% trans 'Add client' %}</a></p>
+  <p><a href="{% url 'zarinpal:payment_create' %}">{% trans 'Create a payment link' %}</a></p>
+  <p><a href="{% url 'zarinpal:payment_list' %}">{% trans 'Payment list' %}</a></p>
 </div>
 {% endif %}
 
@@ -35,9 +37,9 @@
 
 {% if barName == "warehouse" %}
 <div class="sidebar drop_shadow border border-1 rounded-2">
+  <p><a href="{% url 'staff:sold_products' %}">{% trans 'Sold products' %}</a></p>
   <p><a href="#">{% trans 'Warehouse Managment' %}</a></p>
 
-</div>
 </div>
 {% endif %}
 

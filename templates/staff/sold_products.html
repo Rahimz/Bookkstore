@@ -1,0 +1,38 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block title %}{% trans 'Sold products' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="warehouse" %}
+    </div>
+    <div class="col-md-10">
+      <h2>{% trans 'Sold products'%}</h2>
+      <table class="table table-striped">
+        <thead>
+          <th scope="">{% trans 'Name' %}</th>
+          <th scope="">{% trans 'Quantity' %}</th>
+
+        </thead>
+        <tbody>
+          {% for item  in products %}
+          <tr>
+            {% for i in item %}
+            <td>{{ i }}</td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

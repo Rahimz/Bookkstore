@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from zeep import Client
 import requests
@@ -38,9 +38,12 @@ payment_data = {'id': 0}
 global_description = ''
 
 
-def send_form_request(request):
+def send_form_request(request, pay_id=None):
     request.session['paid'] = None
-    payment_id = payment_data['id']
+    if pay_id:
+        payment_id = pay_id
+    else:
+        payment_id = payment_data['id']
     payment = Payment.objects.get(pk=payment_id)
     request.session['payment_id'] = payment.id
     description = payment.client_name
@@ -77,14 +80,16 @@ def send_form_request(request):
 def form_verify(request):
     payment = None
 
-    payment_id = request.session['payment_id']
-    payment = Payment.objects.get(pk=payment_id)
-    amount = payment.amount
+
 
     t_status = request.GET.get('code')
     t_authority = request.GET['Authority']
 
     if request.GET.get('Status') == 'OK':
+        payment_id = request.session['payment_id']
+        payment = Payment.objects.get(pk=payment_id)
+        amount = payment.amount
+
         req_header = {"accept": "application/json",
                       "content-type": "application/json'"}
         req_data = {
@@ -274,4 +279,30 @@ def form_payment(request):
         request,
         'zarinpal/form_payment.html',
         {'form': form}
+    )
+
+
+def payment_create(request):
+    form = PaymentForm()
+    if request.method == 'POST':
+        form = PaymentForm(data=request.POST)
+        if form.is_valid():
+            new_payment = form.save()
+            return redirect('zarinpal:payment_list')
+    else:
+        form = PaymentForm()
+
+    return render(
+        request,
+        'zarinpal/payment_create.html',
+        {'form': form}
+    )
+
+
+def payment_list(request):
+    payments = Payment.objects.all()
+    return render(
+        request,
+        'zarinpal/payment_list.html',
+        {'payments': payments}
     )

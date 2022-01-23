@@ -1,0 +1,43 @@
+{% extends "_base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Payment link create' %} {% endblock %}
+
+{% block head %}
+<style>
+  #zarinpal {
+    margin: auto
+  }
+
+  #zarinpal img {
+    width: 80px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="sales" %}
+    </div>
+
+
+    <div class="col-md-8 ">
+      <h1 class="">{% trans 'Payment link create' %}</h1>
+      <h3>{% trans 'Type your payment amount in Rial' %}</h3>
+      <form class="" action="." method="post">
+        {{ form | crispy }}
+        {% csrf_token %}
+        <input class="my-3 btn btn-outline-secondary" type="submit" name="" value="{% trans 'Submit' %}">
+      </form>
+    </div>
+    <div id="zarinpal" class="col-md-2">
+      <script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></script>
+    </div>
+  </div> <!-- / end of row-->
+</div>
+</div>
+{% endblock %}

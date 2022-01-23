@@ -60,29 +60,17 @@
     </tfoot>
   </table>
   <br>
-  <p>{{ order.token }}</p>
+  <p class="ending">{{ order.token }}</p>
 
   {% comment %}
   <span class="{% if order.paid %}paid{% else %}pending{% endif %}">
     {% if order.paid %}Paid{% else %}{% trans 'Pending payment' %}{% endif %}
   </span>
   {% endcomment %}
-  <br>
-  <br>
-  <br>
-  <br>
-  <div class="">
-    <table>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    </table>
 
-  </div>
-  <div>
-    <p></p>
-  </div>
+
+
+
+
 </body>
 </html>

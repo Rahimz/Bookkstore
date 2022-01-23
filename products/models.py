@@ -231,6 +231,22 @@ class Product(models.Model):
     has_other_prices = models.BooleanField(
         default=False
     )
+    price_1 = models.DecimalField(
+        max_digits=10,
+        decimal_places=0,
+        default=0
+    )
+    stock_1 = models.IntegerField(
+        default=0,
+    )
+    price_used = models.DecimalField(
+        max_digits=10,
+        decimal_places=0,
+        default=0
+    )
+    stock_used =  models.IntegerField(
+        default=0,
+    )
     # discount = models.ForeignKey(
     #     Coupon,
     #     on_delete=models.SET_NULL,
@@ -238,14 +254,14 @@ class Product(models.Model):
     #     null=True,
     # )
     store_positon = models.CharField(
-    max_length=8,
-    blank=True,
-    null=True
+        max_length=8,
+        blank=True,
+        null=True
     )
     vendor = models.CharField(
-    max_length=100,
-    null=True,
-    blank=True
+        max_length=100,
+        null=True,
+        blank=True
     )
     admin_note = models.TextField(
         blank=True,
