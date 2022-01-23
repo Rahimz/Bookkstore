@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-23 09:04+0330\n"
+"POT-Creation-Date: 2022-01-23 11:44+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -133,7 +133,8 @@ msgstr ""
 #: templates/staff/invoice_create.html:77
 #: templates/staff/invoice_create.html:78
 #: templates/staff/order_detail_for_admin.html:27
-#: templates/staff/orders.html:23 templates/tools/pdf/invoice_pdf.html:30
+#: templates/staff/orders.html:23 templates/staff/sold_products.html:20
+#: templates/tools/pdf/invoice_pdf.html:30
 msgid "Quantity"
 msgstr ""
 
@@ -260,7 +261,7 @@ msgid "Bahman Daroshafaei in social media"
 msgstr ""
 
 #: templates/account/clients/client_add.html:18
-#: templates/staff/sidebar_staff.html:15 templates/staff/sidebar_staff.html:49
+#: templates/staff/sidebar_staff.html:15 templates/staff/sidebar_staff.html:50
 msgid "Add client"
 msgstr ""
 
@@ -283,7 +284,7 @@ msgstr ""
 #: templates/staff/invoice_create.html:23
 #: templates/staff/invoice_create.html:75
 #: templates/staff/order_detail_for_admin.html:26
-#: templates/staff/products.html:21
+#: templates/staff/products.html:21 templates/staff/sold_products.html:19
 msgid "Name"
 msgstr ""
 
@@ -960,11 +961,16 @@ msgstr ""
 msgid "New purchase invoice"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:40
+#: templates/staff/sidebar_staff.html:40 templates/staff/sold_products.html:7
+#: templates/staff/sold_products.html:16
+msgid "Sold products"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:41
 msgid "Warehouse Managment"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:48
+#: templates/staff/sidebar_staff.html:49
 msgid "List of clients"
 msgstr ""
 
