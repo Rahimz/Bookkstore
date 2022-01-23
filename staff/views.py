@@ -8,6 +8,7 @@ from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
 import uuid
 from datetime import datetime, timedelta
+from django.utils.translation import gettext_lazy as _
 
 from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm
 from products.models import Product, Category
@@ -91,12 +92,12 @@ def product_create(request):
             product.category = Category.objects.get(name=form.cleaned_data['category'])
 
             product.save()
-            messages.success(request, 'Product is created!')
+            messages.success(request, _('Product is created!'))
             if 'another' in request.POST:
                 return HttpResponseRedirect(reverse('staff:product_create'))
             return HttpResponseRedirect(reverse('staff:products'))
         else:
-            messages.error(request, 'Form is not valid')
+            messages.error(request, _('Form is not valid'))
     else:
         form = ProductCreateForm()
     return render(
@@ -112,12 +113,12 @@ def category_create(request):
         if form.is_valid():
             category = form.save(commit=False)
             category.save()
-            messages.success(request, 'Category is created!')
+            messages.success(request, _('Category is created!'))
             if 'another' in request.POST:
                 return HttpResponseRedirect(reverse('staff:category_create'))
             return HttpResponseRedirect(reverse('staff:products'))
         else:
-            messages.error(request, 'Form is not valid')
+            messages.error(request, _('Form is not valid'))
     else:
         form = CategoryCreateForm()
     return render(
@@ -147,7 +148,7 @@ class ProductCreate(View):
             if form.is_valid:
                 product = form.save(commit=False)
                 product.save()
-                messages.success(request, 'Product is created!')
+                messages.success(request, _('Product is created!'))
         if "cancel" in request.POST:
             return HttpResponseRedirect(reverse('staff:products'))
         return super(ProductCreate, self).post(request, *args, **kwargs)
@@ -164,10 +165,10 @@ class ProductCreate(View):
             form = ProductCreateForm()
             if form.is_valid():
                 product = form.save()
-                messages.success(request, 'Product created')
+                messages.success(request, _('Product created'))
                 return HttpResponseRedirect(reverse('shop:home'))
             else:
-                messages.error(request, 'Product dose not created!')
+                messages.error(request, _('Product does not created!'))
         else:
             form = ProductCreateForm()
         return render(
@@ -214,7 +215,7 @@ def invoice_create(request, order_id=None, book_id=None):
 
         # Check the stock of product
         if book.stock <= 0:
-            messages.error(request, 'Not enough stock!')
+            messages.error(request, _('Not enough stock!'))
             return redirect('staff:invoice_create', order_id)
 
         # add book to invoice
@@ -233,7 +234,7 @@ def invoice_create(request, order_id=None, book_id=None):
             # Update product stock
             book.stock -= 1
             book.save()
-        messages.success(request,'order line No. {} with {} is added'.format(order.id, book))
+        messages.success(request, _('Product is added to invoice'))
 
         return redirect('staff:invoice_create', order.id)
 
@@ -241,7 +242,7 @@ def invoice_create(request, order_id=None, book_id=None):
     if (not order_id) and book_id:
         # Check the stock of product
         if book.stock <= 0:
-            messages.error(request, 'Not enough stock!')
+            messages.error(request, _('Not enough stock!'))
             return redirect('staff:invoice_create')
 
         # if book.stock >=1:
@@ -250,7 +251,7 @@ def invoice_create(request, order_id=None, book_id=None):
                     status = 'draft',
                     shipping_method = 'pickup',
                 )
-        messages.success(request, 'order No. {} is created'.format(order.id))
+        messages.success(request, _('Order is created') + ' : {}'.format(order.id))
         order_line = OrderLine.objects.create(
             order = order,
             product = book,
@@ -261,7 +262,7 @@ def invoice_create(request, order_id=None, book_id=None):
         # Update product stock
         book.stock -= 1
         book.save()
-        messages.success(request,'order line No. {} with {} is added'.format(order.id, book))
+        messages.success(request,  _('Product is added to invoice'))
         return redirect('staff:invoice_create', order.id)
         # else:
         #     messages.error(request,'Not enough stock!')
@@ -282,7 +283,7 @@ def invoice_create(request, order_id=None, book_id=None):
                 book = results.first()
                 # Check the stock of product
                 if book.stock <= 0:
-                    messages.error(request, 'Not enough stock!')
+                    messages.error(request, _('Not enough stock!'))
                     if not order:
                         return redirect('staff:invoice_create')
                     if order:
@@ -294,7 +295,7 @@ def invoice_create(request, order_id=None, book_id=None):
                                 status = 'draft',
                                 shipping_method = 'pickup',
                             )
-                    messages.success(request, 'order No. {} is created'.format(order.id))
+                    messages.success(request,  _('Order is created') + ' : {}'.format(order.id))
 
                 # if the book is added in the invoice we will update the quantity in invoice
                 if book.pk in book_ids:
@@ -316,7 +317,7 @@ def invoice_create(request, order_id=None, book_id=None):
                     )
                     book.stock -= 1
                     book.save()
-                messages.success(request,'order line No. {} with {} is added'.format(order.id, book))
+                messages.success(request, _('Product is added to invoice'))
         else:
             pass
 
@@ -380,17 +381,17 @@ def invoice_checkout(request, order_id):
         checkout_form = OrderAdminCheckoutForm(data=request.POST)
         client_search_form = ClientSearchForm(data=request.POST)
         if client_search_form.is_valid():
-            messages.debug(request, 'client_search_form.is_valid')
+            # messages.debug(request, 'client_search_form.is_valid')
             query = client_search_form.cleaned_data['query']
             try:
                 client = CustomUser.objects.get(
                     Q(phone=query) | Q(first_name=query) | Q(last_name=query) | Q(username=query)
                     )
-                messages.success(request, 'client found')
+                messages.success(request, _('Client found'))
             except:
                 pass
         if checkout_form.is_valid():
-            messages.debug(request, 'checkout_form.is_valid')
+            # messages.debug(request, 'checkout_form.is_valid')
             order.client = client
             order.paid = checkout_form.cleaned_data['paid']
             order.customer_note = checkout_form.cleaned_data['customer_note']
@@ -398,7 +399,7 @@ def invoice_checkout(request, order_id):
             order.status = 'approved'
             shipping_method = 'pickup'
             order.save()
-            messages.success(request, 'Order approved')
+            messages.success(request, _('Order approved'))
             return redirect('staff:order_list', 'all')
     return render(
         request,
@@ -431,7 +432,7 @@ def orderline_update(request, order_id, orderline_id):
             if update_form.cleaned_data['quantity'] != 0:
                 if update_form.cleaned_data['quantity'] > order_line.quantity:
                     if update_form.cleaned_data['quantity'] > order_line.quantity + product.stock:
-                        messages.error(request, 'Not enough stock'+' The stock is{}'.format(product.stock))
+                        messages.error(request, _('Not enough stock') + _('Quantity') + ' {}'.format(product.stock))
                         return redirect('staff:invoice_create', order.id)
                     else:
                         # Update product stock

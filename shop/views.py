@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from django.utils.translation import gettext_lazy as _
 
 from products.models import Product, Good, Category
 from search.forms import SearchForm
@@ -91,7 +92,7 @@ def temp_home(request):
 
 def category_list(request):
     main_categories = Category.objects.filter(active=True, parent_category=None)
-    
+
     return render(
         request,
         'shop/category_list.html',
