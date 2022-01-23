@@ -80,14 +80,16 @@ def send_form_request(request, pay_id=None):
 def form_verify(request):
     payment = None
 
-    payment_id = request.session['payment_id']
-    payment = Payment.objects.get(pk=payment_id)
-    amount = payment.amount
+
 
     t_status = request.GET.get('code')
     t_authority = request.GET['Authority']
 
     if request.GET.get('Status') == 'OK':
+        payment_id = request.session['payment_id']
+        payment = Payment.objects.get(pk=payment_id)
+        amount = payment.amount
+
         req_header = {"accept": "application/json",
                       "content-type": "application/json'"}
         req_data = {
