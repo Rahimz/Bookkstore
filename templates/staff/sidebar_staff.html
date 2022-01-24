@@ -10,7 +10,7 @@
 
 {% if barName == "sales" %}
 <div class="sidebar drop_shadow border border-1 rounded-2">
-  <p><a href="{% url 'staff:invoice_create' %}">{% trans 'New invoice' %}</a></p>
+  <p><a href="{% url 'staff:invoice_create' %}" accesskey="a" data-bs-toggle="tooltip" data-bs-placement="left" title="alt + shift + a">{% trans 'New invoice' %}</a></p>
   <p><a href="{% url 'staff:draft_orders' %}">{% trans 'List of draft orders' %}</a></p>
   <p><a href="{% url 'client_add' %}/#addClient" onclick="return popitup('/account/client_add/#addClient')" class="">{% trans 'Add client' %}</a></p>
   <p><a href="{% url 'zarinpal:payment_create' %}">{% trans 'Create a payment link' %}</a></p>
@@ -46,7 +46,7 @@
 {% if barName == "clients" %}
 <div class="sidebar drop_shadow border border-1 rounded-2">
   <p><a href="{% url 'client_list' %}">{% trans 'List of clients' %}</a></p>
-  <p><a href="{% url 'client_add' %}">{% trans 'Add client' %}</a></p>
+  <p><a href="{% url 'client_add' %}" accesskey="c" data-bs-toggle="tooltip" data-bs-placement="left" title="alt + shift + c">{% trans 'Add client' %}</a></p>
 
 </div>
 {% endif %}
