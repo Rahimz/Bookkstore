@@ -4,14 +4,16 @@ from django.conf import settings
 from django.http import HttpResponse, FileResponse
 from django.template.loader import render_to_string
 from django.contrib.admin.views.decorators import staff_member_required
-import io
+from io import BytesIO
 from django.db.models import Q
 from datetime import datetime
+from django.core.mail import EmailMessage, mail_admins
 
 import weasyprint
 import openpyxl
 
 from orders.models import Order, OrderLine
+from zarinpal.models import Payment
 
 
 @staff_member_required
@@ -102,3 +104,28 @@ def draft_order_export_excel(request):
 
 
     return response
+
+
+def email_to_admin(paymaent_id):
+    """
+    Function to send email to admin when a payment is done.
+    """
+    payment = Payment.objects.get(pk=paymaent_id)
+
+    #email body
+    subject = 'Successful payment in Ketabedamavand.com {}'.format(payment.id)
+    # message = 'A successful payment registered at Zarinpal: \nPayment ID.: {} \nName: {} \nPhone: {} \nAmount: {:,} \n Date & Time:{} \n Ref ID.:{}'.format(
+    #     payment.id,
+    #     payment.client_name,
+    #     payment.client_phone,
+    #     payment.amount,
+    #     payment.created,
+    #     payment.ref_id)
+    message = f"A successful payment registered at Zarinpal: \nPayment ID.: {payment.id} \nAmount: {payment.amount:,} \n\nName: {payment.client_name} \nPhone: {payment.client_phone} \n\nDate & Time:{payment.created.isoformat(sep='-')} \n Ref ID.:{payment.ref_id}"
+
+    # send email
+    mail_admins(
+        subject,
+        message,
+        fail_silently=False
+        )
