@@ -432,7 +432,7 @@ def orderline_update(request, order_id, orderline_id):
             if update_form.cleaned_data['quantity'] != 0:
                 if update_form.cleaned_data['quantity'] > order_line.quantity:
                     if update_form.cleaned_data['quantity'] > order_line.quantity + product.stock:
-                        messages.error(request, _('Not enough stock') + _('Quantity') + ' {}'.format(product.stock))
+                        messages.error(request, _('Not enough stock') + ' ' + _('Quantity') + ' {}'.format(product.stock))
                         return redirect('staff:invoice_create', order.id)
                     else:
                         # Update product stock
@@ -493,7 +493,7 @@ def sold_products(request):
         else:
             products[item.product.name] = item.quantity
     products = sorted(products.items(), key=lambda x: x[1], reverse=True)
-    
+
     return render(
         request,
         'staff/sold_products.html',

@@ -114,14 +114,18 @@
     </div>
     {% endcomment %}
     {% if messages %}
-    <ul class="messages">
-      {% for message in messages %}
-      <li class="{{ message.tags }}">
-        {{ message|safe }}
-        <a href="#" class="close">x</a>
-      </li>
-      {% endfor %}
-    </ul>
+    <div  id="hideme" class="hide-class">
+
+      <ul  class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">
+          {{ message|safe }}
+          <a href="#" class="close" class="toast" role="alert" aria-live="assertive" aria-atomic="true">x</a>
+        </li>
+        {% endfor %}
+      </ul>
+
+    </div>
     {% endif %}
     {% if user.is_staff %}
     <div class="m-2">
@@ -158,22 +162,22 @@
         <div class="col text-light">
           <p class="fw-bold">{% trans 'Ketabe Damavand' %}</p>
           <p>{% trans 'Address' %} :
-          <br><span>{% trans 'No. Edward Brown St.' %}</span>
-          <br><span>{% trans '16 Azar St.' %}</span>
-          <br><span>{% trans 'Tehran, Iran' %}</span>
+            <br><span>{% trans 'No. Edward Brown St.' %}</span>
+            <br><span>{% trans '16 Azar St.' %}</span>
+            <br><span>{% trans 'Tehran, Iran' %}</span>
           </p>
           <p>{% trans 'Phone' %} :
-          <br><span>{% trans 'Bookstore' %} :</span>
-          <br><a href="tel:+989123487091" dir="ltr">+98 912 3487091</a>
-          <br>
-          <br>
-          <span>{% trans 'Orders followup' %} :</span>
-          <br><a href="tel:+989123487091" dir="ltr">+98 912 3487091</a>
+            <br><span>{% trans 'Bookstore' %} :</span>
+            <br><a href="tel:+989123487091" dir="ltr">+98 912 3487091</a>
+            <br>
+            <br>
+            <span>{% trans 'Orders followup' %} :</span>
+            <br><a href="tel:+989123487091" dir="ltr">+98 912 3487091</a>
           <p>
             <a href="mailto:info@ketabedamavand.com">info@ketabedamavand.com</a>
           </p>
 
-        </p>
+          </p>
         </div>
         <div class="col text-light social-network">
           <p class="fw-bold">{% trans 'Social Media' %}</p>
@@ -219,6 +223,13 @@
   </footer>
 
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  {% comment %}
+  <script>
+    setTimeout(function() {
+      document.getElementById('hideme').className = 'waa';
+    }, 2500);
+  </script>
+  {% endcomment %}
   {% block script %}
   {% endblock %}
 </body>

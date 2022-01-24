@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-23 20:18+0330\n"
+"POT-Creation-Date: 2022-01-24 11:20+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -162,101 +162,101 @@ msgstr ""
 msgid "items in cart"
 msgstr ""
 
-#: templates/_base.html:130 templates/staff/sales.html:7
+#: templates/_base.html:134 templates/staff/sales.html:7
 msgid "Sales"
 msgstr ""
 
-#: templates/_base.html:131 templates/staff/order_create.html:7
+#: templates/_base.html:135 templates/staff/order_create.html:7
 #: templates/staff/order_detail_for_admin.html:7 templates/staff/orders.html:7
 msgid "Orders"
 msgstr ""
 
-#: templates/_base.html:132
+#: templates/_base.html:136
 msgid "Purchase"
 msgstr ""
 
-#: templates/_base.html:133 templates/shop/product_detail.html:108
+#: templates/_base.html:137 templates/shop/product_detail.html:121
 #: templates/staff/warehouse.html:7
 msgid "Warehouse"
 msgstr ""
 
-#: templates/_base.html:134 templates/staff/products.html:7
+#: templates/_base.html:138 templates/staff/products.html:7
 msgid "Products"
 msgstr ""
 
-#: templates/_base.html:135 templates/account/clients/client_add.html:9
+#: templates/_base.html:139 templates/account/clients/client_add.html:9
 #: templates/account/clients/client_list.html:7
 #: templates/account/clients/client_list.html:16
 msgid "Clients"
 msgstr ""
 
-#: templates/_base.html:137
+#: templates/_base.html:141
 msgid "Admin"
 msgstr ""
 
-#: templates/_base.html:138
+#: templates/_base.html:142
 msgid "Rosetta"
 msgstr ""
 
-#: templates/_base.html:154
+#: templates/_base.html:158
 msgid "How to order books"
 msgstr ""
 
-#: templates/_base.html:155
+#: templates/_base.html:159
 msgid "Website rules"
 msgstr ""
 
-#: templates/_base.html:156
+#: templates/_base.html:160
 msgid "Q&A"
 msgstr ""
 
-#: templates/_base.html:157
+#: templates/_base.html:161
 msgid "Contact us"
 msgstr ""
 
-#: templates/_base.html:161 templates/_base.html:183 templates/_base.html:218
+#: templates/_base.html:165 templates/_base.html:187 templates/_base.html:222
 #: templates/tools/pdf/invoice_pdf.html:7
 msgid "Ketabe Damavand"
 msgstr ""
 
-#: templates/_base.html:162
+#: templates/_base.html:166
 msgid "Address"
 msgstr ""
 
-#: templates/_base.html:163
+#: templates/_base.html:167
 msgid "No. Edward Brown St."
 msgstr ""
 
-#: templates/_base.html:164
+#: templates/_base.html:168
 msgid "16 Azar St."
 msgstr ""
 
-#: templates/_base.html:165
+#: templates/_base.html:169
 msgid "Tehran, Iran"
 msgstr ""
 
-#: templates/_base.html:167 templates/account/clients/client_list.html:22
+#: templates/_base.html:171 templates/account/clients/client_list.html:22
 #: templates/staff/invoice_create.html:23
 msgid "Phone"
 msgstr ""
 
-#: templates/_base.html:168
+#: templates/_base.html:172
 msgid "Bookstore"
 msgstr ""
 
-#: templates/_base.html:172
+#: templates/_base.html:176
 msgid "Orders followup"
 msgstr ""
 
-#: templates/_base.html:181
+#: templates/_base.html:185
 msgid "Social Media"
 msgstr ""
 
-#: templates/_base.html:190
+#: templates/_base.html:194
 msgid "Order books in social media"
 msgstr ""
 
-#: templates/_base.html:203
+#: templates/_base.html:207
 msgid "Bahman Daroshafaei in social media"
 msgstr ""
 
@@ -384,7 +384,7 @@ msgid "Unit price"
 msgstr ""
 
 #: templates/cart/detail.html:20 templates/shop/product_detail.html:25
-#: templates/staff/draft_orders.html:27
+#: templates/shop/product_detail.html:114 templates/staff/draft_orders.html:27
 #: templates/staff/invoice_checkout.html:44
 #: templates/staff/invoice_create.html:79 templates/staff/products.html:23
 #: templates/tools/pdf/invoice_pdf.html:29
@@ -443,10 +443,9 @@ msgstr ""
 msgid "Checkout"
 msgstr ""
 
-#: templates/home.html:9 templates/shop/product_detail.html:7
-#: templates/temp_home.html:7 templates/zarinpal/fail.html:33
-#: templates/zarinpal/form_fail.html:31 templates/zarinpal/form_success.html:27
-#: templates/zarinpal/success.html:27
+#: templates/home.html:9 templates/temp_home.html:7
+#: templates/zarinpal/fail.html:33 templates/zarinpal/form_fail.html:31
+#: templates/zarinpal/form_success.html:27 templates/zarinpal/success.html:27
 msgid "Home"
 msgstr ""
 
@@ -704,7 +703,7 @@ msgstr ""
 msgid "Publisher"
 msgstr ""
 
-#: templates/shop/product_detail.html:34 templates/shop/product_detail.html:129
+#: templates/shop/product_detail.html:34 templates/shop/product_detail.html:143
 msgid "Add to cart"
 msgstr ""
 
@@ -732,36 +731,81 @@ msgstr ""
 msgid "Edition"
 msgstr ""
 
-#: templates/shop/product_detail.html:90
+#: templates/shop/product_detail.html:83
+msgid "Number of pages"
+msgstr ""
+
+#: templates/shop/product_detail.html:84
+msgid "Age range"
+msgstr ""
+
+#: templates/shop/product_detail.html:93
 msgid "Size"
 msgstr ""
 
-#: templates/shop/product_detail.html:91 templates/staff/orders.html:25
+#: templates/shop/product_detail.html:94 templates/staff/orders.html:25
 msgid "Weight"
 msgstr ""
 
-#: templates/shop/product_detail.html:92
+#: templates/shop/product_detail.html:95
 msgid "Cover type"
 msgstr ""
 
-#: templates/shop/product_detail.html:104
-msgid "zero stock"
+#: templates/shop/product_detail.html:96
+msgid "Latin name"
 msgstr ""
 
-#: templates/shop/product_detail.html:105
-msgid "zero stock limit"
-msgstr ""
-
-#: templates/shop/product_detail.html:106
-msgid "admin note"
-msgstr ""
-
-#: templates/shop/product_detail.html:107
-msgid "Bookstore position"
+#: templates/shop/product_detail.html:97
+msgid "Author latin name"
 msgstr ""
 
 #: templates/shop/product_detail.html:109
+#: templates/shop/product_detail.html:115
+msgid "Stock"
+msgstr ""
+
+#: templates/shop/product_detail.html:110
+msgid "Zero stock"
+msgstr ""
+
+#: templates/shop/product_detail.html:111
+msgid "Zero stock limit"
+msgstr ""
+
+#: templates/shop/product_detail.html:112
+msgid "Product type"
+msgstr ""
+
+#: templates/shop/product_detail.html:113
+msgid "Has other prices"
+msgstr ""
+
+#: templates/shop/product_detail.html:116
+msgid "Price used"
+msgstr ""
+
+#: templates/shop/product_detail.html:117
+msgid "Stock used"
+msgstr ""
+
+#: templates/shop/product_detail.html:118
+msgid "Bookstore position"
+msgstr ""
+
+#: templates/shop/product_detail.html:119
+msgid "Vendor"
+msgstr ""
+
+#: templates/shop/product_detail.html:120
+msgid "Admin note"
+msgstr ""
+
+#: templates/shop/product_detail.html:122
 msgid "Just for online sales"
+msgstr ""
+
+#: templates/shop/product_detail.html:123
+msgid "Just for store sales"
 msgstr ""
 
 #: templates/staff/category_create.html:8
@@ -1074,16 +1118,16 @@ msgstr ""
 msgid "We will contact you to send your order"
 msgstr ""
 
-#: zarinpal/views.py:111 zarinpal/views.py:224
+#: zarinpal/views.py:115 zarinpal/views.py:231
 msgid ""
 "Transaction success.\n"
 "RefID: "
 msgstr ""
 
-#: zarinpal/views.py:124 zarinpal/views.py:242
+#: zarinpal/views.py:131 zarinpal/views.py:249
 msgid "Transaction submitted : "
 msgstr ""
 
-#: zarinpal/views.py:145 zarinpal/views.py:263
+#: zarinpal/views.py:152 zarinpal/views.py:270
 msgid "Transaction failed or canceled by user"
 msgstr ""
