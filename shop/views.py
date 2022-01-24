@@ -92,9 +92,10 @@ def temp_home(request):
 
 def category_list(request):
     main_categories = Category.objects.filter(active=True, parent_category=None)
-
+    search_form = SearchForm()
     return render(
         request,
         'shop/category_list.html',
-        {'main_categories': main_categories }
+        {'main_categories': main_categories,
+        'search_form': search_form }
     )
