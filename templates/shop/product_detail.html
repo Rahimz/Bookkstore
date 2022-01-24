@@ -4,7 +4,7 @@
 
 {% load static %}
 
-{% block title %}{% trans 'Home' %}{% endblock %}
+{% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
 <div class="container-fluid overflow-hidden">
@@ -12,7 +12,7 @@
     <div class="row gy-2">
       <div class="col-md-4">
         <div class="border drop_shadow rounded-2">
-          <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top p-4" alt="{{ product.image_alt }}">
+          <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}" itemprop="image"{% endif %} class="card-img-top p-4" alt="{{ product.image_alt }}">
         </div>
         <span class="badge rounded-pill ms-4 mt-2 {% if product.state == 'new' %}bg-success{% else %}bg-warning{% endif %}">{{ product.state | capfirst }}</span>
       </div>
@@ -76,9 +76,12 @@
             <div class="col">
               <div class="" id="info-1">
                 <div class="card card-body">
-                  <p>{% trans 'ISBN' %} : {{ product.isbn }}</p>
-                  <p>{% trans 'Publish year' %} : {{ product.publish_year }}</p>
-                  <p>{% trans 'Edition' %} : {{ product.edition }}</p>
+                  <p itemprop="isb">{% trans 'ISBN' %} : {{ product.isbn }}</p>
+                  <p itemprop="copyrightYear">{% trans 'Publish year' %} : {{ product.publish_year }}</p>
+                  <p itemprop="bookEdition">{% trans 'Edition' %} : {{ product.edition }}</p>
+                  <p itemprop="numberOfPages">{% trans 'Number of pages' %} : {{ product.page_number }}</p>
+                  <p>{% trans 'Age range' %} : {{ product.age_range }}</p>
+
                 </div>
               </div>
             </div>
@@ -86,9 +89,11 @@
             <div class="col">
               <div class="collapse" id="info-2">
                 <div class="card card-body">
-                  <p>{% trans 'Size' %} : {{ product.size }}</p>
-                  <p>{% trans 'Weight' %} : {{ product.weight }}</p>
+                  <p itemprop="size">{% trans 'Size' %} : {{ product.size }}</p>
+                  <p itemprop="weight">{% trans 'Weight' %} : {{ product.weight }}</p>
                   <p>{% trans 'Cover type' %} : {{ product.cover_type }}</p>
+                  <p>{% trans 'Latin name' %} : {{ product.latin_name }}</p>
+                  <p>{% trans 'Author latin name' %} : {{ product.author_latin_name }}</p>
                 </div>
               </div>
             </div>
@@ -100,12 +105,21 @@
             <div class="col">
               <div class="collapse" id="admin-info">
                 <div class="card card-body">
-                  <p>{% trans 'zero stock' %} : {{ product.zero_stock }}</p>
-                  <p>{% trans 'zero stock limit' %} : {{ product.zero_stock_limit }}</p>
-                  <p>{% trans 'admin note' %} : {{ product.admin_note  }}</p>
-                  <p>{% trans 'Bookstore position' %} : </p>
+                  <p>{% trans 'Stock' %} : {{ product.stock }}</p>
+                  <p>{% trans 'Zero stock' %} : {{ product.zero_stock }}</p>
+                  <p>{% trans 'Zero stock limit' %} : {{ product.zero_stock_limit }}</p>
+                  <p>{% trans 'Product type' %} : {{ product.product_type  }}</p>
+                  <p>{% trans 'Has other prices' %} : {{ product.has_other_prices  }}</p>
+                  <p>{% trans 'Price' %} : {{ product.price_1  }}</p>
+                  <p>{% trans 'Stock' %} : {{ product.stock_1  }}</p>
+                  <p>{% trans 'Price used' %} : {{ product.price_used  }}</p>
+                  <p>{% trans 'Stock used' %} : {{ product.stock_used  }}</p>
+                  <p>{% trans 'Bookstore position' %} : {{ product.store_positon  }}</p>
+                  <p>{% trans 'Vendor' %} : {{ product.vendor  }}</p>
+                  <p>{% trans 'Admin note' %} : {{ product.admin_note  }}</p>
                   <p>{% trans 'Warehouse' %} : </p>
-                  <p>{% trans 'Just for online sales' %} : </p>
+                  <p>{% trans 'Just for online sales' %} : {{ product.available_online  }}</p>
+                  <p>{% trans 'Just for store sales' %} : {{ product.available_in_store  }}</p>
                 </div>
               </div>
             </div>
