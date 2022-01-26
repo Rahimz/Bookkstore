@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-24 11:20+0330\n"
-"PO-Revision-Date: 2022-01-24 11:31+0330\n"
+"POT-Creation-Date: 2022-01-26 14:25+0330\n"
+"PO-Revision-Date: 2022-01-26 14:25+0330\n"
 "Last-Translator:   <rahimaghareb@yahoo.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -135,7 +135,7 @@ msgstr "موجودی کافی نیست"
 #: templates/staff/invoice_create.html:78
 #: templates/staff/order_detail_for_admin.html:27
 #: templates/staff/orders.html:24 templates/staff/sold_products.html:20
-#: templates/tools/pdf/invoice_pdf.html:30
+#: templates/tools/pdf/invoice_pdf.html:31
 msgid "Quantity"
 msgstr "تعداد"
 
@@ -154,7 +154,7 @@ msgstr "لوگو کتاب دماوند "
 msgid "Children & Youth"
 msgstr "کودک و نوجوان"
 
-#: templates/_base.html:62 templates/shop/category_list.html:7
+#: templates/_base.html:62 templates/shop/category_list.html:9
 #: templates/staff/categories.html:8 templates/staff/categories.html:17
 msgid "Categories"
 msgstr "دسته‌بندی‌ها"
@@ -371,7 +371,7 @@ msgstr "سبد خرید شما"
 msgid "Image"
 msgstr "تصویر"
 
-#: templates/cart/detail.html:16 templates/tools/pdf/invoice_pdf.html:28
+#: templates/cart/detail.html:16 templates/tools/pdf/invoice_pdf.html:29
 msgid "Product"
 msgstr "محصول"
 
@@ -389,7 +389,7 @@ msgstr "قیمت واحد"
 #: templates/shop/product_detail.html:114 templates/staff/draft_orders.html:27
 #: templates/staff/invoice_checkout.html:44
 #: templates/staff/invoice_create.html:79 templates/staff/products.html:23
-#: templates/tools/pdf/invoice_pdf.html:29
+#: templates/tools/pdf/invoice_pdf.html:30
 msgid "Price"
 msgstr "قیمت"
 
@@ -421,8 +421,8 @@ msgstr ""
 "<td>\"%(code)s\" کوپن (%(discount)s%% تخفیف)</td>"
 
 #: templates/cart/detail.html:72 templates/orders/create.html:46
-#: templates/tools/pdf/invoice_pdf.html:32
-#: templates/tools/pdf/invoice_pdf.html:50
+#: templates/tools/pdf/invoice_pdf.html:33
+#: templates/tools/pdf/invoice_pdf.html:51
 msgid "Total"
 msgstr "جمع"
 
@@ -454,8 +454,8 @@ msgid "Home"
 msgstr "خانه"
 
 #: templates/home.html:19 templates/search/search.html:9
-#: templates/search/search.html:45 templates/shop/category_list.html:14
-#: templates/shop/product_list.html:14
+#: templates/search/search.html:45 templates/shop/category_list.html:20
+#: templates/shop/product_list.html:20
 msgid "Search"
 msgstr "جستجو"
 
@@ -768,7 +768,6 @@ msgid "Cover type"
 msgstr "نوع جلد"
 
 #: templates/shop/product_detail.html:96
-#| msgid "Last name:"
 msgid "Latin name"
 msgstr "نام لاتین"
 
@@ -782,17 +781,14 @@ msgid "Stock"
 msgstr "موجودی"
 
 #: templates/shop/product_detail.html:110
-#| msgid "zero stock"
 msgid "Zero stock"
 msgstr "موجودی منفی"
 
 #: templates/shop/product_detail.html:111
-#| msgid "zero stock limit"
 msgid "Zero stock limit"
 msgstr "محدوده موجودی منفی"
 
 #: templates/shop/product_detail.html:112
-#| msgid "Product create"
 msgid "Product type"
 msgstr "نوع محصول"
 
@@ -801,13 +797,12 @@ msgid "Has other prices"
 msgstr "دارای قیمت‌های دیگر"
 
 #: templates/shop/product_detail.html:116
-#| msgid "Price"
 msgid "Price used"
-msgstr "قیمت دسته دوم"
+msgstr "قیمت دست‌دوم"
 
 #: templates/shop/product_detail.html:117
 msgid "Stock used"
-msgstr "موجودی دسته‌دوم"
+msgstr "موجودی دست‌دوم"
 
 #: templates/shop/product_detail.html:118
 msgid "Bookstore position"
@@ -818,7 +813,6 @@ msgid "Vendor"
 msgstr "تامین کننده"
 
 #: templates/shop/product_detail.html:120
-#| msgid "admin note"
 msgid "Admin note"
 msgstr "یادداشت مدیر"
 
@@ -827,7 +821,6 @@ msgid "Just for online sales"
 msgstr "فقط برای فروش آنلاین"
 
 #: templates/shop/product_detail.html:123
-#| msgid "Just for online sales"
 msgid "Just for store sales"
 msgstr "فقط برای فروش در فروشگاه"
 
@@ -863,8 +856,8 @@ msgstr "شماره سفارش"
 #: templates/staff/invoice_checkout.html:45
 #: templates/staff/invoice_create.html:77
 #: templates/staff/invoice_create.html:80
-#: templates/tools/pdf/invoice_pdf.html:31
-#: templates/tools/pdf/invoice_pdf.html:54
+#: templates/tools/pdf/invoice_pdf.html:32
+#: templates/tools/pdf/invoice_pdf.html:55
 msgid "Discount"
 msgstr "تخفیف"
 
@@ -896,7 +889,7 @@ msgstr "تخفیف"
 
 #: templates/staff/invoice_checkout.html:83
 #: templates/staff/invoice_create.html:126
-#: templates/tools/pdf/invoice_pdf.html:58
+#: templates/tools/pdf/invoice_pdf.html:59
 msgid "PAYABLE"
 msgstr "قابل پرداخت"
 
@@ -1051,7 +1044,7 @@ msgstr "لیست انبارها"
 msgid "Invoice no."
 msgstr "شماره فاکتور"
 
-#: templates/tools/pdf/invoice_pdf.html:50
+#: templates/tools/pdf/invoice_pdf.html:51
 msgid "Rial"
 msgstr "ریال"
 
