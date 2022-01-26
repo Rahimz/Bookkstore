@@ -7,7 +7,7 @@ class ProductCreateForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        exclude = ['import_session', ]
+        exclude = ['import_session', 'isbn_9']
 
 
 class CategoryCreateForm(forms.ModelForm):
