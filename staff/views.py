@@ -463,7 +463,7 @@ def orderline_update(request, order_id, orderline_id):
 
 
 def draft_orders(request):
-    draft_orders = Order.objects.filter(status='draft')
+    draft_orders = Order.objects.filter(status='draft').exclude(quantity=0)
     return render(
         request,
         'staff/draft_orders.html',

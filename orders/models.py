@@ -121,6 +121,9 @@ class Order(models.Model):
         default=0,
         blank=True,
     )
+    quantity = models.IntegerField(
+        default=0,
+    )
     is_gift = models.BooleanField(default=False)
     paid = models.BooleanField(default=False)
 
@@ -130,6 +133,8 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         if not self.token:
             self.token = str(uuid.uuid4())
+
+        self.quantity = self.get_total_quantity()
 
         self.payable = self.get_cost_after_discount() - self.discount
 
