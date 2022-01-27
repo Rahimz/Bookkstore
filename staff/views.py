@@ -27,16 +27,37 @@ def sales(request):
     )
 
 
-def orders(request, period='all'):
-    duration = {'day': 1, 'week':7 , 'month':30, 'all': 365}
+def orders(request, period=None, channel=None):
+    # list of all approved or paid orders
+    if channel=='all' and period == 'all':
+        orders = Order.objects.filter(
+            Q(status='approved') | Q(paid=True))
 
-    orders = Order.objects.filter(
-        Q(status='approved') | Q(paid=True)).filter(created__gte=datetime.now() - timedelta(duration[period]))
+    # 'mix' channel means we need the orders that should be collected
+    if channel == 'mix' and period=='all':
+        orders = Order.objects.filter(
+            Q(status='approved') | Q(paid=True)).exclude(channel='cashier')
+
+    # staff/orders/30/mix
+    elif channel == 'mix' and period not in ('all', 'mix'):
+        orders = Order.objects.filter(
+            Q(status='approved') | Q(paid=True)).exclude(channel='cashier').filter(approved_date__gte=datetime.now() - timedelta(int(period)))
+
+    # staff/orders/365/cashier
+    elif channel == 'cashier' and period not in ('all', 'mix'):
+        orders = Order.objects.filter(
+            Q(status='approved') | Q(paid=True)).filter(channel='cashier').filter(approved_date__gte=datetime.now() - timedelta(int(period)))
+
+    else:
+        orders = Order.objects.filter(
+            Q(status='approved') | Q(paid=True))
+
     return render(
         request,
         'staff/orders.html',
         {'orders': orders}
     )
+
 
 def order_detail_for_admin(request, pk):
     order = get_object_or_404(Order, pk=pk)
@@ -399,10 +420,11 @@ def invoice_checkout(request, order_id):
             order.channel = checkout_form.cleaned_data['channel']
             order.status = 'approved'
             order.approver = request.user
+            order.approved_date = datetime.now()
             shipping_method = 'pickup'
             order.save()
             messages.success(request, _('Order approved'))
-            return redirect('staff:order_list', 'all')
+            return redirect('staff:order_list', period='all', channel='all')
     return render(
         request,
         'staff/invoice_checkout.html',

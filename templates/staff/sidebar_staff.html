@@ -20,10 +20,15 @@
 
 {% if barName == "orders" %}
 <div class="sidebar drop_shadow border border-1 rounded-2">
-  <p><a href="{% url 'staff:order_list' 'all' %}">{% trans 'List of orders' %}</a></p>
-  <p><a href="{% url 'staff:order_list' 'day' %}">{% trans 'Last day' %}</a></p>
-  <p><a href="{% url 'staff:order_list' 'week' %}">{% trans 'Last week' %}</a></p>
-  <p><a href="{% url 'staff:order_list' 'month' %}">{% trans 'Last month' %}</a></p>
+  <p><a href="{% url 'staff:order_list' period='all' channel='all' %}">{% trans 'All approved orders' %}</a></p>
+  <br>
+  <p><a href="{% url 'staff:order_list' period='all' channel='mix' %}">{% trans 'Collectable orders' %}</a></p>
+  <p><a href="{% url 'staff:order_list' period='1' channel='mix' %}">{% trans 'Last day' %}</a></p>
+  <p><a href="{% url 'staff:order_list' period='7' channel='mix' %}">{% trans 'Last week' %}</a></p>
+  <p><a href="{% url 'staff:order_list' period='30' channel='mix' %}">{% trans 'Last month' %}</a></p>
+  <p><a href="{% url 'staff:order_list' period='365' channel='mix' %}">{% trans 'Last year' %}</a></p>
+  <br>
+  <p><a href="{% url 'staff:order_list' period='365' channel='cashier' %}">{% trans 'Cashier orders' %}</a></p>
 
 </div>
 {% endif %}

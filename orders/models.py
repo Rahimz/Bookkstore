@@ -64,6 +64,10 @@ class Order(models.Model):
     updated = models.DateTimeField(
         auto_now=True
     )
+    approved_date = models.DateTimeField(
+        blank=True,
+        null=True
+    )
     status = models.CharField(
         max_length=32,
         default='unfulfilled',
