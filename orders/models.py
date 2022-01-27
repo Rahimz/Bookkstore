@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 import uuid
+from django.utils.translation import gettext_lazy as _
 
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -21,6 +22,14 @@ class Order(models.Model):
         ('post', 'Post'),
         ('bike_delivery', 'Bike Delivery'),
         ('pickup', 'Pickup')
+    ]
+    CHANNEL_CHOICES = [
+        ('cashier', _('Cashier')),
+        ('instagram', 'Instagram'),
+        ('telegram', 'Telegram'),
+        ('twitter', 'Twitter'),
+        ('Website', _('Website')),
+        ('other', _('Other')),
     ]
 
     # is used to register the staff activity
@@ -59,6 +68,11 @@ class Order(models.Model):
         max_length=32,
         default='unfulfilled',
         choices=STATUS_CHOICES
+    )
+    channel = models.CharField(
+        max_length=50,
+        default = 'cashier',
+        choices=CHANNEL_CHOICES,
     )
     billing_address = models.ForeignKey(
         Address,
