@@ -397,6 +397,7 @@ def invoice_checkout(request, order_id):
             order.customer_note = checkout_form.cleaned_data['customer_note']
             order.is_gift = checkout_form.cleaned_data['is_gift']
             order.status = 'approved'
+            order.approver = request.user
             shipping_method = 'pickup'
             order.save()
             messages.success(request, _('Order approved'))
