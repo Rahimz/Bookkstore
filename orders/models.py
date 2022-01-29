@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 import uuid
+from django.utils.translation import gettext_lazy as _
 
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -22,12 +23,26 @@ class Order(models.Model):
         ('bike_delivery', 'Bike Delivery'),
         ('pickup', 'Pickup')
     ]
+    CHANNEL_CHOICES = [
+        ('cashier', _('Cashier')),
+        ('instagram', 'Instagram'),
+        ('telegram', 'Telegram'),
+        ('twitter', 'Twitter'),
+        ('Website', _('Website')),
+        ('other', _('Other')),
+    ]
 
     # is used to register the staff activity
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         related_name='admin_orders',
+        blank=True,
+        null=True
+    )
+    approver = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
         blank=True,
         null=True
     )
@@ -49,10 +64,19 @@ class Order(models.Model):
     updated = models.DateTimeField(
         auto_now=True
     )
+    approved_date = models.DateTimeField(
+        blank=True,
+        null=True
+    )
     status = models.CharField(
         max_length=32,
         default='unfulfilled',
         choices=STATUS_CHOICES
+    )
+    channel = models.CharField(
+        max_length=50,
+        default = 'cashier',
+        choices=CHANNEL_CHOICES,
     )
     billing_address = models.ForeignKey(
         Address,
@@ -121,6 +145,9 @@ class Order(models.Model):
         default=0,
         blank=True,
     )
+    quantity = models.IntegerField(
+        default=0,
+    )
     is_gift = models.BooleanField(default=False)
     paid = models.BooleanField(default=False)
 
@@ -130,6 +157,8 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         if not self.token:
             self.token = str(uuid.uuid4())
+
+        self.quantity = self.get_total_quantity()
 
         self.payable = self.get_cost_after_discount() - self.discount
 

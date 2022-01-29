@@ -18,6 +18,7 @@ django-rosetta = "*"
 django-crispy-forms = "*"
 zeep = "*"
 weasyprint = "*"
+pandas = "*"
 
 [dev-packages]
 

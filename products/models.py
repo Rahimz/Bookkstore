@@ -109,6 +109,11 @@ class Product(models.Model):
         blank=True,
         null=True
     )
+    isbn_9 = models.CharField(
+        max_length=9,
+        blank=True,
+        null=True
+    )
     author = models.CharField(
         max_length=200,
         blank=True,
@@ -297,6 +302,13 @@ class Product(models.Model):
 
         if not self.slug:
             self.slug = slugify(self.name, allow_unicode=True)
+
+        if self.isbn and not self.isbn_9:
+            if len(self.isbn) == 13:
+                self.isbn_9 = self.isbn[3:-1]
+            elif len(self.isbn) == 10:
+                self.isbn_9 = self.isbn[:-1]
+
         super(Product, self).save(*args, **kwargs)
 
     def __str__(self):

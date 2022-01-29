@@ -1,0 +1,31 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+  <style media="screen">
+    @font-face {
+      font-family: iransans;
+      src: url(../fonts/IRANSansWebFaNum.woff2);
+    }
+
+    body {
+      font-family: Helvetica, sans-serif;
+      color: #222;
+      line-height: 1.5;
+      font-family: iransans;
+    }
+  </style>
+</head>
+<body>
+  <h1>{% trans 'Ketabe Damavand' %}</h1>
+  <h3>{% trans 'Welcome' %} {{ user.first_name }} {{ last_name }}!</h3>
+  <p>{% trans 'Your registration at ketabedamavand.com is completed' %}.</p>
+  <p>{% trans 'Your username' %}: {{ user.username }}</p>
+  <br>
+  <p>{% trans 'For login you can use' %}:<a href="{% url 'login' %}">{%  trans 'Login'%}</a></p>
+  <br>
+  <br>
+  <a href="{% url 'shop:home' %}">ketabedamavand.com</a>
+</body>
+</html>

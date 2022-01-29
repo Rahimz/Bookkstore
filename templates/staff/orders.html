@@ -23,8 +23,8 @@
             <th scope="col">{% trans 'Client' %}</th>
             <th scope="col">{% trans 'Quantity' %}</th>
             <th scope="col">{% trans 'Weight' %}</th>
-            <th scope="col">{% trans 'Location' %}</th>
-            <th scope="col">{% trans 'Shipping method' %}</th>
+            <th scope="col">{% trans 'Channel' %}</th>
+            <th scope="col">{% trans 'Approved date' %}</th>
             <th scope="col">{% trans 'Paid' %}</th>
             <th scope="col">{% trans 'Is a gift' %}</th>
           </tr>
@@ -37,8 +37,8 @@
             <td>{{ order.client }}</td>
             <td>{{ order.get_total_quantity }}</td>
             <td>{{ order.get_total_weight }} gr</td>
-            <td></td>
-            <td>{{ order.shipping_method }}</td>
+            <td>{{ order.channel }}</td>
+            <td>{{ order.approved_date | date:"d, M Y" }}</td>
             <td>{% if order.paid %}&#10004{% else %}&#10008{% endif %}</td>
             <td>{% if order.is_gift %}&#10004{% else %}&#10008{% endif %}</td>
           </tr>

@@ -11,7 +11,8 @@ urlpatterns = [
     path('orders/<int:pk>/', views.order_detail_for_admin, name='order_detail_for_admin'),
     path('orders/drafts/', views.draft_orders, name='draft_orders'),
     path('orders/create/', views.order_create, name='order_create'),
-    path('orders/<str:period>/', views.orders, name='order_list'),
+    path('orders/<str:period>/<str:channel>/', views.orders, name='order_list'),
+
     path('invoice/create/', views.invoice_create, name='invoice_create'),
     path('invoice/create/<int:order_id>/', views.invoice_create, name='invoice_create'),
     path('invoice/create/<int:order_id>/<int:book_id>/', views.invoice_create, name='invoice_add_book'),
@@ -29,4 +30,6 @@ urlpatterns = [
     path('categories/', views.category_list, name='categories'),
     path('category/create/', views.category_create, name='category_create'),
 
+    path('vendor/list/', views.vendor_list, name='vendor_list'),
+    path('vendor/add/', views.vendor_add, name='vendor_add'),
 ]

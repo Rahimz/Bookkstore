@@ -16,7 +16,8 @@ from orders.models import Order, OrderLine
 from orders.forms import OrderAdminCheckoutForm
 from search.forms import ClientSearchForm, BookIsbnSearchForm, SearchForm
 from search.views import ProductSearch
-from account.models import CustomUser
+from account.models import CustomUser, Vendor
+from account.forms import VendorAddForm, AddressAddForm
 
 
 def sales(request):
@@ -27,16 +28,37 @@ def sales(request):
     )
 
 
-def orders(request, period='all'):
-    duration = {'day': 1, 'week':7 , 'month':30, 'all': 365}
+def orders(request, period=None, channel=None):
+    # list of all approved or paid orders
+    if channel=='all' and period == 'all':
+        orders = Order.objects.filter(
+            Q(status='approved') | Q(paid=True))
 
-    orders = Order.objects.filter(
-        Q(status='approved') | Q(paid=True)).filter(created__gte=datetime.now() - timedelta(duration[period]))
+    # 'mix' channel means we need the orders that should be collected
+    if channel == 'mix' and period=='all':
+        orders = Order.objects.filter(
+            Q(status='approved') | Q(paid=True)).exclude(channel='cashier')
+
+    # staff/orders/30/mix
+    elif channel == 'mix' and period not in ('all', 'mix'):
+        orders = Order.objects.filter(
+            Q(status='approved') | Q(paid=True)).exclude(channel='cashier').filter(approved_date__gte=datetime.now() - timedelta(int(period)))
+
+    # staff/orders/365/cashier
+    elif channel == 'cashier' and period not in ('all', 'mix'):
+        orders = Order.objects.filter(
+            Q(status='approved') | Q(paid=True)).filter(channel='cashier').filter(approved_date__gte=datetime.now() - timedelta(int(period)))
+
+    else:
+        orders = Order.objects.filter(
+            Q(status='approved') | Q(paid=True))
+
     return render(
         request,
         'staff/orders.html',
         {'orders': orders}
     )
+
 
 def order_detail_for_admin(request, pk):
     order = get_object_or_404(Order, pk=pk)
@@ -396,11 +418,14 @@ def invoice_checkout(request, order_id):
             order.paid = checkout_form.cleaned_data['paid']
             order.customer_note = checkout_form.cleaned_data['customer_note']
             order.is_gift = checkout_form.cleaned_data['is_gift']
+            order.channel = checkout_form.cleaned_data['channel']
             order.status = 'approved'
+            order.approver = request.user
+            order.approved_date = datetime.now()
             shipping_method = 'pickup'
             order.save()
             messages.success(request, _('Order approved'))
-            return redirect('staff:order_list', 'all')
+            return redirect('staff:order_list', period='all', channel='all')
     return render(
         request,
         'staff/invoice_checkout.html',
@@ -463,7 +488,7 @@ def orderline_update(request, order_id, orderline_id):
 
 
 def draft_orders(request):
-    draft_orders = Order.objects.filter(status='draft')
+    draft_orders = Order.objects.filter(status='draft').exclude(quantity=0)
     return render(
         request,
         'staff/draft_orders.html',
@@ -500,4 +525,48 @@ def sold_products(request):
         {'order_lines': order_lines,
         'products':products,
         }
+    )
+
+
+def vendor_add(request):
+    vendor_form = VendorAddForm()
+    address_form = AddressAddForm(initial={'country':'IR', 'city':_('Tehran')})
+    if request.method == 'POST':
+        vendor_form = VendorAddForm(request.POST)
+        address_form = AddressAddForm(request.POST)
+        if vendor_form.is_valid() and address_form:
+            vendor = vendor_form.save(commit=False)
+            vendor.username = vendor_form.cleaned_data['first_name']
+
+            address = address_form.save(commit=False)
+            address.phone = vendor.phone
+            address.name = vendor.username
+            address.save()  # we should save and create the address then add it to vendor
+
+            vendor.default_billing_address = address
+            vendor.email = '{}@ketabedamavand.com'.format(vendor.username)
+
+            vendor.save()
+
+            messages.success(request, _('Vendor is added!') + ' {}'.format(vendor.first_name))
+
+            return HttpResponseRedirect(reverse('staff:products'))
+        else:
+            messages.error(request, _('Form is not valid'))
+    else:
+        vendor_form = VendorAddForm()
+        address_form = AddressAddForm(initial={'country':'IR', 'city':_('Tehran')})
+    return render(
+        request,
+        'staff/vendor_add.html',
+        {'vendor_form': vendor_form,
+        'address_form': address_form}
+    )
+
+def vendor_list(request):
+    vendors = Vendor.objects.all()
+    return render(
+        request,
+        'staff/vendor_list.html',
+        {'vendors': vendors}
     )

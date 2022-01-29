@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordResetForm
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.contrib import messages
 import uuid
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ClientAddForm
 from .models import CustomUser
@@ -25,12 +27,27 @@ def register(request):
             new_user = user_form.save(commit=False)
             # Set the chosen password
             new_user.set_password(user_form.cleaned_data['password'])
+
+            new_user.is_client = True
             # Save the User object
             new_user.save()
+
+            ## TODO: The registraion email does not recieve in mailbox 
+            if new_user.email:
+                subject = "You are registered at Ketabedamavand.com"
+                to = new_user.email
+                html_content = render_to_string('tools/emails/registration_email.html', {'user':new_user})
+                text_content = strip_tags(html_content) # Strip the html tag. So people can see the pure text at least.
+
+                msg = EmailMultiAlternatives(subject, text_content, [to])
+                msg.attach_alternative(html_content, "text/html")
+                msg.send()
 
             return render(request,
                          'account/register_done.html',
                          {'new_user': new_user})
+        else:
+            messages.error(request, _('Form is not valid'))
     else:
         user_form = UserRegistrationForm()
     return render(request,
