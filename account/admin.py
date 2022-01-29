@@ -5,7 +5,7 @@ from .models import CustomUser, Address, Vendor
 
 # admin.site.register(CustomUser)
 
-admin.site.register(Address)
+# admin.site.register(Address)
 
 @admin.register(CustomUser)
 class UserAdmin(admin.ModelAdmin):
@@ -22,3 +22,8 @@ class UserAdmin(admin.ModelAdmin):
 @admin.register(Vendor)
 class VendorAdmin(admin.ModelAdmin):
     list_display = ['first_name', 'overal_discount']
+
+
+@admin.register(Address)
+class AddressAdmin(admin.ModelAdmin):
+    list_display = ['pk', 'name']

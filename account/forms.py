@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
-from .models import CustomUser, Vendor
+from .models import CustomUser, Vendor, Address
 
 
 
@@ -44,7 +44,7 @@ class ClientAddForm(forms.ModelForm):
 class VendorAddForm(forms.ModelForm):
 	class Meta:
 		model = Vendor
-		fields = ('first_name', 'overal_discount', 'phone', 'default_billing_address', 'contact_person', 'other_phone')
+		fields = ('first_name', 'overal_discount', 'phone', 'contact_person', 'other_phone')
 		labels = {
             'first_name': _('Name'),
 			'overal_discount': _('Overal discount'),
@@ -55,3 +55,18 @@ class VendorAddForm(forms.ModelForm):
 		widgets = {
         	'overal_discount': forms.TextInput(attrs={'placeholder': _('Percent')})
         }
+
+class AddressAddForm(forms.ModelForm):
+	class Meta:
+		model = Address
+		exclude = ['name', 'phone']
+		# labels = {
+        #     'first_name': _('Name'),
+		# 	'overal_discount': _('Overal discount'),
+		# 	'default_billing_address': _('Address'),
+		# 	'contact_person': _('Contact person'),
+		# 	'other_phone': _('Other phone')
+        # }
+		# widgets = {
+        # 	'overal_discount': forms.TextInput(attrs={'placeholder': _('Percent')})
+        # }

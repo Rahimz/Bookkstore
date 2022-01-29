@@ -17,7 +17,8 @@
       <h2>{% trans 'Vendor add' %}</h2>
 
       <form class="" action="." method="post">
-        {{ form | crispy }}
+        {{ vendor_form | crispy }}
+        {{ address_form | crispy }}
         {% csrf_token %}
         <div class="col-sm-offset-2 col-sm-10">
           <input type="submit"  class="btn btn-success" value="{% trans 'Submit' %}">

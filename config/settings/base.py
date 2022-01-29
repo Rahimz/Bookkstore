@@ -207,3 +207,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # wkhtmltopdf  settings for exportting pdf
 WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
+
+COUNTRIES_FIRST =  [
+    'IR',
+ ]

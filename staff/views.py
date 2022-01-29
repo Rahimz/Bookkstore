@@ -17,7 +17,7 @@ from orders.forms import OrderAdminCheckoutForm
 from search.forms import ClientSearchForm, BookIsbnSearchForm, SearchForm
 from search.views import ProductSearch
 from account.models import CustomUser
-from account.forms import VendorAddForm
+from account.forms import VendorAddForm, AddressAddForm
 
 
 def sales(request):
@@ -529,21 +529,36 @@ def sold_products(request):
 
 
 def vendor_add(request):
-    form = VendorAddForm()
+    vendor_form = VendorAddForm()
+    address_form = AddressAddForm(initial={'country':'IR', 'city':_('Tehran')})
     if request.method == 'POST':
-        form = VendorAddForm(request.POST)
-        if form.is_valid():
-            vendor = form.save(commit=False)
+        vendor_form = VendorAddForm(request.POST)
+        address_form = AddressAddForm(request.POST)
+        if vendor_form.is_valid() and address_form:
+            vendor = vendor_form.save(commit=False)
+            vendor.username = vendor_form.cleaned_data['first_name']
+
+            address = address_form.save(commit=False)
+            address.phone = vendor.phone
+            address.name = vendor.username
+            address.save()  # we should save and create the address then add it to vendor
+
+            vendor.default_billing_address = address
+            vendor.email = '{}@ketabedamavand.com'.format(vendor.username)
+
             vendor.save()
-            messages.success(request, _('Vendor is added!'))
+
+            messages.success(request, _('Vendor is added!' + ' {}'.format(vendor.first_name)))
 
             return HttpResponseRedirect(reverse('staff:products'))
         else:
             messages.error(request, _('Form is not valid'))
     else:
-        form = VendorAddForm()
+        vendor_form = VendorAddForm()
+        address_form = AddressAddForm(initial={'country':'IR', 'city':_('Tehran')})
     return render(
         request,
         'staff/vendor_add.html',
-        {'form': form}
+        {'vendor_form': vendor_form,
+        'address_form': address_form}
     )
