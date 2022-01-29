@@ -1,0 +1,48 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+{% block title %}{% trans 'Vendor list' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="products" %}
+    </div>
+    <div class="col-md-10">
+      <h2>{% trans 'Vendor list' %}</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">{% trans 'Vendor No' %}</th>
+            <th scope="col">{% trans 'Vendor' %}</th>
+            <th scope="col">{% trans 'Overal discount' %}</th>
+            <th scope="col">{% trans 'Conatct Person' %}</th>
+            <th scope="col">{% trans 'phone' %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for vendor in vendors %}
+          <tr>
+            <th scope="row">{{ forloop.counter}}</th>
+            <td>{{ vendor.pk }}</td>
+            <td>{{ vendor.first_name }}</td>
+            <td>{{ vendor.overal_discount }}</td>
+            <td>{{ vendor.contact_person }}</td>
+            <td>{{ vendor.phone }}</td>
+
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+
+    </div>
+  </div>
+</div>
+{% endblock %}

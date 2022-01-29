@@ -16,7 +16,7 @@ from orders.models import Order, OrderLine
 from orders.forms import OrderAdminCheckoutForm
 from search.forms import ClientSearchForm, BookIsbnSearchForm, SearchForm
 from search.views import ProductSearch
-from account.models import CustomUser
+from account.models import CustomUser, Vendor
 from account.forms import VendorAddForm, AddressAddForm
 
 
@@ -561,4 +561,12 @@ def vendor_add(request):
         'staff/vendor_add.html',
         {'vendor_form': vendor_form,
         'address_form': address_form}
+    )
+
+def vendor_list(request):
+    vendors = Vendor.objects.all()
+    return render(
+        request,
+        'staff/vendor_list.html',
+        {'vendors': vendors}
     )
