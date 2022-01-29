@@ -4,6 +4,7 @@ from django.conf import settings
 from django.utils import timezone
 from django_countries.fields import Country, CountryField
 from phonenumber_field.modelfields import PhoneNumberField
+from django.utils.translation import gettext_lazy as _
 
 
 class Address(models.Model):
@@ -93,3 +94,29 @@ class CustomUser(AbstractUser):
             return ' - '.join([self.first_name, self.last_name])
         else:
             return self.username
+
+
+class Vendor(CustomUser):
+    overal_discount = models.DecimalField(
+        max_digits=2,
+        decimal_places=0,
+        null=True,
+        blank=True
+    )
+    contact_person = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True
+    )
+    other_phone = PhoneNumberField(
+        blank=True,
+        default=""
+    )
+
+    class Meta:
+        verbose_name = _('Vendor')
+        verbose_name_plural = _('Vendors')
+
+
+    def __str__(self):
+        return self.first_name

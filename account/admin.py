@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CustomUser, Address
+from .models import CustomUser, Address, Vendor
 
 
 # admin.site.register(CustomUser)
@@ -17,3 +17,8 @@ class UserAdmin(admin.ModelAdmin):
     search_fields = ['first_name', 'last_name', 'email', 'username']
     list_editable = ['is_staff', 'is_client',]
     # inlines = [OrderLineInline]
+
+
+@admin.register(Vendor)
+class VendorAdmin(admin.ModelAdmin):
+    list_display = ['first_name', 'overal_discount']

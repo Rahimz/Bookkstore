@@ -17,6 +17,7 @@ from orders.forms import OrderAdminCheckoutForm
 from search.forms import ClientSearchForm, BookIsbnSearchForm, SearchForm
 from search.views import ProductSearch
 from account.models import CustomUser
+from account.forms import VendorAddForm
 
 
 def sales(request):
@@ -524,4 +525,25 @@ def sold_products(request):
         {'order_lines': order_lines,
         'products':products,
         }
+    )
+
+
+def vendor_add(request):
+    form = VendorAddForm()
+    if request.method == 'POST':
+        form = VendorAddForm(request.POST)
+        if form.is_valid():
+            vendor = form.save(commit=False)
+            vendor.save()
+            messages.success(request, _('Vendor is added!'))
+
+            return HttpResponseRedirect(reverse('staff:products'))
+        else:
+            messages.error(request, _('Form is not valid'))
+    else:
+        form = VendorAddForm()
+    return render(
+        request,
+        'staff/vendor_add.html',
+        {'form': form}
     )
