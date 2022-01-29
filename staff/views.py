@@ -548,7 +548,7 @@ def vendor_add(request):
 
             vendor.save()
 
-            messages.success(request, _('Vendor is added!' + ' {}'.format(vendor.first_name)))
+            messages.success(request, _('Vendor is added!') + ' {}'.format(vendor.first_name))
 
             return HttpResponseRedirect(reverse('staff:products'))
         else:

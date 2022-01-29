@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-26 14:25+0330\n"
+"POT-Creation-Date: 2022-01-29 13:54+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,19 +30,62 @@ msgstr ""
 msgid "Passwords don't match."
 msgstr ""
 
-#: account/views.py:51
+#: account/forms.py:49 templates/account/clients/client_list.html:21
+#: templates/shop/product_detail.html:22
+#: templates/staff/invoice_checkout.html:39
+#: templates/staff/invoice_create.html:23
+#: templates/staff/invoice_create.html:75
+#: templates/staff/order_detail_for_admin.html:26
+#: templates/staff/products.html:21 templates/staff/sold_products.html:19
+msgid "Name"
+msgstr ""
+
+#: account/forms.py:50 templates/staff/vendor_list.html:24
+msgid "Overal discount"
+msgstr ""
+
+#: account/forms.py:51 templates/_base.html:166
+msgid "Address"
+msgstr ""
+
+#: account/forms.py:52
+msgid "Contact person"
+msgstr ""
+
+#: account/forms.py:53
+msgid "Other phone"
+msgstr ""
+
+#: account/forms.py:56
+msgid "Percent"
+msgstr ""
+
+#: account/models.py:105 templates/shop/product_detail.html:119
+#: templates/staff/vendor_list.html:23
+msgid "Vendor"
+msgstr ""
+
+#: account/models.py:106
+msgid "Vendors"
+msgstr ""
+
+#: account/views.py:50 staff/views.py:122 staff/views.py:143 staff/views.py:555
+msgid "Form is not valid"
+msgstr ""
+
+#: account/views.py:68
 msgid "User details updated successfully"
 msgstr ""
 
-#: account/views.py:53
+#: account/views.py:70
 msgid "Error updating your user details"
 msgstr ""
 
-#: account/views.py:97
+#: account/views.py:114
 msgid "Client added!"
 msgstr ""
 
-#: account/views.py:101
+#: account/views.py:118
 msgid "The phone number is already used!"
 msgstr ""
 
@@ -54,11 +97,35 @@ msgstr ""
 msgid "There are not enough products in stock!"
 msgstr ""
 
-#: products/models.py:62 products/models.py:308 templates/_base.html:53
+#: orders/forms.py:28
+msgid "Notes"
+msgstr ""
+
+#: orders/forms.py:29 templates/staff/orders.html:29
+msgid "Is a gift"
+msgstr ""
+
+#: orders/forms.py:30
+msgid "Cahnnel"
+msgstr ""
+
+#: orders/models.py:27
+msgid "Cashier"
+msgstr ""
+
+#: orders/models.py:31
+msgid "Website"
+msgstr ""
+
+#: orders/models.py:32
+msgid "Other"
+msgstr ""
+
+#: products/models.py:62 products/models.py:320 templates/_base.html:53
 msgid "New"
 msgstr ""
 
-#: products/models.py:63 products/models.py:309 templates/_base.html:56
+#: products/models.py:63 products/models.py:321 templates/_base.html:56
 msgid "Used"
 msgstr ""
 
@@ -82,51 +149,47 @@ msgstr ""
 msgid "ISBN"
 msgstr ""
 
-#: staff/views.py:95 staff/views.py:151
+#: staff/views.py:117 staff/views.py:173
 msgid "Product is created!"
 msgstr ""
 
-#: staff/views.py:100 staff/views.py:121
-msgid "Form is not valid"
-msgstr ""
-
-#: staff/views.py:116
+#: staff/views.py:138
 msgid "Category is created!"
 msgstr ""
 
-#: staff/views.py:168
+#: staff/views.py:190
 msgid "Product created"
 msgstr ""
 
-#: staff/views.py:171
+#: staff/views.py:193
 msgid "Product does not created!"
 msgstr ""
 
-#: staff/views.py:218 staff/views.py:245 staff/views.py:286
+#: staff/views.py:240 staff/views.py:267 staff/views.py:308
 msgid "Not enough stock!"
 msgstr ""
 
-#: staff/views.py:237 staff/views.py:265 staff/views.py:320
+#: staff/views.py:259 staff/views.py:287 staff/views.py:342
 msgid "Product is added to invoice"
 msgstr ""
 
-#: staff/views.py:254 staff/views.py:298
+#: staff/views.py:276 staff/views.py:320
 msgid "Order is created"
 msgstr ""
 
-#: staff/views.py:390
+#: staff/views.py:412
 msgid "Client found"
 msgstr ""
 
-#: staff/views.py:402
+#: staff/views.py:427
 msgid "Order approved"
 msgstr ""
 
-#: staff/views.py:435
+#: staff/views.py:460
 msgid "Not enough stock"
 msgstr ""
 
-#: staff/views.py:435 templates/cart/detail.html:17
+#: staff/views.py:460 templates/cart/detail.html:17
 #: templates/staff/draft_orders.html:26
 #: templates/staff/invoice_checkout.html:42
 #: templates/staff/invoice_create.html:53
@@ -136,6 +199,14 @@ msgstr ""
 #: templates/staff/orders.html:24 templates/staff/sold_products.html:20
 #: templates/tools/pdf/invoice_pdf.html:31
 msgid "Quantity"
+msgstr ""
+
+#: staff/views.py:533 staff/views.py:558
+msgid "Tehran"
+msgstr ""
+
+#: staff/views.py:551
+msgid "Vendor is added!"
 msgstr ""
 
 #: templates/_base.html:11 templates/_base.html:12 templates/_base.html:38
@@ -215,12 +286,9 @@ msgid "Contact us"
 msgstr ""
 
 #: templates/_base.html:165 templates/_base.html:187 templates/_base.html:222
+#: templates/tools/emails/registration_email.html:21
 #: templates/tools/pdf/invoice_pdf.html:7
 msgid "Ketabe Damavand"
-msgstr ""
-
-#: templates/_base.html:166
-msgid "Address"
 msgstr ""
 
 #: templates/_base.html:167
@@ -261,7 +329,7 @@ msgid "Bahman Daroshafaei in social media"
 msgstr ""
 
 #: templates/account/clients/client_add.html:18
-#: templates/staff/sidebar_staff.html:15 templates/staff/sidebar_staff.html:49
+#: templates/staff/sidebar_staff.html:17 templates/staff/sidebar_staff.html:56
 msgid "Add client"
 msgstr ""
 
@@ -272,20 +340,10 @@ msgstr ""
 #: templates/staff/invoice_create.html:40
 #: templates/staff/invoice_create.html:137 templates/staff/order_create.html:21
 #: templates/staff/product_create.html:23
-#: templates/staff/product_create.html:24
+#: templates/staff/product_create.html:24 templates/staff/vendor_add.html:24
 #: templates/zarinpal/form_payment.html:32
 #: templates/zarinpal/payment_create.html:34
 msgid "Submit"
-msgstr ""
-
-#: templates/account/clients/client_list.html:21
-#: templates/shop/product_detail.html:22
-#: templates/staff/invoice_checkout.html:39
-#: templates/staff/invoice_create.html:23
-#: templates/staff/invoice_create.html:75
-#: templates/staff/order_detail_for_admin.html:26
-#: templates/staff/products.html:21 templates/staff/sold_products.html:19
-msgid "Name"
 msgstr ""
 
 #: templates/account/dashboard.html:7 templates/account/dashboard.html:12
@@ -293,6 +351,7 @@ msgid "Profile"
 msgstr ""
 
 #: templates/account/dashboard.html:14 templates/account/register_done.html:10
+#: templates/tools/emails/registration_email.html:22
 msgid "Welcome"
 msgstr ""
 
@@ -792,10 +851,6 @@ msgstr ""
 msgid "Bookstore position"
 msgstr ""
 
-#: templates/shop/product_detail.html:119
-msgid "Vendor"
-msgstr ""
-
 #: templates/shop/product_detail.html:120
 msgid "Admin note"
 msgstr ""
@@ -828,7 +883,7 @@ msgstr ""
 msgid "Invoice create"
 msgstr ""
 
-#: templates/staff/draft_orders.html:19 templates/staff/sidebar_staff.html:14
+#: templates/staff/draft_orders.html:19 templates/staff/sidebar_staff.html:16
 msgid "List of draft orders"
 msgstr ""
 
@@ -920,7 +975,6 @@ msgid "Order Status"
 msgstr ""
 
 #: templates/staff/order_detail_for_admin.html:20
-#: templates/staff/orders.html:27
 msgid "Shipping method"
 msgstr ""
 
@@ -928,7 +982,7 @@ msgstr ""
 msgid "Note"
 msgstr ""
 
-#: templates/staff/orders.html:16 templates/staff/sidebar_staff.html:23
+#: templates/staff/orders.html:16
 msgid "List of orders"
 msgstr ""
 
@@ -937,15 +991,15 @@ msgid "Order No"
 msgstr ""
 
 #: templates/staff/orders.html:26
-msgid "Location"
+msgid "Channel"
+msgstr ""
+
+#: templates/staff/orders.html:27
+msgid "Approved date"
 msgstr ""
 
 #: templates/staff/orders.html:28 templates/zarinpal/payment_list.html:30
 msgid "Paid"
-msgstr ""
-
-#: templates/staff/orders.html:29
-msgid "Is a gift"
 msgstr ""
 
 #: templates/staff/product_create.html:8 templates/staff/product_create.html:17
@@ -960,7 +1014,7 @@ msgstr ""
 msgid "Purchases"
 msgstr ""
 
-#: templates/staff/purchases.html:16 templates/staff/sidebar_staff.html:34
+#: templates/staff/purchases.html:16 templates/staff/sidebar_staff.html:41
 msgid "List of purchases"
 msgstr ""
 
@@ -976,50 +1030,107 @@ msgstr ""
 msgid "List of categories"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:13
+#: templates/staff/sidebar_staff.html:8
+msgid "Add vendor"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:9 templates/staff/vendor_list.html:8
+#: templates/staff/vendor_list.html:17
+msgid "Vendor list"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:15
 msgid "New invoice"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:16
+#: templates/staff/sidebar_staff.html:18
 msgid "Create a payment link"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:17 templates/zarinpal/payment_list.html:6
+#: templates/staff/sidebar_staff.html:19 templates/zarinpal/payment_list.html:6
 #: templates/zarinpal/payment_list.html:23
 msgid "Payment list"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:24
+#: templates/staff/sidebar_staff.html:25
+msgid "All approved orders"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:27
+msgid "Collectable orders"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:28
 msgid "Last day"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:25
+#: templates/staff/sidebar_staff.html:29
 msgid "Last week"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:26
+#: templates/staff/sidebar_staff.html:30
 msgid "Last month"
 msgstr ""
 
+#: templates/staff/sidebar_staff.html:31
+msgid "Last year"
+msgstr ""
+
 #: templates/staff/sidebar_staff.html:33
+msgid "Cashier orders"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:40
 msgid "New purchase invoice"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:40 templates/staff/sold_products.html:7
+#: templates/staff/sidebar_staff.html:47 templates/staff/sold_products.html:7
 #: templates/staff/sold_products.html:16
 msgid "Sold products"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:41
+#: templates/staff/sidebar_staff.html:48
 msgid "Warehouse Managment"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:48
+#: templates/staff/sidebar_staff.html:55
 msgid "List of clients"
+msgstr ""
+
+#: templates/staff/vendor_add.html:8 templates/staff/vendor_add.html:17
+msgid "Vendor add"
+msgstr ""
+
+#: templates/staff/vendor_list.html:22
+msgid "Vendor No"
+msgstr ""
+
+#: templates/staff/vendor_list.html:25
+msgid "Conatct Person"
+msgstr ""
+
+#: templates/staff/vendor_list.html:26
+msgid "phone"
 msgstr ""
 
 #: templates/staff/warehouse.html:16
 msgid "List of warhouse"
+msgstr ""
+
+#: templates/tools/emails/registration_email.html:23
+msgid "Your registration at ketabedamavand.com is completed"
+msgstr ""
+
+#: templates/tools/emails/registration_email.html:24
+msgid "Your username"
+msgstr ""
+
+#: templates/tools/emails/registration_email.html:26
+msgid "For login you can use"
+msgstr ""
+
+#: templates/tools/emails/registration_email.html:26
+msgid "Login"
 msgstr ""
 
 #: templates/tools/pdf/invoice_pdf.html:9
