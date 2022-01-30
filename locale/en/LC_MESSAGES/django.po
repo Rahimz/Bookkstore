@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-29 13:54+0330\n"
+"POT-Creation-Date: 2022-01-30 19:52+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgstr ""
 msgid "Passwords don't match."
 msgstr ""
 
-#: account/forms.py:49 templates/account/clients/client_list.html:21
+#: account/forms.py:59 templates/account/clients/client_list.html:21
 #: templates/shop/product_detail.html:22
 #: templates/staff/invoice_checkout.html:39
 #: templates/staff/invoice_create.html:23
@@ -40,36 +40,37 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: account/forms.py:50 templates/staff/vendor_list.html:24
+#: account/forms.py:60 templates/staff/vendor_list.html:24
 msgid "Overal discount"
 msgstr ""
 
-#: account/forms.py:51 templates/_base.html:166
+#: account/forms.py:61 templates/_base.html:166
 msgid "Address"
 msgstr ""
 
-#: account/forms.py:52
+#: account/forms.py:62
 msgid "Contact person"
 msgstr ""
 
-#: account/forms.py:53
+#: account/forms.py:63
 msgid "Other phone"
 msgstr ""
 
-#: account/forms.py:56
+#: account/forms.py:66
 msgid "Percent"
 msgstr ""
 
-#: account/models.py:105 templates/shop/product_detail.html:119
+#: account/models.py:111 templates/shop/product_detail.html:119
 #: templates/staff/vendor_list.html:23
 msgid "Vendor"
 msgstr ""
 
-#: account/models.py:106
+#: account/models.py:112
 msgid "Vendors"
 msgstr ""
 
-#: account/views.py:50 staff/views.py:122 staff/views.py:143 staff/views.py:555
+#: account/views.py:50 account/views.py:139 staff/views.py:123
+#: staff/views.py:144 staff/views.py:573
 msgid "Form is not valid"
 msgstr ""
 
@@ -87,6 +88,10 @@ msgstr ""
 
 #: account/views.py:118
 msgid "The phone number is already used!"
+msgstr ""
+
+#: account/views.py:136
+msgid "Client details updated"
 msgstr ""
 
 #: cart/views.py:27
@@ -142,54 +147,58 @@ msgid "Name, author, translator, publisher or isbn"
 msgstr ""
 
 #: search/forms.py:21
-msgid "name or +989123456789"
+msgid "+989123456789"
 msgstr ""
 
 #: search/forms.py:28 templates/shop/product_detail.html:80
 msgid "ISBN"
 msgstr ""
 
-#: staff/views.py:117 staff/views.py:173
+#: staff/views.py:118 staff/views.py:174
 msgid "Product is created!"
 msgstr ""
 
-#: staff/views.py:138
+#: staff/views.py:139
 msgid "Category is created!"
 msgstr ""
 
-#: staff/views.py:190
+#: staff/views.py:191
 msgid "Product created"
 msgstr ""
 
-#: staff/views.py:193
+#: staff/views.py:194
 msgid "Product does not created!"
 msgstr ""
 
-#: staff/views.py:240 staff/views.py:267 staff/views.py:308
+#: staff/views.py:241 staff/views.py:268 staff/views.py:309
 msgid "Not enough stock!"
 msgstr ""
 
-#: staff/views.py:259 staff/views.py:287 staff/views.py:342
+#: staff/views.py:260 staff/views.py:288 staff/views.py:343
 msgid "Product is added to invoice"
 msgstr ""
 
-#: staff/views.py:276 staff/views.py:320
+#: staff/views.py:277 staff/views.py:321
 msgid "Order is created"
 msgstr ""
 
-#: staff/views.py:412
+#: staff/views.py:419
 msgid "Client found"
 msgstr ""
 
-#: staff/views.py:427
+#: staff/views.py:428
+msgid "Client added"
+msgstr ""
+
+#: staff/views.py:445
 msgid "Order approved"
 msgstr ""
 
-#: staff/views.py:460
+#: staff/views.py:478
 msgid "Not enough stock"
 msgstr ""
 
-#: staff/views.py:460 templates/cart/detail.html:17
+#: staff/views.py:478 templates/cart/detail.html:17
 #: templates/staff/draft_orders.html:26
 #: templates/staff/invoice_checkout.html:42
 #: templates/staff/invoice_create.html:53
@@ -201,11 +210,11 @@ msgstr ""
 msgid "Quantity"
 msgstr ""
 
-#: staff/views.py:533 staff/views.py:558
+#: staff/views.py:551 staff/views.py:576
 msgid "Tehran"
 msgstr ""
 
-#: staff/views.py:551
+#: staff/views.py:569
 msgid "Vendor is added!"
 msgstr ""
 
@@ -303,7 +312,7 @@ msgstr ""
 msgid "Tehran, Iran"
 msgstr ""
 
-#: templates/_base.html:171 templates/account/clients/client_list.html:22
+#: templates/_base.html:171 templates/account/clients/client_list.html:24
 #: templates/staff/invoice_create.html:23
 msgid "Phone"
 msgstr ""
@@ -334,6 +343,7 @@ msgid "Add client"
 msgstr ""
 
 #: templates/account/clients/client_add.html:22
+#: templates/account/clients/client_update.html:23
 #: templates/staff/category_create.html:23
 #: templates/staff/category_create.html:24 templates/staff/draft_orders.html:42
 #: templates/staff/invoice_checkout.html:25
@@ -344,6 +354,19 @@ msgstr ""
 #: templates/zarinpal/form_payment.html:32
 #: templates/zarinpal/payment_create.html:34
 msgid "Submit"
+msgstr ""
+
+#: templates/account/clients/client_list.html:22
+msgid "Username"
+msgstr ""
+
+#: templates/account/clients/client_list.html:23
+msgid "Client code"
+msgstr ""
+
+#: templates/account/clients/client_update.html:9
+#: templates/account/clients/client_update.html:18
+msgid "Client details"
 msgstr ""
 
 #: templates/account/dashboard.html:7 templates/account/dashboard.html:12
