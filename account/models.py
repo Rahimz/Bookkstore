@@ -5,6 +5,7 @@ from django.utils import timezone
 from django_countries.fields import Country, CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
+from django.shortcuts import reverse
 
 
 class Address(models.Model):
@@ -77,6 +78,10 @@ class CustomUser(AbstractUser):
         default=timezone.now,
         editable=False
     )
+
+    def get_absolute_url(self):
+        return reverse('client_update',
+                       args=[self.id])
 
     def __str__(self):
         if self.first_name or self.last_name:

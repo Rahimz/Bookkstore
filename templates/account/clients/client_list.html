@@ -19,6 +19,8 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">{% trans 'Name' %}</th>
+          <th scope="col">{% trans 'Username' %}</th>
+          <th scope="col">{% trans 'Client code' %}</th>
           <th scope="col">{% trans 'Phone' %}</th>
         </tr>
       </thead>
@@ -26,8 +28,10 @@
         {% for client in clients %}
         <tr>
           <th scope="row">{{ forloop.counter }}</th>
-          <td>{{ client }}</td>
-          <td>{{ client.phone }}</td>
+          <td><a href="{{ client.get_absolute_url }}">{{ client }}</a></td>
+          <td><a href="{{ client.get_absolute_url }}">{{ client.username }}</a></td>
+          <td><a href="{{ client.get_absolute_url }}">{{ client.id }}</a></td>
+          <td><a href="{{ client.get_absolute_url }}">{{ client.phone }}</a></td>
         </tr>
         {% endfor %}
 
