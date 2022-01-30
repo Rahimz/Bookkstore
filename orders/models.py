@@ -152,7 +152,7 @@ class Order(models.Model):
     paid = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ("-pk",)
+        ordering = ("-approved_date", "-pk",)
 
     def save(self, *args, **kwargs):
         if not self.token:

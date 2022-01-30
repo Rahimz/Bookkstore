@@ -18,7 +18,7 @@ class ClientSearchForm(forms.Form):
         self.fields['query'].required = False
 
     query = forms.CharField(label='Phone',
-        widget=forms.TextInput(attrs={'placeholder': _('name or +989123456789')})
+        widget=forms.TextInput(attrs={'placeholder': _('+989123456789')})
     )
 
 

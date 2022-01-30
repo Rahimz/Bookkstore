@@ -18,6 +18,7 @@ from search.forms import ClientSearchForm, BookIsbnSearchForm, SearchForm
 from search.views import ProductSearch
 from account.models import CustomUser, Vendor
 from account.forms import VendorAddForm, AddressAddForm
+from tools.fa_to_en_num import number_converter
 
 
 def sales(request):
@@ -397,7 +398,7 @@ def invoice_create(request, order_id=None, book_id=None):
 def invoice_checkout(request, order_id):
     checkout_form = OrderAdminCheckoutForm()
     client_search_form = ClientSearchForm()
-    client = CustomUser.objects.get(username='guest')
+    client = None
     order = Order.objects.get(pk=order_id)
     if request.method == 'POST':
         checkout_form = OrderAdminCheckoutForm(data=request.POST)
@@ -405,15 +406,32 @@ def invoice_checkout(request, order_id):
         if client_search_form.is_valid():
             # messages.debug(request, 'client_search_form.is_valid')
             query = client_search_form.cleaned_data['query']
+
+            #we will check if any farsi character is in the query we will changed it
+            query = number_converter(query)
+
             try:
-                client = CustomUser.objects.get(
-                    Q(phone=query) | Q(first_name=query) | Q(last_name=query) | Q(username=query)
-                    )
-                messages.success(request, _('Client found'))
+                client = CustomUser.objects.get(phone=query, is_client=True)
             except:
                 pass
+
+            if client:
+                messages.success(request, _('Client found'))
+
+            elif query and not client:
+                client = CustomUser(
+                    phone=query,
+                    username=query,
+                    email="{}@ketabedamavand.com".format(query)
+                )
+                client.save()
+                messages.success(request, _('Client added')+ ' {}'.format(client.phone))
+
+            elif not client:
+                client = CustomUser.objects.get(username='guest')
+
         if checkout_form.is_valid():
-            # messages.debug(request, 'checkout_form.is_valid')
+
             order.client = client
             order.paid = checkout_form.cleaned_data['paid']
             order.customer_note = checkout_form.cleaned_data['customer_note']

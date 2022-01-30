@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
-from .forms import LoginForm, UserRegistrationForm, UserEditForm, ClientAddForm
+from .forms import LoginForm, UserRegistrationForm, UserEditForm, ClientAddForm, ClientUpdateForm
 from .models import CustomUser
 
 
@@ -32,7 +32,7 @@ def register(request):
             # Save the User object
             new_user.save()
 
-            ## TODO: The registraion email does not recieve in mailbox 
+            ## TODO: The registraion email does not recieve in mailbox
             if new_user.email:
                 subject = "You are registered at Ketabedamavand.com"
                 to = new_user.email
@@ -122,4 +122,26 @@ def client_add(request):
         request,
         'account/clients/client_add.html',
         {'form': form}
+    )
+
+def client_update(request, client_id):
+    client = CustomUser.objects.get(pk=client_id)
+
+    client_form = ClientUpdateForm(instance=client)
+
+    if request.method == "POST":
+        client_form = ClientUpdateForm(data=request.POST, instance=client)
+        if client_form.is_valid():
+            client_form.save()
+            messages.success(request, _('Client details updated'))
+            return redirect('/account/clients')
+        else:
+            messages.error(request, _('Form is not valid'))
+    else:
+        client_form = ClientUpdateForm(instance=client)
+    return render(
+        request,
+        'account/clients/client_update.html',
+        {'client': client,
+        'client_form': client_form}
     )

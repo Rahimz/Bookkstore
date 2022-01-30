@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-29 13:54+0330\n"
-"PO-Revision-Date: 2022-01-29 13:55+0330\n"
+"POT-Creation-Date: 2022-01-30 19:52+0330\n"
+"PO-Revision-Date: 2022-01-30 19:55+0330\n"
 "Last-Translator:   <rahimaghareb@yahoo.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -31,7 +31,7 @@ msgstr "تکرار پسورد"
 msgid "Passwords don't match."
 msgstr "پسوردها یکسان نیستند"
 
-#: account/forms.py:49 templates/account/clients/client_list.html:21
+#: account/forms.py:59 templates/account/clients/client_list.html:21
 #: templates/shop/product_detail.html:22
 #: templates/staff/invoice_checkout.html:39
 #: templates/staff/invoice_create.html:23
@@ -41,37 +41,37 @@ msgstr "پسوردها یکسان نیستند"
 msgid "Name"
 msgstr "نام"
 
-#: account/forms.py:50 templates/staff/vendor_list.html:24
+#: account/forms.py:60 templates/staff/vendor_list.html:24
 msgid "Overal discount"
 msgstr "تخفیف کلی"
 
-#: account/forms.py:51 templates/_base.html:166
+#: account/forms.py:61 templates/_base.html:166
 msgid "Address"
 msgstr "آدرس"
 
-#: account/forms.py:52
+#: account/forms.py:62
 msgid "Contact person"
 msgstr "فرد رابط"
 
-#: account/forms.py:53
+#: account/forms.py:63
 msgid "Other phone"
 msgstr "تلفن دیگر"
 
-#: account/forms.py:56
+#: account/forms.py:66
 msgid "Percent"
 msgstr "درصد"
 
-#: account/models.py:105 templates/shop/product_detail.html:119
+#: account/models.py:111 templates/shop/product_detail.html:119
 #: templates/staff/vendor_list.html:23
 msgid "Vendor"
 msgstr "تامین‌کننده"
 
-#: account/models.py:106
+#: account/models.py:112
 msgid "Vendors"
 msgstr "تامین‌کنندگان"
 
-#: account/views.py:50 staff/views.py:122 staff/views.py:143
-#: staff/views.py:555
+#: account/views.py:50 account/views.py:139 staff/views.py:123
+#: staff/views.py:144 staff/views.py:573
 msgid "Form is not valid"
 msgstr "فرم معتبر نیست"
 
@@ -90,6 +90,11 @@ msgstr "مشتری اضافه شد!"
 #: account/views.py:118
 msgid "The phone number is already used!"
 msgstr "این شماره تلفن استفاده شده است!"
+
+#: account/views.py:136
+#| msgid "Client added!"
+msgid "Client details updated"
+msgstr "اطلاعات مشتری به‌روزرسانی شد!"
 
 #: cart/views.py:27
 msgid "Product added to cart!"
@@ -144,54 +149,60 @@ msgid "Name, author, translator, publisher or isbn"
 msgstr "نام، نویسنده، مترجم، ناشر یا شابک"
 
 #: search/forms.py:21
-msgid "name or +989123456789"
-msgstr "نام یا شماره تلفن"
+#| msgid "name or +989123456789"
+msgid "+989123456789"
+msgstr ""
 
 #: search/forms.py:28 templates/shop/product_detail.html:80
 msgid "ISBN"
 msgstr "شابک"
 
-#: staff/views.py:117 staff/views.py:173
+#: staff/views.py:118 staff/views.py:174
 msgid "Product is created!"
 msgstr "محصول ساخته شد!"
 
-#: staff/views.py:138
+#: staff/views.py:139
 msgid "Category is created!"
 msgstr "دسته‌بندی ساخته شد!"
 
-#: staff/views.py:190
+#: staff/views.py:191
 msgid "Product created"
 msgstr "محصول ساخته شد!"
 
-#: staff/views.py:193
+#: staff/views.py:194
 msgid "Product does not created!"
 msgstr "محصول ساخته نشد!"
 
-#: staff/views.py:240 staff/views.py:267 staff/views.py:308
+#: staff/views.py:241 staff/views.py:268 staff/views.py:309
 msgid "Not enough stock!"
 msgstr "موجودی کافی نیست"
 
-#: staff/views.py:259 staff/views.py:287 staff/views.py:342
+#: staff/views.py:260 staff/views.py:288 staff/views.py:343
 msgid "Product is added to invoice"
 msgstr "محصول به فاکتور اضافه شد"
 
-#: staff/views.py:276 staff/views.py:320
+#: staff/views.py:277 staff/views.py:321
 msgid "Order is created"
 msgstr "سفارش ایجاد شد"
 
-#: staff/views.py:412
+#: staff/views.py:419
 msgid "Client found"
 msgstr "مشتری شناسایی شد"
 
-#: staff/views.py:427
+#: staff/views.py:428
+#| msgid "Client added!"
+msgid "Client added"
+msgstr "مشتری اضافه شد!"
+
+#: staff/views.py:445
 msgid "Order approved"
 msgstr "سفارش تایید شد"
 
-#: staff/views.py:460
+#: staff/views.py:478
 msgid "Not enough stock"
 msgstr "موجودی کافی نیست"
 
-#: staff/views.py:460 templates/cart/detail.html:17
+#: staff/views.py:478 templates/cart/detail.html:17
 #: templates/staff/draft_orders.html:26
 #: templates/staff/invoice_checkout.html:42
 #: templates/staff/invoice_create.html:53
@@ -203,12 +214,11 @@ msgstr "موجودی کافی نیست"
 msgid "Quantity"
 msgstr "تعداد"
 
-#: staff/views.py:533 staff/views.py:558
+#: staff/views.py:551 staff/views.py:576
 msgid "Tehran"
 msgstr "تهران"
 
-#: staff/views.py:551
-#| msgid "Vendor add"
+#: staff/views.py:569
 msgid "Vendor is added!"
 msgstr "تأمین‌کننده اضافه شد!"
 
@@ -306,7 +316,7 @@ msgstr "خیابان ۱۶ آذر"
 msgid "Tehran, Iran"
 msgstr "تهران، ایران"
 
-#: templates/_base.html:171 templates/account/clients/client_list.html:22
+#: templates/_base.html:171 templates/account/clients/client_list.html:24
 #: templates/staff/invoice_create.html:23
 msgid "Phone"
 msgstr "تلفن"
@@ -337,6 +347,7 @@ msgid "Add client"
 msgstr "اضافه کردن مشتری"
 
 #: templates/account/clients/client_add.html:22
+#: templates/account/clients/client_update.html:23
 #: templates/staff/category_create.html:23
 #: templates/staff/category_create.html:24
 #: templates/staff/draft_orders.html:42
@@ -349,6 +360,22 @@ msgstr "اضافه کردن مشتری"
 #: templates/zarinpal/payment_create.html:34
 msgid "Submit"
 msgstr "تایید"
+
+#: templates/account/clients/client_list.html:22
+#| msgid "Your username"
+msgid "Username"
+msgstr "نام کاربری شما"
+
+#: templates/account/clients/client_list.html:23
+#| msgid "Client found"
+msgid "Client code"
+msgstr "کد مشتری"
+
+#: templates/account/clients/client_update.html:9
+#: templates/account/clients/client_update.html:18
+#| msgid "Order details"
+msgid "Client details"
+msgstr "اطلاعات سفارش"
 
 #: templates/account/dashboard.html:7 templates/account/dashboard.html:12
 msgid "Profile"

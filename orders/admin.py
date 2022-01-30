@@ -11,8 +11,9 @@ class OrderLineInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     list_display = [
         'id', 'client', 'user',
-        'user_email', 'paid', 'created', 'updated'
+        'user_email', 'paid', 'approved_date',
     ]
-    list_filter = ['paid', 'created', 'updated']
+    list_filter = ['paid', 'approved_date', ]
+    list_editable = ['paid', 'approved_date', ]
     search_fields = ['first_name', 'last_name', 'email']
     inlines = [OrderLineInline]

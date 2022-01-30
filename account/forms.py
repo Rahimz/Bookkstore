@@ -41,6 +41,16 @@ class ClientAddForm(forms.ModelForm):
 		fields = ('first_name', 'last_name', 'phone')
 
 
+class ClientUpdateForm(forms.ModelForm):
+
+	class Meta:
+		model = CustomUser
+		fields = (
+			'username', 'first_name', 'last_name', 'phone', 'email',
+			'default_billing_address', 'default_shipping_address', 'addresses'
+
+		)
+
 class VendorAddForm(forms.ModelForm):
 	class Meta:
 		model = Vendor
