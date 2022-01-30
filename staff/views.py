@@ -398,7 +398,7 @@ def invoice_create(request, order_id=None, book_id=None):
 def invoice_checkout(request, order_id):
     checkout_form = OrderAdminCheckoutForm()
     client_search_form = ClientSearchForm()
-    client = CustomUser.objects.get(username='guest')
+    client = None
     order = Order.objects.get(pk=order_id)
     if request.method == 'POST':
         checkout_form = OrderAdminCheckoutForm(data=request.POST)
@@ -409,7 +409,7 @@ def invoice_checkout(request, order_id):
 
             #we will check if any farsi character is in the query we will changed it
             query = number_converter(query)
-            client = None
+
             try:
                 client = CustomUser.objects.get(phone=query, is_client=True)
             except:
@@ -417,7 +417,8 @@ def invoice_checkout(request, order_id):
 
             if client:
                 messages.success(request, _('Client found'))
-            elif not client:
+
+            elif query and not client:
                 client = CustomUser(
                     phone=query,
                     username=query,
@@ -426,8 +427,10 @@ def invoice_checkout(request, order_id):
                 client.save()
                 messages.success(request, _('Client added')+ ' {}'.format(client.phone))
 
+            elif not client:
+                client = CustomUser.objects.get(username='guest')
+
         if checkout_form.is_valid():
-            # messages.debug(request, 'checkout_form.is_valid')
 
             order.client = client
             order.paid = checkout_form.cleaned_data['paid']
