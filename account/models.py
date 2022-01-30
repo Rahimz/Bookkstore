@@ -20,14 +20,15 @@ class Address(models.Model):
         max_length=256,
         blank=True
     )
-    city = models.CharField(
-        max_length=256,
-        blank=True
-    )
     postal_code = models.CharField(
         max_length=20,
         blank=True
     )
+    city = models.CharField(
+        max_length=256,
+        blank=True
+    )
+
     country = CountryField()
     phone = PhoneNumberField(
         blank=True,
