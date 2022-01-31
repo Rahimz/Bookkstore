@@ -213,6 +213,11 @@ class OrderLine(models.Model):
         decimal_places=settings.DEFAULT_DECIMAL_PLACES,
         default=0
     )
+    variation = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         ordering = ("-product",)

@@ -200,7 +200,7 @@ class ProductCreate(View):
             {'form': form}
         )
 
-def invoice_create(request, order_id=None, book_id=None):
+def invoice_create(request, order_id=None, book_id=None, variation='main'):
     books = None
     results = None
     book = None
@@ -211,7 +211,7 @@ def invoice_create(request, order_id=None, book_id=None):
     update_forms = {}
     if order_id:
         order = Order.objects.get(pk=order_id)
-        book_ids = [item.product.pk for item in order.lines.all()]
+        book_ids = [(item.product.pk, item.variation) for item in order.lines.all()]
 
         for item in order.lines.all():
             # update_forms[item.id]
@@ -224,6 +224,23 @@ def invoice_create(request, order_id=None, book_id=None):
     if book_id:
         book = Product.objects.get(pk=book_id)
 
+        # in this dict we handle the other prices and quantities variations
+        variation_dict = {
+            'main': {
+                'price': book.price,
+                'stock': book.stock,
+            },
+            'v1': {
+                'price': book.price_1,
+                'stock': book.stock_1,
+            },
+            'used': {
+                'price': book.price_used,
+                'stock': book.stock_used,}
+        }
+        price = variation_dict[variation]['price']
+        stock = variation_dict[variation]['stock']
+
     isbn_search_form = BookIsbnSearchForm()
 
 
@@ -233,13 +250,13 @@ def invoice_create(request, order_id=None, book_id=None):
     if order_id and book_id:
 
         # Check the stock of product
-        if book.stock <= 0:
+        if stock <= 0:
             messages.error(request, _('Not enough stock!'))
             return redirect('staff:invoice_create', order_id)
 
         # add book to invoice
-        if book.id in book_ids:
-            order_line = OrderLine.objects.get(order=order, product=book)
+        if (book.id, variation) in book_ids:
+            order_line = OrderLine.objects.get(order=order, product=book, variation=variation)
             order_line.quantity += 1
             order_line.save()
         else:
@@ -247,11 +264,13 @@ def invoice_create(request, order_id=None, book_id=None):
                 order = order,
                 product = book,
                 quantity = 1,
-                price = book.price,
+                price = price,
+                variation = variation,
             )
 
             # Update product stock
-            book.stock -= 1
+            stock -= 1
+            book.stock = stock
             book.save()
         messages.success(request, _('Product is added to invoice'))
 
@@ -259,8 +278,7 @@ def invoice_create(request, order_id=None, book_id=None):
 
     # When we add a book for first time and we dont have an order
     if (not order_id) and book_id:
-        # Check the stock of product
-        if book.stock <= 0:
+        if stock <= 0:
             messages.error(request, _('Not enough stock!'))
             return redirect('staff:invoice_create')
 
@@ -275,11 +293,13 @@ def invoice_create(request, order_id=None, book_id=None):
             order = order,
             product = book,
             quantity = 1,
-            price = book.price,
+            price = price,
+            variation = variation,
         )
 
         # Update product stock
-        book.stock -= 1
+        stock -= 1
+        book.stock = stock
         book.save()
         messages.success(request,  _('Product is added to invoice'))
         return redirect('staff:invoice_create', order.id)
