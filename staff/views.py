@@ -215,11 +215,7 @@ def invoice_create(request, order_id=None, book_id=None):
 
         for item in order.lines.all():
             # update_forms[item.id]
-            form  = InvoiceAddForm(
-            # initial={
-            #     'quantity': item.quantity,
-            #     'discount': item.discount }
-                )
+            form  = InvoiceAddForm()
             update_forms[item.id] = form
 
     else:
@@ -287,8 +283,7 @@ def invoice_create(request, order_id=None, book_id=None):
         book.save()
         messages.success(request,  _('Product is added to invoice'))
         return redirect('staff:invoice_create', order.id)
-        # else:
-        #     messages.error(request,'Not enough stock!')
+
 
     # ::# TODO: should refactor shome of the codes does not use
     if request.method == 'POST':
@@ -344,42 +339,6 @@ def invoice_create(request, order_id=None, book_id=None):
         else:
             pass
 
-
-
-
-        # if isbn_search_form.is_valid():
-        #     isbn = isbn_search_form.cleaned_data['isbn_query']
-        #
-        #     if not order:
-        #         order = Order.objects.create(
-        #                     user = request.user,
-        #                     status = 'draft',
-        #                     shipping_method = 'pickup',
-        #                 )
-        #         messages.success(request, 'order No. {} is created'.format(order.id))
-        #
-        #
-        #     try:
-        #         book = Product.objects.get(isbn=isbn)
-        #         messages.success(request, 'Book {} found'.format(book.id))
-        #         if book.pk in book_ids:
-        #             order_line = OrderLine.objects.get(order=order, product=book)
-        #             order_line.quantity += 1
-        #             order_line.save()
-        #         else:
-        #             order_line = OrderLine.objects.create(
-        #                 order = order,
-        #                 product = book,
-        #                 quantity = 1,
-        #                 price = book.price,
-        #             )
-        #         messages.success(request,'order line No. {} with {} is added'.format(order.id, book))
-        #
-        #         # isbn_search_form = BookIsbnSearchForm()
-        #
-        #
-        #     except:
-        #         messages.error(request, 'Book {} does not exist!'.format(isbn))
     search_form = SearchForm()
     return render(
         request,
