@@ -270,7 +270,14 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
 
             # Update product stock
             stock -= 1
-            book.stock = stock
+
+            if variation == 'main':
+                book.stock = stock
+            elif variation  == 'v1':
+                book.stock_1 = stock
+            elif variation == 'used':
+                book.stock_used = stock
+
             book.save()
         messages.success(request, _('Product is added to invoice'))
 
@@ -299,8 +306,16 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
 
         # Update product stock
         stock -= 1
-        book.stock = stock
+
+        if variation == 'main':
+            book.stock = stock
+        elif variation  == 'v1':
+            book.stock_1 = stock
+        elif variation == 'used':
+            book.stock_used = stock
+
         book.save()
+
         messages.success(request,  _('Product is added to invoice'))
         return redirect('staff:invoice_create', order.id)
 
@@ -320,42 +335,51 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
             if len(results) == 1:
                 book = results.first()
                 # Check the stock of product
-                if book.stock <= 0:
-                    messages.error(request, _('Not enough stock!'))
+                if book.has_other_prices:
+                    messages.warning(request, _('This book has other prices'))
+                    # if not order:
+                    #     return redirect('staff:invoice_create')
+                    # if order:
+                    #     return redirect('staff:invoice_create', order.id)
+                elif not book.has_other_prices:
+                    if book.stock <= 0:
+                        messages.error(request, _('Not enough stock!'))
+                        if not order:
+                            return redirect('staff:invoice_create')
+                        if order:
+                            return redirect('staff:invoice_create', order.id)
+                    # if the order has not created yet, we created it here
                     if not order:
-                        return redirect('staff:invoice_create')
-                    if order:
-                        return redirect('staff:invoice_create', order.id)
-                # if the order has not created yet, we created it here
-                if not order:
-                    order = Order.objects.create(
-                                user = request.user,
-                                status = 'draft',
-                                shipping_method = 'pickup',
-                            )
-                    messages.success(request,  _('Order is created') + ' : {}'.format(order.id))
+                        order = Order.objects.create(
+                                    user = request.user,
+                                    status = 'draft',
+                                    shipping_method = 'pickup',
+                                )
+                        messages.success(request,  _('Order is created') + ' : {}'.format(order.id))
 
-                # if the book is added in the invoice we will update the quantity in invoice
-                if book.pk in book_ids:
-                    order_line = OrderLine.objects.get(order=order, product=book)
-                    order_line.quantity += 1
-                    order_line.save()
+                    # if the book is added in the invoice we will update the quantity in invoice
+                    if (book.pk, 'main') in book_ids and not book.has_other_prices:
+                        order_line = OrderLine.objects.get(order=order, product=book)
+                        order_line.quantity += 1
+                        order_line.variation = 'main'
+                        order_line.save()
 
-                    # Update product stock
-                    book.stock -=1
-                    book.save()
+                        # Update product stock
+                        book.stock -=1
+                        book.save()
 
-                # if the book is not in invoice we will create an invoice orderline
-                else:
-                    order_line = OrderLine.objects.create(
-                        order = order,
-                        product = book,
-                        quantity = 1,
-                        price = book.price,
-                    )
-                    book.stock -= 1
-                    book.save()
-                messages.success(request, _('Product is added to invoice'))
+                    # if the book is not in invoice we will create an invoice orderline
+                    else:
+                        order_line = OrderLine.objects.create(
+                            order = order,
+                            product = book,
+                            quantity = 1,
+                            price = book.price,
+                            variation = 'main'
+                        )
+                        book.stock -= 1
+                        book.save()
+                    messages.success(request, _('Product is added to invoice'))
         else:
             pass
 
@@ -439,13 +463,38 @@ def orderline_update(request, order_id, orderline_id):
         if update_form.is_valid():
             order_line = OrderLine.objects.get(pk=orderline_id)
             product = order_line.product
+            variation = order_line.variation
+
+            variation_dict = {
+                'main': {
+                    'price': product.price,
+                    'stock': product.stock,
+                },
+                'v1': {
+                    'price': product.price_1,
+                    'stock': product.stock_1,
+                },
+                'used': {
+                    'price': product.price_used,
+                    'stock': product.stock_used,}
+            }
+            product_price = variation_dict[order_line.variation]['price']
+            product_stock = variation_dict[order_line.variation]['stock']
 
             if update_form.cleaned_data['remove'] == True:
                 """
                 remove an orde line if remove checkbox is clicked
                 """
                 # Update product stock
-                product.stock += order_line.quantity
+                product_stock += order_line.quantity
+
+                if variation == 'main':
+                    product.stock = product_stock
+                elif variation  == 'v1':
+                    product.stock_1 = product_stock
+                elif variation == 'used':
+                    product.stock_used = product_stock
+
                 product.save()
 
                 order_line.delete()
@@ -453,27 +502,43 @@ def orderline_update(request, order_id, orderline_id):
 
             if update_form.cleaned_data['quantity'] != 0:
                 if update_form.cleaned_data['quantity'] > order_line.quantity:
-                    if update_form.cleaned_data['quantity'] > order_line.quantity + product.stock:
-                        messages.error(request, _('Not enough stock') + ' ' + _('Quantity') + ' {}'.format(product.stock))
+                    if update_form.cleaned_data['quantity'] > order_line.quantity + product_stock:
+                        messages.error(request, _('Not enough stock') + ' ' + _('Quantity') + ' {}'.format(product_stock))
                         return redirect('staff:invoice_create', order.id)
                     else:
                         # Update product stock
-                        product.stock -= update_form.cleaned_data['quantity'] - order_line.quantity
+                        product_stock -= update_form.cleaned_data['quantity'] - order_line.quantity
+
+                        if variation == 'main':
+                            product.stock = product_stock
+                        elif variation  == 'v1':
+                            product.stock_1 = product_stock
+                        elif variation == 'used':
+                            product.stock_used = product_stock
+
                         product.save()
 
 
                 elif update_form.cleaned_data['quantity'] < order_line.quantity:
                     # Update product stock
-                    product.stock += order_line.quantity - update_form.cleaned_data['quantity']
+                    product_stock += order_line.quantity - update_form.cleaned_data['quantity']
 
+                    if variation == 'main':
+                        product.stock = product_stock
+                    elif variation  == 'v1':
+                        product.stock_1 = product_stock
+                    elif variation == 'used':
+                        product.stock_used = product_stock
+                    product.save()
 
                 order_line.quantity = update_form.cleaned_data['quantity']
+                order_line.save()
 
-                product.save()
 
             if update_form.cleaned_data['discount'] != 0:
                 order_line.discount = update_form.cleaned_data['discount']
-            order_line.save()
+                order_line.save()
+
             update_form = InvoiceAddForm()
             return redirect('staff:invoice_create', order.id)
 

@@ -24,6 +24,11 @@ class OrderCreateForm(forms.ModelForm):
         exclude = ['user', 'token', 'checkout_token' ]
 
 class InvoiceAddForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['quantity'].widget.attrs.update(style='max-width: 4em')
+        self.fields['discount'].widget.attrs.update(style='max-width: 6em')
+
     remove = forms.BooleanField(required=False)
 
     class Meta:
