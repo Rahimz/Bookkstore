@@ -36,4 +36,5 @@ urlpatterns = [
 
     path('vendor/list/', views.vendor_list, name='vendor_list'),
     path('vendor/add/', views.vendor_add, name='vendor_add'),
+    path('vendor/edit/<int:vendor_id>/', views.vendor_edit, name='vendor_edit'),
 ]

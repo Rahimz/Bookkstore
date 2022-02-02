@@ -596,7 +596,7 @@ def vendor_add(request):
     if request.method == 'POST':
         vendor_form = VendorAddForm(request.POST)
         address_form = AddressAddForm(request.POST)
-        if vendor_form.is_valid() and address_form:
+        if vendor_form.is_valid() and address_form.is_valid():
             vendor = vendor_form.save(commit=False)
             vendor.username = vendor_form.cleaned_data['first_name']
 
@@ -618,6 +618,28 @@ def vendor_add(request):
     else:
         vendor_form = VendorAddForm()
         address_form = AddressAddForm(initial={'country':'IR', 'city':_('Tehran')})
+    return render(
+        request,
+        'staff/vendor_add.html',
+        {'vendor_form': vendor_form,
+        'address_form': address_form}
+    )
+
+
+def vendor_edit(request, vendor_id):
+    vendor = get_object_or_404(Vendor, pk=vendor_id)
+    if request.method == 'POST':
+        vendor_form = VendorAddForm(request.POST, instance=vendor)
+        address_form = AddressAddForm(request.POST, instance=vendor.default_billing_address)
+        if vendor_form.is_valid() and address_form.is_valid():
+            vendor_form.save()
+            address_form.save()
+            messages.success(request, _('Vendor is updated') + ': {}'.format(vendor.first_name))
+        else:
+            messages.error(request, _('Form is not valid'))
+    else:
+        vendor_form = VendorAddForm(instance=vendor)
+        address_form = AddressAddForm(instance=vendor.default_billing_address)
     return render(
         request,
         'staff/vendor_add.html',
