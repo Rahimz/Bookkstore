@@ -51,8 +51,9 @@ def order_export_excel(request, *args, **kwargs):
 
 
     for count , order in enumerate(orders):
-        title_list = [ order.id, str(order.client), str(order.client_phone),
-             str(order.created,), order.status, order.billing_address, order.shipping_address,
+        title_list = [
+            order.id, str(order.client), str(order.client_phone),
+            str(order.created,), order.status, order.channel, order.billing_address, order.shipping_address,
             order.shipping_method, str(order.user), order.total_cost, order.total_cost_after_discount, order.discount,
             order.payable, order.paid, order.customer_note, order.weight, order.is_gift,
         ]
@@ -78,7 +79,7 @@ def draft_order_export_excel(request):
     sheet = wb.active
 
     headers = [
-        'Order ID', 'Client', 'Client Phone', 'Created', 'Status',
+        'Order ID', 'Client', 'Client Phone', 'Created', 'Status', 'Channel',
         'billing_address', 'shipping_address', 'shipping_method',  'Created by',
         'Total cost', 'Tota cost after discount', 'discount', 'Payable', 'paid',
         'Customer notes', 'Weight', 'Is gift',
