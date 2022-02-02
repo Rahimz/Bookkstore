@@ -47,7 +47,7 @@ class ClientUpdateForm(forms.ModelForm):
 		model = CustomUser
 		fields = (
 			'username', 'first_name', 'last_name', 'phone', 'email',
-			'default_billing_address', 'default_shipping_address', 'addresses'
+			'default_billing_address', 'default_shipping_address', 
 
 		)
 
@@ -67,9 +67,12 @@ class VendorAddForm(forms.ModelForm):
         }
 
 class AddressAddForm(forms.ModelForm):
+	def __init__(self, *args, **kwargs):
+	    super().__init__(*args, **kwargs)
+	    self.fields['country'].required = False
 	class Meta:
 		model = Address
-		exclude = ['name', 'phone']
+		exclude = ['name', 'phone', 'addresses']
 		# labels = {
         #     'first_name': _('Name'),
 		# 	'overal_discount': _('Overal discount'),

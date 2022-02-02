@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-02 08:51+0330\n"
-"PO-Revision-Date: 2022-02-02 08:54+0330\n"
-"Last-Translator:   <>\n"
+"PO-Revision-Date: 2022-02-02 11:50+0330\n"
+"Last-Translator:   <rahimaghareb@yahoo.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -374,7 +374,7 @@ msgstr "کد مشتری"
 #: templates/account/clients/client_update.html:9
 #: templates/account/clients/client_update.html:18
 msgid "Client details"
-msgstr "اطلاعات سفارش"
+msgstr "اطلاعات مشتری"
 
 #: templates/account/dashboard.html:7 templates/account/dashboard.html:12
 msgid "Profile"

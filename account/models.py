@@ -62,14 +62,14 @@ class CustomUser(AbstractUser):
     )
     default_shipping_address = models.ForeignKey(
         Address,
-        related_name="+",
+        related_name="shipping",
         null=True,
         blank=True,
         on_delete=models.SET_NULL
     )
     default_billing_address = models.ForeignKey(
         Address,
-        related_name="+",
+        related_name="billing",
         null=True,
         blank=True,
         on_delete=models.SET_NULL
