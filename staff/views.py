@@ -654,3 +654,12 @@ def vendor_list(request):
         'staff/vendor_list.html',
         {'vendors': vendors}
     )
+
+
+def purchase_create(request):
+    search_form = SearchForm()
+    return render(
+        request,
+        'staff/purchase_create.html',
+        {'search_form': search_form}
+    )
