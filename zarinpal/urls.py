@@ -12,4 +12,5 @@ urlpatterns = [
     path('payment/create/', views.payment_create , name='payment_create'),
     path('payment-link/<int:pay_id>/', views.send_form_request , name='payment_link_request'),
     path('payments/', views.payment_list , name='payment_list'),
+    path('payments/already_paid/', views.already_paid , name='already_paid'),
 ]

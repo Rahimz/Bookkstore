@@ -41,7 +41,7 @@
             <td>{{ pay.amount }}</td>
             <td>{% if pay.paid %}&#10004{% else %}&#10008{% endif %}</td>
             <td>{% if pay.paid %}{{ pay.ref_id }}{% endif %}</td>
-            <td><a href="{% url 'zarinpal:payment_link_request' pay.id %}">link</a></td>
+            <td><a href="{% url 'zarinpal:payment_link_request' pay.id %}" {% if pay.paid %}disable{% endif %}>link</a></td>
           </tr>
           {% endfor %}
         </tbody>

@@ -212,6 +212,11 @@ class Product(models.Model):
         null=True,
         blank=True
     )
+    publisher_2 = models.CharField(
+        max_length=250,
+        null=True,
+        blank=True
+    )
     publish_year = models.IntegerField(
         default=1400,
         validators=[MinValueValidator(1233), MaxValueValidator(1400)],

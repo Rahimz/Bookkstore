@@ -31,7 +31,7 @@
           <tr>
             <th scope="row">{{ forloop.counter}}</th>
             <td>{{ vendor.pk }}</td>
-            <td>{{ vendor.first_name }}</td>
+            <td><a href="{% url 'staff:vendor_edit' vendor.pk %}">{{ vendor.first_name }}</a></td>
             <td>{{ vendor.overal_discount }}</td>
             <td>{{ vendor.contact_person }}</td>
             <td>{{ vendor.phone }}</td>

@@ -17,3 +17,12 @@ class OrderAdmin(admin.ModelAdmin):
     list_editable = ['paid', 'approved_date', ]
     search_fields = ['first_name', 'last_name', 'email']
     inlines = [OrderLineInline]
+
+
+@admin.register(OrderLine)
+class OrderLineAdmin(admin.ModelAdmin):
+    list_display = [
+        'id', 'order', 'product',
+        'price', 'quantity', 'variation',
+    ]
+    search_fields = ['order', 'product', 'variation']

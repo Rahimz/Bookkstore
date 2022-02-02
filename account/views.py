@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
-from .forms import LoginForm, UserRegistrationForm, UserEditForm, ClientAddForm, ClientUpdateForm
+from .forms import LoginForm, UserRegistrationForm, UserEditForm, ClientAddForm, ClientUpdateForm, AddressAddForm
 from .models import CustomUser
 
 
@@ -99,49 +99,89 @@ def client_list(request):
 
 def client_add(request):
     form = ClientAddForm()
-    if request.method == "POST":
-        form = ClientAddForm(data=request.POST)
+    billing_address_form = AddressAddForm()
+    shipping_address_form = AddressAddForm()
 
-        if form.is_valid():
-            new_client = form.save(commit=False)
+    if request.method == "POST":
+        client_form = ClientAddForm(data=request.POST)
+        billing_address_form = AddressAddForm(data=request.POST)
+        shipping_address_form = AddressAddForm(data=request.POST)
+
+        if client_form.is_valid() and billing_address_form.is_valid() and shipping_address_form.is_valid():
+            new_client = client_form.save(commit=False)
             new_client.is_client = True
-            new_client.username = form.cleaned_data['phone']
-            new_client.first_name = form.cleaned_data['first_name']
-            new_client.last_name = form.cleaned_data['last_name']
+            new_client.username = client_form.cleaned_data['phone']
+            new_client.first_name = client_form.cleaned_data['first_name']
+            new_client.last_name = client_form.cleaned_data['last_name']
             new_client.password = str(uuid.uuid4())
             new_client.email = "{}@ketabedamavand.com".format(new_client.username)
             new_client.save()
+
+            billing = billing_address_form.save(commit=False)
+            shipping = shipping_address_form.save(commit=False)
+
+            # billing.name = '{} {}'.format(new_client.first_name, new_client.last_name + ' - ' + _('Billing address'))
+            billing.name = '{}'.format(str(new_client.phone)) + ' - billing'
+            billing.phone = new_client.phone
+            billing.save()
+
+            # shipping.name = '{} {}'.format(new_client.first_name, new_client.last_name + ' - ' + _('Shipping address'))
+            shipping.name = '{}'.format(str(new_client.phone)) + ' - shipping'
+            shipping.phone = new_client.phone
+            shipping.save()
+
+            new_client.default_billing_address = billing
+            new_client.default_shipping_address = shipping
+            new_client.save()
+
+
             messages.success(request, _('Client added!'))
             return redirect('/account/clients')
         else:
-            form = ClientAddForm(data=request.POST)
+            client_form = ClientAddForm(data=request.POST)
             messages.error(request, _('The phone number is already used!'))
     else:
-        form = ClientAddForm()
+        client_form = ClientAddForm()
     return render(
         request,
         'account/clients/client_add.html',
-        {'form': form}
+        {'client_form': client_form,
+        'billing_address_form': billing_address_form,
+        'shipping_address_form': shipping_address_form,
+        }
     )
 
 def client_update(request, client_id):
     client = CustomUser.objects.get(pk=client_id)
 
-    client_form = ClientUpdateForm(instance=client)
+    # client_form = ClientUpdateForm(instance=client)
+    # client_form = ClientAddForm(instance=client)
+    # billing_address_form = AddressAddForm(instance=client.default_billing_address)
+    # shipping_address_form = AddressAddForm(instance=client.default_shipping_address)
 
     if request.method == "POST":
         client_form = ClientUpdateForm(data=request.POST, instance=client)
-        if client_form.is_valid():
+        billing_address_form = AddressAddForm(data=request.POST, instance=client.default_billing_address)
+        shipping_address_form = AddressAddForm(data=request.POST, instance=client.default_shipping_address)
+        if client_form.is_valid() and shipping_address_form.is_valid() and billing_address_form.is_valid():
             client_form.save()
+            billing_address_form.save()
+            shipping_address_form.save()
+
             messages.success(request, _('Client details updated'))
             return redirect('/account/clients')
         else:
             messages.error(request, _('Form is not valid'))
     else:
         client_form = ClientUpdateForm(instance=client)
+        billing_address_form = AddressAddForm(instance=client.default_billing_address)
+        shipping_address_form = AddressAddForm(instance=client.default_shipping_address)
     return render(
         request,
-        'account/clients/client_update.html',
+        'account/clients/client_add.html',
         {'client': client,
-        'client_form': client_form}
+        'client_form': client_form,
+        'billing_address_form': billing_address_form,
+        'shipping_address_form': shipping_address_form,
+        }
     )

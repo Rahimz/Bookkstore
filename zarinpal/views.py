@@ -46,6 +46,10 @@ def send_form_request(request, pay_id=None):
     else:
         payment_id = payment_data['id']
     payment = Payment.objects.get(pk=payment_id)
+    if payment.paid == True:
+        # return redirect('already_paid')
+        #we will retrun a function in this views.py
+        return already_paid(request, payment.id)
     request.session['payment_id'] = payment.id
     description = payment.client_name
     amount = payment.amount
@@ -312,4 +316,12 @@ def payment_list(request):
         request,
         'zarinpal/payment_list.html',
         {'payments': payments}
+    )
+
+
+def already_paid(request, payment_id):
+    return render(
+        request,
+        'zarinpal/already_paid.html',
+        {'payment_id': payment_id}
     )

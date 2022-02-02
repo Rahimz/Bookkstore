@@ -6,17 +6,17 @@
 
 {% load crispy_forms_tags %}
 
-{% block title %}{% trans 'Invoice create' %}{% endblock %}
+{% block title %}{% trans 'Purchase create' %}{% endblock %}
 
 {% block content %}
 <div class="container-fluid overflow-hidden">
   <div class="row">
     <div class="col-md-2">
-      {% include "staff/sidebar_staff.html" with barName="sales" %}
+      {% include "staff/sidebar_staff.html" with barName="purchase" %}
     </div>
     <div class="col-md-10">
       <div>
-        <h2>{% trans 'Create invoice' %}</h2>
+        <h2>{% trans 'Create purchase' %}</h2>
 
         {% if order %}
         <h4>{% trans 'Client' %}</h4>
@@ -67,7 +67,8 @@
           {% endif%}
 
       </div>
-
+      {% comment %}
+      {% endcomment %}
       <div class="">
         <h2 class="my-4">{% trans 'Invoice' %}</h2>
         <table class="table table-striped">
@@ -87,6 +88,7 @@
             </tr>
           </thead>
           <tbody>
+            {% comment %}
             {% for order_line in order.lines.all %}
             <tr>
               <th scope="row">{{ forloop.counter }}</th>
@@ -112,6 +114,7 @@
               <td>{{ order_line.get_cost_after_discount }}</td>
             </tr>
             {% endfor %}
+            {% endcomment %}
           </tbody>
           <tfoot>
             <tr>
