@@ -24,6 +24,7 @@
             <p itemprop="translator" class="">{% trans 'Translator' %} : {{ product.translator }}</p>
             <p class="">{% trans 'Price' %} : {{ product.price }}</p>
             <p itemprop="publisher" class="">{% trans 'Publisher' %} : {{ product.publisher }}</p>
+            <p itemprop="publisher" class="">{% trans 'Publisher' %} : {% if product.publisher_2 %}{{ product.publisher_2 }}{% endif %}</p>
           </div>
         </div>
         <div class="mt-4">
