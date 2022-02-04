@@ -2,12 +2,16 @@ from django.db import models
 from django.conf import settings
 import uuid
 from django.utils.translation import gettext_lazy as _
+from django.core.validators import MinValueValidator, MaxValueValidator
+from decimal import Decimal
 
 from phonenumber_field.modelfields import PhoneNumberField
 
-from account.models import Address
+from account.models import Address, Vendor
 from products.models import Product
 
+
+PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
 
 class Order(models.Model):
     STATUS_CHOICES = [
@@ -212,6 +216,181 @@ class OrderLine(models.Model):
         max_digits=settings.DEFAULT_MAX_DIGITS,
         decimal_places=settings.DEFAULT_DECIMAL_PLACES,
         default=0
+    )
+    variation = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+    )
+
+    class Meta:
+        ordering = ("-product",)
+
+
+    def __str__(self):
+        return str(self.id)
+
+    def get_cost(self):
+        return self.price * self.quantity
+
+    def get_cost_after_discount(self):
+        return self.price * self.quantity - self.discount
+
+    def get_weight(self):
+        return self.product.weight * self.quantity
+
+    def update_quantity(self, new_quantity):
+        self.quantity = new_quantity
+
+    def update_discount(self, new_discount):
+        self.discount = new_discount
+
+
+class Purchase(models.Model):
+    STATUS_CHOICES = [
+        ('draft', 'Draft'),
+        ('paid', 'paid'),
+        ('approved', 'approved'),
+    ]
+
+    # is used to register the staff activity
+    registrar = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        related_name='purchase_registerar',
+        blank=True,
+        null=True
+    )
+    approver = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        related_name='purchase_approver',
+        blank=True,
+        null=True
+    )
+    vendor = models.ForeignKey(
+        Vendor,
+        on_delete=models.SET_NULL,
+        related_name='purchases',
+        blank=True,
+        null=True,
+    )
+    created = models.DateTimeField(
+        auto_now_add=True,
+    )
+    updated = models.DateTimeField(
+        auto_now=True
+    )
+    approved_date = models.DateTimeField(
+        blank=True,
+        null=True
+    )
+    payment_date = models.DateField(
+        blank=True,
+        null=True
+    )
+    status = models.CharField(
+        max_length=32,
+        default='draft',
+        choices=STATUS_CHOICES
+    )
+    token = models.CharField(
+        max_length=36,
+        unique=True,
+        blank=True
+    )
+    total_cost = models.DecimalField(
+        max_digits=settings.DEFAULT_MAX_DIGITS,
+        decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+        default=0,
+    )
+    total_cost_after_discount = models.DecimalField(
+        max_digits=settings.DEFAULT_MAX_DIGITS,
+        decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+        default=0,
+    )
+    discount = models.DecimalField(
+        max_digits=settings.DEFAULT_MAX_DIGITS,
+        decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+        default=0,
+    )
+    payable = models.DecimalField(
+        max_digits=settings.DEFAULT_MAX_DIGITS,
+        decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+        default=0,
+    )
+    quantity = models.IntegerField(
+        default=0,
+    )
+    paid = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ("-payment_date", "approved_date", "-pk",)
+
+    def save(self, *args, **kwargs):
+        if not self.token:
+            self.token = str(uuid.uuid4())
+
+        # self.quantity = self.get_total_quantity()
+
+        # self.payable = self.get_cost_after_discount() - self.discount
+
+        super(Purchase, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.vendor.first_name
+
+    # def get_total_cost(self):
+    #     return sum(item.get_cost() for item in self.lines.all())
+    #
+    # def get_cost_after_discount(self):
+    #     return sum(item.get_cost_after_discount() for item in self.lines.all())
+    #
+    # def get_payable(self):
+    #     return self.get_cost_after_discount() - self.discount
+    #
+    # def get_total_weight(self):
+    #     return sum(item.get_weight() for item in self.lines.all())
+    #
+    # def get_total_quantity(self):
+    #     return sum(item.quantity for item in self.lines.all())
+
+
+class PurchaseLine(models.Model):
+    purchase = models.ForeignKey(
+        Purchase,
+        related_name='lines',
+        editable=False,
+        on_delete=models.CASCADE,
+    )
+    product = models.ForeignKey(
+        Product,
+        related_name='purchase_lines',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+    price = models.DecimalField(
+        max_digits=settings.DEFAULT_MAX_DIGITS,
+        decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+        null=True,
+        blank=True
+    )
+    quantity = models.PositiveIntegerField(
+        default=0
+    )
+    discount = models.DecimalField(
+        max_digits=settings.DEFAULT_MAX_DIGITS,
+        decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+        default=0
+    )
+    discount_percent = models.DecimalField(
+        max_digits=3,
+        decimal_places=0,
+        default=Decimal(0),
+        validators=PERCENTAGE_VALIDATOR,
+        null=True,
+        blank=True,
     )
     variation = models.CharField(
         max_length=50,
