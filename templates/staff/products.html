@@ -20,6 +20,7 @@
       <thead>
         <tr>
           <th scope="col">#</th>
+          <th scope="col">{% trans 'Edit' %}</th>
           <th scope="col">{% trans 'Name' %}</th>
           <th scope="col">{% trans 'Author' %}</th>
           <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
@@ -29,6 +30,7 @@
         {% for product in products %}
         <tr>
           <th scope="row">{{ product.pk }}</th>
+          <td><a href="{% url 'staff:product_update' product.id %}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
           <td><a href="{% url 'shop:product_detail' product.pk %}">{{ product.name }}</a></td>
           <td>{{ product.author }}</td>
           <td>{{ product.price | intcomma:False }}</td>

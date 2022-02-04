@@ -8,13 +8,19 @@
 
 {% block title %}{{ product.name }}{% endblock %}
 
+{% block staff_tab %}<a class="btn text-dark btn-outline-warning" href="{% url 'staff:product_update' product.id %}" >{% trans 'Update product' %}</a>{% endblock %}
+
 {% block content %}
 <div class="container-fluid overflow-hidden">
   <div itemscope itemtype="https://schema.org/Book">
     <div class="row gy-2">
       <div class="col-md-4">
         <div class="border drop_shadow rounded-2">
-          <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}" itemprop="image"{% endif %} class="card-img-top p-4" alt="{{ product.image_alt }}">
+          {% if product.image %}
+          <img src="{{ product.image.url }}" itemprop="image" class="card-img-top p-4" alt="{{ product.image_alt }}">
+          {% else %}
+          <img src="{% static 'img/no_image.png' %}" class="card-img-top p-4" alt="no-image">
+          {% endif %}
         </div>
         <span class="badge rounded-pill ms-4 mt-2 {% if product.state == 'new' %}bg-success{% else %}bg-warning{% endif %}">{{ product.state | capfirst }}</span>
       </div>
@@ -47,7 +53,7 @@
       <div class="col-md-5">
         <div class="drop_shadow border rounded-2 p-3">
           <div class="bg-light p-2">
-            <p class="">product.description</p>
+            <p class="">{{ product.description }}</p>
           </div>
         </div>
       </div>
