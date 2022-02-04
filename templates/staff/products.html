@@ -4,6 +4,8 @@
 
 {% load static %}
 
+{% load humanize %}
+
 {% block title %}{% trans 'Products' %}{% endblock %}
 
 {% block content %}
@@ -20,7 +22,7 @@
           <th scope="col">#</th>
           <th scope="col">{% trans 'Name' %}</th>
           <th scope="col">{% trans 'Author' %}</th>
-          <th scope="col">{% trans 'Price' %}</th>
+          <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
         </tr>
       </thead>
       <tbody>
@@ -29,7 +31,7 @@
           <th scope="row">{{ product.pk }}</th>
           <td><a href="{% url 'shop:product_detail' product.pk %}">{{ product.name }}</a></td>
           <td>{{ product.author }}</td>
-          <td>{{ product.price }}</td>
+          <td>{{ product.price | intcomma:False }}</td>
         </tr>
         {% endfor %}
 

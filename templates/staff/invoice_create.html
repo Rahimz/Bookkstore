@@ -4,6 +4,8 @@
 
 {% load static %}
 
+{% load humanize %}
+
 {% load crispy_forms_tags %}
 
 {% block title %}{% trans 'Invoice create' %}{% endblock %}
@@ -50,14 +52,14 @@
             <div class="col-md-4">
 
               <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='main' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='main' %}{% endif %}" class="btn btn-sm btn-outline-success m-1 fs-10 text-right">
-                {{ result.name | truncatechars:30 }} - {{ result.publisher | truncatechars:15 }} - {{ result.size }} - {{ result.cover_type }} - {% trans 'Quantity' %} {{ result.stock}} - {{ result.price }}
+                {{ result.name | truncatechars:30 }} - {{ result.publisher | truncatechars:15 }} - {{ result.size }} - {{ result.cover_type }} - {% trans 'Quantity' %} {{ result.stock}} - {{ result.price | intcomma:False }}
               </a>
               {% if result.has_other_prices %}
               {% if result.stock_1 %}
-                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='v1' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='v1' %}{% endif %}" class="btn btn-sm btn-outline-success">{{ result.price_1 }}</a>
+                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='v1' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='v1' %}{% endif %}" class="btn btn-sm btn-outline-success">{{ result.price_1 | intcomma:False }}</a>
               {% endif %}
               {% if result.stock_used %}
-                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='used' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='used' %}{% endif %}" class="btn btn-sm btn-outline-warning">{{ result.price_used }}</a>
+                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='used' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='used' %}{% endif %}" class="btn btn-sm btn-outline-warning">{{ result.price_used | intcomma:False }}</a>
               {% endif %}
               {% endif %}
             </div>
@@ -107,9 +109,9 @@
               </td>
               <td>{{ order_line.variation }}</td>
               <td>{{ order_line.quantity }}</td>
-              <td>{{ order_line.price }}</td>
-              <td>{{ order_line.discount }}</td>
-              <td>{{ order_line.get_cost_after_discount }}</td>
+              <td>{{ order_line.price | intcomma:False }}</td>
+              <td>{{ order_line.discount | intcomma:False }}</td>
+              <td>{{ order_line.get_cost_after_discount | intcomma:False }}</td>
             </tr>
             {% endfor %}
           </tbody>
@@ -119,18 +121,18 @@
               <td colspan="7">{% trans 'SUM' %}</td>
               <td>{{ order.get_total_quantity }}</td>
               <td colspan="2"></td>
-              <td>{{ order.get_cost_after_discount }}</td>
+              <td>{{ order.get_cost_after_discount | intcomma:False }}</td>
             </tr>
             <tr>
               <th scope="row"></th>
               <td colspan="10">{% trans 'DISCOUNT' %}</td>
-              <td class="text-danger">{{ order.discount }}</td>
+              <td class="text-danger">{{ order.discount | intcomma:False }}</td>
               <td></td>
             </tr>
             <tr>
               <th scope="row"></th>
               <td colspan="10" class="fw-bolder">{% trans 'PAYABLE' %}</td>
-              <td class="fw-bolder">{{ order.get_payable }}</td>
+              <td class="fw-bolder">{{ order.get_payable | intcomma:False }}</td>
             </tr>
           </tfoot>
         </table>
