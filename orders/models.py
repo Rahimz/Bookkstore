@@ -163,6 +163,7 @@ class Order(models.Model):
             self.token = str(uuid.uuid4())
 
         self.quantity = self.get_total_quantity()
+        self.weight = self.get_total_weight()
 
         self.payable = self.get_cost_after_discount() - self.discount
 
@@ -237,7 +238,10 @@ class OrderLine(models.Model):
         return self.price * self.quantity - self.discount
 
     def get_weight(self):
-        return self.product.weight * self.quantity
+        if self.product.weight:
+            return self.product.weight * self.quantity
+        else:
+            return 0
 
     def update_quantity(self, new_quantity):
         self.quantity = new_quantity
@@ -245,6 +249,12 @@ class OrderLine(models.Model):
     def update_discount(self, new_discount):
         self.discount = new_discount
 
+    # def save(self, *args, **kwargs):
+    #     self.order.update_quantity()
+    #     self.order.update_weight()
+    #     self.order.save()
+    #
+    #     super(OrderLine, self).save(*args, **kwargs)
 
 class Purchase(models.Model):
     STATUS_CHOICES = [
