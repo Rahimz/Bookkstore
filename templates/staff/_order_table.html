@@ -61,7 +61,7 @@
     <tr>
       <th scope="row"></th>
       <td colspan="9" class="fw-bolder">{% trans 'Payable' %}</td>
-      <td class="fw-bolder">{{ order.get_cost_after_discount | intcomma:False }}</td>
+      <td class="fw-bolder">{{ order.payable | intcomma:False }}</td>
     </tr>
 
   </tbody>

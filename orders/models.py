@@ -74,7 +74,7 @@ class Order(models.Model):
     )
     status = models.CharField(
         max_length=32,
-        default='unfulfilled',
+        default='draft',
         choices=STATUS_CHOICES
     )
     channel = models.CharField(
@@ -84,16 +84,16 @@ class Order(models.Model):
     )
     billing_address = models.ForeignKey(
         Address,
-        related_name="+",
-        editable=False,
+        related_name='order_billing',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL
     )
     shipping_address = models.ForeignKey(
         Address,
-        related_name="+",
-        editable=False,
+        related_name='order_shipping',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL
     )
     user_email = models.EmailField(
@@ -119,7 +119,7 @@ class Order(models.Model):
         max_digits=settings.DEFAULT_MAX_DIGITS,
         decimal_places=settings.DEFAULT_DECIMAL_PLACES,
         default=0,
-        editable=False,
+
     )
     total_cost = models.DecimalField(
         max_digits=settings.DEFAULT_MAX_DIGITS,
@@ -165,7 +165,7 @@ class Order(models.Model):
         self.quantity = self.get_total_quantity()
         self.weight = self.get_total_weight()
 
-        self.payable = self.get_cost_after_discount() - self.discount
+        self.payable = self.get_payable()
 
         super(Order, self).save(*args, **kwargs)
 
@@ -179,7 +179,7 @@ class Order(models.Model):
         return sum(item.get_cost_after_discount() for item in self.lines.all())
 
     def get_payable(self):
-        return self.get_cost_after_discount() - self.discount
+        return self.get_cost_after_discount() - self.discount + self.shipping_cost
 
     def get_total_weight(self):
         return sum(item.get_weight() for item in self.lines.all())
