@@ -1,0 +1,100 @@
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+
+<html dir="rtl">
+<body>
+  <h1>{% trans 'Ketabe Damavand' %}</h1>
+  <p>
+    {% trans 'Invoice no.' %} {{ order.id }}<br />
+    <span class="secondary">
+      {#{{ order.created|date:"M d, Y" }}#}
+      {{  fa_date  }}
+    </span>
+  </p>
+  <p class="order-info">
+    {% if order.client.username == "guest" %}
+    {% trans 'Client' %}: {% trans 'Guest' %}
+    {% else %}
+    {% trans 'Client' %}: {{ order.client.first_name }} {{ order.client.last_name }}
+    <br>{% trans 'Phone' %}: {{ order.phone }}
+    <br>{% trans 'Address' %}: {{  order.billing_address.get_full_address }}
+    <br>{% trans 'Address' %}: {{  order.shipping_address.get_full_address }}
+    {% endif %}
+  </p>
+  <p class="order-info">
+    {% trans 'Registrar' %}: {{ order.user }} - {% trans 'Approver' %}: {{ order.approver }}
+  </p>
+
+  <h3>{% trans 'Order features' %}</h3>
+  {% if order.is_gift %}
+  <span class="badge">{% trans 'Is a gift' %}</span>
+  {% endif %}
+  {% if order.paid %}
+  <span class="badge">{% trans 'Paid' %}</span>
+  {% endif %}
+
+  <table dir="rtl">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>{% trans 'Product ID' %}</th>
+        <th>{% trans 'Product' %}</th>
+        <th>{% trans 'ISBN' %}</th>
+        <th>{% trans 'Price' %}</th>
+        <th>{% trans 'Quantity' %}</th>
+        <th>{% trans 'Discount' %}</th>
+        <th>{% trans 'Total' %} <span style="font-size:8px;">({% trans 'Rial' %})</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in order.lines.all %}
+        <tr class="row{% cycle "1" "2" %}">
+          <td>{{ forloop.counter }}</td>
+          <td>{{ item.product.id }}</td>
+          <td>{{ item.product.name | truncatechars:50 }}</td>
+          <td>{% if item.product.isbn %}{{ item.product.isbn }}{% endif %}</td>
+          <td class="num">{{ item.price | intcomma:False }}</td>
+          <td class="num">{{ item.quantity }}</td>
+          <td class="num">{{ item.discount | intcomma:False }}</td>
+          <td class="num">{{ item.get_cost_after_discount | intcomma:False }}</td>
+        </tr>
+      {% endfor %}
+
+    </tbody>
+    <tfoot>
+      <tr class="total">
+        <td colspan="7">{% trans 'Total'%} {% trans 'Rial' %}</td>
+        <td class="num">{{ order.get_cost_after_discount | intcomma:False }}</td>
+      </tr>
+      <tr class=discount>
+          <td colspan="7">{% trans 'Discount'%}</td>
+          <td class="num">{{ order.discount | intcomma:False }} </td>
+      </tr>
+      {% if order.shipping_cost %}
+      <tr class=discount>
+          <td colspan="7">{% trans 'Shipping cost'%}</td>
+          <td class="num">{{ order.shipping_cost | intcomma:False }} </td>
+      </tr>
+      {% endif %}
+      <tr class=total>
+          <td colspan="7">{% trans 'PAYABLE'%}</td>
+          <td class="num"><b>{{ order.get_payable | intcomma:False }}</b></td>
+      </tr>
+    </tfoot>
+  </table>
+  <br>
+  <p class="ending">{{ order.token }}</p>
+
+  {% comment %}
+  <span class="{% if order.paid %}paid{% else %}pending{% endif %}">
+    {% if order.paid %}Paid{% else %}{% trans 'Pending payment' %}{% endif %}
+  </span>
+  {% endcomment %}
+
+
+
+
+
+</body>
+</html>
