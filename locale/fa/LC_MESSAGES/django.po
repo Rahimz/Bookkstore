@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-02 08:51+0330\n"
-"PO-Revision-Date: 2022-02-02 11:50+0330\n"
+"POT-Creation-Date: 2022-02-05 16:06+0330\n"
+"PO-Revision-Date: 2022-02-05 16:11+0330\n"
 "Last-Translator:   <rahimaghareb@yahoo.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -31,67 +31,69 @@ msgstr "تکرار پسورد"
 msgid "Passwords don't match."
 msgstr "پسوردها یکسان نیستند"
 
-#: account/forms.py:59 templates/account/clients/client_list.html:21
-#: templates/shop/product_detail.html:22
-#: templates/staff/invoice_checkout.html:39
-#: templates/staff/invoice_create.html:23
-#: templates/staff/invoice_create.html:79
-#: templates/staff/order_detail_for_admin.html:26
-#: templates/staff/products.html:21 templates/staff/sold_products.html:19
+#: account/forms.py:57 templates/account/clients/client_list.html:35
+#: templates/shop/product_detail.html:30 templates/staff/_order_table.html:12
+#: templates/staff/invoice_create.html:25
+#: templates/staff/invoice_create.html:81 templates/staff/products.html:24
+#: templates/staff/purchase_create.html:25
+#: templates/staff/purchase_create.html:83
+#: templates/staff/sold_products.html:19
 msgid "Name"
 msgstr "نام"
 
-#: account/forms.py:60 templates/staff/vendor_list.html:24
+#: account/forms.py:58 templates/staff/vendor_list.html:24
 msgid "Overal discount"
 msgstr "تخفیف کلی"
 
-#: account/forms.py:61 templates/_base.html:166
+#: account/forms.py:59 templates/_base.html:167
+#: templates/tools/pdf/invoice_pdf_a4.html:21
+#: templates/tools/pdf/invoice_pdf_a4.html:22
 msgid "Address"
 msgstr "آدرس"
 
-#: account/forms.py:62
+#: account/forms.py:60
 msgid "Contact person"
 msgstr "فرد رابط"
 
-#: account/forms.py:63
+#: account/forms.py:61
 msgid "Other phone"
 msgstr "تلفن دیگر"
 
-#: account/forms.py:66
+#: account/forms.py:64
 msgid "Percent"
 msgstr "درصد"
 
-#: account/models.py:111 templates/shop/product_detail.html:120
+#: account/models.py:113 templates/shop/product_detail.html:128
 #: templates/staff/vendor_list.html:23
 msgid "Vendor"
 msgstr "تامین‌کننده"
 
-#: account/models.py:112
+#: account/models.py:114
 msgid "Vendors"
 msgstr "تامین‌کنندگان"
 
-#: account/views.py:50 account/views.py:139 staff/views.py:123
-#: staff/views.py:144 staff/views.py:617
+#: account/views.py:57 account/views.py:199 staff/views.py:123
+#: staff/views.py:144 staff/views.py:621 staff/views.py:643 staff/views.py:685
 msgid "Form is not valid"
 msgstr "فرم معتبر نیست"
 
-#: account/views.py:68
+#: account/views.py:75
 msgid "User details updated successfully"
 msgstr "اطلاعات کاربر به‌روزرسانی شد"
 
-#: account/views.py:70
+#: account/views.py:77
 msgid "Error updating your user details"
 msgstr "مشکلی در به‌روزرسانی اطلاعات کاربر پیش آمد"
 
-#: account/views.py:114
+#: account/views.py:165
 msgid "Client added!"
 msgstr "مشتری اضافه شد!"
 
-#: account/views.py:118
+#: account/views.py:169
 msgid "The phone number is already used!"
 msgstr "این شماره تلفن استفاده شده است!"
 
-#: account/views.py:136
+#: account/views.py:196
 msgid "Client details updated"
 msgstr "اطلاعات مشتری به‌روزرسانی شد!"
 
@@ -108,6 +110,7 @@ msgid "Notes"
 msgstr "یادداشت‌ها"
 
 #: orders/forms.py:29 templates/staff/orders.html:29
+#: templates/tools/pdf/invoice_pdf_a4.html:31
 msgid "Is a gift"
 msgstr "هدیه است"
 
@@ -115,31 +118,31 @@ msgstr "هدیه است"
 msgid "Cahnnel"
 msgstr "کانال"
 
-#: orders/models.py:27
+#: orders/models.py:31
 msgid "Cashier"
 msgstr "صندوقدار"
 
-#: orders/models.py:31
+#: orders/models.py:35
 msgid "Website"
 msgstr "وب‌سایت"
 
-#: orders/models.py:32
+#: orders/models.py:36
 msgid "Other"
 msgstr "دیگر"
 
-#: products/models.py:62 products/models.py:325 templates/_base.html:53
+#: products/models.py:63 products/models.py:332 templates/_base.html:53
 msgid "New"
 msgstr "نو"
 
-#: products/models.py:63 products/models.py:326 templates/_base.html:56
+#: products/models.py:64 products/models.py:333 templates/_base.html:56
 msgid "Used"
 msgstr "دست دوم"
 
-#: products/models.py:74
+#: products/models.py:75
 msgid "Book"
 msgstr "کتاب"
 
-#: products/models.py:75
+#: products/models.py:76
 msgid "Craft"
 msgstr "صنایع دستی"
 
@@ -151,7 +154,12 @@ msgstr "نام، نویسنده، مترجم، ناشر یا شابک"
 msgid "+989123456789"
 msgstr ""
 
-#: search/forms.py:28 templates/shop/product_detail.html:81
+#: search/forms.py:27
+msgid "Name or phonenumber"
+msgstr "نام یا شماره تلفن"
+
+#: search/forms.py:33 templates/shop/product_detail.html:89
+#: templates/tools/pdf/invoice_pdf_a4.html:43
 msgid "ISBN"
 msgstr "شابک"
 
@@ -171,58 +179,69 @@ msgstr "محصول ساخته شد!"
 msgid "Product does not created!"
 msgstr "محصول ساخته نشد!"
 
-#: staff/views.py:254 staff/views.py:289 staff/views.py:346
+#: staff/views.py:255 staff/views.py:290 staff/views.py:347
 msgid "Not enough stock!"
 msgstr "موجودی کافی نیست"
 
-#: staff/views.py:282 staff/views.py:319 staff/views.py:382
+#: staff/views.py:283 staff/views.py:320 staff/views.py:383
 msgid "Product is added to invoice"
 msgstr "محصول به فاکتور اضافه شد"
 
-#: staff/views.py:298 staff/views.py:358
+#: staff/views.py:299 staff/views.py:359
 msgid "Order is created"
 msgstr "سفارش ایجاد شد"
 
-#: staff/views.py:339
-#| msgid "Has other prices"
+#: staff/views.py:340
 msgid "This book has other prices"
 msgstr "این کتاب قیمت‌های دیگری دارد"
 
-#: staff/views.py:422
+#: staff/views.py:423
 msgid "Client found"
 msgstr "مشتری شناسایی شد"
 
-#: staff/views.py:431
+#: staff/views.py:432
 msgid "Client added"
 msgstr "مشتری اضافه شد!"
 
-#: staff/views.py:448
+#: staff/views.py:450
 msgid "Order approved"
 msgstr "سفارش تایید شد"
 
-#: staff/views.py:506
+#: staff/views.py:508
 msgid "Not enough stock"
 msgstr "موجودی کافی نیست"
 
-#: staff/views.py:506 templates/cart/detail.html:17
-#: templates/staff/draft_orders.html:26
-#: templates/staff/invoice_checkout.html:42
-#: templates/staff/invoice_create.html:53
-#: templates/staff/invoice_create.html:81
+#: staff/views.py:508 templates/cart/detail.html:17
+#: templates/staff/_order_table.html:15 templates/staff/draft_orders.html:28
+#: templates/staff/invoice_create.html:55
 #: templates/staff/invoice_create.html:83
-#: templates/staff/order_detail_for_admin.html:27
-#: templates/staff/orders.html:24 templates/staff/sold_products.html:20
-#: templates/tools/pdf/invoice_pdf.html:31
+#: templates/staff/invoice_create.html:85 templates/staff/orders.html:24
+#: templates/staff/purchase_create.html:55
+#: templates/staff/purchase_create.html:85
+#: templates/staff/purchase_create.html:87
+#: templates/staff/sold_products.html:20
+#: templates/tools/pdf/invoice_pdf.html:42
+#: templates/tools/pdf/invoice_pdf_a4.html:45
 msgid "Quantity"
 msgstr "تعداد"
 
-#: staff/views.py:595 staff/views.py:620
+#: staff/views.py:599 staff/views.py:624
 msgid "Tehran"
 msgstr "تهران"
 
-#: staff/views.py:613
+#: staff/views.py:617
 msgid "Vendor is added!"
 msgstr "تأمین‌کننده اضافه شد!"
+
+#: staff/views.py:641
+#| msgid "Vendor is added!"
+msgid "Vendor is updated"
+msgstr "تأمین‌کننده به‌روزرسانی شد!"
+
+#: staff/views.py:681
+#| msgid "Product created"
+msgid "Product updated"
+msgstr "محصول به‌روزرسانی شد!"
 
 #: templates/_base.html:11 templates/_base.html:12 templates/_base.html:38
 #: templates/_base.html:45 templates/_temp_base.html:11
@@ -261,120 +280,174 @@ msgstr "سفارش‌ها"
 msgid "Purchase"
 msgstr "خریدها"
 
-#: templates/_base.html:137 templates/shop/product_detail.html:122
+#: templates/_base.html:137 templates/shop/product_detail.html:130
 #: templates/staff/warehouse.html:7
 msgid "Warehouse"
 msgstr "انبار"
 
-#: templates/_base.html:138 templates/staff/products.html:7
+#: templates/_base.html:138 templates/staff/products.html:9
 msgid "Products"
 msgstr "محصولات"
 
 #: templates/_base.html:139 templates/account/clients/client_add.html:9
-#: templates/account/clients/client_list.html:7
-#: templates/account/clients/client_list.html:16
+#: templates/account/clients/client_list.html:9
+#: templates/account/clients/client_list.html:18
 msgid "Clients"
 msgstr "مشتری‌ها "
 
-#: templates/_base.html:141
+#: templates/_base.html:142
 msgid "Admin"
 msgstr "مدیر"
 
-#: templates/_base.html:142
+#: templates/_base.html:143
 msgid "Rosetta"
 msgstr ""
 
-#: templates/_base.html:158
+#: templates/_base.html:159
 msgid "How to order books"
 msgstr "نحوه سفارش کتاب"
 
-#: templates/_base.html:159
+#: templates/_base.html:160
 msgid "Website rules"
 msgstr "قوانین وب‌سایت"
 
-#: templates/_base.html:160
+#: templates/_base.html:161
 msgid "Q&A"
 msgstr "سوالات متداول"
 
-#: templates/_base.html:161
+#: templates/_base.html:162
 msgid "Contact us"
 msgstr "تماس با ما"
 
-#: templates/_base.html:165 templates/_base.html:187 templates/_base.html:222
+#: templates/_base.html:166 templates/_base.html:188 templates/_base.html:223
 #: templates/tools/emails/registration_email.html:21
 #: templates/tools/pdf/invoice_pdf.html:7
+#: templates/tools/pdf/invoice_pdf_a4.html:7
 msgid "Ketabe Damavand"
 msgstr "کتاب دماوند"
 
-#: templates/_base.html:167
+#: templates/_base.html:168
 msgid "No. Edward Brown St."
 msgstr "خیابان ادوارد براون شماره "
 
-#: templates/_base.html:168
+#: templates/_base.html:169
 msgid "16 Azar St."
 msgstr "خیابان ۱۶ آذر"
 
-#: templates/_base.html:169
+#: templates/_base.html:170
 msgid "Tehran, Iran"
 msgstr "تهران، ایران"
 
-#: templates/_base.html:171 templates/account/clients/client_list.html:24
-#: templates/staff/invoice_create.html:23
+#: templates/_base.html:172 templates/account/clients/client_details.html:34
+#: templates/account/clients/client_list.html:38
+#: templates/staff/invoice_create.html:25
+#: templates/staff/purchase_create.html:25
+#: templates/tools/pdf/invoice_pdf.html:20
+#: templates/tools/pdf/invoice_pdf_a4.html:20
 msgid "Phone"
 msgstr "تلفن"
 
-#: templates/_base.html:172
+#: templates/_base.html:173
 msgid "Bookstore"
 msgstr "فروشگاه"
 
-#: templates/_base.html:176
+#: templates/_base.html:177
 msgid "Orders followup"
 msgstr "پیگیری  سفارش"
 
-#: templates/_base.html:185
+#: templates/_base.html:186
 msgid "Social Media"
 msgstr "رسانه‌های اجتماعی"
 
-#: templates/_base.html:194
+#: templates/_base.html:195
 msgid "Order books in social media"
 msgstr "سفارش کتاب "
 
-#: templates/_base.html:207
+#: templates/_base.html:208
 msgid "Bahman Daroshafaei in social media"
 msgstr "بهمن دارالشفایی "
 
 #: templates/account/clients/client_add.html:18
-#: templates/staff/sidebar_staff.html:17 templates/staff/sidebar_staff.html:56
+#: templates/staff/sidebar_staff.html:17 templates/staff/sidebar_staff.html:58
 msgid "Add client"
 msgstr "اضافه کردن مشتری"
 
-#: templates/account/clients/client_add.html:22
+#: templates/account/clients/client_add.html:21
+#: templates/account/clients/client_details.html:42
+#: templates/staff/order_detail_for_admin.html:45
+msgid "Billing address"
+msgstr "آدرس خرید"
+
+#: templates/account/clients/client_add.html:24
+msgid "If Shipping address is as same as billing address, leave it empty"
+msgstr "اگر آدرس خرید با آدرس ارسال یکی است، لطفاً آدرس ارسال را خالی بگذارید"
+
+#: templates/account/clients/client_add.html:25
+#: templates/account/clients/client_details.html:48
+#: templates/staff/order_detail_for_admin.html:49
+#| msgid "Shipping method"
+msgid "Shipping address"
+msgstr "آدرس ارسال"
+
+#: templates/account/clients/client_add.html:28
 #: templates/account/clients/client_update.html:23
 #: templates/staff/category_create.html:23
 #: templates/staff/category_create.html:24
-#: templates/staff/draft_orders.html:42
-#: templates/staff/invoice_checkout.html:25
-#: templates/staff/invoice_create.html:40
-#: templates/staff/invoice_create.html:143
+#: templates/staff/draft_orders.html:44
+#: templates/staff/invoice_checkout.html:27
+#: templates/staff/invoice_create.html:42
+#: templates/staff/invoice_create.html:145
 #: templates/staff/order_create.html:21 templates/staff/product_create.html:23
-#: templates/staff/product_create.html:24 templates/staff/vendor_add.html:24
+#: templates/staff/product_create.html:24
+#: templates/staff/purchase_create.html:42
+#: templates/staff/purchase_create.html:150 templates/staff/vendor_add.html:24
 #: templates/zarinpal/form_payment.html:32
 #: templates/zarinpal/payment_create.html:34
 msgid "Submit"
 msgstr "تایید"
 
-#: templates/account/clients/client_list.html:22
-msgid "Username"
-msgstr "نام کاربری شما"
-
-#: templates/account/clients/client_list.html:23
-msgid "Client code"
-msgstr "کد مشتری"
-
+#: templates/account/clients/client_details.html:9
+#: templates/account/clients/client_details.html:18
 #: templates/account/clients/client_update.html:9
 #: templates/account/clients/client_update.html:18
 msgid "Client details"
 msgstr "اطلاعات مشتری"
+
+#: templates/account/clients/client_details.html:22
+#: templates/account/clients/client_list.html:36
+msgid "Username"
+msgstr "نام کاربری"
+
+#: templates/account/clients/client_details.html:26
+#| msgid "First name:"
+msgid "First name"
+msgstr "نام"
+
+#: templates/account/clients/client_details.html:30
+#| msgid "Last name:"
+msgid "Last name"
+msgstr "نام خانوادگی"
+
+#: templates/account/clients/client_details.html:38
+#| msgid "Email:"
+msgid "Email"
+msgstr "ایمیل"
+
+#: templates/account/clients/client_list.html:25 templates/home.html:19
+#: templates/search/search.html:9 templates/search/search.html:45
+#: templates/shop/category_list.html:20 templates/shop/product_list.html:20
+msgid "Search"
+msgstr "جستجو"
+
+#: templates/account/clients/client_list.html:34
+#: templates/staff/products.html:23
+#| msgid "Edition"
+msgid "Edit"
+msgstr "اصلاح"
+
+#: templates/account/clients/client_list.html:37
+msgid "Client code"
+msgstr "کد مشتری"
 
 #: templates/account/dashboard.html:7 templates/account/dashboard.html:12
 msgid "Profile"
@@ -453,18 +526,20 @@ msgstr "وارد شوید"
 msgid "Your shopping cart"
 msgstr "سبد خرید شما"
 
-#: templates/cart/detail.html:15 templates/staff/invoice_checkout.html:38
-#: templates/staff/invoice_create.html:78
+#: templates/cart/detail.html:15 templates/staff/_order_table.html:10
+#: templates/staff/invoice_create.html:80
+#: templates/staff/purchase_create.html:82
 msgid "Image"
 msgstr "تصویر"
 
-#: templates/cart/detail.html:16 templates/tools/pdf/invoice_pdf.html:29
+#: templates/cart/detail.html:16 templates/tools/pdf/invoice_pdf.html:40
+#: templates/tools/pdf/invoice_pdf_a4.html:42
 msgid "Product"
 msgstr "محصول"
 
 #: templates/cart/detail.html:18 templates/cart/detail.html:44
-#: templates/staff/invoice_checkout.html:41
-#: templates/staff/invoice_create.html:81
+#: templates/staff/invoice_create.html:83
+#: templates/staff/purchase_create.html:85
 msgid "Remove"
 msgstr "حذف"
 
@@ -472,16 +547,18 @@ msgstr "حذف"
 msgid "Unit price"
 msgstr "قیمت واحد"
 
-#: templates/cart/detail.html:20 templates/shop/product_detail.html:25
-#: templates/shop/product_detail.html:115 templates/staff/draft_orders.html:27
-#: templates/staff/invoice_checkout.html:44
-#: templates/staff/invoice_create.html:84 templates/staff/products.html:23
-#: templates/tools/pdf/invoice_pdf.html:30
+#: templates/cart/detail.html:20 templates/shop/product_detail.html:33
+#: templates/shop/product_detail.html:123 templates/staff/_order_table.html:17
+#: templates/staff/draft_orders.html:29 templates/staff/invoice_create.html:86
+#: templates/staff/products.html:26 templates/staff/purchase_create.html:88
+#: templates/tools/pdf/invoice_pdf.html:41
+#: templates/tools/pdf/invoice_pdf_a4.html:44
 msgid "Price"
 msgstr "قیمت"
 
-#: templates/cart/detail.html:38 templates/staff/invoice_create.html:81
-#: templates/staff/invoice_create.html:104
+#: templates/cart/detail.html:38 templates/staff/invoice_create.html:83
+#: templates/staff/invoice_create.html:106
+#: templates/staff/purchase_create.html:85
 msgid "Update"
 msgstr "به‌روزرسانی"
 
@@ -489,7 +566,6 @@ msgstr "به‌روزرسانی"
 #: templates/cart/detail.html:57 templates/cart/detail.html:65
 #: templates/cart/detail.html:75 templates/orders/create.html:33
 #: templates/orders/create.html:42 templates/orders/create.html:46
-#: templates/shop/product_card.html:17
 msgid "Toman"
 msgstr "تومان"
 
@@ -508,8 +584,10 @@ msgstr ""
 "<td>\"%(code)s\" کوپن (%(discount)s%% تخفیف)</td>"
 
 #: templates/cart/detail.html:72 templates/orders/create.html:46
-#: templates/tools/pdf/invoice_pdf.html:33
-#: templates/tools/pdf/invoice_pdf.html:51
+#: templates/tools/pdf/invoice_pdf.html:44
+#: templates/tools/pdf/invoice_pdf.html:62
+#: templates/tools/pdf/invoice_pdf_a4.html:47
+#: templates/tools/pdf/invoice_pdf_a4.html:67
 msgid "Total"
 msgstr "جمع"
 
@@ -530,7 +608,7 @@ msgid "Continue shopping"
 msgstr "ادامه خرید"
 
 #: templates/cart/detail.html:104 templates/orders/create.html:26
-#: templates/staff/invoice_checkout.html:19
+#: templates/staff/invoice_checkout.html:21
 msgid "Checkout"
 msgstr "ثبت سفارش"
 
@@ -540,12 +618,6 @@ msgstr "ثبت سفارش"
 #: templates/zarinpal/form_success.html:27 templates/zarinpal/success.html:26
 msgid "Home"
 msgstr "خانه"
-
-#: templates/home.html:19 templates/search/search.html:9
-#: templates/search/search.html:45 templates/shop/category_list.html:20
-#: templates/shop/product_list.html:20
-msgid "Search"
-msgstr "جستجو"
 
 #: templates/orders/create.html:7 templates/orders/created.html:7
 msgid "Order created"
@@ -787,126 +859,182 @@ msgstr "بعدی"
 msgid "last"
 msgstr "آخرین"
 
-#: templates/shop/product_card.html:11 templates/shop/product_card.html:12
-#: templates/shop/product_card.html:17
+#: templates/shop/product_card.html:12 templates/shop/product_card.html:13
+#: templates/shop/product_card.html:18
 msgid "Out of stock"
 msgstr "ناموجود"
 
-#: templates/shop/product_detail.html:23
-#: templates/staff/invoice_checkout.html:40
-#: templates/staff/invoice_create.html:80 templates/staff/products.html:22
+#: templates/shop/product_card.html:18 templates/shop/product_detail.html:33
+#: templates/shop/product_detail.html:123 templates/staff/_order_table.html:17
+#: templates/staff/_order_table.html:19 templates/staff/draft_orders.html:29
+#: templates/staff/draft_orders.html:30 templates/staff/draft_orders.html:31
+#: templates/staff/products.html:26 templates/tools/pdf/invoice_pdf.html:44
+#: templates/tools/pdf/invoice_pdf.html:62
+#: templates/tools/pdf/invoice_pdf_a4.html:47
+#: templates/tools/pdf/invoice_pdf_a4.html:67
+msgid "Rial"
+msgstr "ریال"
+
+#: templates/shop/product_detail.html:11
+#| msgid "Create product"
+msgid "Update product"
+msgstr "به‌روزرسانی محصول"
+
+#: templates/shop/product_detail.html:31 templates/staff/_order_table.html:13
+#: templates/staff/invoice_create.html:82 templates/staff/products.html:25
+#: templates/staff/purchase_create.html:84
 msgid "Author"
 msgstr "نویسنده"
 
-#: templates/shop/product_detail.html:24
+#: templates/shop/product_detail.html:32
 msgid "Translator"
 msgstr "مترجم"
 
-#: templates/shop/product_detail.html:26 templates/shop/product_detail.html:27
+#: templates/shop/product_detail.html:34 templates/shop/product_detail.html:35
+#: templates/staff/_order_table.html:14
 msgid "Publisher"
 msgstr "ناشر"
 
-#: templates/shop/product_detail.html:35
-#: templates/shop/product_detail.html:144
+#: templates/shop/product_detail.html:43
+#: templates/shop/product_detail.html:152
 msgid "Add to cart"
 msgstr "اضافه کردن به سبد"
 
-#: templates/shop/product_detail.html:39
+#: templates/shop/product_detail.html:47
 msgid "Let me know if becomes available"
 msgstr "موجود شد اطلاع بده"
 
-#: templates/shop/product_detail.html:59
+#: templates/shop/product_detail.html:67
 msgid "Book informations"
 msgstr "اطلاعات کتاب"
 
-#: templates/shop/product_detail.html:62
+#: templates/shop/product_detail.html:70
 msgid "Book Features"
 msgstr "ویژگی‌های کتاب"
 
-#: templates/shop/product_detail.html:66
+#: templates/shop/product_detail.html:74
 msgid "Admin info"
 msgstr "مدیریت کتاب"
 
-#: templates/shop/product_detail.html:82
+#: templates/shop/product_detail.html:90
 msgid "Publish year"
 msgstr "سال نشر"
 
-#: templates/shop/product_detail.html:83
+#: templates/shop/product_detail.html:91
 msgid "Edition"
 msgstr "دوره چاپ"
 
-#: templates/shop/product_detail.html:84
+#: templates/shop/product_detail.html:92
 msgid "Number of pages"
 msgstr "تعداد صفحات"
 
-#: templates/shop/product_detail.html:85
+#: templates/shop/product_detail.html:93
 msgid "Age range"
 msgstr "محدوده سنی"
 
-#: templates/shop/product_detail.html:94
+#: templates/shop/product_detail.html:102
 msgid "Size"
 msgstr "سایز"
 
-#: templates/shop/product_detail.html:95 templates/staff/orders.html:25
+#: templates/shop/product_detail.html:103 templates/staff/orders.html:25
 msgid "Weight"
 msgstr "وزن"
 
-#: templates/shop/product_detail.html:96
+#: templates/shop/product_detail.html:104
 msgid "Cover type"
 msgstr "نوع جلد"
 
-#: templates/shop/product_detail.html:97
+#: templates/shop/product_detail.html:105
 msgid "Latin name"
 msgstr "نام لاتین"
 
-#: templates/shop/product_detail.html:98
+#: templates/shop/product_detail.html:106
 msgid "Author latin name"
 msgstr "نام لاتین نویسنده"
 
-#: templates/shop/product_detail.html:110
-#: templates/shop/product_detail.html:116
+#: templates/shop/product_detail.html:118
+#: templates/shop/product_detail.html:124
 msgid "Stock"
 msgstr "موجودی"
 
-#: templates/shop/product_detail.html:111
+#: templates/shop/product_detail.html:119
 msgid "Zero stock"
 msgstr "موجودی منفی"
 
-#: templates/shop/product_detail.html:112
+#: templates/shop/product_detail.html:120
 msgid "Zero stock limit"
 msgstr "محدوده موجودی منفی"
 
-#: templates/shop/product_detail.html:113
+#: templates/shop/product_detail.html:121
 msgid "Product type"
 msgstr "نوع محصول"
 
-#: templates/shop/product_detail.html:114
+#: templates/shop/product_detail.html:122
 msgid "Has other prices"
 msgstr "دارای قیمت‌های دیگر"
 
-#: templates/shop/product_detail.html:117
+#: templates/shop/product_detail.html:125
 msgid "Price used"
 msgstr "قیمت دست‌دوم"
 
-#: templates/shop/product_detail.html:118
+#: templates/shop/product_detail.html:126
 msgid "Stock used"
 msgstr "موجودی دست‌دوم"
 
-#: templates/shop/product_detail.html:119
+#: templates/shop/product_detail.html:127
 msgid "Bookstore position"
 msgstr "موقعیت در فروشگاه"
 
-#: templates/shop/product_detail.html:121
+#: templates/shop/product_detail.html:129
 msgid "Admin note"
 msgstr "یادداشت مدیر"
 
-#: templates/shop/product_detail.html:123
+#: templates/shop/product_detail.html:131
 msgid "Just for online sales"
 msgstr "فقط برای فروش آنلاین"
 
-#: templates/shop/product_detail.html:124
+#: templates/shop/product_detail.html:132
 msgid "Just for store sales"
 msgstr "فقط برای فروش در فروشگاه"
+
+#: templates/staff/_order_table.html:11 templates/staff/invoice_create.html:79
+#: templates/staff/purchase_create.html:81
+msgid "isbn"
+msgstr "شابک"
+
+#: templates/staff/_order_table.html:18 templates/staff/_order_table.html:50
+#: templates/staff/draft_orders.html:30 templates/staff/invoice_create.html:83
+#: templates/staff/invoice_create.html:87
+#: templates/staff/purchase_create.html:85
+#: templates/staff/purchase_create.html:89
+#: templates/tools/pdf/invoice_pdf.html:43
+#: templates/tools/pdf/invoice_pdf.html:66
+#: templates/tools/pdf/invoice_pdf_a4.html:46
+#: templates/tools/pdf/invoice_pdf_a4.html:71
+msgid "Discount"
+msgstr "تخفیف"
+
+#: templates/staff/_order_table.html:19 templates/staff/draft_orders.html:31
+#: templates/staff/invoice_create.html:88
+#: templates/staff/purchase_create.html:90
+msgid "Cost"
+msgstr "هزینه"
+
+#: templates/staff/_order_table.html:43
+#| msgid "Submit"
+msgid "Sum"
+msgstr "جمع"
+
+#: templates/staff/_order_table.html:57
+#: templates/tools/pdf/invoice_pdf.html:71
+#: templates/tools/pdf/invoice_pdf_a4.html:76
+#| msgid "Shipping method"
+msgid "Shipping cost"
+msgstr "هزینه ارسال"
+
+#: templates/staff/_order_table.html:63
+msgid "Payable"
+msgstr "قابل پرداخت"
 
 #: templates/staff/category_create.html:8
 #: templates/staff/category_create.html:17
@@ -923,91 +1051,93 @@ msgstr "لغو"
 msgid "Save and add another"
 msgstr "ذخیره و اضافه کردن یکی دیگر"
 
-#: templates/staff/draft_orders.html:9 templates/staff/invoice_checkout.html:9
-#: templates/staff/invoice_create.html:9
+#: templates/staff/draft_orders.html:11
+#: templates/staff/invoice_checkout.html:11
+#: templates/staff/invoice_create.html:11
 msgid "Invoice create"
 msgstr "ایجاد فاکتور"
 
-#: templates/staff/draft_orders.html:19 templates/staff/sidebar_staff.html:16
+#: templates/staff/draft_orders.html:21 templates/staff/sidebar_staff.html:16
 msgid "List of draft orders"
 msgstr "لیست سفارش‌های پیش‌نویس"
 
-#: templates/staff/draft_orders.html:25
+#: templates/staff/draft_orders.html:27
 msgid "Order ID"
 msgstr "شماره سفارش"
 
-#: templates/staff/draft_orders.html:28
-#: templates/staff/invoice_checkout.html:45
-#: templates/staff/invoice_create.html:81
-#: templates/staff/invoice_create.html:85
-#: templates/tools/pdf/invoice_pdf.html:32
-#: templates/tools/pdf/invoice_pdf.html:55
-msgid "Discount"
-msgstr "تخفیف"
-
-#: templates/staff/draft_orders.html:29
-#: templates/staff/invoice_checkout.html:46
-#: templates/staff/invoice_create.html:86
-msgid "Cost"
-msgstr "هزینه"
-
-#: templates/staff/invoice_checkout.html:32
-#: templates/staff/invoice_create.html:72
-msgid "Invoice"
-msgstr "فاکتور"
-
-#: templates/staff/invoice_checkout.html:37
-#: templates/staff/invoice_create.html:77
-msgid "isbn"
-msgstr "شابک"
-
-#: templates/staff/invoice_checkout.html:70
-#: templates/staff/invoice_create.html:119
-msgid "SUM"
-msgstr "جمع"
-
-#: templates/staff/invoice_checkout.html:77
-#: templates/staff/invoice_create.html:126
-msgid "DISCOUNT"
-msgstr "تخفیف"
-
-#: templates/staff/invoice_checkout.html:83
-#: templates/staff/invoice_create.html:132
-#: templates/tools/pdf/invoice_pdf.html:59
-msgid "PAYABLE"
-msgstr "قابل پرداخت"
-
-#: templates/staff/invoice_create.html:19
-msgid "Create invoice"
-msgstr "فاکتور جدید"
-
-#: templates/staff/invoice_create.html:22
-#: templates/staff/order_detail_for_admin.html:18
-#: templates/staff/orders.html:23
-msgid "Client"
-msgstr "مشتری"
-
-#: templates/staff/invoice_create.html:26
-msgid "Add products"
-msgstr "اضافه کردن محصول"
-
-#: templates/staff/invoice_create.html:82
-msgid "State"
-msgstr ""
-
-#: templates/staff/invoice_create.html:142
-msgid "Save draft"
-msgstr "ذخیره پیش‌نویس"
-
-#: templates/staff/invoice_create.html:144
-msgid "Print"
-msgstr "چاپ"
-
-#: templates/staff/invoice_create.html:146
+#: templates/staff/invoice_checkout.html:30
+#: templates/staff/invoice_create.html:148
+#: templates/staff/order_detail_for_admin.html:62
+#: templates/staff/purchase_create.html:153
 msgid "PDF"
 msgstr ""
 
-#: templates/staff/invoice_create.html:148
+#: templates/staff/invoice_checkout.html:31
+#: templates/staff/invoice_create.html:149
+#: templates/staff/order_detail_for_admin.html:63
+msgid "PDF A4"
+msgstr ""
+
+#: templates/staff/invoice_checkout.html:38
+#: templates/staff/invoice_create.html:74
+#: templates/staff/order_detail_for_admin.html:58
+#: templates/staff/purchase_create.html:76
+msgid "Invoice"
+msgstr "فاکتور"
+
+#: templates/staff/invoice_create.html:21
+msgid "Create invoice"
+msgstr "فاکتور جدید"
+
+#: templates/staff/invoice_create.html:24
+#: templates/staff/order_detail_for_admin.html:29
+#: templates/staff/orders.html:23 templates/staff/purchase_create.html:24
+#: templates/tools/pdf/invoice_pdf.html:17
+#: templates/tools/pdf/invoice_pdf.html:19
+#: templates/tools/pdf/invoice_pdf_a4.html:17
+#: templates/tools/pdf/invoice_pdf_a4.html:19
+msgid "Client"
+msgstr "مشتری"
+
+#: templates/staff/invoice_create.html:28
+#: templates/staff/purchase_create.html:28
+msgid "Add products"
+msgstr "اضافه کردن محصول"
+
+#: templates/staff/invoice_create.html:84
+#: templates/staff/purchase_create.html:86
+msgid "State"
+msgstr "وضعیت"
+
+#: templates/staff/invoice_create.html:121
+#: templates/staff/purchase_create.html:126
+msgid "SUM"
+msgstr "جمع"
+
+#: templates/staff/invoice_create.html:128
+#: templates/staff/purchase_create.html:133
+msgid "DISCOUNT"
+msgstr "تخفیف"
+
+#: templates/staff/invoice_create.html:134
+#: templates/staff/purchase_create.html:139
+#: templates/tools/pdf/invoice_pdf.html:76
+#: templates/tools/pdf/invoice_pdf_a4.html:81
+msgid "PAYABLE"
+msgstr "قابل پرداخت"
+
+#: templates/staff/invoice_create.html:144
+#: templates/staff/purchase_create.html:149
+msgid "Save draft"
+msgstr "ذخیره پیش‌نویس"
+
+#: templates/staff/invoice_create.html:146
+#: templates/staff/purchase_create.html:151
+msgid "Print"
+msgstr "چاپ"
+
+#: templates/staff/invoice_create.html:151
+#: templates/staff/purchase_create.html:155
 msgid "Clear"
 msgstr "پاک کردن"
 
@@ -1015,21 +1145,35 @@ msgstr "پاک کردن"
 msgid "Order details"
 msgstr "جزییات سفارش"
 
-#: templates/staff/order_detail_for_admin.html:17
+#: templates/staff/order_detail_for_admin.html:19
+#: templates/tools/pdf/invoice_pdf.html:24
+#: templates/tools/pdf/invoice_pdf_a4.html:26
 msgid "Registrar"
 msgstr "ثبت کننده"
 
-#: templates/staff/order_detail_for_admin.html:19
+#: templates/staff/order_detail_for_admin.html:23
+#: templates/tools/pdf/invoice_pdf.html:24
+#: templates/tools/pdf/invoice_pdf_a4.html:26
+#| msgid "Approved date"
+msgid "Approver"
+msgstr "تأییدکننده"
+
+#: templates/staff/order_detail_for_admin.html:33
 msgid "Order Status"
 msgstr "وضعیت سفارش"
 
-#: templates/staff/order_detail_for_admin.html:20
-msgid "Shipping method"
-msgstr "روش ارسال"
+#: templates/staff/order_detail_for_admin.html:37
+#: templates/staff/orders.html:26
+msgid "Channel"
+msgstr "کانال"
 
-#: templates/staff/order_detail_for_admin.html:21
+#: templates/staff/order_detail_for_admin.html:41
 msgid "Note"
 msgstr "یادداشت"
+
+#: templates/staff/order_detail_for_admin.html:53
+msgid "Shipping method"
+msgstr "روش ارسال"
 
 #: templates/staff/orders.html:16
 msgid "List of orders"
@@ -1039,15 +1183,12 @@ msgstr "لیست سفارش‌ها "
 msgid "Order No"
 msgstr "شماره سفارش"
 
-#: templates/staff/orders.html:26
-msgid "Channel"
-msgstr "کانال"
-
 #: templates/staff/orders.html:27
 msgid "Approved date"
 msgstr "تاریخ تأیید"
 
-#: templates/staff/orders.html:28 templates/zarinpal/payment_list.html:30
+#: templates/staff/orders.html:28 templates/tools/pdf/invoice_pdf_a4.html:34
+#: templates/zarinpal/payment_list.html:30
 msgid "Paid"
 msgstr "پرداخت شده"
 
@@ -1056,15 +1197,25 @@ msgstr "پرداخت شده"
 msgid "Product create"
 msgstr "محصول جدید"
 
-#: templates/staff/products.html:16 templates/staff/sidebar_staff.html:5
+#: templates/staff/products.html:18 templates/staff/sidebar_staff.html:5
 msgid "List of products"
 msgstr "لیست محصولات"
+
+#: templates/staff/purchase_create.html:11
+#| msgid "Purchase"
+msgid "Purchase create"
+msgstr "ایجاد خرید "
+
+#: templates/staff/purchase_create.html:21
+#| msgid "Create product"
+msgid "Create purchase"
+msgstr "ایجاد خرید"
 
 #: templates/staff/purchases.html:7
 msgid "Purchases"
 msgstr "خریدها"
 
-#: templates/staff/purchases.html:16 templates/staff/sidebar_staff.html:41
+#: templates/staff/purchases.html:16 templates/staff/sidebar_staff.html:43
 msgid "List of purchases"
 msgstr "لیست خریدها"
 
@@ -1103,48 +1254,53 @@ msgstr "ساخت لینک پرداخت"
 msgid "Payment list"
 msgstr "لیست پرداخت‌ها"
 
-#: templates/staff/sidebar_staff.html:25
+#: templates/staff/sidebar_staff.html:20
+#| msgid "Cashier orders"
+msgid "Cashier sales"
+msgstr "فروش‌های صندوقدار"
+
+#: templates/staff/sidebar_staff.html:27
 msgid "All approved orders"
 msgstr "سفارش‌های تایید شده"
 
-#: templates/staff/sidebar_staff.html:27
+#: templates/staff/sidebar_staff.html:29
 msgid "Collectable orders"
 msgstr "سفارش‌های قابل جمع‌آوری"
 
-#: templates/staff/sidebar_staff.html:28
+#: templates/staff/sidebar_staff.html:30
 msgid "Last day"
 msgstr "روز گذشته"
 
-#: templates/staff/sidebar_staff.html:29
+#: templates/staff/sidebar_staff.html:31
 msgid "Last week"
 msgstr "هفته کذشته"
 
-#: templates/staff/sidebar_staff.html:30
+#: templates/staff/sidebar_staff.html:32
 msgid "Last month"
 msgstr "ماه گذشته"
 
-#: templates/staff/sidebar_staff.html:31
+#: templates/staff/sidebar_staff.html:33
 msgid "Last year"
 msgstr "سال گذشته"
 
-#: templates/staff/sidebar_staff.html:33
+#: templates/staff/sidebar_staff.html:35
 msgid "Cashier orders"
 msgstr "سفارش‌های صندوقدار"
 
-#: templates/staff/sidebar_staff.html:40
+#: templates/staff/sidebar_staff.html:42
 msgid "New purchase invoice"
 msgstr "فاکتور خرید جدید"
 
-#: templates/staff/sidebar_staff.html:47 templates/staff/sold_products.html:7
+#: templates/staff/sidebar_staff.html:49 templates/staff/sold_products.html:7
 #: templates/staff/sold_products.html:16
 msgid "Sold products"
 msgstr "محصولات فروخته شده"
 
-#: templates/staff/sidebar_staff.html:48
+#: templates/staff/sidebar_staff.html:50
 msgid "Warehouse Managment"
 msgstr "مدیریت انبار"
 
-#: templates/staff/sidebar_staff.html:55
+#: templates/staff/sidebar_staff.html:57
 msgid "List of clients"
 msgstr "لیست مشتریان"
 
@@ -1185,12 +1341,24 @@ msgid "Login"
 msgstr "ورود"
 
 #: templates/tools/pdf/invoice_pdf.html:9
+#: templates/tools/pdf/invoice_pdf_a4.html:9
 msgid "Invoice no."
 msgstr "شماره فاکتور"
 
-#: templates/tools/pdf/invoice_pdf.html:51
-msgid "Rial"
-msgstr "ریال"
+#: templates/tools/pdf/invoice_pdf.html:17
+#: templates/tools/pdf/invoice_pdf_a4.html:17
+msgid "Guest"
+msgstr "مهمان"
+
+#: templates/tools/pdf/invoice_pdf_a4.html:29
+#| msgid "Order Status"
+msgid "Order features"
+msgstr "ویژگی‌های سفارش"
+
+#: templates/tools/pdf/invoice_pdf_a4.html:41
+#| msgid "Product"
+msgid "Product ID"
+msgstr "کد محصول"
 
 #: templates/zarinpal/already_paid.html:5
 #: templates/zarinpal/already_paid.html:10
@@ -1198,12 +1366,10 @@ msgid "Already paid"
 msgstr "پرداخت‌شده "
 
 #: templates/zarinpal/already_paid.html:15
-#| msgid "Your payment is failed!"
 msgid "This payment is already done"
 msgstr "این پرداخت قبلاً انجام شده است"
 
 #: templates/zarinpal/already_paid.html:16
-#| msgid "Payment No"
 msgid "Payment no"
 msgstr "شماره پرداخت"
 
