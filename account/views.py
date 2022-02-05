@@ -106,7 +106,7 @@ def client_list(request):
             query = number_converter(query)
 
             clients = clients.annotate(
-                search=SearchVector('first_name', 'last_name', 'username', 'phone'),).filter(search=query)
+                search=SearchVector('first_name', 'last_name', 'username', 'phone'),).filter(search__contains=query)
     else:
         client_search_form = CLientSearchStaffForm()
 
