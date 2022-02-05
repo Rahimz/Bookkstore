@@ -18,14 +18,18 @@
     </div>
     <div class="col-md-10">
       <div>
-        <h2 class="my-4">{% trans 'Checkout' %}</h2>
+        <h2 class="my-4">{% trans 'Checkout' %}: {{ order.id }}</h2>
         <div class="client">
           <form class="" action="." method="post">
             {{ client_search_form | crispy }}
             {{ checkout_form | crispy }}
             {% csrf_token %}
-            <input class="btn btn-outline-secondary" type="submit" name="client" value="{% trans 'Submit' %}">
+            <input class="btn btn-outline-success my-4" type="submit" name="client" value="{% trans 'Submit' %}">
           </form>
+        <div class="my-3">
+          <a href="{% url 'tools:make_invoice_pdf' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF' %}</a>
+          <a href="{% url 'tools:make_invoice_pdf_a4' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF A4' %}</a>
+        </div>
         </div>
 
       </div>

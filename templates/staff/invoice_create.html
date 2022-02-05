@@ -146,6 +146,7 @@
         <a onclick="window.print();return false;" class="btn btn-outline-secondary">{% trans 'Print' %}</a>
         {% if order %}
         <a href="{% url 'tools:make_invoice_pdf' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF' %}</a>
+        <a href="{% url 'tools:make_invoice_pdf_a4' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF A4' %}</a>
         {% endif %}
         <a href="{% url 'staff:invoice_create' %}" class="btn btn-outline-secondary">{% trans 'Clear' %}</a>
       </div>

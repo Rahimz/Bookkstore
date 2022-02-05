@@ -400,12 +400,12 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
 
 
 def invoice_checkout(request, order_id):
-    checkout_form = OrderAdminCheckoutForm()
+    order = Order.objects.get(pk=order_id)
+    checkout_form = OrderAdminCheckoutForm(instance=order)
     client_search_form = ClientSearchForm()
     client = None
-    order = Order.objects.get(pk=order_id)
     if request.method == 'POST':
-        checkout_form = OrderAdminCheckoutForm(data=request.POST)
+        checkout_form = OrderAdminCheckoutForm(data=request.POST, instance=order)
         client_search_form = ClientSearchForm(data=request.POST)
         if client_search_form.is_valid():
             # messages.debug(request, 'client_search_form.is_valid')
@@ -441,6 +441,7 @@ def invoice_checkout(request, order_id):
             order.customer_note = checkout_form.cleaned_data['customer_note']
             order.is_gift = checkout_form.cleaned_data['is_gift']
             order.channel = checkout_form.cleaned_data['channel']
+            order.discount = checkout_form.cleaned_data['discount']
             order.status = 'approved'
             order.approver = request.user
             order.approved_date = datetime.now()
