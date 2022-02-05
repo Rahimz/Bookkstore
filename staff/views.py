@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.views import View
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.postgres.search import SearchVector
-from django.db.models import Q
+from django.db.models import Q, Count
 import uuid
 from datetime import datetime, timedelta
 from django.utils.translation import gettext_lazy as _
@@ -213,6 +213,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
         order = Order.objects.get(pk=order_id)
         book_ids = [(item.product.pk, item.variation) for item in order.lines.all()]
 
+        # TODO: The loop should be replaced with a query to enhance the performance
         for item in order.lines.all():
             # update_forms[item.id]
             form  = InvoiceAddForm()
@@ -550,7 +551,9 @@ def orderline_update(request, order_id, orderline_id):
 
 
 def draft_orders(request):
-    draft_orders = Order.objects.filter(status='draft').exclude(quantity=0)
+    # draft_orders = Order.objects.filter(status='draft').exclude(quantity=0)
+    draft_orders = Order.objects.filter(status='draft')
+
     return render(
         request,
         'staff/draft_orders.html',
@@ -662,4 +665,29 @@ def purchase_create(request):
         request,
         'staff/purchase_create.html',
         {'search_form': search_form}
+    )
+
+
+def product_update(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    if request.method == 'POST':
+        form = ProductCreateForm(
+            data=request.POST,
+            instance=product,
+            files=request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('Product updated') + ' {}'.format(product.name))
+            return redirect('staff:products')
+
+        else:
+            messages.error(request, _('Form is not valid'))
+    else:
+        form = ProductCreateForm(instance=product)
+
+    return render(
+        request,
+        'staff/product_create.html',
+        {'form': form}
+
     )

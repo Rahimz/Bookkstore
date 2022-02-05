@@ -4,6 +4,8 @@
 
 {% load static %}
 
+{% load humanize %}
+
 {% load crispy_forms_tags %}
 
 {% block title %}{% trans 'Invoice create' %}{% endblock %}
@@ -24,9 +26,9 @@
               <th scope="col">#</th>
               <th scope="col">{% trans 'Order ID' %}</th>
               <th scope="col">{% trans 'Quantity' %}</th>
-              <th scope="col">{% trans 'Price' %}</th>
-              <th scope="col">{% trans 'Discount' %}</th>
-              <th scope="col">{% trans 'Cost' %}</th>
+              <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
+              <th scope="col">{% trans 'Discount' %}<span class="small"> ({% trans 'Rial' %})</span></th>
+              <th scope="col">{% trans 'Cost' %}<span class="small"> ({% trans 'Rial' %})</span></th>
               <th scope="col"></th>
             </tr>
           </thead>
@@ -36,9 +38,9 @@
               <th scope="row">{{ forloop.counter }}</th>
               <td><a href="{% url 'staff:invoice_create' order.id %}">{{ order.id }}</a></td>
               <td>{{ order.get_total_quantity}}</td>
-              <td>{{ order.get_cost_after_discount }}</td>
-              <td>{{ order.discount }}</td>
-              <td>{{ order.get_payable }}</td>
+              <td>{{ order.get_cost_after_discount | intcomma:False }}</td>
+              <td>{{ order.discount | intcomma:False }}</td>
+              <td>{{ order.get_payable | intcomma:False }}</td>
               <td><a href="{% url 'staff:invoice_checkout' order.id %}" class="btn btn-sm btn-outline-secondary">{% trans 'Submit' %}</a></td>
             </tr>
             {% endfor %}

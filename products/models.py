@@ -7,6 +7,7 @@ import string
 import random
 
 from files.models import ImportSession
+from account.models import Vendor
 # from discount.models import Cupon
 # from warehouse.models import warehouse
 
@@ -268,11 +269,17 @@ class Product(models.Model):
         blank=True,
         null=True
     )
-    vendor = models.CharField(
-        max_length=100,
+    vendor = models.ForeignKey(
+        Vendor,
+        on_delete=models.SET_NULL,
         null=True,
         blank=True
     )
+    # vendor = models.CharField(
+    #     max_length=100,
+    #     null=True,
+    #     blank=True
+    # )
     admin_note = models.TextField(
         blank=True,
         null=True,

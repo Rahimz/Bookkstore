@@ -4,7 +4,11 @@
 
 {% load static %}
 
+{% load humanize %}
+
 {% block title %}{{ product.name }}{% endblock %}
+
+{% block staff_tab %}<a class="btn text-dark btn-outline-warning" href="{% url 'staff:product_update' product.id %}" >{% trans 'Update product' %}</a>{% endblock %}
 
 {% block content %}
 <div class="container-fluid overflow-hidden">
@@ -12,7 +16,11 @@
     <div class="row gy-2">
       <div class="col-md-4">
         <div class="border drop_shadow rounded-2">
-          <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}" itemprop="image"{% endif %} class="card-img-top p-4" alt="{{ product.image_alt }}">
+          {% if product.image %}
+          <img src="{{ product.image.url }}" itemprop="image" class="card-img-top p-4" alt="{{ product.image_alt }}">
+          {% else %}
+          <img src="{% static 'img/no_image.png' %}" class="card-img-top p-4" alt="no-image">
+          {% endif %}
         </div>
         <span class="badge rounded-pill ms-4 mt-2 {% if product.state == 'new' %}bg-success{% else %}bg-warning{% endif %}">{{ product.state | capfirst }}</span>
       </div>
@@ -22,7 +30,7 @@
             <p itemprop="name" class="">{% trans 'Name' %} : {{ product.name }}</p>
             <p itemprop="author" class="">{% trans 'Author' %} : {{ product.author }}</p>
             <p itemprop="translator" class="">{% trans 'Translator' %} : {{ product.translator }}</p>
-            <p class="">{% trans 'Price' %} : {{ product.price }}</p>
+            <p class="">{% trans 'Price' %} : {{ product.price | intcomma:False}}<span class="small"> ({% trans 'Rial' %})</span></p>
             <p itemprop="publisher" class="">{% trans 'Publisher' %} : {{ product.publisher }}</p>
             <p itemprop="publisher" class="">{% trans 'Publisher' %} : {% if product.publisher_2 %}{{ product.publisher_2 }}{% endif %}</p>
           </div>
@@ -45,7 +53,7 @@
       <div class="col-md-5">
         <div class="drop_shadow border rounded-2 p-3">
           <div class="bg-light p-2">
-            <p class="">product.description</p>
+            <p class="">{{ product.description }}</p>
           </div>
         </div>
       </div>
@@ -111,9 +119,9 @@
                   <p>{% trans 'Zero stock limit' %} : {{ product.zero_stock_limit }}</p>
                   <p>{% trans 'Product type' %} : {{ product.product_type  }}</p>
                   <p>{% trans 'Has other prices' %} : {{ product.has_other_prices  }}</p>
-                  <p>{% trans 'Price' %} : {{ product.price_1  }}</p>
+                  <p>{% trans 'Price' %} : {{ product.price_1 | intcomma:False }}<span class="small"> ({% trans 'Rial' %})</span></p>
                   <p>{% trans 'Stock' %} : {{ product.stock_1  }}</p>
-                  <p>{% trans 'Price used' %} : {{ product.price_used  }}</p>
+                  <p>{% trans 'Price used' %} : {{ product.price_used | intcomma:False }}</p>
                   <p>{% trans 'Stock used' %} : {{ product.stock_used  }}</p>
                   <p>{% trans 'Bookstore position' %} : {{ product.store_positon  }}</p>
                   <p>{% trans 'Vendor' %} : {{ product.vendor  }}</p>
@@ -139,7 +147,7 @@
         <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class=" p-4" height="150px" width="auto" alt="{{ product.image_alt }}">
       </div>
       <p><span class="badge {% if good.state == "new" %}bg-success{% else %}bg-warning{% endif %} rounded-pill ms-4 mt-2">{{ good.state }}</span></p>
-      <p>{{ good.price }}</p>
+      <p>{{ good.price | intcomma:False }}</p>
       <button type="button" class="btn btn-outline-secondary" name="button">{% trans 'Add to cart'%}</button>
 
     </div>
