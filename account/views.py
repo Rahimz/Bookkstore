@@ -16,11 +16,13 @@ from .models import CustomUser
 from search.forms import CLientSearchStaffForm
 from tools.fa_to_en_num import number_converter
 
+
 def dashboard(request):
     user = request.user
     return render(request,
-                'account/dashboard.html',
-                {})
+                  'account/dashboard.html',
+                  {})
+
 
 def register(request):
     if request.method == 'POST':
@@ -35,20 +37,22 @@ def register(request):
             # Save the User object
             new_user.save()
 
-            ## TODO: The registraion email does not recieve in mailbox
+            # TODO: The registraion email does not recieve in mailbox
             if new_user.email:
                 subject = "You are registered at Ketabedamavand.com"
                 to = new_user.email
-                html_content = render_to_string('tools/emails/registration_email.html', {'user':new_user})
-                text_content = strip_tags(html_content) # Strip the html tag. So people can see the pure text at least.
+                html_content = render_to_string(
+                    'tools/emails/registration_email.html', {'user': new_user})
+                # Strip the html tag. So people can see the pure text at least.
+                text_content = strip_tags(html_content)
 
                 msg = EmailMultiAlternatives(subject, text_content, [to])
                 msg.attach_alternative(html_content, "text/html")
                 msg.send()
 
             return render(request,
-                         'account/register_done.html',
-                         {'new_user': new_user})
+                          'account/register_done.html',
+                          {'new_user': new_user})
         else:
             messages.error(request, _('Form is not valid'))
     else:
@@ -62,7 +66,7 @@ def register(request):
 def edit(request):
     if request.method == 'POST':
         user_form = UserEditForm(instance=request.user,
-                                data=request.POST)
+                                 data=request.POST)
 
         if user_form.is_valid():
             user_form.save()
@@ -74,11 +78,10 @@ def edit(request):
     else:
         user_form = UserEditForm(instance=request.user)
 
-
     return render(request,
-                'account/edit.html',
-                {'user_form': user_form,
-                })
+                  'account/edit.html',
+                  {'user_form': user_form,
+                   })
 
 # def password_reset(request):
 #     form = PasswordResetForm()
@@ -92,17 +95,18 @@ def edit(request):
 #         {'form': form}
 #     )
 
+
 @staff_member_required
 def client_list(request):
     results = None
-    clients = CustomUser.objects.filter(is_client=True)
+    clients = CustomUser.objects.filter(is_client=True).order_by('-pk').exclude(is_superuser=True).exclude(username='guest')
 
     if request.method == 'POST':
         client_search_form = CLientSearchStaffForm(data=request.POST)
         if client_search_form.is_valid():
             query = client_search_form.cleaned_data['query']
 
-            #we will check if any farsi character is in the query we will changed it
+            # we will check if any farsi character is in the query we will changed it
             query = number_converter(query)
 
             clients = clients.annotate(
@@ -114,10 +118,11 @@ def client_list(request):
         request,
         'account/clients/client_list.html',
         {'clients': clients,
-        'client_search_form': client_search_form,
-        'results': results
-        }
+         'client_search_form': client_search_form,
+         'results': results
+         }
     )
+
 
 def client_add(request):
     form = ClientAddForm()
@@ -136,7 +141,8 @@ def client_add(request):
             new_client.first_name = client_form.cleaned_data['first_name']
             new_client.last_name = client_form.cleaned_data['last_name']
             new_client.password = str(uuid.uuid4())
-            new_client.email = "{}@ketabedamavand.com".format(new_client.username)
+            new_client.email = "{}@ketabedamavand.com".format(
+                new_client.username)
             new_client.save()
 
             billing = billing_address_form.save(commit=False)
@@ -156,7 +162,6 @@ def client_add(request):
             new_client.default_shipping_address = shipping
             new_client.save()
 
-
             messages.success(request, _('Client added!'))
             return redirect('/account/clients')
         else:
@@ -168,23 +173,21 @@ def client_add(request):
         request,
         'account/clients/client_add.html',
         {'client_form': client_form,
-        'billing_address_form': billing_address_form,
-        'shipping_address_form': shipping_address_form,
-        }
+         'billing_address_form': billing_address_form,
+         'shipping_address_form': shipping_address_form,
+         }
     )
+
 
 def client_update(request, client_id):
     client = CustomUser.objects.get(pk=client_id)
 
-    # client_form = ClientUpdateForm(instance=client)
-    # client_form = ClientAddForm(instance=client)
-    # billing_address_form = AddressAddForm(instance=client.default_billing_address)
-    # shipping_address_form = AddressAddForm(instance=client.default_shipping_address)
-
     if request.method == "POST":
         client_form = ClientUpdateForm(data=request.POST, instance=client)
-        billing_address_form = AddressAddForm(data=request.POST, instance=client.default_billing_address)
-        shipping_address_form = AddressAddForm(data=request.POST, instance=client.default_shipping_address)
+        billing_address_form = AddressAddForm(
+            data=request.POST, instance=client.default_billing_address)
+        shipping_address_form = AddressAddForm(
+            data=request.POST, instance=client.default_shipping_address)
         if client_form.is_valid() and shipping_address_form.is_valid() and billing_address_form.is_valid():
             client_form.save()
             billing_address_form.save()
@@ -196,14 +199,27 @@ def client_update(request, client_id):
             messages.error(request, _('Form is not valid'))
     else:
         client_form = ClientUpdateForm(instance=client)
-        billing_address_form = AddressAddForm(instance=client.default_billing_address)
-        shipping_address_form = AddressAddForm(instance=client.default_shipping_address)
+        billing_address_form = AddressAddForm(
+            instance=client.default_billing_address)
+        shipping_address_form = AddressAddForm(
+            instance=client.default_shipping_address)
     return render(
         request,
         'account/clients/client_add.html',
         {'client': client,
-        'client_form': client_form,
-        'billing_address_form': billing_address_form,
-        'shipping_address_form': shipping_address_form,
+         'client_form': client_form,
+         'billing_address_form': billing_address_form,
+         'shipping_address_form': shipping_address_form,
+         }
+    )
+
+
+def client_details(request, client_id):
+    client = CustomUser.objects.get(pk=client_id)
+    return render(
+        request,
+        'account/clients/client_details.html',
+        {
+            'client': client,
         }
     )

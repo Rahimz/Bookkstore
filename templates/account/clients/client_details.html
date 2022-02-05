@@ -1,0 +1,61 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Client details' %} {{ client.username }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="clients" %}
+    </div>
+    <div class="col-md-10">
+      <h2 id="addClient">{% trans 'Client details' %}</h2>
+      <div class="">
+        <table class="table striped-table">
+          <tr>
+            <td>{% trans 'Username' %}</td>
+            <td>{{ client.username }}</td>
+          </tr>
+          <tr>
+            <td>{% trans 'First name' %}</td>
+            <td>{{ client.first_name }}</td>
+          </tr>
+          <tr>
+            <td>{% trans 'Last name' %}</td>
+            <td>{{ client.last_name }}</td>
+          </tr>
+          <tr>
+            <td>{% trans 'Phone' %}</td>
+            <td>{{ client.phone }}</td>
+          </tr>
+          <tr>
+            <td>{% trans 'Email' %}</td>
+            <td>{{ client.email }}</td>
+          </tr>
+          <tr>
+            <td>{% trans 'Billing address' %}</td>
+            <td>{{ client.default_billing_address }}
+              <br>{{ client.default_billing_address.get_full_address }}
+            </td>
+          </tr>
+          <tr>
+            <td>{% trans 'Shipping address' %}</td>
+            <td>{{ client.default_shipping_address }}
+              <br>{{ client.default_shipping_address.get_full_address }}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+{% endblock %}

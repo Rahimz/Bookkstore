@@ -31,6 +31,7 @@
         <thead>
           <tr>
             <th scope="col">#</th>
+            <th scope="col">{% trans 'Edit' %}</th>
             <th scope="col">{% trans 'Name' %}</th>
             <th scope="col">{% trans 'Username' %}</th>
             <th scope="col">{% trans 'Client code' %}</th>
@@ -41,10 +42,11 @@
           {% for client in clients %}
           <tr>
             <th scope="row">{{ forloop.counter }}</th>
-            <td><a href="{{ client.get_absolute_url }}">{{ client }}</a></td>
-            <td><a href="{{ client.get_absolute_url }}">{{ client.username }}</a></td>
-            <td><a href="{{ client.get_absolute_url }}">{{ client.id }}</a></td>
-            <td><a href="{{ client.get_absolute_url }}">{{ client.phone }}</a></td>
+            <td><a href="{% url 'client_update' client.id %}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+            <td><a href="{% url 'client_details' client.id %}">{{ client }}</a></td>
+            <td>{{ client.username }}</td>
+            <td>{{ client.id }}</td>
+            <td>{{ client.phone }}</td>
           </tr>
           {% endfor %}
 
