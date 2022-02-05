@@ -6,11 +6,22 @@
 <body>
   <h1>{% trans 'Ketabe Damavand' %}</h1>
   <p>
-    {% trans 'Invoice no.' %} {{ order.id }}</br>
+    {% trans 'Invoice no.' %} {{ order.id }}<br />
     <span class="secondary">
       {#{{ order.created|date:"M d, Y" }}#}
       {{  fa_date  }}
     </span>
+  </p>
+  <p class="order-info">
+    {% if order.client.username == "guest" %}
+    {% trans 'Client' %}: {% trans 'Guest' %}
+    {% else %}
+    {% trans 'Client' %}: {{ order.client.first_name }} {{ order.client.last_name }}
+    <br>{% trans 'Phone' %}: {{ order.phone }}
+    {% endif %}
+  </p>
+  <p class="order-info">
+    {% trans 'Registrar' %}: {{ order.user }} - {% trans 'Approver' %}: {{ order.approver }}
   </p>
    {% comment %}
   <h3>{% trans 'Bill to' %}</h3>
@@ -29,14 +40,14 @@
         <th>{% trans 'Price' %}</th>
         <th>{% trans 'Quantity' %}</th>
         <th>{% trans 'Discount' %}</th>
-        <th>{% trans 'Total' %}</th>
+        <th>{% trans 'Total' %} <span style="font-size:8px;">({% trans 'Rial' %})</span></th>
       </tr>
     </thead>
     <tbody>
       {% for item in order.lines.all %}
         <tr class="row{% cycle "1" "2" %}">
           <td>{{ forloop.counter }}</td>
-          <td>{{ item.product.name }}</td>
+          <td>{{ item.product.name | truncatechars:20 }}</td>
           <td class="num">{{ item.price | intcomma:False }}</td>
           <td class="num">{{ item.quantity }}</td>
           <td class="num">{{ item.discount | intcomma:False }}</td>
@@ -54,6 +65,12 @@
           <td colspan="5">{% trans 'Discount'%}</td>
           <td class="num">{{ order.discount | intcomma:False }} </td>
       </tr>
+      {% if order.shipping_cost %}
+      <tr class=discount>
+          <td colspan="5">{% trans 'Shipping cost'%}</td>
+          <td class="num">{{ order.shipping_cost | intcomma:False }} </td>
+      </tr>
+      {% endif %}
       <tr class=total>
           <td colspan="5">{% trans 'PAYABLE'%}</td>
           <td class="num"><b>{{ order.get_payable | intcomma:False }}</b></td>

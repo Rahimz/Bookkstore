@@ -79,3 +79,7 @@ h1 {
   page-break-inside: avoid;
   page-break-after: always;
 }
+
+.order-info {
+  font-size: 12px;
+}
