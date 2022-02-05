@@ -13,34 +13,55 @@
       {% include "staff/sidebar_staff.html" with barName="orders" %}
     </div>
     <div class="col-md-10">
-      <h2>{% trans 'Order details' %}</h2>
-      <p>{%trans 'Registrar' %} : {{ order.user }}</p>
-      <p>{%trans 'Client' %} : {{ order.client }}</p>
-      <p>{%trans 'Order Status' %} : {{ order.status }}</p>
-      <p>{%trans 'Shipping method' %} : {{ order.shipping_method }}</p>
-      <p>{%trans 'Note' %} : {{ order.customer_note }}</p>
+      <h2>{% trans 'Order details' %} : {{ order.id }}</h2>
       <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">{% trans 'Name' %}</th>
-            <th scope="col">{% trans 'Quantity' %}</th>
+        <tr>
+          <td>{%trans 'Registrar' %}</td>
+          <td>{{ order.user }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Approver' %}</td>
+          <td>{{ order.approver }}
+            <br>{% if order.approved_date %}{{ order.approved_date}}{% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td>{%trans 'Client' %}</td>
+          <td>{{ order.client }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Order Status' %}</td>
+          <td>{{ order.status }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Channel' %}</td>
+          <td>{{ order.channel }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Note' %}</td>
+          <td>{{ order.customer_note }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Billing address' %}</td>
+          <td>{{ order.billing_address.get_full_address }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Shipping address' %}</td>
+          <td>{{ order.shipping_address.get_full_address }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Shipping method' %}</td>
+          <td>{{ order.shipping_method }}</td>
+        </tr>
 
-          </tr>
-        </thead>
-        <tbody>
-          {% for line in order.lines.all %}
-          <tr>
-            <th scope="row">{{ forloop.counter }}</td>
-            <td>{{ line.product.name }}</td>
-            <td>{{ line.quantity }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
       </table>
+      <h2 class="mt-5">{% trans 'Invoice' %}</h2>
+      {% include "staff/_order_table.html" %}
 
+      <div class="">
+        <a href="{% url 'tools:make_invoice_pdf' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF' %}</a>
+      </div>
     </div>
-
   </div>
 
 </div>
