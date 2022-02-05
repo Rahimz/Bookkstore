@@ -22,6 +22,11 @@ class ClientSearchForm(forms.Form):
     )
 
 
+class CLientSearchStaffForm(forms.Form):
+    query = forms.CharField(label='',
+        widget=forms.TextInput(attrs={'placeholder': _('Name or phonenumber')})
+    )
+
 class BookIsbnSearchForm(forms.Form):
     isbn_query = forms.IntegerField(
         label='ISBN',

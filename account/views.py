@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.forms import PasswordResetForm
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.contrib import messages
@@ -8,10 +9,12 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from django.contrib.postgres.search import SearchVector
 
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ClientAddForm, ClientUpdateForm, AddressAddForm
 from .models import CustomUser
-
+from search.forms import CLientSearchStaffForm
+from tools.fa_to_en_num import number_converter
 
 def dashboard(request):
     user = request.user
@@ -89,12 +92,31 @@ def edit(request):
 #         {'form': form}
 #     )
 
+@staff_member_required
 def client_list(request):
+    results = None
     clients = CustomUser.objects.filter(is_client=True)
+
+    if request.method == 'POST':
+        client_search_form = CLientSearchStaffForm(data=request.POST)
+        if client_search_form.is_valid():
+            query = client_search_form.cleaned_data['query']
+
+            #we will check if any farsi character is in the query we will changed it
+            query = number_converter(query)
+
+            clients = clients.annotate(
+                search=SearchVector('first_name', 'last_name', 'username', 'phone'),).filter(search=query)
+    else:
+        client_search_form = CLientSearchStaffForm()
+
     return render(
         request,
         'account/clients/client_list.html',
-        {'clients': clients}
+        {'clients': clients,
+        'client_search_form': client_search_form,
+        'results': results
+        }
     )
 
 def client_add(request):

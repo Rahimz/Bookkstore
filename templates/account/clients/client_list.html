@@ -4,40 +4,53 @@
 
 {% load static %}
 
+{% load crispy_forms_tags %}
+
 {% block title %}{% trans 'Clients' %}{% endblock %}
 
 {% block content %}
 <div class="container-fluid overflow-hidden">
   <div class="row">
-      <div class="col-md-2">
-        {% include "staff/sidebar_staff.html" with barName="clients" %}
-      </div>
-      <div class="col-md-10">
-    <h2>{% trans 'Clients' %}</h2>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">{% trans 'Name' %}</th>
-          <th scope="col">{% trans 'Username' %}</th>
-          <th scope="col">{% trans 'Client code' %}</th>
-          <th scope="col">{% trans 'Phone' %}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for client in clients %}
-        <tr>
-          <th scope="row">{{ forloop.counter }}</th>
-          <td><a href="{{ client.get_absolute_url }}">{{ client }}</a></td>
-          <td><a href="{{ client.get_absolute_url }}">{{ client.username }}</a></td>
-          <td><a href="{{ client.get_absolute_url }}">{{ client.id }}</a></td>
-          <td><a href="{{ client.get_absolute_url }}">{{ client.phone }}</a></td>
-        </tr>
-        {% endfor %}
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="clients" %}
+    </div>
+    <div class="col-md-10">
+      <h2>{% trans 'Clients' %}</h2>
+      <form class="" action="." method="post">{% csrf_token %}
+        <div class="row  no-gutters">
+          <div class="col-md-9">
+            {{ client_search_form | crispy }}
+          </div>
+          <div class="col-md-3">
+            <input class="btn btn-outline-secondary form-control" type="submit" value="{% trans 'Search' %}">
+          </div>
+        </div>
+      </form>
 
-      </tbody>
-    </table>
-    {% include "shop/pagination.html" with page=clients %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">{% trans 'Name' %}</th>
+            <th scope="col">{% trans 'Username' %}</th>
+            <th scope="col">{% trans 'Client code' %}</th>
+            <th scope="col">{% trans 'Phone' %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for client in clients %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td><a href="{{ client.get_absolute_url }}">{{ client }}</a></td>
+            <td><a href="{{ client.get_absolute_url }}">{{ client.username }}</a></td>
+            <td><a href="{{ client.get_absolute_url }}">{{ client.id }}</a></td>
+            <td><a href="{{ client.get_absolute_url }}">{{ client.phone }}</a></td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+      {% include "shop/pagination.html" with page=clients %}
     </div>
 
 
