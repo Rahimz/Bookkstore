@@ -100,3 +100,28 @@ def purchase_details(request, purchase_id):
         'staff/purchase/purchase_details.html',
         {'purchase': purchase}
     )
+
+
+def purchase_update(request, purchase_id):
+    purchase = get_object_or_404(Purchase, pk=purchase_id)
+    if request.method == 'POST':
+        purchase_form = PurchaseCreateForm(data=request.POST, instance=purchase)
+        if purchase_form.is_valid():
+            purchase = purchase_form.save(commit=False)
+            purchase.registrar = request.user
+            if not purchase_form.cleaned_data['payment_days']:
+                purchase.payment_date = datetime.now() + timedelta(days=1)
+            else:
+                purchase.payment_date = datetime.now() + timedelta(days=purchase_form.cleaned_data['payment_days'])
+
+            purchase.save()
+            messages.success(request, _('Purchase is updated'))
+            return redirect('orders:purchase_details', purchase.id)
+    else:
+        purchase_form = PurchaseCreateForm(instance=purchase)
+
+    return render(
+        request,
+        'staff/purchase/purchase_create.html',
+        {'purchase_form': purchase_form}
+    )
