@@ -26,7 +26,7 @@
               <th scope="col">{% trans 'Payment Date' %}</th>
               <th scope="col">{% trans 'Quantity' %}</th>
               <th scope="col">{% trans 'Payable' %}</th>
-              <th scope="col">{% trans 'State' %}</th>
+              <th scope="col">{% trans 'Status' %}</th>
             </tr>
           </thead>
           <tbody>
@@ -38,7 +38,7 @@
               <td>{{ purchase.payment_date }}</td>
               <td>{{ purchase.quantity }}</td>
               <td>{{ purchase.payable }}</td>
-              <td>{{ purchase.state }}</td>
+              <td>{{ purchase.status }}</td>
             </tr>
             {% endfor %}
 
