@@ -39,8 +39,9 @@
 
 {% if barName == "purchase" %}
 <div class="sidebar drop_shadow border border-1 rounded-2">
-  <p><a href="{% url 'staff:purchase_create' %}">{% trans 'New purchase invoice' %}</a></p>
-  <p><a href="#">{% trans 'List of purchases' %}</a></p>
+  <p><a href="{% url 'orders:purchase_create' %}">{% trans 'New purchase invoice' %}</a></p>
+  {#<p><a href="{% url 'staff:purchase_create' %}">{% trans 'New purchase invoice' %}</a></p>#}
+  <p><a href="{% url 'orders:purchase_list' %}">{% trans 'List of purchases' %}</a></p>
 </div>
 {% endif %}
 

@@ -1,7 +1,8 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
+from django.core.validators import MinValueValidator, MaxValueValidator
 
-from .models import Order
+from .models import Order, Purchase
 
 
 class OrderCreateForm(forms.ModelForm):
@@ -29,3 +30,16 @@ class OrderAdminCheckoutForm(forms.ModelForm):
             'is_gift': _('Is a gift'),
             'channel': _('Cahnnel'),
         }
+
+
+class PurchaseCreateForm(forms.ModelForm):
+    payment_days = forms.IntegerField(
+        required=False,
+        label=_('Payment deadline'),
+        help_text=_('Payment term in days between 1 and 120'),
+        validators=[MinValueValidator(1), MaxValueValidator(120)],
+    )
+
+    class Meta:
+        model = Purchase
+        fields = ['vendor', ]

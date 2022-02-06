@@ -1,0 +1,30 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Purchase create' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="purchase" %}
+    </div>
+    <div class="col-md-10">
+      <h2>{% trans 'New purchase' %}</h2>
+      <div class="">
+        <form class="" action="." method="post">
+          {% csrf_token %}
+          {{ purchase_form | crispy }}
+          <input type="submit" name="" value="{% trans 'Submit' %}">
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

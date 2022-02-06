@@ -1,11 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from datetime import datetime, timedelta
+from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 
-from .models import OrderLine
-from .forms import OrderCreateForm
+
+from .models import OrderLine, Purchase
+from .forms import OrderCreateForm, PurchaseCreateForm
 from cart.cart import Cart
 from discounts.forms import CouponApplyForm
-
 
 
 @login_required
@@ -54,3 +57,37 @@ def order_create(request):
     return render(request,
                   'orders/create.html',
                   {'cart': cart, 'form': form})
+
+
+def purchase_create(request):
+    if request.method == 'POST':
+        purchase_form = PurchaseCreateForm(data=request.POST)
+        if purchase_form.is_valid():
+            purchase = purchase_form.save(commit=False)
+            purchase.registrar = request.user
+            if not purchase_form.cleaned_data['payment_days']:
+                purchase.payment_date = datetime.now() + timedelta(days=1)
+            else:
+                purchase.payment_date = datetime.now() + timedelta(days=purchase_form.cleaned_data['payment_days'])
+
+            purchase.save()
+            messages.success(request, _('Purchase is created'))
+            return redirect('orders:purchase_list')
+    else:
+        purchase_form = PurchaseCreateForm()
+
+    return render(
+        request,
+        'staff/purchase/purchase_create.html',
+        {'purchase_form': purchase_form}
+    )
+
+
+def purchase_list(request):
+    purchases = Purchase.objects.all()
+
+    return render(
+        request,
+        'staff/purchase/purchase_list.html',
+        {'purchases': purchases}
+    )
