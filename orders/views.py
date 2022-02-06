@@ -5,11 +5,13 @@ from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
 
-from .models import OrderLine, Purchase
-from .forms import OrderCreateForm, PurchaseCreateForm
+from .models import OrderLine, Purchase, PurchaseLine
+from .forms import OrderCreateForm, PurchaseCreateForm, PurchaseLineAddForm
 from cart.cart import Cart
 from discounts.forms import CouponApplyForm
-
+from search.forms import SearchForm
+from search.views import ProductSearch
+from products.models import Product
 
 @login_required
 def order_create(request):
@@ -93,17 +95,61 @@ def purchase_list(request):
     )
 
 
-def purchase_details(request, purchase_id):
+def purchase_details(request, purchase_id, product_id=None):
+    results = None
+    search_form = SearchForm()
     purchase = get_object_or_404(Purchase, pk=purchase_id)
+
+    product = get_object_or_404(Product, pk=product_id) if product_id else None
+
+    if product:
+        PurchaseLine.objects.create(
+            purchase = purchase,
+            product = product,
+            price = product.price,
+            quantity = 1,
+            variation = 'main',
+        )
+        messages.success(request, _('Item added'))
+        return redirect('orders:purchase_details', purchase.id)
+
+    if request.method == 'POST':
+        line_form = PurchaseLineAddForm(data=request.POST)
+        search_form = SearchForm(data=request.POST)
+        if search_form.is_valid():
+            search_query = search_form.cleaned_data['query']
+            results = ProductSearch(object=Product, query=search_query).order_by('name', 'publisher')
+
+        # if line_form.is_valid():
+        #     new_line = line_form.save(commit=False)
+        #     new_line.purchase = purchase
+        #     product = new_line.product
+        #     new_line.save()
+        #
+        #     product.stock += new_line.quantity
+        #     product.save()
+        #
+        #     messages.success(request, _('Purchase row added') + str(product.id))
+        #     return redirect('orders:purchase_details' , purchase.id)
+    else:
+        line_form = PurchaseLineAddForm()
+        search_form = SearchForm()
+
     return render(
         request,
         'staff/purchase/purchase_details.html',
-        {'purchase': purchase}
+        {
+            'purchase': purchase,
+            'line_form': line_form,
+            'search_form': search_form,
+            'results': results
+        }
     )
 
 
 def purchase_update(request, purchase_id):
     purchase = get_object_or_404(Purchase, pk=purchase_id)
+
     if request.method == 'POST':
         purchase_form = PurchaseCreateForm(data=request.POST, instance=purchase)
         if purchase_form.is_valid():
@@ -117,6 +163,7 @@ def purchase_update(request, purchase_id):
             purchase.save()
             messages.success(request, _('Purchase is updated'))
             return redirect('orders:purchase_details', purchase.id)
+
     else:
         purchase_form = PurchaseCreateForm(instance=purchase)
 

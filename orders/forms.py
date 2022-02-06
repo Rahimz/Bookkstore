@@ -2,7 +2,7 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-from .models import Order, Purchase
+from .models import Order, Purchase, PurchaseLine
 
 
 class OrderCreateForm(forms.ModelForm):
@@ -43,3 +43,9 @@ class PurchaseCreateForm(forms.ModelForm):
     class Meta:
         model = Purchase
         fields = ['vendor', ]
+
+class PurchaseLineAddForm(forms.ModelForm):
+
+    class Meta:
+        model = PurchaseLine
+        exclude = ['vendor']

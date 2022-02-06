@@ -45,8 +45,41 @@
       <div class="">
         <a href="#" class="btn btn-outline-success ">{% trans 'Add product' %}</a>
         <a href="{% url 'orders:purchase_update' purchase.id %}" class="btn btn-outline-secondary ">{% trans 'Edit purchase' %}</a>
+      </div>
+      <div class="my-3">
+        <form class="" action="." method="post">
+          {% csrf_token %}
+          {{ search_form | crispy }}
+          <input type="submit" class="btn btn-outline-secondary my-3" name="" value="{% trans 'Submit' %}">
+        </form>
 
       </div>
+      {% if results %}
+      <div class="row">
+
+        {% for result in results %}
+        <div class="col-md-4">
+
+          <a href="{% url 'orders:purchase_add_line' purchase_id=purchase.id product_id=result.id %}"
+            class="btn btn-sm btn-outline-success m-1 fs-10 text-right">
+            {{ result.name | truncatechars:30 }} - {{ result.publisher | truncatechars:15 }} - {{ result.size }} - {{ result.cover_type }} - {% trans 'Quantity' %} {{ result.stock}} - {{ result.price | intcomma:False }}
+          </a>
+          {% if result.has_other_prices %}
+          {% if result.stock_1 %}
+          <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='v1' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='v1' %}{% endif %}"
+            class="btn btn-sm btn-outline-success">{{ result.price_1 | intcomma:False }}</a>
+          {% endif %}
+          {% if result.stock_used %}
+          <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='used' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='used' %}{% endif %}"
+            class="btn btn-sm btn-outline-warning">{{ result.price_used | intcomma:False }}</a>
+          {% endif %}
+          {% endif %}
+        </div>
+        {% endfor %}
+
+      </div>
+      {% endif%}
+
       <div class="">
         <table class="table table-striped">
           <thead>
@@ -65,19 +98,19 @@
             </tr>
           </thead>
           <tbody>
-            {% for order_line in order.lines.all %}
+            {% for purchase_line in purchase.lines.all %}
             <tr>
               <th scope="row">{{ forloop.counter }}</th>
               <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="60px" height="auto"></td>
-              <td>{{ order_line.product.isbn }}</td>
-              <td>{{ order_line.product.name }}</td>
-              <td>{{ order_line.product.author }}</td>
-              <td>{{ order_line.product.publisher }}</td>
-              <td>{{ order_line.quantity }}</td>
+              <td>{{ purchase_line.product.isbn }}</td>
+              <td>{{ purchase_line.product.name }}</td>
+              <td>{{ purchase_line.product.author }}</td>
+              <td>{{ purchase_line.product.publisher }}</td>
+              <td>{{ purchase_line.quantity }}</td>
               <td></td>
-              <td>{{ order_line.get_cost | intcomma:False }}</td>
-              <td>{{ order_line.discount | intcomma:False }}</td>
-              <td>{{ order_line.get_cost_after_discount | intcomma:False }}</td>
+              <td>{{ purchase_line.get_cost | intcomma:False }}</td>
+              <td>{{ purchase_line.discount | intcomma:False }}</td>
+              <td>{{ purchase_line.get_cost_after_discount | intcomma:False }}</td>
             </tr>
             {% endfor %}
 

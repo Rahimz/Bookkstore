@@ -9,6 +9,8 @@ urlpatterns = [
 
     path('purchase/create/', views.purchase_create, name='purchase_create'),
     path('purchase/list/', views.purchase_list, name='purchase_list'),
+    path('purchase/edit/<int:purchase_id>/', views.purchase_update, name='purchase_update'), # for updating main purchase model
+
     path('purchase/<int:purchase_id>/', views.purchase_details, name='purchase_details'),
-    path('purchase/edit/<int:purchase_id>/', views.purchase_update, name='purchase_update'),
+    path('purchase/<int:purchase_id>/add/<int:product_id>/', views.purchase_details, name='purchase_add_line'),
 ]
