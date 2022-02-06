@@ -33,7 +33,7 @@
             {% for purchase in purchases %}
             <tr>
               <th scope="row">{{ forloop.counter }}</th>
-              <td>{{ purchase.vendor }}</td>
+              <td><a href="{% url 'orders:purchase_details' purchase.id %}">{{ purchase.vendor }}</a></td>
               <td>{{ purchase.created }}</td>
               <td>{{ purchase.payment_date }}</td>
               <td>{{ purchase.quantity }}</td>

@@ -4,6 +4,7 @@ import uuid
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator
 from decimal import Decimal
+from datetime import datetime
 
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -349,6 +350,9 @@ class Purchase(models.Model):
 
     def __str__(self):
         return self.vendor.first_name
+
+    def get_remained_days(self):
+        return (self.payment_date - datetime.now().date()).days
 
     # def get_total_cost(self):
     #     return sum(item.get_cost() for item in self.lines.all())

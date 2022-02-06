@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
 from django.contrib import messages
@@ -72,7 +72,7 @@ def purchase_create(request):
 
             purchase.save()
             messages.success(request, _('Purchase is created'))
-            return redirect('orders:purchase_list')
+            return redirect('orders:purchase_details', purchase.id)
     else:
         purchase_form = PurchaseCreateForm()
 
@@ -90,4 +90,13 @@ def purchase_list(request):
         request,
         'staff/purchase/purchase_list.html',
         {'purchases': purchases}
+    )
+
+
+def purchase_details(request, purchase_id):
+    purchase = get_object_or_404(Purchase, pk=purchase_id)
+    return render(
+        request,
+        'staff/purchase/purchase_details.html',
+        {'purchase': purchase}
     )

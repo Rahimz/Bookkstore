@@ -1,0 +1,120 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Purchase details' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="purchase" %}
+    </div>
+    <div class="col-md-10">
+      <h2>{% trans 'Purchase' %} {{ purchase.id }} - {{ purchase.vendor }}</h2>
+      <table class="table table-striped">
+        <tr>
+          <td>{%trans 'Registrar' %}</td>
+          <td>{{ purchase.registrar }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Approver' %}</td>
+          <td>{{ purchase.approver }}
+            <br>{% if purchase.approved_date %}{{ purchase.approved_date}}{% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td>{%trans 'Vendor' %}</td>
+          <td>{{ purchase.vendor }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Payment deadline' %}</td>
+          <td>{{ purchase.payment_date }} - {{ purchase.get_remained_days }} {% trans 'days is remained' %}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'purchase Status' %}</td>
+          <td>{{ purchase.status }}</td>
+        </tr>
+      </table>
+      <div class="">
+        <a href="#" class="btn btn-outline-success ">{% trans 'Add product' %}</a>
+        <a href="#" class="btn btn-outline-secondary ">{% trans 'Edit purchase' %}</a>
+
+      </div>
+      <div class="">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">{% trans 'Image' %}</th>
+              <th scope="col">{% trans 'isbn' %}</th>
+              <th scope="col">{% trans 'Name' %}</th>
+              <th scope="col">{% trans 'Author' %}</th>
+              <th scope="col">{% trans 'Publisher' %}</th>
+              <th scope="col">{% trans 'Quantity' %}</th>
+              <th scope="col"></th>
+              <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
+              <th scope="col">{% trans 'Discount' %}</th>
+              <th scope="col">{% trans 'Cost' %} ({% trans 'Rial' %})</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order_line in order.lines.all %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="60px" height="auto"></td>
+              <td>{{ order_line.product.isbn }}</td>
+              <td>{{ order_line.product.name }}</td>
+              <td>{{ order_line.product.author }}</td>
+              <td>{{ order_line.product.publisher }}</td>
+              <td>{{ order_line.quantity }}</td>
+              <td></td>
+              <td>{{ order_line.get_cost | intcomma:False }}</td>
+              <td>{{ order_line.discount | intcomma:False }}</td>
+              <td>{{ order_line.get_cost_after_discount | intcomma:False }}</td>
+            </tr>
+            {% endfor %}
+
+
+
+            <tr>
+              <th scope="row"></th>
+              <td colspan="5">{% trans 'Sum' %}</td>
+              <td>{{ order.get_total_quantity }}</td>
+              <td colspan="3"></td>
+              <td>{{ order.get_cost_after_discount | intcomma:False }}</td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td colspan="9">{% trans 'Discount' %}</td>
+              <td class="text-danger">{{ order.discount | intcomma:False }}</td>
+
+            </tr>
+            <tr>
+              {% if order.shipping_cost %}
+              <th scope="row"></th>
+              <td colspan="9">{% trans 'Shipping cost' %}</td>
+              <td class="">{{ order.shipping_cost | intcomma:False }}</td>
+              {% endif %}
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td colspan="9" class="fw-bolder">{% trans 'Payable' %}</td>
+              <td class="fw-bolder">{{ order.payable | intcomma:False }}</td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
