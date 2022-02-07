@@ -50,20 +50,20 @@
     </tr>
     <tr>
       <th scope="row"></th>
-      <td colspan="9">{% trans 'Discount' %}</td>
+      <td colspan="10">{% trans 'Discount' %}</td>
       <td class="text-danger">{{ order.discount | intcomma:False }}</td>
 
     </tr>
     <tr>
       {% if order.shipping_cost %}
       <th scope="row"></th>
-      <td colspan="9">{% trans 'Shipping cost' %}</td>
+      <td colspan="10">{% trans 'Shipping cost' %}</td>
       <td class="">{{ order.shipping_cost | intcomma:False }}</td>
       {% endif %}
     </tr>
     <tr>
       <th scope="row"></th>
-      <td colspan="9" class="fw-bolder">{% trans 'Payable' %}</td>
+      <td colspan="10" class="fw-bolder">{% trans 'Payable' %}</td>
       <td class="fw-bolder">{{ order.payable | intcomma:False }}</td>
     </tr>
 
