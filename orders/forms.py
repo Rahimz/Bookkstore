@@ -29,6 +29,7 @@ class OrderAdminCheckoutForm(forms.ModelForm):
             'customer_note': _('Notes'),
             'is_gift': _('Is a gift'),
             'channel': _('Cahnnel'),
+            'discount': _('Invoice discount'),
         }
 
 
@@ -43,6 +44,10 @@ class PurchaseCreateForm(forms.ModelForm):
     class Meta:
         model = Purchase
         fields = ['vendor', 'deadline_days']
+        labels = {
+            'vendor': _('Vendor'),
+            'deadline_days': _('Payment deadline'),
+        }
 
 class PurchaseLineAddForm(forms.ModelForm):
 
