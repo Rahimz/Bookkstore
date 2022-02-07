@@ -300,6 +300,10 @@ class Purchase(models.Model):
         blank=True,
         null=True
     )
+    deadline_days = models.IntegerField(
+        blank=True,
+        null=True
+    )
     status = models.CharField(
         max_length=32,
         default='draft',

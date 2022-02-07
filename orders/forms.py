@@ -33,16 +33,16 @@ class OrderAdminCheckoutForm(forms.ModelForm):
 
 
 class PurchaseCreateForm(forms.ModelForm):
-    payment_days = forms.IntegerField(
-        required=False,
-        label=_('Payment deadline'),
-        help_text=_('Payment term in days between 1 and 120'),
-        validators=[MinValueValidator(1), MaxValueValidator(120)],
-    )
+    # payment_days = forms.IntegerField(
+    #     required=False,
+    #     label=_('Payment deadline'),
+    #     help_text=_('Payment term in days between 1 and 120'),
+    #     validators=[MinValueValidator(1), MaxValueValidator(120)],
+    # )
 
     class Meta:
         model = Purchase
-        fields = ['vendor', ]
+        fields = ['vendor', 'deadline_days']
 
 class PurchaseLineAddForm(forms.ModelForm):
 

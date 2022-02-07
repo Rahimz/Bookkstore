@@ -34,16 +34,19 @@
           <td>{{ purchase.vendor }}</td>
         </tr>
         <tr>
+          <td>{%trans 'Vendor discount' %}</td>
+          <td>{{ purchase.vendor.overal_discount }} %</td>
+        </tr>
+        <tr>
           <td>{%trans 'Payment deadline' %}</td>
-          <td>{{ purchase.payment_date }} - {{ purchase.get_remained_days }} {% trans 'days is remained' %}</td>
+          <td>{{ purchase.payment_date }} - {{ purchase.deadline_days }} {% trans 'days is remained' %}</td>
         </tr>
         <tr>
           <td>{%trans 'purchase Status' %}</td>
           <td>{{ purchase.status }}</td>
         </tr>
       </table>
-      <div class="">
-        <a href="#" class="btn btn-outline-success ">{% trans 'Add product' %}</a>
+      <div class="">        
         <a href="{% url 'orders:purchase_update' purchase.id %}" class="btn btn-outline-secondary ">{% trans 'Edit purchase' %}</a>
       </div>
       <div class="my-3">
@@ -93,6 +96,7 @@
               <th scope="col">{% trans 'Quantity' %}</th>
               <th scope="col"></th>
               <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
+              <th scope="col">%</th>
               <th scope="col">{% trans 'Discount' %}</th>
               <th scope="col">{% trans 'Cost' %} ({% trans 'Rial' %})</th>
             </tr>
@@ -109,6 +113,7 @@
               <td>{{ purchase_line.quantity }}</td>
               <td></td>
               <td>{{ purchase_line.get_cost | intcomma:False }}</td>
+              <td>{{ purchase_line.purchase.vendor.overal_discount | intcomma:False }}</td>
               <td>{{ purchase_line.discount | intcomma:False }}</td>
               <td>{{ purchase_line.get_cost_after_discount | intcomma:False }}</td>
             </tr>
@@ -146,8 +151,11 @@
         </table>
 
       </div>
-    </div>
+      <div class="">
+        <a href="#" class="btn btn-outline-success">{% trans 'Purchase checkout' %}</a>
+      </div>
+    </div> <!-- end of col-md-10 -->
 
-  </div>
+  </div> <!-- end of main row -->
 </div>
 {% endblock %}
