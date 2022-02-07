@@ -1,8 +1,6 @@
 @page {
-  width: 8cm;
-  height: auto;
-  /* min-height: 3cm; */
-  margin: 0;
+  size: A4;
+  margin: 1cm;
   /* padding: 0.5cm; */
 }
 
@@ -82,4 +80,13 @@ h1 {
 
 .order-info {
   font-size: 12px;
+}
+
+.badge {
+  font-size: 12px;
+  background-color: #81ce81;
+  border-radius: 2px;
+  padding: 8px 4px;
+  border: 1px solid grey;
+  margin: 2px;
 }

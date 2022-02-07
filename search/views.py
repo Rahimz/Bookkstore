@@ -11,7 +11,7 @@ def ProductSearch(object, query):
     """
     results = object.objects.all().annotate(
         search=SearchVector('name', 'author', 'translator', 'publisher', 'isbn'),
-    ).filter(search=query)
+    ).filter(search__contains=query)
     return results
 
 def product_search(request):

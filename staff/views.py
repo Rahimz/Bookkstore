@@ -85,6 +85,15 @@ def warehouse(request):
 
 def products(request):
     products_object = Product.objects.all()
+
+    search_form = SearchForm()
+    if request.method == 'POST':
+        search_form = SearchForm(data=request.POST)
+        if search_form.is_valid():
+            search_query = search_form.cleaned_data['query']
+
+            products_object = ProductSearch(object=Product, query=search_query).order_by('name', 'publisher')
+
     # pagination
     paginator = Paginator(products_object, 50) # 50 posts in each page
     page = request.GET.get('page')
@@ -103,6 +112,7 @@ def products(request):
         {
         'products':products,
         'page': page,
+        'search_form': search_form,
         }
     )
 
@@ -399,13 +409,14 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
     })
 
 
-def invoice_checkout(request, order_id):
-    checkout_form = OrderAdminCheckoutForm()
-    client_search_form = ClientSearchForm()
-    client = None
+def invoice_checkout(request, order_id, client_id=None):
     order = Order.objects.get(pk=order_id)
+    checkout_form = OrderAdminCheckoutForm(instance=order)
+    client_search_form = ClientSearchForm()
+    client = CustomUser.objects.get(pk=client_id) if client_id else None
+    clients = None
     if request.method == 'POST':
-        checkout_form = OrderAdminCheckoutForm(data=request.POST)
+        checkout_form = OrderAdminCheckoutForm(data=request.POST, instance=order)
         client_search_form = ClientSearchForm(data=request.POST)
         if client_search_form.is_valid():
             # messages.debug(request, 'client_search_form.is_valid')
@@ -413,34 +424,38 @@ def invoice_checkout(request, order_id):
 
             #we will check if any farsi character is in the query we will changed it
             query = number_converter(query)
-
-            try:
-                client = CustomUser.objects.get(phone=query, is_client=True)
-            except:
-                pass
-
-            if client:
-                messages.success(request, _('Client found'))
-
-            elif query and not client:
-                client = CustomUser(
-                    phone=query,
-                    username=query,
-                    email="{}@ketabedamavand.com".format(query)
-                )
-                client.save()
-                messages.success(request, _('Client added')+ ' {}'.format(client.phone))
-
-            elif not client:
-                client = CustomUser.objects.get(username='guest')
+            clients = CustomUser.objects.filter(is_client=True).order_by('-pk').exclude(is_superuser=True).exclude(username='guest')
+            clients = clients.annotate(
+                search=SearchVector('first_name', 'last_name', 'username', 'phone'),).filter(search__contains=query)
+            # try:
+            #     client = CustomUser.objects.get(phone=query, is_client=True)
+            # except:
+            #     pass
+            #
+            # if client:
+            #     messages.success(request, _('Client found'))
+            #
+            # elif query and not client:
+            #     client = CustomUser(
+            #         phone=query,
+            #         username=query,
+            #         email="{}@ketabedamavand.com".format(query)
+            #     )
+            #     client.save()
+            #     messages.success(request, _('Client added')+ ' {}'.format(client.phone))
+            #
+            # elif not client:
+            #     client = CustomUser.objects.get(username='guest')
 
         if checkout_form.is_valid():
-
+            if not client:
+                client = CustomUser.objects.get(username='guest')
             order.client = client
             order.paid = checkout_form.cleaned_data['paid']
             order.customer_note = checkout_form.cleaned_data['customer_note']
             order.is_gift = checkout_form.cleaned_data['is_gift']
             order.channel = checkout_form.cleaned_data['channel']
+            order.discount = checkout_form.cleaned_data['discount']
             order.status = 'approved'
             order.approver = request.user
             order.approved_date = datetime.now()
@@ -454,6 +469,8 @@ def invoice_checkout(request, order_id):
         {'client_search_form': client_search_form,
          'order': order,
          'checkout_form': checkout_form,
+         'clients': clients,
+         'client': client,
     })
 
 def orderline_update(request, order_id, orderline_id):

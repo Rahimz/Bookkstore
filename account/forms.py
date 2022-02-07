@@ -47,8 +47,6 @@ class ClientUpdateForm(forms.ModelForm):
 		model = CustomUser
 		fields = (
 			'username', 'first_name', 'last_name', 'phone', 'email',
-			'default_billing_address', 'default_shipping_address', 
-
 		)
 
 class VendorAddForm(forms.ModelForm):

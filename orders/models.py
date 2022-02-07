@@ -4,6 +4,7 @@ import uuid
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator
 from decimal import Decimal
+from datetime import datetime
 
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -74,7 +75,7 @@ class Order(models.Model):
     )
     status = models.CharField(
         max_length=32,
-        default='unfulfilled',
+        default='draft',
         choices=STATUS_CHOICES
     )
     channel = models.CharField(
@@ -84,16 +85,16 @@ class Order(models.Model):
     )
     billing_address = models.ForeignKey(
         Address,
-        related_name="+",
-        editable=False,
+        related_name='order_billing',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL
     )
     shipping_address = models.ForeignKey(
         Address,
-        related_name="+",
-        editable=False,
+        related_name='order_shipping',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL
     )
     user_email = models.EmailField(
@@ -119,7 +120,7 @@ class Order(models.Model):
         max_digits=settings.DEFAULT_MAX_DIGITS,
         decimal_places=settings.DEFAULT_DECIMAL_PLACES,
         default=0,
-        editable=False,
+
     )
     total_cost = models.DecimalField(
         max_digits=settings.DEFAULT_MAX_DIGITS,
@@ -165,7 +166,7 @@ class Order(models.Model):
         self.quantity = self.get_total_quantity()
         self.weight = self.get_total_weight()
 
-        self.payable = self.get_cost_after_discount() - self.discount
+        self.payable = self.get_payable()
 
         super(Order, self).save(*args, **kwargs)
 
@@ -179,7 +180,7 @@ class Order(models.Model):
         return sum(item.get_cost_after_discount() for item in self.lines.all())
 
     def get_payable(self):
-        return self.get_cost_after_discount() - self.discount
+        return self.get_cost_after_discount() - self.discount + self.shipping_cost
 
     def get_total_weight(self):
         return sum(item.get_weight() for item in self.lines.all())
@@ -299,6 +300,10 @@ class Purchase(models.Model):
         blank=True,
         null=True
     )
+    deadline_days = models.IntegerField(
+        blank=True,
+        null=True
+    )
     status = models.CharField(
         max_length=32,
         default='draft',
@@ -341,29 +346,32 @@ class Purchase(models.Model):
         if not self.token:
             self.token = str(uuid.uuid4())
 
-        # self.quantity = self.get_total_quantity()
+        self.quantity = self.get_total_quantity()
 
-        # self.payable = self.get_cost_after_discount() - self.discount
+        self.payable = self.get_cost_after_discount() - self.discount
 
         super(Purchase, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.vendor.first_name
 
-    # def get_total_cost(self):
-    #     return sum(item.get_cost() for item in self.lines.all())
-    #
-    # def get_cost_after_discount(self):
-    #     return sum(item.get_cost_after_discount() for item in self.lines.all())
-    #
-    # def get_payable(self):
-    #     return self.get_cost_after_discount() - self.discount
-    #
-    # def get_total_weight(self):
-    #     return sum(item.get_weight() for item in self.lines.all())
-    #
-    # def get_total_quantity(self):
-    #     return sum(item.quantity for item in self.lines.all())
+    def get_remained_days(self):
+        return (self.payment_date - datetime.now().date()).days
+
+    def get_total_cost(self):
+        return sum(item.get_cost() for item in self.lines.all())
+
+    def get_cost_after_discount(self):
+        return sum(item.get_cost_after_discount() for item in self.lines.all())
+
+    def get_payable(self):
+        return self.get_cost_after_discount() - self.discount
+
+    def get_total_weight(self):
+        return sum(item.get_weight() for item in self.lines.all())
+
+    def get_total_quantity(self):
+        return sum(item.quantity for item in self.lines.all())
 
 
 class PurchaseLine(models.Model):

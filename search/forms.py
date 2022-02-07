@@ -16,11 +16,22 @@ class ClientSearchForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['query'].required = False
+        self.fields['query_name'].required = False
 
-    query = forms.CharField(label='Phone',
+    query = forms.CharField(
+        label='Phone',
         widget=forms.TextInput(attrs={'placeholder': _('+989123456789')})
     )
+    query_name = forms.CharField(
+        label=_('Name'),
+        widget=forms.TextInput(attrs={'placeholder': _('Ckient name')})
+    )
 
+
+class CLientSearchStaffForm(forms.Form):
+    query = forms.CharField(label='',
+        widget=forms.TextInput(attrs={'placeholder': _('Name or phonenumber')})
+    )
 
 class BookIsbnSearchForm(forms.Form):
     isbn_query = forms.IntegerField(

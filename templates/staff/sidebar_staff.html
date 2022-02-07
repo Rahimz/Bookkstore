@@ -5,8 +5,6 @@
   <p><a href="{% url 'staff:products'%}">{% trans 'List of products' %}</a></p>
   <p><a href="{% url 'staff:category_create'%}">{% trans 'Create a new category' %}</a></p>
   <p><a href="{% url 'staff:categories' %}">{% trans 'List of categories' %}</a></p>
-  <p><a href="{% url 'staff:vendor_add' %}">{% trans 'Add vendor' %}</a></p>
-  <p><a href="{% url 'staff:vendor_list' %}">{% trans 'Vendor list' %}</a></p>
 </div>
 {% endif %}
 
@@ -17,6 +15,8 @@
   <p><a href="{% url 'client_add' %}/#addClient" onclick="return popitup('/account/client_add/#addClient')" class="">{% trans 'Add client' %}</a></p>
   <p><a href="{% url 'zarinpal:payment_create' %}">{% trans 'Create a payment link' %}</a></p>
   <p><a href="{% url 'zarinpal:payment_list' %}">{% trans 'Payment list' %}</a></p>
+  <p><a href="{% url 'staff:order_list' period='365' channel='cashier' %}">{% trans 'Cashier sales' %}</a></p>
+
 </div>
 {% endif %}
 
@@ -37,8 +37,12 @@
 
 {% if barName == "purchase" %}
 <div class="sidebar drop_shadow border border-1 rounded-2">
-  <p><a href="{% url 'staff:purchase_create' %}">{% trans 'New purchase invoice' %}</a></p>
-  <p><a href="#">{% trans 'List of purchases' %}</a></p>
+  <p><a href="{% url 'orders:purchase_create' %}">{% trans 'New purchase invoice' %}</a></p>
+  {#<p><a href="{% url 'staff:purchase_create' %}">{% trans 'New purchase invoice' %}</a></p>#}
+  <p><a href="{% url 'orders:purchase_list' %}">{% trans 'List of purchases' %}</a></p>
+  <br>
+  <p><a href="{% url 'staff:vendor_add' %}">{% trans 'Add vendor' %}</a></p>
+  <p><a href="{% url 'staff:vendor_list' %}">{% trans 'Vendor list' %}</a></p>
 </div>
 {% endif %}
 

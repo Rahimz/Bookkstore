@@ -1,0 +1,34 @@
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+<table class="table table-striped">
+  <tr>
+    <td>{%trans 'Registrar' %}</td>
+    <td>{{ purchase.registrar }}</td>
+  </tr>
+  <tr>
+    <td>{%trans 'Approver' %}</td>
+    <td>{{ purchase.approver }}
+      <br>{% if purchase.approved_date %}{{ purchase.approved_date}}{% endif %}
+    </td>
+  </tr>
+  <tr>
+    <td>{%trans 'Vendor' %}</td>
+    <td>{{ purchase.vendor }}</td>
+  </tr>
+  <tr>
+    <td>{%trans 'Vendor discount' %}</td>
+    <td>{{ purchase.vendor.overal_discount }} %</td>
+  </tr>
+  <tr>
+    <td>{%trans 'Payment deadline' %}</td>
+    <td>{{ purchase.payment_date }} - {{ purchase.deadline_days }} {% trans 'days is remained' %}</td>
+  </tr>
+  <tr>
+    <td>{%trans 'Purchase status' %}</td>
+    <td><span class="badge {% if purchase.status == 'draft' %}bg-warning{% else %}bg-success {% endif %}">{{ purchase.status }} </span></td>
+  </tr>
+
+</table>

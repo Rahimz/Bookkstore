@@ -18,78 +18,38 @@
     </div>
     <div class="col-md-10">
       <div>
-        <h2 class="my-4">{% trans 'Checkout' %}</h2>
+        <h2 class="my-4">{% trans 'Checkout' %}: {{ order.id }}</h2>
         <div class="client">
-          <form class="" action="." method="post">
+          <form class="" action="" method="post">
             {{ client_search_form | crispy }}
+            <input class="btn btn-outline-success my-4" type="submit" name="client" value="{% trans 'Search client' %}">
+            {% csrf_token %}
+          </form>
+          {% if clients %}
+          {% for client in clients %}
+          <a href="{% url 'staff:invoice_checkout_client' order_id=order.id client_id=client.id %}" class="btn btn-outline-secondary">{{ client.first_name }} {{ client.last_name }}- {{ client.phone }}</a>
+          {% endfor %}
+          {% endif %}
+          {% if client %}
+          {{ client.first_name }} {{ client.last_name }}- {{ client.phone }}
+          {% endif %}
+          <form class="" action="." method="post">
             {{ checkout_form | crispy }}
             {% csrf_token %}
-            <input class="btn btn-outline-secondary" type="submit" name="client" value="{% trans 'Submit' %}">
+            <input class="btn btn-outline-success my-4" type="submit" name="client" value="{% trans 'Submit' %}">
           </form>
+          <div class="my-3">
+            <a href="{% url 'tools:make_invoice_pdf' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF' %}</a>
+            <a href="{% url 'tools:make_invoice_pdf_a4' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF A4' %}</a>
+          </div>
         </div>
 
       </div>
 
       <div class="">
         <h2 class="my-4">{% trans 'Invoice' %}</h2>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">{% trans 'isbn' %}</th>
-              <th scope="col">{% trans 'Image' %}</th>
-              <th scope="col">{% trans 'Name' %}</th>
-              <th scope="col">{% trans 'Author' %}</th>
-              <th scope="col">{% trans 'Remove' %}</th>
-              <th scope="col">{% trans 'Quantity' %}</th>
-              <th scope="col"></th>
-              <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
-              <th scope="col">{% trans 'Discount' %}</th>
-              <th scope="col">{% trans 'Cost' %}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for order_line in order.lines.all %}
-            <tr>
-              <th scope="row">{{ forloop.counter }}</th>
-              <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="60px" height="auto"></td>
-              <td>{{ order_line.product.isbn }}</td>
-              <td>{{ order_line.product.name }}</td>
-              <td>{{ order_line.product.author }}</td>
-              <td> </td>
-              <td>{{ order_line.quantity }}</td>
-              <td></td>
-              <td>{{ order_line.get_cost | intcomma:False }}</td>
-              <td>{{ order_line.discount | intcomma:False }}</td>
-              <td>{{ order_line.get_cost_after_discount | intcomma:False }}</td>
-            </tr>
-            {% endfor %}
 
-
-
-            <tr>
-              <th scope="row"></th>
-              <td colspan="5">{% trans 'SUM' %}</td>
-              <td>{{ order.get_total_quantity }}</td>
-              <td colspan="3"></td>
-              <td>{{ order.get_cost_after_discount | intcomma:False }}</td>
-            </tr>
-            <tr>
-              <th scope="row"></th>
-              <td colspan="9">{% trans 'DISCOUNT' %}</td>
-              <td class="text-danger">{{ order.discount | intcomma:False }}</td>
-              <td></td>
-            </tr>
-            <tr>
-              <th scope="row"></th>
-              <td colspan="9" class="fw-bolder">{% trans 'PAYABLE' %}</td>
-              <td class="fw-bolder">{{ order.get_cost_after_discount | intcomma:False }}</td>
-            </tr>
-
-          </tbody>
-        </table>
-
-
+        {% include "staff/_order_table.html" %}
 
       </div>
 

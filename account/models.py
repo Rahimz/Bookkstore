@@ -45,6 +45,8 @@ class Address(models.Model):
     def get_absolute_url(self):
         return reverse('address_detail',
                        args=[self.id])
+    def get_full_address(self):
+        return f"{self.country.name} - {self.city} - {self.street_address_1}, {self.street_address_2} - {self.postal_code}"
 
 
 class CustomUser(AbstractUser):

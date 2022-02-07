@@ -31,6 +31,21 @@ def make_invoice_pdf(request, order_id=None):
         stylesheets=[weasyprint.CSS(settings.STATIC_ROOT + 'css/invoice_pdf.css')])
     return response
 
+@staff_member_required
+def make_invoice_pdf_a4(request, order_id=None):
+    order = Order.objects.get(pk=order_id)
+
+    fa_date = hij_strf_date(greg_to_hij_date(order.created.date()), '%-d %B %Y')
+
+    html = render_to_string('tools/pdf/invoice_pdf_a4.html',
+        {'order': order,
+        'fa_date': fa_date})
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'filename=order_{order.id}.pdf'
+    weasyprint.HTML(string=html).write_pdf(response,
+        stylesheets=[weasyprint.CSS(settings.STATIC_ROOT + 'css/invoice_pdf_a4.css')])
+    return response
+
 
 def order_export_excel(request, *args, **kwargs):
     orders = Order.objects.filter( Q(status='approved') | Q(paid=True) )
