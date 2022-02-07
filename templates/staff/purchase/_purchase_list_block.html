@@ -44,27 +44,20 @@
     <tr>
       <th scope="row"></th>
       <td colspan="5">{% trans 'Sum' %}</td>
-      <td>{{ order.get_total_quantity }}</td>
-      <td colspan="3"></td>
-      <td>{{ order.get_cost_after_discount | intcomma:False }}</td>
+      <td>{{ purchase.get_total_quantity }}</td>
+      <td colspan="4"></td>
+      <td>{{ purchase.get_cost_after_discount | intcomma:False }}</td>
     </tr>
     <tr>
       <th scope="row"></th>
       <td colspan="10">{% trans 'Discount' %}</td>
-      <td class="text-danger">{{ order.discount | intcomma:False }}</td>
+      <td class="text-danger">{{ purchase.discount | intcomma:False }}</td>
 
-    </tr>
-    <tr>
-      {% if order.shipping_cost %}
-      <th scope="row"></th>
-      <td colspan="10">{% trans 'Shipping cost' %}</td>
-      <td class="">{{ order.shipping_cost | intcomma:False }}</td>
-      {% endif %}
     </tr>
     <tr>
       <th scope="row"></th>
       <td colspan="10" class="fw-bolder">{% trans 'Payable' %}</td>
-      <td class="fw-bolder">{{ order.payable | intcomma:False }}</td>
+      <td class="fw-bolder">{{ purchase.payable | intcomma:False }}</td>
     </tr>
 
   </tbody>

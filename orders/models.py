@@ -346,9 +346,9 @@ class Purchase(models.Model):
         if not self.token:
             self.token = str(uuid.uuid4())
 
-        # self.quantity = self.get_total_quantity()
+        self.quantity = self.get_total_quantity()
 
-        # self.payable = self.get_cost_after_discount() - self.discount
+        self.payable = self.get_cost_after_discount() - self.discount
 
         super(Purchase, self).save(*args, **kwargs)
 
@@ -358,20 +358,20 @@ class Purchase(models.Model):
     def get_remained_days(self):
         return (self.payment_date - datetime.now().date()).days
 
-    # def get_total_cost(self):
-    #     return sum(item.get_cost() for item in self.lines.all())
-    #
-    # def get_cost_after_discount(self):
-    #     return sum(item.get_cost_after_discount() for item in self.lines.all())
-    #
-    # def get_payable(self):
-    #     return self.get_cost_after_discount() - self.discount
-    #
-    # def get_total_weight(self):
-    #     return sum(item.get_weight() for item in self.lines.all())
-    #
-    # def get_total_quantity(self):
-    #     return sum(item.quantity for item in self.lines.all())
+    def get_total_cost(self):
+        return sum(item.get_cost() for item in self.lines.all())
+
+    def get_cost_after_discount(self):
+        return sum(item.get_cost_after_discount() for item in self.lines.all())
+
+    def get_payable(self):
+        return self.get_cost_after_discount() - self.discount
+
+    def get_total_weight(self):
+        return sum(item.get_weight() for item in self.lines.all())
+
+    def get_total_quantity(self):
+        return sum(item.quantity for item in self.lines.all())
 
 
 class PurchaseLine(models.Model):
