@@ -38,7 +38,7 @@
               <td>{{ purchase.payment_date }}</td>
               <td>{{ purchase.quantity }}</td>
               <td>{{ purchase.payable }}</td>
-              <td>{{ purchase.status }}</td>
+              <td><span class="badge {% if purchase.status == 'draft' %}bg-warning{% else %}bg-success {% endif %}">{{ purchase.status }} </span></td>
             </tr>
             {% endfor %}
 

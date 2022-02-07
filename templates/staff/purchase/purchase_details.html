@@ -18,34 +18,10 @@
     </div>
     <div class="col-md-10">
       <h2>{% trans 'Purchase' %} {{ purchase.id }} - {{ purchase.vendor }}</h2>
-      <table class="table table-striped">
-        <tr>
-          <td>{%trans 'Registrar' %}</td>
-          <td>{{ purchase.registrar }}</td>
-        </tr>
-        <tr>
-          <td>{%trans 'Approver' %}</td>
-          <td>{{ purchase.approver }}
-            <br>{% if purchase.approved_date %}{{ purchase.approved_date}}{% endif %}
-          </td>
-        </tr>
-        <tr>
-          <td>{%trans 'Vendor' %}</td>
-          <td>{{ purchase.vendor }}</td>
-        </tr>
-        <tr>
-          <td>{%trans 'Vendor discount' %}</td>
-          <td>{{ purchase.vendor.overal_discount }} %</td>
-        </tr>
-        <tr>
-          <td>{%trans 'Payment deadline' %}</td>
-          <td>{{ purchase.payment_date }} - {{ purchase.deadline_days }} {% trans 'days is remained' %}</td>
-        </tr>
-        <tr>
-          <td>{%trans 'purchase Status' %}</td>
-          <td>{{ purchase.status }}</td>
-        </tr>
-      </table>
+      <div class="">
+        {% include 'staff/purchase/_purchase_details_block.html' %}
+      </div>
+      {% if purchase.status == "draft" %}
       <div class="">
         <a href="{% url 'orders:purchase_update' purchase.id %}" class="btn btn-outline-secondary ">{% trans 'Edit purchase' %}</a>
       </div>
@@ -63,8 +39,7 @@
         {% for result in results %}
         <div class="col-md-4 my-4">
 
-          <a href="{% url 'orders:purchase_add_line' purchase_id=purchase.id product_id=result.id %}"
-            class="btn btn-sm btn-success m-1 fs-10 text-right">
+          <a href="{% url 'orders:purchase_add_line' purchase_id=purchase.id product_id=result.id %}" class="btn btn-sm btn-success m-1 fs-10 text-right">
             {{ result.name | truncatechars:30 }} - {{ result.publisher | truncatechars:15 }} - {{ result.size }} - {{ result.cover_type }} - {% trans 'Quantity' %} {{ result.stock}} - {{ result.price | intcomma:False }}
           </a>
           {% if result.has_other_prices %}
@@ -77,84 +52,21 @@
             class="btn btn-sm btn-warning">{{ result.price_used | intcomma:False }}</a>
           {% endif %}
           {% endif %}
-          <a href="#"
-            class="btn btn-sm btn-success m-1 fs-10 text-right">+</a>
+          <a href="#" class="btn btn-sm btn-success m-1 fs-10 text-right">+</a>
         </div>
         {% endfor %}
 
       </div>
-      {% endif%}
+      {% endif %} {# end of results block #}
+      {% endif %} {# end of draft purchase block #}
 
       <div class="">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">{% trans 'Image' %}</th>
-              <th scope="col">{% trans 'isbn' %}</th>
-              <th scope="col">{% trans 'Name' %}</th>
-              <th scope="col">{% trans 'Author' %}</th>
-              <th scope="col">{% trans 'Publisher' %}</th>
-              <th scope="col">{% trans 'Quantity' %}</th>
-              <th scope="col"></th>
-              <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
-              <th scope="col">%</th>
-              <th scope="col">{% trans 'Discount' %}</th>
-              <th scope="col">{% trans 'Cost' %} ({% trans 'Rial' %})</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for purchase_line in purchase.lines.all %}
-            <tr>
-              <th scope="row">{{ forloop.counter }}</th>
-              <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="60px" height="auto"></td>
-              <td>{{ purchase_line.product.isbn }}</td>
-              <td>{{ purchase_line.product.name }}</td>
-              <td>{{ purchase_line.product.author }}</td>
-              <td>{{ purchase_line.product.publisher }}</td>
-              <td>{{ purchase_line.quantity }}</td>
-              <td></td>
-              <td>{{ purchase_line.get_cost | intcomma:False }}</td>
-              <td>{{ purchase_line.purchase.vendor.overal_discount | intcomma:False }}</td>
-              <td>{{ purchase_line.discount | intcomma:False }}</td>
-              <td>{{ purchase_line.get_cost_after_discount | intcomma:False }}</td>
-            </tr>
-            {% endfor %}
-
-
-
-            <tr>
-              <th scope="row"></th>
-              <td colspan="5">{% trans 'Sum' %}</td>
-              <td>{{ order.get_total_quantity }}</td>
-              <td colspan="3"></td>
-              <td>{{ order.get_cost_after_discount | intcomma:False }}</td>
-            </tr>
-            <tr>
-              <th scope="row"></th>
-              <td colspan="9">{% trans 'Discount' %}</td>
-              <td class="text-danger">{{ order.discount | intcomma:False }}</td>
-
-            </tr>
-            <tr>
-              {% if order.shipping_cost %}
-              <th scope="row"></th>
-              <td colspan="9">{% trans 'Shipping cost' %}</td>
-              <td class="">{{ order.shipping_cost | intcomma:False }}</td>
-              {% endif %}
-            </tr>
-            <tr>
-              <th scope="row"></th>
-              <td colspan="9" class="fw-bolder">{% trans 'Payable' %}</td>
-              <td class="fw-bolder">{{ order.payable | intcomma:False }}</td>
-            </tr>
-
-          </tbody>
-        </table>
-
+        {% include 'staff/purchase/_purchase_list_block.html' %}
       </div>
       <div class="">
-        <a href="#" class="btn btn-outline-success">{% trans 'Purchase checkout' %}</a>
+        {% if purchase.status == "draft" %}
+        <a href="{% url 'orders:purchase_checkout' purchase.id %}" class="btn btn-outline-success">{% trans 'Purchase checkout' %}</a>
+        {% endif %}
       </div>
     </div> <!-- end of col-md-10 -->
 

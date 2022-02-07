@@ -67,11 +67,12 @@ def purchase_create(request):
         if purchase_form.is_valid():
             purchase = purchase_form.save(commit=False)
             purchase.registrar = request.user
-            if not purchase_form.cleaned_data['payment_days']:
+            if not purchase_form.cleaned_data['deadline_days']:
                 purchase.payment_date = datetime.now() + timedelta(days=1)
             else:
-                purchase.payment_date = datetime.now() + timedelta(days=purchase_form.cleaned_data['payment_days'])
+                purchase.payment_date = datetime.now() + timedelta(days=purchase_form.cleaned_data['deadline_days'])
 
+            purchase.deadline_days = purchase_form.cleaned_data['deadline_days']
             purchase.save()
             messages.success(request, _('Purchase is created'))
             return redirect('orders:purchase_details', purchase.id)
@@ -182,4 +183,28 @@ def purchase_update(request, purchase_id):
         request,
         'staff/purchase/purchase_create.html',
         {'purchase_form': purchase_form}
+    )
+
+
+def purchase_checkout(request, purchase_id):
+    purchase = get_object_or_404(Purchase, pk=purchase_id)
+
+    product_ids = [item.product.pk for item in purchase.lines.all()]
+    if purchase.status == 'draft':
+        for item in purchase.lines.all():
+            product = item.product
+            product.stock += item.quantity
+            product.save()
+        purchase.approver = request.user
+        purchase.approved_date = datetime.now()
+        purchase.status = 'approved'
+        purchase.save()
+        messages.success(request, _('Purchase added to stock'))
+    else:
+        messages.error(request, _('This purchase is already approved'))
+
+    return render(
+        request,
+        'staff/purchase/purchase_checkout.html',
+        {'purchase': purchase}
     )

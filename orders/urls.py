@@ -13,4 +13,6 @@ urlpatterns = [
 
     path('purchase/<int:purchase_id>/', views.purchase_details, name='purchase_details'),
     path('purchase/<int:purchase_id>/add/<int:product_id>/', views.purchase_details, name='purchase_add_line'),
+
+    path('purchase/checkout/<int:purchase_id>/', views.purchase_checkout, name='purchase_checkout'),
 ]
