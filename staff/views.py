@@ -632,7 +632,7 @@ def vendor_add(request):
 
             messages.success(request, _('Vendor is added!') + ' {}'.format(vendor.first_name))
 
-            return HttpResponseRedirect(reverse('staff:products'))
+            return HttpResponseRedirect(reverse('staff:vendor_list'))
         else:
             messages.error(request, _('Form is not valid'))
     else:
