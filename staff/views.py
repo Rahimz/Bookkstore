@@ -85,6 +85,15 @@ def warehouse(request):
 
 def products(request):
     products_object = Product.objects.all()
+
+    search_form = SearchForm()
+    if request.method == 'POST':
+        search_form = SearchForm(data=request.POST)
+        if search_form.is_valid():
+            search_query = search_form.cleaned_data['query']
+
+            products_object = ProductSearch(object=Product, query=search_query).order_by('name', 'publisher')
+
     # pagination
     paginator = Paginator(products_object, 50) # 50 posts in each page
     page = request.GET.get('page')
@@ -103,6 +112,7 @@ def products(request):
         {
         'products':products,
         'page': page,
+        'search_form': search_form,
         }
     )
 
