@@ -409,11 +409,12 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
     })
 
 
-def invoice_checkout(request, order_id):
+def invoice_checkout(request, order_id, client_id=None):
     order = Order.objects.get(pk=order_id)
     checkout_form = OrderAdminCheckoutForm(instance=order)
     client_search_form = ClientSearchForm()
-    client = None
+    client = CustomUser.objects.get(pk=client_id) if client_id else None
+    clients = None
     if request.method == 'POST':
         checkout_form = OrderAdminCheckoutForm(data=request.POST, instance=order)
         client_search_form = ClientSearchForm(data=request.POST)
@@ -423,29 +424,32 @@ def invoice_checkout(request, order_id):
 
             #we will check if any farsi character is in the query we will changed it
             query = number_converter(query)
-
-            try:
-                client = CustomUser.objects.get(phone=query, is_client=True)
-            except:
-                pass
-
-            if client:
-                messages.success(request, _('Client found'))
-
-            elif query and not client:
-                client = CustomUser(
-                    phone=query,
-                    username=query,
-                    email="{}@ketabedamavand.com".format(query)
-                )
-                client.save()
-                messages.success(request, _('Client added')+ ' {}'.format(client.phone))
-
-            elif not client:
-                client = CustomUser.objects.get(username='guest')
+            clients = CustomUser.objects.filter(is_client=True).order_by('-pk').exclude(is_superuser=True).exclude(username='guest')
+            clients = clients.annotate(
+                search=SearchVector('first_name', 'last_name', 'username', 'phone'),).filter(search__contains=query)
+            # try:
+            #     client = CustomUser.objects.get(phone=query, is_client=True)
+            # except:
+            #     pass
+            #
+            # if client:
+            #     messages.success(request, _('Client found'))
+            #
+            # elif query and not client:
+            #     client = CustomUser(
+            #         phone=query,
+            #         username=query,
+            #         email="{}@ketabedamavand.com".format(query)
+            #     )
+            #     client.save()
+            #     messages.success(request, _('Client added')+ ' {}'.format(client.phone))
+            #
+            # elif not client:
+            #     client = CustomUser.objects.get(username='guest')
 
         if checkout_form.is_valid():
-
+            if not client:
+                client = CustomUser.objects.get(username='guest')
             order.client = client
             order.paid = checkout_form.cleaned_data['paid']
             order.customer_note = checkout_form.cleaned_data['customer_note']
@@ -465,6 +469,8 @@ def invoice_checkout(request, order_id):
         {'client_search_form': client_search_form,
          'order': order,
          'checkout_form': checkout_form,
+         'clients': clients,
+         'client': client,
     })
 
 def orderline_update(request, order_id, orderline_id):

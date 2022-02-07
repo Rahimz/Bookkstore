@@ -20,16 +20,28 @@
       <div>
         <h2 class="my-4">{% trans 'Checkout' %}: {{ order.id }}</h2>
         <div class="client">
-          <form class="" action="." method="post">
+          <form class="" action="" method="post">
             {{ client_search_form | crispy }}
+            <input class="btn btn-outline-success my-4" type="submit" name="client" value="{% trans 'Search client' %}">
+            {% csrf_token %}
+          </form>
+          {% if clients %}
+          {% for client in clients %}
+          <a href="{% url 'staff:invoice_checkout_client' order_id=order.id client_id=client.id %}" class="btn btn-outline-secondary">{{ client.first_name }} {{ client.last_name }}- {{ client.phone }}</a>
+          {% endfor %}
+          {% endif %}
+          {% if client %}
+          {{ client.first_name }} {{ client.last_name }}- {{ client.phone }}
+          {% endif %}
+          <form class="" action="." method="post">
             {{ checkout_form | crispy }}
             {% csrf_token %}
             <input class="btn btn-outline-success my-4" type="submit" name="client" value="{% trans 'Submit' %}">
           </form>
-        <div class="my-3">
-          <a href="{% url 'tools:make_invoice_pdf' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF' %}</a>
-          <a href="{% url 'tools:make_invoice_pdf_a4' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF A4' %}</a>
-        </div>
+          <div class="my-3">
+            <a href="{% url 'tools:make_invoice_pdf' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF' %}</a>
+            <a href="{% url 'tools:make_invoice_pdf_a4' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF A4' %}</a>
+          </div>
         </div>
 
       </div>

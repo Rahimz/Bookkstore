@@ -23,6 +23,7 @@ urlpatterns = [
 
     path('invoice/create/line-update/<int:order_id>/<int:orderline_id>/', views.orderline_update, name='orderline_update'),
     path('invoice/checkout/<int:order_id>/', views.invoice_checkout, name='invoice_checkout'),
+    path('invoice/checkout/<int:order_id>/<int:client_id>/', views.invoice_checkout, name='invoice_checkout_client'),
 
     path('purchases/', views.purchases, name='purchase_list'),
     path('purchase/create/', views.purchase_create, name='purchase_create'),
