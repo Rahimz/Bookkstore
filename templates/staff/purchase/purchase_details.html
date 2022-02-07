@@ -46,7 +46,7 @@
           <td>{{ purchase.status }}</td>
         </tr>
       </table>
-      <div class="">        
+      <div class="">
         <a href="{% url 'orders:purchase_update' purchase.id %}" class="btn btn-outline-secondary ">{% trans 'Edit purchase' %}</a>
       </div>
       <div class="my-3">
@@ -61,22 +61,24 @@
       <div class="row">
 
         {% for result in results %}
-        <div class="col-md-4">
+        <div class="col-md-4 my-4">
 
           <a href="{% url 'orders:purchase_add_line' purchase_id=purchase.id product_id=result.id %}"
-            class="btn btn-sm btn-outline-success m-1 fs-10 text-right">
+            class="btn btn-sm btn-success m-1 fs-10 text-right">
             {{ result.name | truncatechars:30 }} - {{ result.publisher | truncatechars:15 }} - {{ result.size }} - {{ result.cover_type }} - {% trans 'Quantity' %} {{ result.stock}} - {{ result.price | intcomma:False }}
           </a>
           {% if result.has_other_prices %}
           {% if result.stock_1 %}
           <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='v1' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='v1' %}{% endif %}"
-            class="btn btn-sm btn-outline-success">{{ result.price_1 | intcomma:False }}</a>
+            class="btn btn-sm btn-success">{{ result.price_1 | intcomma:False }}</a>
           {% endif %}
           {% if result.stock_used %}
           <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='used' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='used' %}{% endif %}"
-            class="btn btn-sm btn-outline-warning">{{ result.price_used | intcomma:False }}</a>
+            class="btn btn-sm btn-warning">{{ result.price_used | intcomma:False }}</a>
           {% endif %}
           {% endif %}
+          <a href="#"
+            class="btn btn-sm btn-success m-1 fs-10 text-right">+</a>
         </div>
         {% endfor %}
 

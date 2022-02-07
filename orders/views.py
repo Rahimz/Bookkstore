@@ -100,19 +100,31 @@ def purchase_details(request, purchase_id, product_id=None):
     search_form = SearchForm()
     purchase = get_object_or_404(Purchase, pk=purchase_id)
 
+    # product_ids = purchase.lines.values_list('id', flat=True)
+    product_ids = [item.product.pk for item in purchase.lines.all()]
+
     product = get_object_or_404(Product, pk=product_id) if product_id else None
 
     if product:
-        PurchaseLine.objects.create(
-            purchase = purchase,
-            product = product,
-            price = product.price,
-            quantity = 1,
-            variation = 'main',
-            discount = product.price * purchase.vendor.overal_discount / 100,
-        )
-        messages.success(request, _('Item added'))
-        return redirect('orders:purchase_details', purchase.id)
+        if product.id in product_ids:
+            purchase_line = PurchaseLine.objects.get(purchase=purchase, product=product)
+            purchase_line.quantity += 1
+            purchase_line.save()
+
+            messages.success(request, _('Purchase row updated'))
+            return redirect('orders:purchase_details', purchase.id)
+        else:
+            PurchaseLine.objects.create(
+                purchase = purchase,
+                product = product,
+                price = product.price,
+                quantity = 1,
+                variation = 'main',
+                discount = product.price * purchase.vendor.overal_discount / 100,
+            )
+
+            messages.success(request, _('Purchase row added'))
+            return redirect('orders:purchase_details', purchase.id)
 
     if request.method == 'POST':
         line_form = PurchaseLineAddForm(data=request.POST)
