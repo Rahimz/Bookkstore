@@ -111,6 +111,7 @@ def purchase_details(request, purchase_id, product_id=None):
             purchase_line = PurchaseLine.objects.get(purchase=purchase, product=product)
             purchase_line.quantity += 1
             purchase_line.save()
+            purchase.save()
 
             messages.success(request, _('Purchase row updated'))
             return redirect('orders:purchase_details', purchase.id)
@@ -123,6 +124,7 @@ def purchase_details(request, purchase_id, product_id=None):
                 variation = 'main',
                 discount = product.price * purchase.vendor.overal_discount / 100,
             )
+            purchase.save()
 
             messages.success(request, _('Purchase row added'))
             return redirect('orders:purchase_details', purchase.id)
