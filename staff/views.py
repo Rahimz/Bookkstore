@@ -270,6 +270,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
             order_line = OrderLine.objects.get(order=order, product=book, variation=variation)
             order_line.quantity += 1
             order_line.save()
+            order.save()
         else:
             order_line = OrderLine.objects.create(
                 order = order,
@@ -278,6 +279,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
                 price = price,
                 variation = variation,
             )
+            order.save()
 
             # Update product stock
             stock -= 1
@@ -314,7 +316,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
             price = price,
             variation = variation,
         )
-
+        order.save()
         # Update product stock
         stock -= 1
 
@@ -374,6 +376,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
                         order_line.quantity += 1
                         order_line.variation = 'main'
                         order_line.save()
+                        order.save()
 
                         # Update product stock
                         book.stock -=1
@@ -388,6 +391,8 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
                             price = book.price,
                             variation = 'main'
                         )
+                        order.save()
+
                         book.stock -= 1
                         book.save()
                     messages.success(request, _('Product is added to invoice'))
@@ -516,6 +521,7 @@ def orderline_update(request, order_id, orderline_id):
                 product.save()
 
                 order_line.delete()
+                order.save()
                 return redirect('staff:invoice_create', order.id)
 
             if update_form.cleaned_data['quantity'] != 0:
@@ -551,11 +557,13 @@ def orderline_update(request, order_id, orderline_id):
 
                 order_line.quantity = update_form.cleaned_data['quantity']
                 order_line.save()
+                order.save()
 
 
             if update_form.cleaned_data['discount'] != 0:
                 order_line.discount = update_form.cleaned_data['discount']
                 order_line.save()
+                order.save()
 
             update_form = InvoiceAddForm()
             return redirect('staff:invoice_create', order.id)
