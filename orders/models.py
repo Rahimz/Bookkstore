@@ -224,6 +224,13 @@ class OrderLine(models.Model):
         blank=True,
         null=True,
     )
+    shipped =  models.BooleanField(
+        default=False,
+    )
+    shipped_date = models.DateTimeField(
+        null=True,
+        blank=True
+    )
 
     class Meta:
         ordering = ("-product",)
