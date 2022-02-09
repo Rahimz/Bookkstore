@@ -1,0 +1,97 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html dir="rtl">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Open graph -->
+  <meta property="og:title" content="{% trans 'Ketab Damavand' %}" />
+  <meta name="description" property="og:description" content="{% trans 'Ketab Damavand' %}">
+  <meta property="og:image" content="{% static 'img/logo.png' %}" />
+  <meta property="og:image:alt" content="{% trans 'Ketab Damavand logo' %}" />
+
+  <!-- css files -->
+  <link href="{% static 'css/bootstrap.rtl.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/bootstrap-grid.rtl.css' %}" rel="stylesheet">
+  <link href="{% static 'css/bootstrap-utilities.rtl.min.css' %}" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="{% static 'css/base.css' %}" rel="stylesheet">
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F9RJ6DQ80X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-F9RJ6DQ80X');
+  </script>
+
+  {% block head %}{% endblock %}
+
+  <title>{% block title %}{% endblock %} | {% trans 'Ketab Damavand' %}</title>
+</head>
+
+<body>
+  <header class="mb-3">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid bg-main-color border-bottom border-2 border-dark">
+        <a class="navbar-brand p-3 fw-bolder" href="{% url 'shop:home' %}">{% trans 'Ketab Damavand' %}</a>
+
+
+
+      </div>
+
+    </nav>
+
+    {% if messages %}
+    <div  id="hideme" class="hide-class">
+
+      <ul  class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">
+          {{ message|safe }}
+          <a href="#" class="close" class="toast" role="alert" aria-live="assertive" aria-atomic="true">x</a>
+        </li>
+        {% endfor %}
+      </ul>
+
+    </div>
+    {% endif %}
+
+
+
+
+  </header>
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer class="footer">
+    
+    <div class="row bg-dark text-center">
+      <p class="text-light pt-3">{% trans 'Ketabe Damavand'%} 1400</p>
+    </div>
+
+  </footer>
+
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  {% comment %}
+  <script>
+    setTimeout(function() {
+      document.getElementById('hideme').className = 'waa';
+    }, 2500);
+  </script>
+  {% endcomment %}
+  {% block script %}
+  {% endblock %}
+</body>
+
+</html>

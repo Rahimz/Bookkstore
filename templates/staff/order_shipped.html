@@ -1,0 +1,99 @@
+{% extends "_base_popup.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Order shipped' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+
+    <div class="col-md-12">
+      <h2>{% trans 'Order details' %} : {{ order.id }}</h2>
+
+      {#<!--  if form is submitted  we will close it automatically--> #}
+      {% if form_submit %}
+      <script type="text/javascript">
+
+          setTimeout(function() {
+            window.close();
+          }, 4000);
+
+      </script>
+
+      {% else %}
+      <form class="" method="post" action=".">
+        {% csrf_token %}
+        {{ shipping_form | crispy }}
+        <input type="submit" name="" value="{% trans 'Submit' %} " class="btn btn-outline-success my-3" >
+      </form>
+      {% endif %}
+
+      <table class="table table-striped">
+        <tr>
+          <td>{%trans 'Registrar' %}</td>
+          <td>{{ order.user }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Approver' %}</td>
+          <td>{{ order.approver }}
+            <br>{% if order.approved_date %}{{ order.approved_date}}{% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td>{%trans 'Client' %}</td>
+          <td>{{ order.client }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Order Status' %}</td>
+          <td>{{ order.status }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Channel' %}</td>
+          <td>{{ order.channel }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Note' %}</td>
+          <td>{{ order.customer_note }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Billing address' %}</td>
+          <td>{{ order.billing_address.get_full_address }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Shipping address' %}</td>
+          <td>{{ order.shipping_address.get_full_address }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Shipping method' %}</td>
+          <td>{{ order.shipping_method }}</td>
+        </tr>
+
+      </table>
+
+
+
+      <div class="">
+
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+  function xSubmit(frm) {
+    $.post($(frm).attr('action'), $(frm).serializeArray());
+    alert("The request has been submitted.");
+    window.close();
+  }
+</script>
+{% endblock %}

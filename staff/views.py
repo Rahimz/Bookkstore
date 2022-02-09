@@ -469,7 +469,11 @@ def invoice_checkout(request, order_id, client_id=None):
             order.status = 'approved'
             order.approver = request.user
             order.approved_date = datetime.now()
-            shipping_method = 'pickup'
+            if order.channel == 'cashier':
+                order.shipping_method = 'pickup'
+                order.shipping_status = 'full'
+            else:
+                order.shipping_method = 'post'                
             order.save()
             messages.success(request, _('Order approved'))
             return redirect('staff:order_list', period='all', channel='all')
@@ -726,14 +730,28 @@ def product_update(request, product_id):
 
 
 def order_shipping(request, order_id):
+    form_submit = False
     order = get_object_or_404(Order, pk=order_id)
-    # shipping_form = OrderShippingForm()
-    order.status = 'fulfilled'
-    order.save()
-    return redirect('staff:order_list', period='all', channel='mix')
-    # return render(
-    #     request,
-    #     'staff/order_list.html',
-    #     {'order': order,
-    #     'shipping_form': shipping_form}
-    # )
+    shipping_form = OrderShippingForm(instance=order)
+    if request.method == 'POST':
+        shipping_form = OrderShippingForm(data=request.POST, instance=order)
+        if shipping_form.is_valid():
+            shipping_form.save()
+            # order.status = shipping_form.cleaned_data['shipping_status']
+            # order.shipped_code = shipping_form.cleaned_data['shipped_code']
+            # order.save()
+            form_submit = True
+            messages.success(request, 'Shipping status is updated' )
+            messages.warning(request, 'Update the order list' )
+            # return redirect('staff:order_shipped', order.id)
+
+    else:
+        shipping_form = OrderShippingForm(instance=order)
+
+    return render(
+        request,
+        'staff/order_shipped.html',
+        {'order': order,
+        'shipping_form': shipping_form,
+        'form_submit': form_submit}
+    )

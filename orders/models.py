@@ -16,18 +16,23 @@ PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
 
 class Order(models.Model):
     STATUS_CHOICES = [
-        ('draft', 'Draft'),
-        ('paid', 'paid'),
-        ('approved', 'approved'),
-        ('unfulfilled', 'Unfulfilled'),
-        ('fulfilled', 'Fulfilled'),
-        ('canceled', 'Canceled'),
+        ('draft', _('Draft')),
+        ('paid', _('Paid')),
+        ('approved', _('Approved')),
+        ('unfulfilled', _('Unfulfilled')),
+        ('fulfilled', _('Fulfilled')),
+        ('canceled', _('Canceled')),
     ]
     SHIPPING_METHODS = [
-        ('post', 'Post'),
-        ('bike_delivery', 'Bike Delivery'),
-        ('pickup', 'Pickup')
+        ('post', _('Post')),
+        ('bike_delivery', _('Bike Delivery')),
+        ('pickup', _('Pickup'))
     ]
+    SHIPPING_STATUS =(
+        ('', ''),
+        ('semi', _('Semi shipped')),
+        ('full', _('Fully Shipped')),
+    )
     CHANNEL_CHOICES = [
         ('cashier', _('Cashier')),
         ('instagram', 'Instagram'),
@@ -121,6 +126,18 @@ class Order(models.Model):
         decimal_places=settings.DEFAULT_DECIMAL_PLACES,
         default=0,
 
+    )
+    shipped_code = models.CharField(
+        max_length=24,
+        blank=True,
+        null=True
+    )
+    shipping_status = models.CharField(
+        max_length=50,
+        choices=SHIPPING_STATUS,
+        default='',
+        blank=True,
+        null=True
     )
     total_cost = models.DecimalField(
         max_digits=settings.DEFAULT_MAX_DIGITS,
