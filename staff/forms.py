@@ -37,7 +37,7 @@ class InvoiceAddForm(forms.ModelForm):
         model = OrderLine
         fields = ('quantity', 'discount',)
         labels = {
-            'quantity': 'quantity'
+            'quantity': _('Quantity')
         }
         widgets = {
             'quantity': forms.TextInput(attrs={'placeholder': 'quantity'})
@@ -57,6 +57,10 @@ class OrderShippingForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['shipped_code', 'shipping_status']
+        labels = {
+            'shipped_code': _('Shipping code'),
+            'shipping_status': _('Shipping status')
+        }
         widgets = {
             'shipped_code': forms.TextInput(attrs={'autofocus': 'autofocus'})
         }
