@@ -15,6 +15,9 @@ urlpatterns = [
     path('orders/create/', views.order_create, name='order_create'),
     path('orders/<str:period>/<str:channel>/', views.orders, name='order_list'),
 
+    path('sales/countries/', views.order_list_by_country, name='order_list_by_country'),
+    path('sales/countries/<str:country_code>/', views.order_list_by_country, name='order_list_by_country'),
+
 
     path('invoice/create/', views.invoice_create, name='invoice_create'),
     path('invoice/create/<int:order_id>/', views.invoice_create, name='invoice_create'),

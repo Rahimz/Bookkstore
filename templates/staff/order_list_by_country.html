@@ -1,0 +1,72 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block title %}{% trans 'Orders' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="sales" %}
+    </div>
+    <div class="col-md-10">
+      <h2>{% trans 'List of orders' %}{% if country %} <b>{{ country.name }}</b>{% endif %}</h2>
+      <ul>
+        {% for item in countries %}
+        <li><a href="{% url 'staff:order_list_by_country' country_code=item %}">{{ item }}</a></li>
+        {% endfor %}
+      </ul>
+      <a href="{% url 'tools:order_export_excel' %}" class="my-2"><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto"></a>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">{% trans 'Order No' %}</th>
+            <th scope="col">{% trans 'Client' %}</th>
+            <th scope="col">{% trans 'Quantity' %}</th>
+            <th scope="col">{% trans 'Weight' %}</th>
+            <th scope="col">{% trans 'Channel' %}</th>
+            <th scope="col">{% trans 'Approved date' %}</th>
+            <th scope="col">{% trans 'Paid' %}</th>
+            <th scope="col">{% trans 'Is a gift' %}</th>
+            <th scope="col">{% trans 'Shipping status' %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+          <tr>
+            <th scope="row">{{ forloop.counter}}</th>
+            <td><a href="{% url 'staff:order_detail_for_admin' order.pk %}">{{ order.pk }}</a></td>
+            <td>{{ order.client }}</td>
+            <td>{{ order.get_total_quantity }}</td>
+            {# <!-- TODO: we have some problem to grab the order weight -->#}
+            <td>{#{{ order.get_total_weight }}#} gr</td>
+            <td>{{ order.channel }}</td>
+            <td>{{ order.approved_date | date:"d, M Y" }}</td>
+            <td>{% if order.paid %}&#10004{% else %}&#10008{% endif %}</td>
+            <td>{% if order.is_gift %}&#10004{% else %}&#10008{% endif %}</td>
+            <td>{{ order.shipping_status }}</td>
+
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script language="javascript" type="text/javascript">
+  function popitup(url) {
+    newwindow = window.open(url, '{{title}}', 'height=350,width=150');
+    if (window.focus) {
+      newwindow.focus()
+    }
+    return false;
+  }
+</script>
+{% endblock %}
