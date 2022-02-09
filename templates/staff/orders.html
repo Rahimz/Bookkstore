@@ -27,6 +27,7 @@
             <th scope="col">{% trans 'Approved date' %}</th>
             <th scope="col">{% trans 'Paid' %}</th>
             <th scope="col">{% trans 'Is a gift' %}</th>
+            <th scope="col">{% trans 'Shipping' %}</th>
           </tr>
         </thead>
         <tbody>
@@ -42,6 +43,7 @@
             <td>{{ order.approved_date | date:"d, M Y" }}</td>
             <td>{% if order.paid %}&#10004{% else %}&#10008{% endif %}</td>
             <td>{% if order.is_gift %}&#10004{% else %}&#10008{% endif %}</td>
+            <td>{% if order.status == "fulfilled" %}&#10004{% else %}<a href="{% url 'staff:order_shipped' order.id %}" class="btn btn-outline-secondary">{% trans 'Shipped' %}</a>{% endif %}</td>
           </tr>
           {% endfor %}
         </tbody>

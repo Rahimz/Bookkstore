@@ -10,7 +10,7 @@ import uuid
 from datetime import datetime, timedelta
 from django.utils.translation import gettext_lazy as _
 
-from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm
+from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm
 from products.models import Product, Category
 from orders.models import Order, OrderLine
 from orders.forms import OrderAdminCheckoutForm
@@ -37,8 +37,9 @@ def orders(request, period=None, channel=None):
 
     # 'mix' channel means we need the orders that should be collected
     if channel == 'mix' and period=='all':
-        orders = Order.objects.filter(
-            Q(status='approved') | Q(paid=True)).exclude(channel='cashier')
+        # orders = Order.objects.filter(
+        #     Q(status='approved') | Q(paid=True)).exclude(channel='cashier')
+        orders = Order.objects.exclude(channel='cashier').exclude(status='draft')
 
     # staff/orders/30/mix
     elif channel == 'mix' and period not in ('all', 'mix'):
@@ -69,6 +70,7 @@ def order_detail_for_admin(request, pk):
         {'order': order}
     )
 
+
 def purchases(request):
     return render(
         request,
@@ -76,12 +78,14 @@ def purchases(request):
         {}
     )
 
+
 def warehouse(request):
     return render(
         request,
         'staff/warehouse.html',
         {}
     )
+
 
 def products(request):
     products_object = Product.objects.all()
@@ -161,7 +165,6 @@ def category_create(request):
     )
 
 
-
 def order_create(request):
     form = OrderCreateForm()
     return render(
@@ -169,6 +172,7 @@ def order_create(request):
         'staff/order_create.html',
         {'form': form}
     )
+
 
 class ProductCreate(View):
     # template = 'staff/product_create.html'
@@ -209,6 +213,7 @@ class ProductCreate(View):
             'staff/product_create.html',
             {'form': form}
         )
+
 
 def invoice_create(request, order_id=None, book_id=None, variation='main'):
     books = None
@@ -478,6 +483,7 @@ def invoice_checkout(request, order_id, client_id=None):
          'client': client,
     })
 
+
 def orderline_update(request, order_id, orderline_id):
     update_form = InvoiceAddForm(initial={'quantity':"0"})
     order = Order.objects.get(pk=order_id)
@@ -675,6 +681,7 @@ def vendor_edit(request, vendor_id):
         'address_form': address_form}
     )
 
+
 def vendor_list(request):
     vendors = Vendor.objects.all()
     return render(
@@ -716,3 +723,17 @@ def product_update(request, product_id):
         {'form': form}
 
     )
+
+
+def order_shipping(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+    # shipping_form = OrderShippingForm()
+    order.status = 'fulfilled'
+    order.save()
+    return redirect('staff:order_list', period='all', channel='mix')
+    # return render(
+    #     request,
+    #     'staff/order_list.html',
+    #     {'order': order,
+    #     'shipping_form': shipping_form}
+    # )

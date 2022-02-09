@@ -40,3 +40,10 @@ class InvoiceAddForm(forms.ModelForm):
         widgets = {
             'quantity': forms.TextInput(attrs={'placeholder': 'quantity'})
         }
+
+
+class OrderShippingForm(forms.ModelForm):
+    # shipped = forms.BooleanField(label='', required=False)
+    class Meta:
+        model = OrderLine
+        fields = ['shipped']

@@ -1,0 +1,140 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Orders' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="orders" %}
+    </div>
+    <div class="col-md-10">
+      <h2>{% trans 'Order details' %} : {{ order.id }}</h2>
+      <table class="table table-striped">
+        <tr>
+          <td>{%trans 'Registrar' %}</td>
+          <td>{{ order.user }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Approver' %}</td>
+          <td>{{ order.approver }}
+            <br>{% if order.approved_date %}{{ order.approved_date}}{% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td>{%trans 'Client' %}</td>
+          <td>{{ order.client }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Order Status' %}</td>
+          <td>{{ order.status }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Channel' %}</td>
+          <td>{{ order.channel }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Note' %}</td>
+          <td>{{ order.customer_note }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Billing address' %}</td>
+          <td>{{ order.billing_address.get_full_address }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Shipping address' %}</td>
+          <td>{{ order.shipping_address.get_full_address }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Shipping method' %}</td>
+          <td>{{ order.shipping_method }}</td>
+        </tr>
+
+      </table>
+      <h2 class="mt-5">{% trans 'Invoice' %}</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">{% trans 'Image' %}</th>
+            <th scope="col">{% trans 'isbn' %}</th>
+            <th scope="col">{% trans 'Name' %}</th>
+            <th scope="col">{% trans 'Author' %}</th>
+            <th scope="col">{% trans 'Publisher' %}</th>
+            <th scope="col">{% trans 'Quantity' %}</th>
+            <th scope="col"></th>
+            <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
+            <th scope="col">{% trans 'Discount' %}</th>
+            <th scope="col">{% trans 'Cost' %} ({% trans 'Rial' %})</th>
+            <th scope="col">{% trans 'Shipped' %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order_line in order.lines.all %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="60px" height="auto"></td>
+            <td>{{ order_line.product.isbn }}</td>
+            <td>{{ order_line.product.name }}</td>
+            <td>{{ order_line.product.author }}</td>
+            <td>{{ order_line.product.publisher }}</td>
+            <td>{{ order_line.quantity }}</td>
+            <td></td>
+            <td>{{ order_line.get_cost | intcomma:False }}</td>
+            <td>{{ order_line.discount | intcomma:False }}</td>
+            <td>{{ order_line.get_cost_after_discount | intcomma:False }}</td>
+            <td>
+              <form class="" action="" method="post">
+                {{ shipping_form.shipped | as_crispy_field }}
+                {#<input type="submit" name="" value="+">#}
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+
+
+
+          <tr>
+            <th scope="row"></th>
+            <td colspan="5">{% trans 'Sum' %}</td>
+            <td>{{ order.get_total_quantity }}</td>
+            <td colspan="3"></td>
+            <td>{{ order.get_cost_after_discount | intcomma:False }}</td>
+          </tr>
+          <tr>
+            <th scope="row"></th>
+            <td colspan="9">{% trans 'Discount' %}</td>
+            <td class="text-danger">{{ order.discount | intcomma:False }}</td>
+
+          </tr>
+          <tr>
+            {% if order.shipping_cost %}
+            <th scope="row"></th>
+            <td colspan="9">{% trans 'Shipping cost' %}</td>
+            <td class="">{{ order.shipping_cost | intcomma:False }}</td>
+            {% endif %}
+          </tr>
+          <tr>
+            <th scope="row"></th>
+            <td colspan="9" class="fw-bolder">{% trans 'Payable' %}</td>
+            <td class="fw-bolder">{{ order.payable | intcomma:False }}</td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <div class="">
+        
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
