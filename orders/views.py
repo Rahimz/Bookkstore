@@ -96,19 +96,38 @@ def purchase_list(request):
     )
 
 
-def purchase_details(request, purchase_id, product_id=None):
+def purchase_details(request, purchase_id, product_id=None, variation='main'):
     results = None
     search_form = SearchForm()
     purchase = get_object_or_404(Purchase, pk=purchase_id)
 
     # product_ids = purchase.lines.values_list('id', flat=True)
-    product_ids = [item.product.pk for item in purchase.lines.all()]
+    # product_ids = [item.product.pk for item in purchase.lines.all()]
+    product_ids = [(item.product.pk, item.variation) for item in purchase.lines.all()]
 
     product = get_object_or_404(Product, pk=product_id) if product_id else None
 
+
+
     if product:
-        if product.id in product_ids:
-            purchase_line = PurchaseLine.objects.get(purchase=purchase, product=product)
+        variation_dict = {
+            'main': {
+                'price': product.price,
+                'stock': product.stock,
+            },
+            'v1': {
+                'price': product.price_1,
+                'stock': product.stock_1,
+            },
+            'used': {
+                'price': product.price_used,
+                'stock': product.stock_used,}
+        }
+        price = variation_dict[variation]['price']
+        stock = variation_dict[variation]['stock']
+
+        if (product.id, variation) in product_ids:
+            purchase_line = PurchaseLine.objects.get(purchase=purchase, product=product, variation=variation)
             purchase_line.quantity += 1
             purchase_line.save()
             purchase.save()
@@ -119,11 +138,19 @@ def purchase_details(request, purchase_id, product_id=None):
             PurchaseLine.objects.create(
                 purchase = purchase,
                 product = product,
-                price = product.price,
+                price = price,
                 quantity = 1,
-                variation = 'main',
-                discount = product.price * purchase.vendor.overal_discount / 100,
+                variation = variation,
+                discount = price * purchase.vendor.overal_discount / 100,
             )
+            stock += 1
+            if variation == 'main':
+                product.stock = stock
+            elif variation  == 'v1':
+                product.stock_1 = stock
+            elif variation == 'used':
+                product.stock_used = stock
+
             purchase.save()
 
             messages.success(request, _('Purchase row added'))

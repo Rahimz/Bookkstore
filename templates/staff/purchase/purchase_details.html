@@ -44,15 +44,15 @@
           </a>
           {% if result.has_other_prices %}
           {% if result.stock_1 %}
-          <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='v1' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='v1' %}{% endif %}"
+          <a href="{% url 'orders:purchase_add_line_v' purchase_id=purchase.id product_id=result.id variation='v1' %}"
             class="btn btn-sm btn-success">{{ result.price_1 | intcomma:False }}</a>
           {% endif %}
           {% if result.stock_used %}
-          <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='used' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='used' %}{% endif %}"
+          <a href="{% url 'orders:purchase_add_line_v' purchase_id=purchase.id product_id=result.id variation='used' %}"
             class="btn btn-sm btn-warning">{{ result.price_used | intcomma:False }}</a>
           {% endif %}
           {% endif %}
-          <a href="#" class="btn btn-sm btn-success m-1 fs-10 text-right">+</a>
+          <a href="#" class="btn btn-sm btn-success m-1 fs-10 text-right">...</a>
         </div>
         {% endfor %}
 

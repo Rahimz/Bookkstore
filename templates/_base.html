@@ -10,8 +10,27 @@
   <!-- Open graph -->
   <meta property="og:title" content="{% trans 'Ketab Damavand' %}" />
   <meta name="description" property="og:description" content="{% trans 'Ketab Damavand' %}">
-  <meta property="og:image" content="{% static 'img/logo.png' %}" />
+  <meta property="og:image" content="{% static 'img/logo.jpg' %}" />
   <meta property="og:image:alt" content="{% trans 'Ketab Damavand logo' %}" />
+
+  <!-- favicon -->
+  <link rel="apple-touch-icon" sizes="57x57" href="{% static 'icon/apple-icon-57x57.png' %}">
+  <link rel="apple-touch-icon" sizes="60x60" href="{% static 'icon/apple-icon-60x60.png' %}">
+  <link rel="apple-touch-icon" sizes="72x72" href="{% static 'icon/apple-icon-72x72.png' %}">
+  <link rel="apple-touch-icon" sizes="76x76" href="{% static 'icon/apple-icon-76x76.png' %}">
+  <link rel="apple-touch-icon" sizes="114x114" href="{% static 'icon/apple-icon-114x114.png' %}">
+  <link rel="apple-touch-icon" sizes="120x120" href="{% static 'icon/apple-icon-120x120.png' %}">
+  <link rel="apple-touch-icon" sizes="144x144" href="{% static 'icon/apple-icon-144x144.png' %}">
+  <link rel="apple-touch-icon" sizes="152x152" href="{% static 'icon/apple-icon-152x152.png' %}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'icon/apple-icon-180x180.png' %}">
+  <link rel="icon" type="image/png" sizes="192x192" href="{% static 'icon/android-icon-192x192.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'icon/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="96x96" href="{% static 'icon/favicon-96x96.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'icon/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'icon/manifest.json' %}">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="{% static 'icon/ms-icon-144x144.png' %}">
+  <meta name="theme-color" content="#ffffff">
 
   <!-- css files -->
   <link href="{% static 'css/bootstrap.rtl.min.css' %}" rel="stylesheet">
@@ -42,7 +61,7 @@
   <header class="mb-3">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid bg-main-color border-bottom border-2 border-dark">
-        <a class="navbar-brand p-5 fw-bolder" href="{% url 'shop:home' %}">{% trans 'Ketab Damavand' %}</a>
+        <a class="navbar-brand p-3 fw-bolder" href="{% url 'shop:home' %}"><img src="{% static 'img/logo.jpg' %}" alt="{% trans 'Ketab Damavand' %}" class="rounded" width="110px;" height="auto"></a>
         <!-- navbar button -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
