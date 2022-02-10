@@ -19,7 +19,7 @@
         <li><a href="{% url 'staff:order_list_by_country' country_code=item %}">{{ item }}</a></li>
         {% endfor %}
       </ul>
-      <a href="{% url 'tools:order_export_excel' %}" class="my-2"><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto"></a>
+      <a href="{% url 'tools:order_export_excel' criteria='approved' %}" class="my-2"><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto"></a>
       <table class="table table-striped">
         <thead>
           <tr>

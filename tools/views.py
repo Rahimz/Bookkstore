@@ -47,8 +47,10 @@ def make_invoice_pdf_a4(request, order_id=None):
     return response
 
 
-def order_export_excel(request, *args, **kwargs):
-    orders = Order.objects.filter( Q(status='approved') | Q(paid=True) )
+def order_export_excel(request, criteria):
+    # TODO: we handle all order export with one function but we should add parameter to
+    # handle differnt kind of report
+    orders = Order.objects.filter(status=criteria)
 
     wb = openpyxl.Workbook()
     sheet = wb.active
