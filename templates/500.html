@@ -1,0 +1,22 @@
+{% extends "_temp_base.html" %}
+{# {% extends "_base.html" %} #}
+{% load i18n %}
+{% load static %}
+
+{% block title %}500 | {% trans 'Ketab Damavand' %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-4 text-center">
+        <h1 class="">{% trans '500 Error' %}</h1>
+    </div> <!-- / end of row-->
+
+    <div class="row mt-5 pt-5 text-center">
+        <div class="col-md-12 ">
+            <h2 class="text-muted center">{% trans 'There is an error in our server! Please try later or contact admins.' %}</h2>
+            <a href="{% url 'shop:home' %}" class="btn btn-outline-secondary my-5 ">{% trans 'Home' %}</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
