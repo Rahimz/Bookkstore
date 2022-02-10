@@ -47,17 +47,39 @@ def make_invoice_pdf_a4(request, order_id=None):
     return response
 
 
-def order_export_excel(request, *args, **kwargs):
-    orders = Order.objects.filter( Q(status='approved') | Q(paid=True) )
+def order_export_excel(request, criteria):
+    # TODO: we handle all order export with one function but we should add parameter to
+    # handle differnt kind of report
+    orders = Order.objects.filter(status=criteria)
 
     wb = openpyxl.Workbook()
     sheet = wb.active
 
     headers = [
-        'Order ID', 'Client', 'Client Phone', 'Created', 'Status',
-        'billing_address', 'shipping_address', 'shipping_method',  'Created by',
-        'Total cost', 'Tota cost after discount', 'discount', 'Payable', 'paid',
-        'Customer notes', 'Weight', 'Is gift',
+        'Order ID',
+        'Client',
+        'Client Phone',
+        'Created',
+        'Created by',
+        'Approved date',
+        'Approved by',
+        'Status',
+        'Channel',
+        'Billing address',
+        'Shipping address',
+        'Shipping method',
+        'Shipping cost',
+        'Shipping status',
+        'Shipped code',
+        'Total cost',
+        'Total cost after discount',
+        'Order discount',
+        'Payable',
+        'Is paid',
+        'Customer notes',
+        'Quantity',
+        'Weight',
+        'Is gift',
     ]
 
     for i in range(len(headers)):
@@ -66,11 +88,32 @@ def order_export_excel(request, *args, **kwargs):
 
 
     for count , order in enumerate(orders):
+        order.save()
         title_list = [
-            order.id, str(order.client), str(order.client_phone),
-            str(order.created,), order.status, order.channel, order.billing_address, order.shipping_address,
-            order.shipping_method, str(order.user), order.total_cost, order.total_cost_after_discount, order.discount,
-            order.payable, order.paid, order.customer_note, order.weight, order.is_gift,
+            order.id,
+            str(order.client),
+            str(order.client_phone),
+            str(order.created,),
+            str(order.user),
+            str(order.approved_date),
+            str(order.approver),
+            order.status,
+            order.channel,
+            order.billing_address.get_full_address() if order.billing_address else '',
+            order.shipping_address.get_full_address() if order.shipping_address else '',
+            order.shipping_method,
+            order.shipping_cost,
+            order.shipping_status,
+            order.shipping_code if order.shipped_code else '',
+            order.total_cost,
+            order.total_cost_after_discount,
+            order.discount,
+            order.payable,
+            order.paid,
+            order.customer_note,
+            order.quantity,
+            order.weight,
+            order.is_gift,
         ]
         for i in range(len(headers)):
             c = sheet.cell(row = count + 2 , column = i + 1)

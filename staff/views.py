@@ -10,13 +10,15 @@ import uuid
 from datetime import datetime, timedelta
 from django.utils.translation import gettext_lazy as _
 
-from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm
+from django_countries.fields import Country
+
+from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm
 from products.models import Product, Category
 from orders.models import Order, OrderLine
 from orders.forms import OrderAdminCheckoutForm
 from search.forms import ClientSearchForm, BookIsbnSearchForm, SearchForm
 from search.views import ProductSearch
-from account.models import CustomUser, Vendor
+from account.models import CustomUser, Vendor, Address
 from account.forms import VendorAddForm, AddressAddForm
 from tools.fa_to_en_num import number_converter
 
@@ -29,6 +31,7 @@ def sales(request):
     )
 
 
+@staff_member_required
 def orders(request, period=None, channel=None):
     # list of all approved or paid orders
     if channel=='all' and period == 'all':
@@ -37,8 +40,9 @@ def orders(request, period=None, channel=None):
 
     # 'mix' channel means we need the orders that should be collected
     if channel == 'mix' and period=='all':
-        orders = Order.objects.filter(
-            Q(status='approved') | Q(paid=True)).exclude(channel='cashier')
+        # orders = Order.objects.filter(
+        #     Q(status='approved') | Q(paid=True)).exclude(channel='cashier')
+        orders = Order.objects.exclude(channel='cashier').exclude(status='draft')
 
     # staff/orders/30/mix
     elif channel == 'mix' and period not in ('all', 'mix'):
@@ -61,6 +65,7 @@ def orders(request, period=None, channel=None):
     )
 
 
+@staff_member_required
 def order_detail_for_admin(request, pk):
     order = get_object_or_404(Order, pk=pk)
     return render(
@@ -69,6 +74,10 @@ def order_detail_for_admin(request, pk):
         {'order': order}
     )
 
+
+
+
+@staff_member_required
 def purchases(request):
     return render(
         request,
@@ -76,6 +85,7 @@ def purchases(request):
         {}
     )
 
+@staff_member_required
 def warehouse(request):
     return render(
         request,
@@ -83,6 +93,8 @@ def warehouse(request):
         {}
     )
 
+
+@staff_member_required
 def products(request):
     products_object = Product.objects.all()
 
@@ -117,6 +129,7 @@ def products(request):
     )
 
 
+@staff_member_required
 def product_create(request):
     if request.method == 'POST':
         form = ProductCreateForm(request.POST)
@@ -140,6 +153,7 @@ def product_create(request):
     )
 
 
+@staff_member_required
 def category_create(request):
     if request.method == 'POST':
         form = CategoryCreateForm(request.POST)
@@ -161,7 +175,7 @@ def category_create(request):
     )
 
 
-
+@staff_member_required
 def order_create(request):
     form = OrderCreateForm()
     return render(
@@ -170,6 +184,8 @@ def order_create(request):
         {'form': form}
     )
 
+
+@staff_member_required
 class ProductCreate(View):
     # template = 'staff/product_create.html'
 
@@ -210,6 +226,8 @@ class ProductCreate(View):
             {'form': form}
         )
 
+
+@staff_member_required
 def invoice_create(request, order_id=None, book_id=None, variation='main'):
     books = None
     results = None
@@ -270,6 +288,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
             order_line = OrderLine.objects.get(order=order, product=book, variation=variation)
             order_line.quantity += 1
             order_line.save()
+            order.save()
         else:
             order_line = OrderLine.objects.create(
                 order = order,
@@ -278,6 +297,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
                 price = price,
                 variation = variation,
             )
+            order.save()
 
             # Update product stock
             stock -= 1
@@ -314,7 +334,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
             price = price,
             variation = variation,
         )
-
+        order.save()
         # Update product stock
         stock -= 1
 
@@ -374,6 +394,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
                         order_line.quantity += 1
                         order_line.variation = 'main'
                         order_line.save()
+                        order.save()
 
                         # Update product stock
                         book.stock -=1
@@ -388,6 +409,8 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
                             price = book.price,
                             variation = 'main'
                         )
+                        order.save()
+
                         book.stock -= 1
                         book.save()
                     messages.success(request, _('Product is added to invoice'))
@@ -409,6 +432,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
     })
 
 
+@staff_member_required
 def invoice_checkout(request, order_id, client_id=None):
     order = Order.objects.get(pk=order_id)
     checkout_form = OrderAdminCheckoutForm(instance=order)
@@ -459,7 +483,11 @@ def invoice_checkout(request, order_id, client_id=None):
             order.status = 'approved'
             order.approver = request.user
             order.approved_date = datetime.now()
-            shipping_method = 'pickup'
+            if order.channel == 'cashier':
+                order.shipping_method = 'pickup'
+                order.shipping_status = 'full'
+            else:
+                order.shipping_method = 'post'
             order.save()
             messages.success(request, _('Order approved'))
             return redirect('staff:order_list', period='all', channel='all')
@@ -473,6 +501,8 @@ def invoice_checkout(request, order_id, client_id=None):
          'client': client,
     })
 
+
+@staff_member_required
 def orderline_update(request, order_id, orderline_id):
     update_form = InvoiceAddForm(initial={'quantity':"0"})
     order = Order.objects.get(pk=order_id)
@@ -516,6 +546,7 @@ def orderline_update(request, order_id, orderline_id):
                 product.save()
 
                 order_line.delete()
+                order.save()
                 return redirect('staff:invoice_create', order.id)
 
             if update_form.cleaned_data['quantity'] != 0:
@@ -551,11 +582,13 @@ def orderline_update(request, order_id, orderline_id):
 
                 order_line.quantity = update_form.cleaned_data['quantity']
                 order_line.save()
+                order.save()
 
 
             if update_form.cleaned_data['discount'] != 0:
                 order_line.discount = update_form.cleaned_data['discount']
                 order_line.save()
+                order.save()
 
             update_form = InvoiceAddForm()
             return redirect('staff:invoice_create', order.id)
@@ -567,6 +600,7 @@ def orderline_update(request, order_id, orderline_id):
     )
 
 
+@staff_member_required
 def draft_orders(request):
     # draft_orders = Order.objects.filter(status='draft').exclude(quantity=0)
     draft_orders = Order.objects.filter(status='draft')
@@ -578,6 +612,7 @@ def draft_orders(request):
     )
 
 
+@staff_member_required
 def category_list(request):
     main_categories = Category.objects.filter(active=True, parent_category=None)
 
@@ -588,6 +623,7 @@ def category_list(request):
     )
 
 
+@staff_member_required
 def sold_products(request):
     order_lines = OrderLine.objects.all()
     # order_lines = OrderLine.objects.all().values_list(product.id, flat=True)
@@ -610,6 +646,7 @@ def sold_products(request):
     )
 
 
+@staff_member_required
 def vendor_add(request):
     vendor_form = VendorAddForm()
     address_form = AddressAddForm(initial={'country':'IR', 'city':_('Tehran')})
@@ -646,6 +683,7 @@ def vendor_add(request):
     )
 
 
+@staff_member_required
 def vendor_edit(request, vendor_id):
     vendor = get_object_or_404(Vendor, pk=vendor_id)
     if request.method == 'POST':
@@ -667,6 +705,8 @@ def vendor_edit(request, vendor_id):
         'address_form': address_form}
     )
 
+
+@staff_member_required
 def vendor_list(request):
     vendors = Vendor.objects.all()
     return render(
@@ -676,6 +716,7 @@ def vendor_list(request):
     )
 
 
+@staff_member_required
 def purchase_create(request):
     search_form = SearchForm()
     return render(
@@ -685,6 +726,7 @@ def purchase_create(request):
     )
 
 
+@staff_member_required
 def product_update(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     if request.method == 'POST':
@@ -707,4 +749,55 @@ def product_update(request, product_id):
         'staff/product_create.html',
         {'form': form}
 
+    )
+
+
+@staff_member_required
+def order_shipping(request, order_id):
+    form_submit = False
+    order = get_object_or_404(Order, pk=order_id)
+    shipping_form = OrderShippingForm(instance=order)
+    if request.method == 'POST':
+        shipping_form = OrderShippingForm(data=request.POST, instance=order)
+        if shipping_form.is_valid():
+            shipping_form.save()
+            # order.status = shipping_form.cleaned_data['shipping_status']
+            # order.shipped_code = shipping_form.cleaned_data['shipped_code']
+            # order.save()
+            form_submit = True
+            messages.success(request, 'Shipping status is updated' )
+            messages.warning(request, 'Update the order list' )
+            # return redirect('staff:order_shipped', order.id)
+
+    else:
+        shipping_form = OrderShippingForm(instance=order)
+
+    return render(
+        request,
+        'staff/order_shipped.html',
+        {'order': order,
+        'shipping_form': shipping_form,
+        'form_submit': form_submit}
+    )
+
+
+@staff_member_required
+def order_list_by_country(request, country_code=None):
+    orders = Order.objects.all().exclude(channel='cashier').filter(Q(status='approved') | Q(status='paid'))
+
+    countries = set(list(filter(None, Address.objects.all().values_list('country', flat=True))))
+    
+
+    country = None
+    if country_code:
+        orders = orders.filter(billing_address__country=country_code)
+        country = Country(code=country_code)
+    return render(
+        request,
+        'staff/order_list_by_country.html',
+        {
+            'orders': orders,
+            'countries': countries,
+            'country': country,
+        }
     )

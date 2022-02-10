@@ -21,6 +21,14 @@ class Address(models.Model):
         max_length=256,
         blank=True
     )
+    house_number = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+    )
+    house_unit = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+    )
     postal_code = models.CharField(
         max_length=20,
         blank=True
@@ -40,13 +48,19 @@ class Address(models.Model):
         ordering = ("pk",)
 
     def __str__(self):
-        return self.name
+        try:
+            return self.name
+        except:
+            return ""
 
     def get_absolute_url(self):
         return reverse('address_detail',
                        args=[self.id])
     def get_full_address(self):
-        return f"{self.country.name} - {self.city} - {self.street_address_1}, {self.street_address_2} - {self.postal_code}"
+        try:
+            return f"{self.country.name} - {self.city} - {self.street_address_1}, {self.street_address_2} - {self.house_number} - {self.house_unit} - {self.postal_code}"
+        except:
+            return ""
 
 
 class CustomUser(AbstractUser):

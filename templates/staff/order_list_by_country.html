@@ -10,10 +10,15 @@
 <div class="container-fluid overflow-hidden">
   <div class="row">
     <div class="col-md-2">
-      {% include "staff/sidebar_staff.html" with barName="orders" %}
+      {% include "staff/sidebar_staff.html" with barName="sales" %}
     </div>
     <div class="col-md-10">
-      <h2>{% trans 'List of orders' %}</h2>
+      <h2>{% trans 'List of orders' %}{% if country %} <b>{{ country.name }}</b>{% endif %}</h2>
+      <ul>
+        {% for item in countries %}
+        <li><a href="{% url 'staff:order_list_by_country' country_code=item %}">{{ item }}</a></li>
+        {% endfor %}
+      </ul>
       <a href="{% url 'tools:order_export_excel' criteria='approved' %}" class="my-2"><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto"></a>
       <table class="table table-striped">
         <thead>
@@ -43,7 +48,7 @@
             <td>{{ order.approved_date | date:"d, M Y" }}</td>
             <td>{% if order.paid %}&#10004{% else %}&#10008{% endif %}</td>
             <td>{% if order.is_gift %}&#10004{% else %}&#10008{% endif %}</td>
-            <td>{% if order.shipping_status == "full" %}&#10004{% else %}<a href="{% url 'staff:order_shipped' order.id %}" onclick="return popitup('/staff/orders/shipping/{{ order.id }}')" class="btn btn-outline-secondary">{% if order.shipping_status == "semi" %}{% trans 'Semi shipped' %}{% else %}{% trans 'Ship order' %}{% endif %}</a>{% endif %}</td>
+            <td>{{ order.shipping_status }}</td>
 
           </tr>
           {% endfor %}
