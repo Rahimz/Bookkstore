@@ -16,6 +16,7 @@
       <th scope="col">{% trans 'Quantity' %}</th>
       <th scope="col"></th>
       <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
+      <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
       <th scope="col">%</th>
       <th scope="col">{% trans 'Discount' %}</th>
       <th scope="col">{% trans 'Cost' %} ({% trans 'Rial' %})</th>
@@ -32,6 +33,7 @@
       <td>{{ purchase_line.product.publisher }}</td>
       <td>{{ purchase_line.quantity }}</td>
       <td></td>
+      <td>{{ purchase_line.price | intcomma:False }}</td>
       <td>{{ purchase_line.get_cost | intcomma:False }}</td>
       <td>{{ purchase_line.purchase.vendor.overal_discount | intcomma:False }}</td>
       <td>{{ purchase_line.discount | intcomma:False }}</td>
