@@ -250,6 +250,38 @@ class Product(models.Model):
     stock_1 = models.IntegerField(
         default=0,
     )
+    price_2 = models.DecimalField(
+        max_digits=10,
+        decimal_places=0,
+        default=0
+    )
+    stock_2 = models.IntegerField(
+        default=0,
+    )
+    price_3 = models.DecimalField(
+        max_digits=10,
+        decimal_places=0,
+        default=0
+    )
+    stock_3 = models.IntegerField(
+        default=0,
+    )
+    price_4 = models.DecimalField(
+        max_digits=10,
+        decimal_places=0,
+        default=0
+    )
+    stock_4 = models.IntegerField(
+        default=0,
+    )
+    price_5 = models.DecimalField(
+        max_digits=10,
+        decimal_places=0,
+        default=0
+    )
+    stock_5 = models.IntegerField(
+        default=0,
+    )
     price_used = models.DecimalField(
         max_digits=10,
         decimal_places=0,
@@ -321,8 +353,22 @@ class Product(models.Model):
             elif len(self.isbn) == 10:
                 self.isbn_9 = self.isbn[:-1]
 
+        # check all stock to remove price from zero stock
+
         if self.stock_1 == 0:
             self.price_1 = 0
+
+        if self.stock_2 == 0:
+            self.price_2 = 0
+
+        if self.stock_3 == 0:
+            self.price_3 = 0
+
+        if self.stock_4 == 0:
+            self.price_4 = 0
+
+        if self.stock_5 == 0:
+            self.price_5 = 0
 
         if self.stock_used == 0:
             self.price_used = 0

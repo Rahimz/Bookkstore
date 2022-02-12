@@ -22,11 +22,48 @@
           <td>{{ product.price | intcomma:False }}</td>
           <td>{{ product.stock }}</td>
         </tr>
+
+        {% if product.stock_1 %}
         <tr>
           <td>{%trans 'Price variation 1' %}</td>
           <td>{{ product.price_1 | intcomma:False }}</td>
           <td>{{ product.stock_1 }}</td>
         </tr>
+        {% endif %}
+
+        {% if product.stock_2 %}
+        <tr>
+          <td>{%trans 'Price variation 2' %}</td>
+          <td>{{ product.price_2 | intcomma:False }}</td>
+          <td>{{ product.stock_2 }}</td>
+        </tr>
+        {% endif %}
+
+        {% if product.stock_3 %}
+        <tr>
+          <td>{%trans 'Price variation 3' %}</td>
+          <td>{{ product.price_3 | intcomma:False }}</td>
+          <td>{{ product.stock_3 }}</td>
+        </tr>
+        {% endif %}
+
+        {% if product.stock_4 %}
+        <tr>
+          <td>{%trans 'Price variation 4' %}</td>
+          <td>{{ product.price_4 | intcomma:False }}</td>
+          <td>{{ product.stock_4 }}</td>
+        </tr>
+        {% endif %}
+
+        {% if product.stock_5 %}
+        <tr>
+          <td>{%trans 'Price variation 5' %}</td>
+          <td>{{ product.price_5 | intcomma:False }}</td>
+          <td>{{ product.stock_5 }}</td>
+        </tr>
+        {% endif %}
+
+
         <tr>
           <td>{%trans 'Price used' %}</td>
           <td>{{ product.price_used | intcomma:False }}</td>
@@ -49,7 +86,7 @@
         {% csrf_token %}
         {{ price_form | crispy }}
         <input type="submit" name="" value="{% trans 'Submit' %} " class="btn btn-outline-success my-3" >
-      </form>      
+      </form>
       {% endif %}
 
 

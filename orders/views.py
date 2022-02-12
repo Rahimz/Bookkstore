@@ -138,6 +138,22 @@ def purchase_details(request, purchase_id, product_id=None, variation='new main'
                     'price': product.price_1,
                     'stock': product.stock_1,
                 },
+                'v2':{
+                    'price': product.price_2,
+                    'stock': product.stock_2,
+                },
+                'v3':{
+                    'price': product.price_3,
+                    'stock': product.stock_3,
+                },
+                'v4':{
+                    'price': product.price_4,
+                    'stock': product.stock_4,
+                },
+                'v5':{
+                    'price': product.price_5,
+                    'stock': product.stock_5,
+                },
             },
             'used': {
                 'main': {
@@ -148,7 +164,7 @@ def purchase_details(request, purchase_id, product_id=None, variation='new main'
         }
 
         price = variation_dict[variation_list[0]][variation_list[1]]['price']
-        price = variation_dict[variation_list[0]][variation_list[1]]['stock']
+        stock = variation_dict[variation_list[0]][variation_list[1]]['stock']
 
         if (product.id, variation) in product_ids:
             purchase_line = PurchaseLine.objects.get(
@@ -255,8 +271,29 @@ def purchase_checkout(request, purchase_id):
 
         for item in purchase.lines.all():
             product = item.product
-            product.stock += item.quantity
+            if item.variation in ('main', 'new main'): # we have some old row in purchase lines
+                product.stock += item.quantity
+
+            elif item.variation in ('v1', 'new v1'): # we have some old row in purchase lines
+                product.stock_1 += item.quantity
+
+            elif item.variation == 'new v2':
+                product.stock_2 += item.quantity
+
+            elif item.variation == 'new v3':
+                product.stock_3 += item.quantity
+
+            elif item.variation == 'new v3':
+                product.stock_4 += item.quantity
+
+            elif item.variation == 'new v4':
+                product.stock_5 += item.quantity
+
+            elif item.variation in ('used', 'used main'): # we have some old row in purchase lines
+                product.stock_used += item.quantity
+
             product.save()
+
         purchase.approver = request.user
         purchase.approved_date = datetime.now()
         purchase.status = 'approved'
@@ -275,15 +312,17 @@ def purchase_checkout(request, purchase_id):
 def price_management(request, product_id, purchase_id):
     product = get_object_or_404(Product, pk=product_id)
     purchase = get_object_or_404(Purchase, pk=purchase_id)
-
+    new_prices = [product.price, product.price_1, product.price_2, product.price_3, product.price_4, product.price_5,]
     if request.method == 'POST':
         price_form = PriceAddForm(data=request.POST)
         if price_form.is_valid():
             new_price = price_form.cleaned_data['price']
             new_variation = price_form.cleaned_data['variation'] #'new' , 'used'
             quantity = price_form.cleaned_data['quantity']
-            if has_empty_price_row(product=product, variation=new_variation):
+            if new_price in new_prices:
+                messages.error(request, _('There is an equal price in the list'))
 
+            if has_empty_price_row(product=product, variation=new_variation) and not (new_price in new_prices):
 
                 add_price(
                     product_id=product.id,
@@ -301,8 +340,7 @@ def price_management(request, product_id, purchase_id):
 
 
             else:
-                messages.error(request, _(
-                    'There is not empty price row for this product variation'))
+                messages.error(request, _('There is not empty price row for this product variation'))
 
     else:
         price_form = PriceAddForm()
