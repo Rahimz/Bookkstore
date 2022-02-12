@@ -321,6 +321,12 @@ class Product(models.Model):
             elif len(self.isbn) == 10:
                 self.isbn_9 = self.isbn[:-1]
 
+        if self.stock_1 == 0:
+            self.price_1 = 0
+
+        if self.stock_used == 0:
+            self.price_used = 0
+
         super(Product, self).save(*args, **kwargs)
 
     def __str__(self):

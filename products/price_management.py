@@ -40,6 +40,22 @@ def has_empty_price_row(product, variation):
                 return i
     return result
 
+def sort_price(product):
+    p1, s1 = product.price, product.stock
+    p2, s2 = product.price_1, product.stock_1
+    prices = [(p1, s1), (p2, s2)]
+
+    prices.sort(key=lambda x : x[0], reverse=True)
+
+    product.price = prices[0][0]
+    product.stock = prices[0][1]
+
+    product.price_1 = prices[1][0]
+    product.stock_1 = prices[1][1]
+
+    product.save()
+
+
 def add_price(price, stock, variation, product_id):
     product = get_object_or_404(Product, pk=product_id)
     # print(price, stock, variation, product_id)
@@ -87,9 +103,4 @@ def add_price(price, stock, variation, product_id):
     product.has_other_prices = True
     product.save()
 
-
-def sort_price(product_id):
-    pass
-
-def find_empty_price_row(product):
-    pass
+    sort_price(product)
