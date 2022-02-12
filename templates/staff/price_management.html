@@ -1,0 +1,74 @@
+{#{% extends "_base_popup.html" %}#}
+{% extends "_base.html" %}
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Order shipped' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+
+    <div class="col-md-12">
+      <h2>{% trans 'Price variations' %} : {{ product.name }} - {{ product.isbn }}</h2>
+      <table class="table table-striped">
+        <tr>
+          <td>{%trans 'Main price' %}</td>
+          <td>{{ product.price | intcomma:False }}</td>
+          <td>{{ product.stock }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Price variation 1' %}</td>
+          <td>{{ product.price_1 | intcomma:False }}</td>
+          <td>{{ product.stock_1 }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Price used' %}</td>
+          <td>{{ product.price_used | intcomma:False }}</td>
+          <td>{{ product.stock_used }}</td>
+        </tr>
+      </table>
+      {#<!--  if form is submitted  we will close it automatically--> #}
+      {% if form_submit %}
+      <script type="text/javascript">
+
+          setTimeout(function() {
+            window.close();
+          }, 4000);
+
+      </script>
+
+      {% else %}
+      <h3 class="mt-4">{% trans 'Add a price variation' %}</h3>
+      <form class="w-50" method="post" action=".">
+        {% csrf_token %}
+        {{ price_form | crispy }}
+        <input type="submit" name="" value="{% trans 'Submit' %} " class="btn btn-outline-success my-3" >
+      </form>
+
+      <a href="{% url 'orders:purchase_details' purchase_id=purchase.id %}" class="btn btn-outline-success my-3">{% trans 'Back to purchase' %}</a>
+      {% endif %}
+
+
+
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+  function xSubmit(frm) {
+    $.post($(frm).attr('action'), $(frm).serializeArray());
+    alert("The request has been submitted.");
+    window.close();
+  }
+</script>
+{% endblock %}

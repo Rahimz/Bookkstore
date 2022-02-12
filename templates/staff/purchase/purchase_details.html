@@ -52,7 +52,7 @@
             class="btn btn-sm btn-warning">{{ result.price_used | intcomma:False }}</a>
           {% endif %}
           {% endif %}
-          <a href="#" class="btn btn-sm btn-success m-1 fs-10 text-right">...</a>
+          <a href="{% url 'orders:price_management' product_id=result.id purchase_id=purchase.id %}" class="btn btn-sm btn-success m-1 fs-10 text-right">...</a>
         </div>
         {% endfor %}
 

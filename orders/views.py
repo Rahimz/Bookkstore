@@ -6,12 +6,13 @@ from django.utils.translation import gettext_lazy as _
 
 
 from .models import OrderLine, Purchase, PurchaseLine
-from .forms import OrderCreateForm, PurchaseCreateForm, PurchaseLineAddForm
+from .forms import OrderCreateForm, PurchaseCreateForm, PurchaseLineAddForm, PriceAddForm
 from cart.cart import Cart
 from discounts.forms import CouponApplyForm
 from search.forms import SearchForm
 from search.views import ProductSearch
 from products.models import Product
+from products.price_management import add_price, has_empty_price_row
 
 @login_required
 def order_create(request):
@@ -236,4 +237,36 @@ def purchase_checkout(request, purchase_id):
         request,
         'staff/purchase/purchase_checkout.html',
         {'purchase': purchase}
+    )
+
+
+def price_management(request, product_id, purchase_id):
+    product = get_object_or_404(Product, pk=product_id)
+    purchase = get_object_or_404(Purchase, pk=purchase_id)
+    if request.method == 'POST':
+        price_form = PriceAddForm(data=request.POST)
+        if price_form.is_valid():
+            new_price = price_form.cleaned_data['price']
+            new_variation = price_form.cleaned_data['variation']
+            quantity = price_form.cleaned_data['quantity']
+            if has_empty_price_row(product=product, variation=new_variation):
+                add_price(product_id=product.id, variation=new_variation, price=new_price, stock=quantity)
+                messages.success(request, _('Price added'))
+                return redirect('orders:price_management', product_id=product.id , purchase_id=purchase.id)
+                return redirect('orders:purchase_details', purchase.id)
+                # variation we passed for add it to purchase line is not the same with form variation
+                # return redirect('orders:purchase_add_line_v', purchase_id=purchase.id, variation=new_variation, product_id=product.id)
+            else:
+                messages.error(request, _('There is not empty price row for this product variation'))
+
+    else:
+        price_form = PriceAddForm()
+    return render(
+        request,
+        'staff/price_management.html',
+        {
+            'product': product,
+            'price_form': price_form,
+            'purchase': purchase,
+        }
     )
