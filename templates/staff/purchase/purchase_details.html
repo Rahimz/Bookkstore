@@ -44,15 +44,31 @@
           </a>
           {% if result.has_other_prices %}
           {% if result.stock_1 %}
-          <a href="{% url 'orders:purchase_add_line_v' purchase_id=purchase.id product_id=result.id variation='v1' %}"
+          <a href="{% url 'orders:purchase_add_line_v' purchase_id=purchase.id product_id=result.id variation='new v1' %}"
             class="btn btn-sm btn-success">{{ result.price_1 | intcomma:False }}</a>
           {% endif %}
+          {% if result.stock_2 %}
+          <a href="{% url 'orders:purchase_add_line_v' purchase_id=purchase.id product_id=result.id variation='new v2' %}"
+            class="btn btn-sm btn-success">{{ result.price_2 | intcomma:False }}</a>
+          {% endif %}
+          {% if result.stock_3 %}
+          <a href="{% url 'orders:purchase_add_line_v' purchase_id=purchase.id product_id=result.id variation='new v3' %}"
+            class="btn btn-sm btn-success">{{ result.price_3 | intcomma:False }}</a>
+          {% endif %}
+          {% if result.stock_4 %}
+          <a href="{% url 'orders:purchase_add_line_v' purchase_id=purchase.id product_id=result.id variation='new v4' %}"
+            class="btn btn-sm btn-success">{{ result.price_4 | intcomma:False }}</a>
+          {% endif %}
+          {% if result.stock_5 %}
+          <a href="{% url 'orders:purchase_add_line_v' purchase_id=purchase.id product_id=result.id variation='new v5' %}"
+            class="btn btn-sm btn-success">{{ result.price_5 | intcomma:False }}</a>
+          {% endif %}
           {% if result.stock_used %}
-          <a href="{% url 'orders:purchase_add_line_v' purchase_id=purchase.id product_id=result.id variation='used' %}"
+          <a href="{% url 'orders:purchase_add_line_v' purchase_id=purchase.id product_id=result.id variation='used main' %}"
             class="btn btn-sm btn-warning">{{ result.price_used | intcomma:False }}</a>
           {% endif %}
           {% endif %}
-          <a href="#" class="btn btn-sm btn-success m-1 fs-10 text-right">...</a>
+          <a href="{% url 'orders:price_management' product_id=result.id purchase_id=purchase.id %}" class="btn btn-sm btn-success m-1 fs-10 text-right">...</a>
         </div>
         {% endfor %}
 

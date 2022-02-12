@@ -54,3 +54,13 @@ class PurchaseLineAddForm(forms.ModelForm):
     class Meta:
         model = PurchaseLine
         exclude = ['vendor']
+
+
+class PriceAddForm(forms.Form):
+    STATUS_CHOICES = (
+        ('new', _('New')),
+        ('used', _('Used')),
+    )
+    variation = forms.ChoiceField(choices = STATUS_CHOICES)
+    price = forms.DecimalField(max_digits=10, decimal_places=0)
+    quantity = forms.IntegerField()

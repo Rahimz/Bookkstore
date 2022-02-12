@@ -6,12 +6,14 @@ from django.utils.translation import gettext_lazy as _
 
 
 from .models import OrderLine, Purchase, PurchaseLine
-from .forms import OrderCreateForm, PurchaseCreateForm, PurchaseLineAddForm
+from .forms import OrderCreateForm, PurchaseCreateForm, PurchaseLineAddForm, PriceAddForm
 from cart.cart import Cart
 from discounts.forms import CouponApplyForm
 from search.forms import SearchForm
 from search.views import ProductSearch
 from products.models import Product
+from products.price_management import add_price, has_empty_price_row, get_price_index
+
 
 @login_required
 def order_create(request):
@@ -70,7 +72,8 @@ def purchase_create(request):
             if not purchase_form.cleaned_data['deadline_days']:
                 purchase.payment_date = datetime.now() + timedelta(days=1)
             else:
-                purchase.payment_date = datetime.now() + timedelta(days=purchase_form.cleaned_data['deadline_days'])
+                purchase.payment_date = datetime.now(
+                ) + timedelta(days=purchase_form.cleaned_data['deadline_days'])
 
             purchase.deadline_days = purchase_form.cleaned_data['deadline_days']
             purchase.save()
@@ -96,38 +99,76 @@ def purchase_list(request):
     )
 
 
-def purchase_details(request, purchase_id, product_id=None, variation='main'):
+def purchase_details(request, purchase_id, product_id=None, variation='new main'):
     results = None
+    variation_list = variation.split()
+
+
     search_form = SearchForm()
     purchase = get_object_or_404(Purchase, pk=purchase_id)
 
     # product_ids = purchase.lines.values_list('id', flat=True)
     # product_ids = [item.product.pk for item in purchase.lines.all()]
-    product_ids = [(item.product.pk, item.variation) for item in purchase.lines.all()]
+    product_ids = [(item.product.pk, item.variation)
+                   for item in purchase.lines.all()]
 
     product = get_object_or_404(Product, pk=product_id) if product_id else None
 
-
-
     if product:
+        # variation_dict = {
+        #     'main': {
+        #         'price': product.price,
+        #         'stock': product.stock,
+        #     },
+        #     'v1': {
+        #         'price': product.price_1,
+        #         'stock': product.stock_1,
+        #     },
+        #     'used': {
+        #         'price': product.price_used,
+        #         'stock': product.stock_used, }
+        # }
         variation_dict = {
-            'main': {
-                'price': product.price,
-                'stock': product.stock,
-            },
-            'v1': {
-                'price': product.price_1,
-                'stock': product.stock_1,
+            'new': {
+                'main': {
+                    'price': product.price,
+                    'stock': product.stock,
+                },
+                'v1': {
+                    'price': product.price_1,
+                    'stock': product.stock_1,
+                },
+                'v2':{
+                    'price': product.price_2,
+                    'stock': product.stock_2,
+                },
+                'v3':{
+                    'price': product.price_3,
+                    'stock': product.stock_3,
+                },
+                'v4':{
+                    'price': product.price_4,
+                    'stock': product.stock_4,
+                },
+                'v5':{
+                    'price': product.price_5,
+                    'stock': product.stock_5,
+                },
             },
             'used': {
-                'price': product.price_used,
-                'stock': product.stock_used,}
+                'main': {
+                    'price': product.price_used,
+                    'stock': product.stock_used
+                },
+            }
         }
-        price = variation_dict[variation]['price']
-        stock = variation_dict[variation]['stock']
+
+        price = variation_dict[variation_list[0]][variation_list[1]]['price']
+        stock = variation_dict[variation_list[0]][variation_list[1]]['stock']
 
         if (product.id, variation) in product_ids:
-            purchase_line = PurchaseLine.objects.get(purchase=purchase, product=product, variation=variation)
+            purchase_line = PurchaseLine.objects.get(
+                purchase=purchase, product=product, variation=variation)
             purchase_line.quantity += 1
             purchase_line.save()
             purchase.save()
@@ -136,20 +177,13 @@ def purchase_details(request, purchase_id, product_id=None, variation='main'):
             return redirect('orders:purchase_details', purchase.id)
         else:
             PurchaseLine.objects.create(
-                purchase = purchase,
-                product = product,
-                price = price,
-                quantity = 1,
-                variation = variation,
-                discount = price * purchase.vendor.overal_discount / 100,
+                purchase=purchase,
+                product=product,
+                price=price,
+                quantity=1,
+                variation=variation,
+                discount=price * purchase.vendor.overal_discount / 100,
             )
-            stock += 1
-            if variation == 'main':
-                product.stock = stock
-            elif variation  == 'v1':
-                product.stock_1 = stock
-            elif variation == 'used':
-                product.stock_used = stock
 
             purchase.save()
 
@@ -161,7 +195,8 @@ def purchase_details(request, purchase_id, product_id=None, variation='main'):
         search_form = SearchForm(data=request.POST)
         if search_form.is_valid():
             search_query = search_form.cleaned_data['query']
-            results = ProductSearch(object=Product, query=search_query).order_by('name', 'publisher')
+            results = ProductSearch(
+                object=Product, query=search_query).order_by('name', 'publisher')
 
         # if line_form.is_valid():
         #     new_line = line_form.save(commit=False)
@@ -194,11 +229,13 @@ def purchase_update(request, purchase_id):
     purchase = get_object_or_404(Purchase, pk=purchase_id)
     purchase_form = PurchaseCreateForm(instance=purchase)
     if request.method == 'POST':
-        purchase_form = PurchaseCreateForm(data=request.POST, instance=purchase)
+        purchase_form = PurchaseCreateForm(
+            data=request.POST, instance=purchase)
         if purchase_form.is_valid():
             purchase = purchase_form.save(commit=False)
             purchase.registrar = request.user
-            purchase.payment_date = datetime.now() + timedelta(days=purchase_form.cleaned_data['deadline_days'])
+            purchase.payment_date = datetime.now(
+            ) + timedelta(days=purchase_form.cleaned_data['deadline_days'])
 
             purchase.save()
 
@@ -220,10 +257,43 @@ def purchase_checkout(request, purchase_id):
 
     product_ids = [item.product.pk for item in purchase.lines.all()]
     if purchase.status == 'draft':
+
+        # TODO: we should check which stock should be updated
+        # if variation[0] == 'new':
+        #     if variation[1] == 'main':
+        #         product.stock = stock
+        #     elif variation[1] == 'v1':
+        #         product.stock_1 = stock
+        # elif variation[0] == 'used':
+        #     if variation[1] == 'main':
+        #         product.stock_used = stock
+
+
         for item in purchase.lines.all():
             product = item.product
-            product.stock += item.quantity
+            if item.variation in ('main', 'new main'): # we have some old row in purchase lines
+                product.stock += item.quantity
+
+            elif item.variation in ('v1', 'new v1'): # we have some old row in purchase lines
+                product.stock_1 += item.quantity
+
+            elif item.variation == 'new v2':
+                product.stock_2 += item.quantity
+
+            elif item.variation == 'new v3':
+                product.stock_3 += item.quantity
+
+            elif item.variation == 'new v3':
+                product.stock_4 += item.quantity
+
+            elif item.variation == 'new v4':
+                product.stock_5 += item.quantity
+
+            elif item.variation in ('used', 'used main'): # we have some old row in purchase lines
+                product.stock_used += item.quantity
+
             product.save()
+
         purchase.approver = request.user
         purchase.approved_date = datetime.now()
         purchase.status = 'approved'
@@ -236,4 +306,50 @@ def purchase_checkout(request, purchase_id):
         request,
         'staff/purchase/purchase_checkout.html',
         {'purchase': purchase}
+    )
+
+
+def price_management(request, product_id, purchase_id):
+    product = get_object_or_404(Product, pk=product_id)
+    purchase = get_object_or_404(Purchase, pk=purchase_id)
+    new_prices = [product.price, product.price_1, product.price_2, product.price_3, product.price_4, product.price_5,]
+    if request.method == 'POST':
+        price_form = PriceAddForm(data=request.POST)
+        if price_form.is_valid():
+            new_price = price_form.cleaned_data['price']
+            new_variation = price_form.cleaned_data['variation'] #'new' , 'used'
+            quantity = price_form.cleaned_data['quantity']
+            if new_price in new_prices:
+                messages.error(request, _('There is an equal price in the list'))
+
+            if has_empty_price_row(product=product, variation=new_variation) and not (new_price in new_prices):
+
+                add_price(
+                    product_id=product.id,
+                    variation=new_variation,
+                    price=new_price,
+                    stock=quantity)
+
+                messages.success(request, _('Price added'))
+                # return redirect('orders:price_management', product_id=product.id , purchase_id=purchase.id)
+                get_variation = get_price_index(
+                    product_id=product.id, variation=new_variation, price=new_price)
+                # messages.success(request, f"{new_variation} {get_variation}")
+                # return redirect('orders:price_management', purchase_id=purchase.id, product_id=product.id)
+                return redirect('orders:purchase_add_line_v', purchase_id=purchase.id, product_id=product.id, variation=f"{new_variation} {get_variation}")
+
+
+            else:
+                messages.error(request, _('There is not empty price row for this product variation'))
+
+    else:
+        price_form = PriceAddForm()
+    return render(
+        request,
+        'staff/price_management.html',
+        {
+            'product': product,
+            'price_form': price_form,
+            'purchase': purchase,
+        }
     )
