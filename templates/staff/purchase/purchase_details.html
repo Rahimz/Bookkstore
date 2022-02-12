@@ -44,11 +44,11 @@
           </a>
           {% if result.has_other_prices %}
           {% if result.stock_1 %}
-          <a href="{% url 'orders:purchase_add_line_v' purchase_id=purchase.id product_id=result.id variation='v1' %}"
+          <a href="{% url 'orders:purchase_add_line_v' purchase_id=purchase.id product_id=result.id variation='new v1' %}"
             class="btn btn-sm btn-success">{{ result.price_1 | intcomma:False }}</a>
           {% endif %}
           {% if result.stock_used %}
-          <a href="{% url 'orders:purchase_add_line_v' purchase_id=purchase.id product_id=result.id variation='used' %}"
+          <a href="{% url 'orders:purchase_add_line_v' purchase_id=purchase.id product_id=result.id variation='used main' %}"
             class="btn btn-sm btn-warning">{{ result.price_used | intcomma:False }}</a>
           {% endif %}
           {% endif %}

@@ -31,14 +31,14 @@ def has_empty_price_row(product, variation):
             }
         }
     }
-    result = None
+
     for key in variations.keys():
-        # print(key, item)
+        # print("Has empty price row", key,)
         for i in variations[key].keys():
             if variations[variation][i]['price'] == 0:
-                result = i
+                # print('the row that is empty: ', f"{variation} {i}")
                 return i
-    return result
+    return None
 
 def sort_price(product):
     p1, s1 = product.price, product.stock
@@ -81,6 +81,7 @@ def add_price(price, stock, variation, product_id):
 
 
     new_var = has_empty_price_row(product, variation)
+    print('new_var', new_var)
     if variation == 'new':
         if new_var == 'main':
             product.price = price
@@ -104,3 +105,30 @@ def add_price(price, stock, variation, product_id):
     product.save()
 
     sort_price(product)
+
+def get_price_index(product_id, variation, price):
+    product = get_object_or_404(Product, pk=product_id)
+    variations = {
+        'new':{
+            'main':{
+                'price': product.price,
+                 'stock': product.stock,
+            },
+            'v1':{
+                'price': product.price_1,
+                'stock': product.stock_1,
+            },
+        },
+        'used':{
+            'main':{
+                'price': product.price_used,
+                'stock': product.stock_used,
+            }
+        }
+    }
+    print(variations[variation])
+    for i in variations[variation].keys():
+        print(variation, i, variations[variation][i], price)
+
+        if variations[variation][i]['price'] == price:
+            return i

@@ -49,9 +49,7 @@
         {% csrf_token %}
         {{ price_form | crispy }}
         <input type="submit" name="" value="{% trans 'Submit' %} " class="btn btn-outline-success my-3" >
-      </form>
-
-      <a href="{% url 'orders:purchase_details' purchase_id=purchase.id %}" class="btn btn-outline-success my-3">{% trans 'Back to purchase' %}</a>
+      </form>      
       {% endif %}
 
 
