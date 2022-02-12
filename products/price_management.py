@@ -81,7 +81,7 @@ def add_price(price, stock, variation, product_id):
 
 
     new_var = has_empty_price_row(product, variation)
-    print('new_var', new_var)
+    # print('new_var', new_var)
     if variation == 'new':
         if new_var == 'main':
             product.price = price
@@ -128,7 +128,7 @@ def get_price_index(product_id, variation, price):
     }
     print(variations[variation])
     for i in variations[variation].keys():
-        print(variation, i, variations[variation][i], price)
+        # print(variation, i, variations[variation][i], price)
 
         if variations[variation][i]['price'] == price:
             return i
