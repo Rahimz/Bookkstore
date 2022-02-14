@@ -75,16 +75,6 @@ def order_detail_for_admin(request, pk):
     )
 
 
-
-
-@staff_member_required
-def purchases(request):
-    return render(
-        request,
-        'staff/purchases.html',
-        {}
-    )
-
 @staff_member_required
 def warehouse(request):
     return render(
@@ -717,16 +707,6 @@ def vendor_list(request):
 
 
 @staff_member_required
-def purchase_create(request):
-    search_form = SearchForm()
-    return render(
-        request,
-        'staff/purchase_create.html',
-        {'search_form': search_form}
-    )
-
-
-@staff_member_required
 def product_update(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     if request.method == 'POST':
@@ -786,7 +766,7 @@ def order_list_by_country(request, country_code=None):
     orders = Order.objects.all().exclude(channel='cashier').filter(Q(status='approved') | Q(status='paid'))
 
     countries = set(list(filter(None, Address.objects.all().values_list('country', flat=True))))
-    
+
 
     country = None
     if country_code:

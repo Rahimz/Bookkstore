@@ -1,0 +1,60 @@
+{#{% extends "_base_popup.html" %}#}
+{% extends "_base.html" %}
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Price management' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+
+    <div class="col-md-12">
+      <h2>{% trans 'Purchaseline' %}: purchase</h2>
+
+      {#<!--  if form is submitted  we will close it automatically--> #}
+      {% if form_submit %}
+      <script type="text/javascript">
+
+          setTimeout(function() {
+            window.close();
+          }, 4000);
+
+      </script>
+
+      {% else %}
+      <h3 class="mt-4">{% trans 'Product' %} : {{ product.name }} - {{ product.isbn }} </h3>
+      <h4>{% trans 'Price' %}: {{ price }} - {% trans 'Stock in time' %}: {{ stock }}</h4>
+      <form class="" method="post" action=".">
+        {% csrf_token %}
+        {{ purchase_update_form | crispy }}
+        <input type="submit" name="" value="{% trans 'Submit' %} " class="btn btn-outline-success my-3" >
+      </form>
+      {% if purchaseline_id %}
+      <a href="{% url 'orders:purchaseline_remove' purchaseline_id %}" class="btn btn-danger">{% trans 'Remove this purchase row' %}</a>
+      {% endif %}
+      {% endif %}
+
+
+
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+  function xSubmit(frm) {
+    $.post($(frm).attr('action'), $(frm).serializeArray());
+    alert("The request has been submitted.");
+    window.close();
+  }
+</script>
+{% endblock %}

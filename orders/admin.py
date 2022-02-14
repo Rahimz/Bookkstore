@@ -45,6 +45,6 @@ class PurchaseAdmin(admin.ModelAdmin):
 class PurchaseLineAdmin(admin.ModelAdmin):
     list_display = [
         'id', 'purchase', 'product',
-        'price', 'quantity', 'variation',
+        'price', 'quantity', 'discount', 'discount_percent', 'variation',
     ]
     search_fields = ['purchase', 'product', 'variation']

@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator
 from decimal import Decimal
 from datetime import datetime
+from math import trunc
 
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -441,17 +442,31 @@ class PurchaseLine(models.Model):
     )
 
     class Meta:
-        ordering = ("-product",)
+        ordering = ("-pk", "product")
 
 
     def __str__(self):
         return str(self.id)
 
+    def save(self, *args, **kwargs):
+        if self.discount == 0 and self.discount_percent != 0:
+            self.discount =  self.price * self.discount_percent / 100
+        elif self.discount and not self.discount_percent:
+            self.discount_percent = trunc(self.discount / self.price * 100)
+        elif self.discount and self.discount_percent:
+            if trunc(self.discount / self.price * 100) != self.discount_percent:
+                self.discount_percent = trunc(self.discount / self.price * 100)
+
+        super(PurchaseLine, self).save(*args, **kwargs)
+
     def get_cost(self):
         return self.price * self.quantity
 
     def get_cost_after_discount(self):
-        return self.price * self.quantity - self.discount
+        if self.discount_percent:
+            return self.get_cost() - self.get_cost() * self.discount_percent / 100
+        else:
+            return (self.price - self.discount) * self.quantity
 
     def get_weight(self):
         return self.product.weight * self.quantity

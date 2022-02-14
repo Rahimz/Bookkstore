@@ -15,7 +15,7 @@
       {% include "staff/sidebar_staff.html" with barName="purchase" %}
     </div>
     <div class="col-md-10">
-      <h3 class="bg-success rounded p-2 text-light">{% trans 'Purchase' %} {%trans 'number '%}{{ purchase.id }} {{ purchase.vendor }} {% trans 'is added to product stock' %}</h3>
+      <h3 class="bg-success rounded p-2 text-light">{% trans 'Purchase' %} <a href="{% url 'orders:purchase_details' purchase.id %}">{%trans 'number '%}{{ purchase.id }}</a> {{ purchase.vendor }} {% trans 'is added to product stock' %}</h3>
       <div class="">
         {% include 'staff/purchase/_purchase_details_block.html' %}
       </div>
