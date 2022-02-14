@@ -12,7 +12,11 @@ urlpatterns = [
     path('purchase/edit/<int:purchase_id>/', views.purchase_update, name='purchase_update'), # for updating main purchase model
 
     path('purchase/<int:purchase_id>/', views.purchase_details, name='purchase_details'),
-    path('purchase/<int:purchase_id>/add/<int:product_id>/', views.purchase_details, name='purchase_add_line'),
+    # path('purchase/<int:purchase_id>/add/<int:product_id>/', views.purchase_details, name='purchase_add_line'),
+    path('purchase/add-line/<int:purchase_id>/<int:product_id>/<str:variation>/', views.purchase_line_add, name='purchaseline_add'),
+    path('purchase/add-line/<int:purchase_id>/<int:product_id>/<str:variation>/<int:purchaseline_id>/', views.purchase_line_add, name='purchaseline_update'),
+    path('purchaseline/remove/<int:purchaseline_id>/', views.purchaseline_remove, name='purchaseline_remove'),
+
     path('purchase/<int:purchase_id>/add/<int:product_id>/<str:variation>/', views.purchase_details, name='purchase_add_line_v'),
 
     path('purchase/price-management/<int:purchase_id>/<int:product_id>/', views.price_management, name='price_management'),

@@ -39,7 +39,8 @@
         {% for result in results %}
         <div class="col-md-4 my-4">
 
-          <a href="{% url 'orders:purchase_add_line' purchase_id=purchase.id product_id=result.id %}" class="btn btn-sm btn-success m-1 fs-10 text-right">
+          {# <a href="{% url 'orders:purchase_add_line' purchase_id=purchase.id product_id=result.id %}" class="btn btn-sm btn-success m-1 fs-10 text-right"> #}
+          <a href="{% url 'orders:purchaseline_add' purchase_id=purchase.id product_id=result.id variation='new main'%}" class="btn btn-sm btn-success m-1 fs-10 text-right">
             {{ result.name | truncatechars:30 }} - {{ result.publisher | truncatechars:15 }} - {{ result.size }} - {{ result.cover_type }} - {% trans 'Quantity' %} {{ result.stock}} - {{ result.price | intcomma:False }}
           </a>
           {% if result.has_other_prices %}
@@ -77,7 +78,67 @@
       {% endif %} {# end of draft purchase block #}
 
       <div class="">
-        {% include 'staff/purchase/_purchase_list_block.html' %}
+        {# {% include 'staff/purchase/_purchase_list_block.html' %} #}
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">{% trans 'Image' %}</th>
+              <th scope="col">{% trans 'isbn' %}</th>
+              <th scope="col">{% trans 'Name' %}</th>
+              <th scope="col">{% trans 'Author' %}</th>
+              <th scope="col">{% trans 'Publisher' %}</th>
+              <th scope="col">{% trans 'Quantity' %}</th>
+              <th scope="col"></th>
+              <th scope="col">{% trans 'Price' %}</th>
+              <th scope="col">{% trans 'Sum' %}</th>
+              <th scope="col">{% trans 'Discount' %} %</th>
+              {# <th scope="col">{% trans 'Discount' %}</th> #}
+              <th scope="col">{% trans 'Cost' %} ({% trans 'Rial' %})</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for purchase_line in purchase_lines %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="60px" height="auto"></td>
+              <td>{{ purchase_line.product.isbn }}</td>
+              <td><a href="{% url 'orders:purchaseline_update' purchase_id=purchase.id product_id=purchase_line.product.id variation=purchase_line.variation purchaseline_id=purchase_line.id %}">{{ purchase_line.product.name }}</a></td>
+              <td>{{ purchase_line.product.author }}</td>
+              <td>{{ purchase_line.product.publisher }}</td>
+              <td>{{ purchase_line.quantity }}</td>
+              <td></td>
+              <td>{{ purchase_line.price | intcomma:False }}</td>
+              <td>{{ purchase_line.get_cost | intcomma:False }}</td>
+              <td>{{ purchase_line.discount_percent | intcomma:False }}</td>
+              {# <td>{{ purchase_line.discount | intcomma:False }}</td> #}{# <!-- TODO: PurchaseLine discount does not calculate correctly --> #}
+              <td>{{ purchase_line.get_cost_after_discount | intcomma:False }}</td>
+            </tr>
+            {% endfor %}
+
+
+
+            <tr>
+              <th scope="row"></th>
+              <td colspan="5">{% trans 'Sum' %}</td>
+              <td>{{ purchase.get_total_quantity }}</td>
+              <td colspan="4"></td>
+              <td>{{ purchase.get_cost_after_discount | intcomma:False }}</td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td colspan="10">{% trans 'Discount' %}</td>
+              <td class="text-danger">{{ purchase.discount | intcomma:False }}</td>
+
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td colspan="10" class="fw-bolder">{% trans 'Payable' %}</td>
+              <td class="fw-bolder">{{ purchase.payable | intcomma:False }}</td>
+            </tr>
+
+          </tbody>
+        </table>
       </div>
       <div class="">
         {% if purchase.status == "draft" %}
