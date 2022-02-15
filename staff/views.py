@@ -14,7 +14,7 @@ from django_countries.fields import Country
 
 from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm
 from products.models import Product, Category
-from orders.models import Order, OrderLine
+from orders.models import Order, OrderLine, PurchaseLine
 from orders.forms import OrderAdminCheckoutForm
 from search.forms import ClientSearchForm, BookIsbnSearchForm, SearchForm
 from search.views import ProductSearch
@@ -632,6 +632,67 @@ def sold_products(request):
         'staff/sold_products.html',
         {'order_lines': order_lines,
         'products':products,
+        }
+    )
+
+
+@staff_member_required
+def purchased_products(request):
+
+    purchase_lines = PurchaseLine.objects.all().order_by('purchase__created')
+
+
+    # order_lines = OrderLine.objects.all().values_list(product.id, flat=True)
+    products = dict()
+    i= 0
+    for line in purchase_lines:
+
+
+        if  line.product.name in products:
+            # we grab the present value from the products dictionary
+            quantity = products[line.product.name]['quantity']
+            vendor = products[line.product.name]['vendor']
+
+            # wether vendor in list is as the same as the vendor in orderline
+            if vendor == line.purchase.vendor.first_name:
+                quantity += line.quantity
+                products[line.product.name] = {
+                    'quantity': quantity,
+                    'vendor': vendor
+                }
+            # wether the vendor is diffrent from the vendor in order line
+            else:
+                # this line makes a bug and override the availabel book not add a new line
+                products[line.product.name + str(i)] = {
+                    'quantity': line.quantity,
+                    'vendor': line.purchase.vendor.first_name
+                }
+
+        else:
+            products[line.product.name] = {
+                'quantity': line.quantity,
+                'vendor': line.purchase.vendor.first_name
+                }
+        i += 1
+    # products = sorted(products.lines(), key=lambda x: x[0], reverse=True)
+
+    # test = {
+    #     'book_name':{
+    #         'quantity': 25,
+    #         'vendor': 'shola'
+    #     },
+    #     'book_name2':{
+    #         'quantity': 25,
+    #         'vendor': 'shola'
+    #     }
+    # }
+    return render(
+        request,
+        'staff/purchased_products.html',
+        {
+        'purchase_lines': purchase_lines,
+        'products':products,
+        # 'test': test,
         }
     )
 

@@ -1,0 +1,43 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load custom_tags %}
+
+{% block title %}{% trans 'Purchased products' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="warehouse" %}
+    </div>
+
+    <div class="col-md-10">
+      <h2>{% trans 'Sold products'%}</h2>
+
+      <table class="table table-striped">
+        <thead>
+          <th scope="col">{% trans 'Name' %}</th>
+          <th scope="col">{% trans 'Quantity' %}</th>
+          <th scope="col">{% trans 'Vendor' %}</th>
+
+        </thead>
+        <tbody>
+          {% for product, data in products.items|sort %}
+          <tr>
+            <td>{{ product }}</td>
+            <td>{{ data.quantity }}</td>
+            <td>{{ data.vendor }}</td>
+        </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
