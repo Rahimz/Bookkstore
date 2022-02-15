@@ -235,9 +235,9 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
         variation = 'new v1'
     elif variation == 'used':
         variation = 'used main'
-    order_line.variation = variation
     variation_list = variation.split()
-    order_line.save()
+    # order_line.variation = variation
+    # order_line.save()
 
 
     if order_id:
