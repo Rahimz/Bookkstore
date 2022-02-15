@@ -218,18 +218,31 @@ class ProductCreate(View):
 
 
 @staff_member_required
-def invoice_create(request, order_id=None, book_id=None, variation='main'):
-    books = None
+def invoice_create(request, order_id=None, book_id=None, variation='new main'):
+    product_id = book_id
+    products = None
     results = None
-    book = None
+    product = None
     # isbn = ''
     search_form = SearchForm()
     update_form = InvoiceAddForm()
-    book_ids = []
+    product_ids = []
     update_forms = {}
+
+    if variation == 'main':
+        variation = 'new main'
+    elif variation == 'v1':
+        variation = 'new v1'
+    elif variation == 'used':
+        variation = 'used main'
+    order_line.variation = variation
+    variation_list = variation.split()
+    order_line.save()
+
+
     if order_id:
         order = Order.objects.get(pk=order_id)
-        book_ids = [(item.product.pk, item.variation) for item in order.lines.all()]
+        product_ids = [(item.product.pk, item.variation) for item in order.lines.all()]
 
         # TODO: The loop should be replaced with a query to enhance the performance
         for item in order.lines.all():
@@ -240,49 +253,69 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
     else:
         order = None
 
-    if book_id:
-        book = Product.objects.get(pk=book_id)
+    if product_id:
+        product = Product.objects.get(pk=product_id)
 
         # in this dict we handle the other prices and quantities variations
+
         variation_dict = {
-            'main': {
-                'price': book.price,
-                'stock': book.stock,
-            },
-            'v1': {
-                'price': book.price_1,
-                'stock': book.stock_1,
+            'new': {
+                'main': {
+                    'price': product.price,
+                    'stock': product.stock,
+                },
+                'v1': {
+                    'price': product.price_1,
+                    'stock': product.stock_1,
+                },
+                'v2': {
+                    'price': product.price_2,
+                    'stock': product.stock_2,
+                },
+                'v3': {
+                    'price': product.price_3,
+                    'stock': product.stock_3,
+                },
+                'v4': {
+                    'price': product.price_4,
+                    'stock': product.stock_4,
+                },
+                'v5': {
+                    'price': product.price_5,
+                    'stock': product.stock_5,
+                },
             },
             'used': {
-                'price': book.price_used,
-                'stock': book.stock_used,}
+                'main': {
+                    'price': product.price_used,
+                    'stock': product.stock_used
+                },
+            }
         }
-        price = variation_dict[variation]['price']
-        stock = variation_dict[variation]['stock']
 
+        price = variation_dict[variation_list[0]][variation_list[1]]['price']
+        stock = variation_dict[variation_list[0]][variation_list[1]]['stock']
     isbn_search_form = BookIsbnSearchForm()
-
-
 
     # If the search result contains more than one results
     #  we handle it in these if statement
-    if order_id and book_id:
+    if order_id and product_id:
 
         # Check the stock of product
         if stock <= 0:
             messages.error(request, _('Not enough stock!'))
             return redirect('staff:invoice_create', order_id)
 
-        # add book to invoice
-        if (book.id, variation) in book_ids:
-            order_line = OrderLine.objects.get(order=order, product=book, variation=variation)
+        # add product to invoice
+        if (product.id, variation) in product_ids:
+            order_line = OrderLine.objects.get(order=order, product=product, variation=variation)
             order_line.quantity += 1
             order_line.save()
             order.save()
         else:
             order_line = OrderLine.objects.create(
                 order = order,
-                product = book,
+                product = product,
                 quantity = 1,
                 price = price,
                 variation = variation,
@@ -292,50 +325,79 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
             # Update product stock
             stock -= 1
 
-            if variation == 'main':
-                book.stock = stock
-            elif variation  == 'v1':
-                book.stock_1 = stock
-            elif variation == 'used':
-                book.stock_used = stock
+            if variation == 'new main':
+                product.stock = stock
 
-            book.save()
+            elif variation == 'new v1':
+                product.stock_1 = stock
+
+            elif variation == 'new v2':
+                product.stock_2 = stock
+
+            elif variation == 'new v3':
+                product.stock_3 = stock
+
+            elif variation == 'new v3':
+                product.stock_4 = stock
+
+            elif variation == 'new v4':
+                product.stock_5 = stock
+
+            elif variation  == 'used main':
+                product.stock_used += stock
+            product.save()
+
         messages.success(request, _('Product is added to invoice'))
 
         return redirect('staff:invoice_create', order.id)
 
-    # When we add a book for first time and we dont have an order
-    if (not order_id) and book_id:
+    # When we add a product for first time and we dont have an order
+    if (not order_id) and product_id:
         if stock <= 0:
             messages.error(request, _('Not enough stock!'))
             return redirect('staff:invoice_create')
 
-        # if book.stock >=1:
+        # if product.stock >=1:
         order = Order.objects.create(
-                    user = request.user,
-                    status = 'draft',
-                    shipping_method = 'pickup',
-                )
+            user = request.user,
+            status = 'draft',
+            shipping_method = 'pickup',
+        )
         messages.success(request, _('Order is created') + ' : {}'.format(order.id))
         order_line = OrderLine.objects.create(
             order = order,
-            product = book,
+            product = product,
             quantity = 1,
             price = price,
             variation = variation,
         )
         order.save()
+
         # Update product stock
         stock -= 1
 
-        if variation == 'main':
-            book.stock = stock
-        elif variation  == 'v1':
-            book.stock_1 = stock
-        elif variation == 'used':
-            book.stock_used = stock
+        if variation == 'new main':
+            product.stock = stock
 
-        book.save()
+        elif variation == 'new v1':
+            product.stock_1 = stock
+
+        elif variation == 'new v2':
+            product.stock_2 = stock
+
+        elif variation == 'new v3':
+            product.stock_3 = stock
+
+        elif variation == 'new v3':
+            product.stock_4 = stock
+
+        elif variation == 'new v4':
+            product.stock_5 = stock
+
+        elif variation  == 'used main':
+            product.stock_used += stock
+
+        product.save()
 
         messages.success(request,  _('Product is added to invoice'))
         return redirect('staff:invoice_create', order.id)
@@ -354,16 +416,53 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
 
             # if the results has only one item, the item automaticaly added to invoice
             if len(results) == 1:
-                book = results.first()
+                product = results.first()
                 # Check the stock of product
-                if book.has_other_prices:
-                    messages.warning(request, _('This book has other prices'))
+                variation_dict = {
+                    'new': {
+                        'main': {
+                            'price': product.price,
+                            'stock': product.stock,
+                        },
+                        'v1': {
+                            'price': product.price_1,
+                            'stock': product.stock_1,
+                        },
+                        'v2': {
+                            'price': product.price_2,
+                            'stock': product.stock_2,
+                        },
+                        'v3': {
+                            'price': product.price_3,
+                            'stock': product.stock_3,
+                        },
+                        'v4': {
+                            'price': product.price_4,
+                            'stock': product.stock_4,
+                        },
+                        'v5': {
+                            'price': product.price_5,
+                            'stock': product.stock_5,
+                        },
+                    },
+                    'used': {
+                        'main': {
+                            'price': product.price_used,
+                            'stock': product.stock_used
+                        },
+                    }
+                }
+
+                price = variation_dict[variation_list[0]][variation_list[1]]['price']
+                stock = variation_dict[variation_list[0]][variation_list[1]]['stock']
+                if product.has_other_prices:
+                    messages.warning(request, _('This product has other prices'))
                     # if not order:
                     #     return redirect('staff:invoice_create')
                     # if order:
                     #     return redirect('staff:invoice_create', order.id)
-                elif not book.has_other_prices:
-                    if book.stock <= 0:
+                elif not product.has_other_prices:
+                    if product.stock <= 0:
                         messages.error(request, _('Not enough stock!'))
                         if not order:
                             return redirect('staff:invoice_create')
@@ -378,31 +477,31 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
                                 )
                         messages.success(request,  _('Order is created') + ' : {}'.format(order.id))
 
-                    # if the book is added in the invoice we will update the quantity in invoice
-                    if (book.pk, 'main') in book_ids and not book.has_other_prices:
-                        order_line = OrderLine.objects.get(order=order, product=book)
+                    # if the product is added in the invoice we will update the quantity in invoice
+                    if (product.pk, 'main') in product_ids and not product.has_other_prices:
+                        order_line = OrderLine.objects.get(order=order, product=product)
                         order_line.quantity += 1
                         order_line.variation = 'main'
                         order_line.save()
                         order.save()
 
                         # Update product stock
-                        book.stock -=1
-                        book.save()
+                        product.stock -=1
+                        product.save()
 
-                    # if the book is not in invoice we will create an invoice orderline
+                    # if the product is not in invoice we will create an invoice orderline
                     else:
                         order_line = OrderLine.objects.create(
                             order = order,
-                            product = book,
+                            product = product,
                             quantity = 1,
-                            price = book.price,
+                            price = product.price,
                             variation = 'main'
                         )
                         order.save()
 
-                        book.stock -= 1
-                        book.save()
+                        product.stock -= 1
+                        product.save()
                     messages.success(request, _('Product is added to invoice'))
         else:
             pass
@@ -414,7 +513,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='main'):
         {'order': order,
          'isbn_search_form': isbn_search_form,
          # 'isbn': isbn,
-         'book_ids': book_ids,
+         'product_ids': product_ids,
          'update_form': update_form,
          'search_form': search_form,
          'results': results,
@@ -500,24 +599,74 @@ def orderline_update(request, order_id, orderline_id):
         update_form = InvoiceAddForm(data=request.POST)
         if update_form.is_valid():
             order_line = OrderLine.objects.get(pk=orderline_id)
+
             product = order_line.product
             variation = order_line.variation
 
+            # variation_dict = {
+            #     'main': {
+            #         'price': product.price,
+            #         'stock': product.stock,
+            #     },
+            #     'v1': {
+            #         'price': product.price_1,
+            #         'stock': product.stock_1,
+            #     },
+            #     'used': {
+            #         'price': product.price_used,
+            #         'stock': product.stock_used,}
+            # }
+            # product_price = variation_dict[order_line.variation]['price']
+            # product_stock = variation_dict[order_line.variation]['stock']
+
+            # to work with orderlines that have been made before
+            if variation == 'main':
+                variation = 'new main'
+            elif variation == 'v1':
+                variation = 'new v1'
+            elif variation == 'used':
+                variation = 'used main'
+            order_line.variation = variation
+            order_line.save()
+
+            variation_list = variation.split()
             variation_dict = {
-                'main': {
-                    'price': product.price,
-                    'stock': product.stock,
-                },
-                'v1': {
-                    'price': product.price_1,
-                    'stock': product.stock_1,
+                'new': {
+                    'main': {
+                        'price': product.price,
+                        'stock': product.stock,
+                    },
+                    'v1': {
+                        'price': product.price_1,
+                        'stock': product.stock_1,
+                    },
+                    'v2': {
+                        'price': product.price_2,
+                        'stock': product.stock_2,
+                    },
+                    'v3': {
+                        'price': product.price_3,
+                        'stock': product.stock_3,
+                    },
+                    'v4': {
+                        'price': product.price_4,
+                        'stock': product.stock_4,
+                    },
+                    'v5': {
+                        'price': product.price_5,
+                        'stock': product.stock_5,
+                    },
                 },
                 'used': {
-                    'price': product.price_used,
-                    'stock': product.stock_used,}
+                    'main': {
+                        'price': product.price_used,
+                        'stock': product.stock_used
+                    },
+                }
             }
-            product_price = variation_dict[order_line.variation]['price']
-            product_stock = variation_dict[order_line.variation]['stock']
+
+            product_price = variation_dict[variation_list[0]][variation_list[1]]['price']
+            product_stock = variation_dict[variation_list[0]][variation_list[1]]['stock']
 
             if update_form.cleaned_data['remove'] == True:
                 """
@@ -526,12 +675,33 @@ def orderline_update(request, order_id, orderline_id):
                 # Update product stock
                 product_stock += order_line.quantity
 
-                if variation == 'main':
-                    product.stock = product_stock
-                elif variation  == 'v1':
-                    product.stock_1 = product_stock
-                elif variation == 'used':
-                    product.stock_used = product_stock
+                # if variation == 'main':
+                #     product.stock = product_stock
+                # elif variation  == 'v1':
+                #     product.stock_1 = product_stock
+                # elif variation == 'used':
+                #     product.stock_used = product_stock
+                # we have some old row in purchase lines
+                if variation == 'new main':
+                    product.stock += product_stock
+
+                elif variation == 'new v1':
+                    product.stock_1 += product_stock
+
+                elif variation == 'new v2':
+                    product.stock_2 += product_stock
+
+                elif variation == 'new v3':
+                    product.stock_3 += product_stock
+
+                elif variation == 'new v3':
+                    product.stock_4 += product_stock
+
+                elif variation == 'new v4':
+                    product.stock_5 += product_stock
+
+                elif variation  == 'used main':
+                    product.stock_used += product_stock
 
                 product.save()
 
@@ -540,6 +710,7 @@ def orderline_update(request, order_id, orderline_id):
                 return redirect('staff:invoice_create', order.id)
 
             if update_form.cleaned_data['quantity'] != 0:
+                # increase the quantity of product in invoice
                 if update_form.cleaned_data['quantity'] > order_line.quantity:
                     if update_form.cleaned_data['quantity'] > order_line.quantity + product_stock:
                         messages.error(request, _('Not enough stock') + ' ' + _('Quantity') + ' {}'.format(product_stock))
@@ -548,12 +719,32 @@ def orderline_update(request, order_id, orderline_id):
                         # Update product stock
                         product_stock -= update_form.cleaned_data['quantity'] - order_line.quantity
 
-                        if variation == 'main':
+                        # if variation == 'main':
+                        #     product.stock = product_stock
+                        # elif variation  == 'v1':
+                        #     product.stock_1 = product_stock
+                        # elif variation == 'used':
+                        #     product.stock_used = product_stock
+                        if variation == 'new main':
                             product.stock = product_stock
-                        elif variation  == 'v1':
+
+                        elif variation == 'new v1':
                             product.stock_1 = product_stock
-                        elif variation == 'used':
-                            product.stock_used = product_stock
+
+                        elif variation == 'new v2':
+                            product.stock_2 = product_stock
+
+                        elif variation == 'new v3':
+                            product.stock_3 = product_stock
+
+                        elif variation == 'new v3':
+                            product.stock_4 = product_stock
+
+                        elif variation == 'new v4':
+                            product.stock_5 = product_stock
+
+                        elif variation  == 'used main':
+                            product.stock_used += product_stock
 
                         product.save()
 
@@ -562,12 +753,28 @@ def orderline_update(request, order_id, orderline_id):
                     # Update product stock
                     product_stock += order_line.quantity - update_form.cleaned_data['quantity']
 
-                    if variation == 'main':
+                    if variation == 'new main':
                         product.stock = product_stock
-                    elif variation  == 'v1':
+
+                    elif variation == 'new v1':
                         product.stock_1 = product_stock
-                    elif variation == 'used':
-                        product.stock_used = product_stock
+
+                    elif variation == 'new v2':
+                        product.stock_2 = product_stock
+
+                    elif variation == 'new v3':
+                        product.stock_3 = product_stock
+
+                    elif variation == 'new v3':
+                        product.stock_4 = product_stock
+
+                    elif variation == 'new v4':
+                        product.stock_5 = product_stock
+
+                    # we have some old row in purchase lines
+                    elif variation  == 'used main':
+                        product.stock_used += product_stock
+
                     product.save()
 
                 order_line.quantity = update_form.cleaned_data['quantity']
