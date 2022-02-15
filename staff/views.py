@@ -528,6 +528,7 @@ def invoice_checkout(request, order_id, client_id=None):
     client_search_form = ClientSearchForm()
     client = CustomUser.objects.get(pk=client_id) if client_id else None
     clients = None
+    client_add_notice = None
     if request.method == 'POST':
         checkout_form = OrderAdminCheckoutForm(data=request.POST, instance=order)
         client_search_form = ClientSearchForm(data=request.POST)
@@ -540,6 +541,8 @@ def invoice_checkout(request, order_id, client_id=None):
             clients = CustomUser.objects.filter(is_client=True).order_by('-pk').exclude(is_superuser=True).exclude(username='guest')
             clients = clients.annotate(
                 search=SearchVector('first_name', 'last_name', 'username', 'phone'),).filter(search__contains=query)
+            if len(clients) == 0:
+                client_add_notice = True
             # try:
             #     client = CustomUser.objects.get(phone=query, is_client=True)
             # except:
@@ -588,6 +591,7 @@ def invoice_checkout(request, order_id, client_id=None):
          'checkout_form': checkout_form,
          'clients': clients,
          'client': client,
+         'client_add_notice': client_add_notice,
     })
 
 
