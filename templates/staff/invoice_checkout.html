@@ -28,14 +28,14 @@
 
           {% if clients %}
           {% for client in clients %}
-          <a href="{% url 'staff:invoice_checkout_client' order_id=order.id client_id=client.id %}" class="btn btn-success">{{ client.first_name }} {{ client.last_name }}- {{ client.phone }}</a>
+          <a href="{% url 'staff:invoice_checkout_client' order_id=order.id client_id=client.id %}" class="btn btn-success m-1">{{ client.first_name }} {{ client.last_name }}- {{ client.phone }}</a>
           {% endfor %}
           {% endif %}
 
 
           {% if client_add_notice %}
           <a href="{% url 'client_add' %}/#addClient" onclick="return popitup('/account/client_add/#addClient')" class="btn btn-success">{% trans 'Add client' %}</a>
-          
+
           {% endif %}
 
           {% if client %}
@@ -46,16 +46,29 @@
           {% endif %}
           <div class="w-50 mt-3">
             <form class="" action="." method="post">
-              <h3 class="mt-3" >{% trans 'Invoice informations' %}</h3>
-              {{ checkout_form | crispy }}
+              <h3 class="mt-3">{% trans 'Invoice informations' %}</h3>
+
+              {% for field in checkout_form  %}
+              <div class="fieldWrapper">
+                {{ field.errors }}
+                {# {{ field.label_tag }} #} {{ field | as_crispy_field }}
+                {% if field.help_text %}
+                <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %}
+              </div>
+              {% endfor %}
+
+
               {% csrf_token %}
               <input class="btn btn-success my-4" type="submit" name="client" value="{% trans 'Submit' %}">
             </form>
           </div>
+          {% comment %}
           <div class="my-3">
             <a href="{% url 'tools:make_invoice_pdf' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF' %}</a>
             <a href="{% url 'tools:make_invoice_pdf_a4' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF A4' %}</a>
           </div>
+          {% endcomment %}
         </div>
 
       </div>

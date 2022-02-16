@@ -31,6 +31,23 @@ def make_invoice_pdf(request, order_id=None):
         stylesheets=[weasyprint.CSS(settings.STATIC_ROOT + 'css/invoice_pdf.css')])
     return response
 
+
+@staff_member_required
+def print_invoice(request, order_id=None):
+    order = Order.objects.get(pk=order_id)
+
+    fa_date = hij_strf_date(greg_to_hij_date(order.created.date()), '%-d %B %Y')
+
+    return render(
+        request,
+        'tools/pdf/print_invoice.html',
+        {
+            'order': order,
+            'fa_date': fa_date
+        }
+    )
+
+
 @staff_member_required
 def make_invoice_pdf_a4(request, order_id=None):
     order = Order.objects.get(pk=order_id)

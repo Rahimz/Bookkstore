@@ -582,7 +582,8 @@ def invoice_checkout(request, order_id, client_id=None):
                 order.shipping_method = 'post'
             order.save()
             messages.success(request, _('Order approved'))
-            return redirect('staff:order_list', period='all', channel='all')
+            # return redirect('staff:order_list', period='all', channel='all')
+            return redirect('staff:order_detail_for_admin', order.pk)
     return render(
         request,
         'staff/invoice_checkout.html',

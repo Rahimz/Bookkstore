@@ -56,19 +56,19 @@
               </a>
               {% if result.has_other_prices %}
               {% if result.stock_1 %}
-                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v1' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='v1' %}{% endif %}" class="btn btn-sm btn-outline-success">{{ result.stock_1 }}: <span class="fw-bolder">{{ result.price_1 | intcomma:False }}</span></a>
+                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v1' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new v1' %}{% endif %}" class="btn btn-sm btn-outline-success">{{ result.stock_1 }}: <span class="fw-bolder">{{ result.price_1 | intcomma:False }}</span></a>
               {% endif %}
               {% if result.stock_2 %}
-                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v2' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='v2' %}{% endif %}" class="btn btn-sm btn-outline-success">{{ result.stock_2 }}: <span class="fw-bolder">{{ result.price_2 | intcomma:False }}</span></a>
+                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v2' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new v2' %}{% endif %}" class="btn btn-sm btn-outline-success">{{ result.stock_2 }}: <span class="fw-bolder">{{ result.price_2 | intcomma:False }}</span></a>
               {% endif %}
               {% if result.stock_3 %}
-                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v3' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='v1' %}{% endif %}" class="btn btn-sm btn-outline-success">{{ result.stock_3 }}: <span class="fw-bolder">{{ result.price_3 | intcomma:False }}</span></a>
+                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v3' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new v3' %}{% endif %}" class="btn btn-sm btn-outline-success">{{ result.stock_3 }}: <span class="fw-bolder">{{ result.price_3 | intcomma:False }}</span></a>
               {% endif %}
               {% if result.stock_4 %}
-                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v4' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='v1' %}{% endif %}" class="btn btn-sm btn-outline-success">{{ result.stock_4 }}: <span class="fw-bolder">{{ result.price_4 | intcomma:False }}</span></a>
+                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v4' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new v4' %}{% endif %}" class="btn btn-sm btn-outline-success">{{ result.stock_4 }}: <span class="fw-bolder">{{ result.price_4 | intcomma:False }}</span></a>
               {% endif %}
               {% if result.stock_5 %}
-                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v5' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='v1' %}{% endif %}" class="btn btn-sm btn-outline-success">{{ result.stock_5 }}: <span class="fw-bolder">{{ result.price_5 | intcomma:False }}</span></a>
+                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v5' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new v5' %}{% endif %}" class="btn btn-sm btn-outline-success">{{ result.stock_5 }}: <span class="fw-bolder">{{ result.price_5 | intcomma:False }}</span></a>
               {% endif %}
 
               {% if result.stock_used %}
@@ -155,8 +155,11 @@
       </div>
       <div class="my-5">
         <a href="{% url 'staff:draft_orders' %}" class="btn btn-outline-secondary">{% trans 'Save draft' %}</a>
-        <a {% if order %}href="{% url 'staff:invoice_checkout' order.id %}" class="btn btn-outline-success" {% else %}href="" class="btn btn-outline-success disabled" {% endif%}>{% trans 'Submit' %}</a>
-        <a onclick="window.print();return false;" class="btn btn-outline-secondary">{% trans 'Print' %}</a>
+
+        <a {% if order and order.lines.all %}href="{% url 'staff:invoice_checkout' order.id %}" class="btn btn-success" {% else %}href="" class="btn btn-outline-success disabled" {% endif%}>{% trans 'Submit' %}</a>
+
+        <a {% if order %} href="{% url 'tools:print_invoice' order.id %}" class="btn btn-outline-secondary my-3" {% else %}href="" class="btn btn-outline-success disabled" {% endif %} target="_blank" >{% trans 'Print' %}</a>
+        {# <a onclick="window.print();return false;" class="btn btn-outline-secondary">{% trans 'Print' %}</a> #}
         {% if order %}
         <a href="{% url 'tools:make_invoice_pdf' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF' %}</a>
         <a href="{% url 'tools:make_invoice_pdf_a4' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF A4' %}</a>

@@ -36,9 +36,15 @@ class UserEditForm(forms.ModelForm):
 
 
 class ClientAddForm(forms.ModelForm):
+	def __init__(self, *args, **kwargs):
+	    super().__init__(*args, **kwargs)
+	    self.fields['phone'].required = True
 	class Meta:
 		model = CustomUser
 		fields = ('first_name', 'last_name', 'phone')
+		widgets = {
+            'first_name': forms.TextInput(attrs={'autofocus': 'autofocus'})
+        }
 
 
 class ClientUpdateForm(forms.ModelForm):
