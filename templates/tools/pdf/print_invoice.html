@@ -12,24 +12,21 @@
 </head>
 
 <body>
-  <h1>{% trans 'Ketabe Damavand' %}</h1>
-  <p>
-    {% trans 'Invoice no.' %} {{ order.id }}<br />
-    <span class="secondary">
-      {#{{ order.created|date:"M d, Y" }}#}
-      {{ fa_date  }}
-    </span>
+  <h1 class="text-center">{% trans 'Ketabe Damavand' %}</h1>
+  <p class="text-center">
+    {% trans 'Invoice no.' %}: {{ order.id }}<br />
+  <p class="text-center small">
+    {#{{ order.created|date:"M d, Y" }}#}
+    {{ fa_date  }}
   </p>
-  <p class="order-info">
+  </p>
+  <p class="order-info text-center">
     {% if order.client.username == "guest" %}
     {% trans 'Client' %}: {% trans 'Guest' %}
     {% else %}
     {% trans 'Client' %}: {{ order.client.first_name }} {{ order.client.last_name }}
     <br>{% trans 'Phone' %}: {{ order.phone }}
     {% endif %}
-  </p>
-  <p class="order-info">
-    {% trans 'Registrar' %}: {{ order.user }} - {% trans 'Approver' %}: {{ order.approver }}
   </p>
   {% comment %}
   <h3>{% trans 'Bill to' %}</h3>
@@ -85,10 +82,12 @@
       </tr>
     </tfoot>
   </table>
-  <br>{{slogan.id}}
-  {% if slogan %}<p>{{ slogan.slogan }} {{ slogan.author }}</p>{% endif %}
-  <br><span>{% trans '16 Azar St.' %} {% trans 'Edward Brown St.' %}{% trans 'No.7' %} {% trans 'Tehran, Iran' %}</span>
-  <p class="ending">{{ order.token }}</p>
+  <p class="order-info text-center">
+    {% trans 'Registrar' %}: {{ order.user }} - {% trans 'Approver' %}: {{ order.approver }}
+  </p>
+  {% if slogan %}<p class="text-center">{{ slogan.slogan }} {{ slogan.author }}</p>{% endif %}
+  <p class="text-center">{% trans '16 Azar St.' %} {% trans 'Edward Brown St.' %} {% trans 'No.7' %}</p>
+  <p class="ending text-center">{{ order.token }}</p>
 
   {% comment %}
   <span class="{% if order.paid %}paid{% else %}pending{% endif %}">
