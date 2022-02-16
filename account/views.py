@@ -163,7 +163,7 @@ def client_add(request):
             new_client.save()
 
             messages.success(request, _('Client added!'))
-            return redirect('/account/clients')
+            return redirect('/account/clients/#clientTable')
         else:
             client_form = ClientAddForm(data=request.POST)
             messages.error(request, _('The phone number is already used!'))

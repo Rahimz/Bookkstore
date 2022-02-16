@@ -38,7 +38,7 @@
             <th scope="col">{% trans 'Phone' %}</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="clientTable">
           {% for client in clients %}
           <tr>
             <th scope="row">{{ forloop.counter }}</th>

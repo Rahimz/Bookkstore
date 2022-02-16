@@ -1,0 +1,109 @@
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+
+<html dir="rtl">
+
+<head>
+  <link href="{% static 'css/bootstrap.rtl.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/bootstrap-grid.rtl.css' %}" rel="stylesheet">
+  <link href="{% static 'css/bootstrap-utilities.rtl.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/invoice_pdf.css' %}" rel="stylesheet">
+</head>
+
+<body>
+  <div class="d-flex justify-content-center">
+    <img src="{% static 'img/logo_bw.png' %}" alt="{% trans 'Ketab Damavand' %}" class="rounded" width="90px;" height="auto">
+  </div>
+  <h2 class="text-center">{% trans 'Ketabe Damavand' %}</h2>
+  <p class="text-center">
+    {% trans 'Invoice no.' %}: {{ order.id }}<br />
+  <p class="text-center small">
+    {#{{ order.created|date:"M d, Y" }}#}
+    {{ fa_date  }}
+  </p>
+  </p>
+  <p class="order-info text-center">
+    {% if order.client.username == "guest" %}
+    {% trans 'Client' %}: {% trans 'Guest' %}
+    {% else %}
+    {% trans 'Client' %}: {{ order.client.first_name }} {{ order.client.last_name }}
+    <br>{% trans 'Phone' %}: {{ order.phone }}
+    {% endif %}
+  </p>
+  {% comment %}
+  <h3>{% trans 'Bill to' %}</h3>
+  <p>
+    {{ order.first_name }} {{ order.last_name }}
+    {{ order.email }}
+    {{ order.address }}
+    {{ order.postal_code }}, {{ order.city }}
+  </p>
+  {% endcomment %}
+  <table dir="rtl" class="table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>{% trans 'Product' %}</th>
+        <th>{% trans 'Price' %}</th>
+        <th>{% trans 'Quantity' %}</th>
+        <th>{% trans 'Discount' %}</th>
+        <th>{% trans 'Total' %} <span style="font-size:8px;">({% trans 'Rial' %})</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in order.lines.all %}
+      <tr class="row{% cycle "1" "2" %}">
+        <td>{{ forloop.counter }}</td>
+        <td>{{ item.product.name | truncatechars:20 }}</td>
+        <td class="num">{{ item.price | intcomma:False }}</td>
+        <td class="num">{{ item.quantity }}</td>
+        <td class="num">{{ item.discount | intcomma:False }}</td>
+        <td class="num">{{ item.get_cost_after_discount | intcomma:False }}</td>
+      </tr>
+      {% endfor %}
+
+    </tbody>
+    <tfoot>
+      <tr class="total">
+        <td colspan="5">{% trans 'Total'%} {% trans 'Rial' %}</td>
+        <td class="num">{{ order.get_cost_after_discount | intcomma:False }}</td>
+      </tr>
+      <tr class=discount>
+        <td colspan="5">{% trans 'Discount'%}</td>
+        <td class="num">{{ order.discount | intcomma:False }} </td>
+      </tr>
+      {% if order.shipping_cost %}
+      <tr class=discount>
+        <td colspan="5">{% trans 'Shipping cost'%}</td>
+        <td class="num">{{ order.shipping_cost | intcomma:False }} </td>
+      </tr>
+      {% endif %}
+      <tr class=total>
+        <td colspan="5">{% trans 'PAYABLE'%}</td>
+        <td class="num"><b>{{ order.get_payable | intcomma:False }}</b></td>
+      </tr>
+    </tfoot>
+  </table>
+  {% comment %}
+  <p class="order-info text-center">
+    {% trans 'Registrar' %}: {{ order.user }} - {% trans 'Approver' %}: {{ order.approver }}
+  </p>
+  {% endcomment %}
+  {% if slogan %}<p class="text-center">{{ slogan.slogan }} {{ slogan.author }}</p>{% endif %}
+  <p class="text-center">{% trans '16 Azar St.' %}, {% trans 'Edward Brown St.' %}, {% trans 'No.7' %} - 66981024</p>
+  <p class="ending text-center">{{ order.token }}</p>
+
+  {% comment %}
+  <span class="{% if order.paid %}paid{% else %}pending{% endif %}">
+    {% if order.paid %}Paid{% else %}{% trans 'Pending payment' %}{% endif %}
+  </span>
+  {% endcomment %}
+
+
+
+
+
+</body>
+
+</html>

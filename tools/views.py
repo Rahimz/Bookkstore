@@ -8,6 +8,7 @@ from io import BytesIO
 from django.db.models import Q
 import datetime
 from django.core.mail import EmailMessage, mail_admins
+import random
 
 import weasyprint
 import openpyxl
@@ -15,6 +16,7 @@ import openpyxl
 from orders.models import Order, OrderLine
 from zarinpal.models import Payment
 from tools.gregory_to_hijry import hij_strf_date, greg_to_hij_date
+from shop.models import Slogan
 
 @staff_member_required
 def make_invoice_pdf(request, order_id=None):
@@ -30,6 +32,25 @@ def make_invoice_pdf(request, order_id=None):
     weasyprint.HTML(string=html).write_pdf(response,
         stylesheets=[weasyprint.CSS(settings.STATIC_ROOT + 'css/invoice_pdf.css')])
     return response
+
+
+@staff_member_required
+def print_invoice(request, order_id=None):
+    order = Order.objects.get(pk=order_id)
+    slogan_id = random.choice(Slogan.objects.values_list('pk', flat=True))    
+    slogan = Slogan.objects.get(pk=slogan_id)
+    fa_date = hij_strf_date(greg_to_hij_date(order.created.date()), '%-d %B %Y')
+
+    return render(
+        request,
+        'tools/pdf/print_invoice.html',
+        {
+            'order': order,
+            'fa_date': fa_date,
+            'slogan': slogan,
+        }
+    )
+
 
 @staff_member_required
 def make_invoice_pdf_a4(request, order_id=None):

@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     'discounts.apps.DiscountsConfig',
     'zarinpal.apps.ZarinpalConfig',
     'warehouses.apps.WarehousesConfig',
-
+    'tools.apps.ToolsConfig',    
 ]
 
 MIDDLEWARE = [
