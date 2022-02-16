@@ -12,7 +12,10 @@
 </head>
 
 <body>
-  <h1 class="text-center">{% trans 'Ketabe Damavand' %}</h1>
+  <div class="d-flex justify-content-center">
+    <img src="{% static 'img/logo_bw.png' %}" alt="{% trans 'Ketab Damavand' %}" class="rounded" width="90px;" height="auto">
+  </div>
+  <h2 class="text-center">{% trans 'Ketabe Damavand' %}</h2>
   <p class="text-center">
     {% trans 'Invoice no.' %}: {{ order.id }}<br />
   <p class="text-center small">
@@ -82,11 +85,13 @@
       </tr>
     </tfoot>
   </table>
+  {% comment %}
   <p class="order-info text-center">
     {% trans 'Registrar' %}: {{ order.user }} - {% trans 'Approver' %}: {{ order.approver }}
   </p>
+  {% endcomment %}
   {% if slogan %}<p class="text-center">{{ slogan.slogan }} {{ slogan.author }}</p>{% endif %}
-  <p class="text-center">{% trans '16 Azar St.' %} {% trans 'Edward Brown St.' %} {% trans 'No.7' %}</p>
+  <p class="text-center">{% trans '16 Azar St.' %}, {% trans 'Edward Brown St.' %}, {% trans 'No.7' %} - 66981024</p>
   <p class="ending text-center">{{ order.token }}</p>
 
   {% comment %}
