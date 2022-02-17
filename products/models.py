@@ -165,6 +165,11 @@ class Product(models.Model):
         null=True,
         blank=True
     )
+    collection_parent = models.CharField(
+        max_length=13,
+        null=True,
+        blank=True
+    )
     age_range = models.CharField(
         max_length=150,
         default='',

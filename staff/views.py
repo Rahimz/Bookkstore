@@ -223,6 +223,11 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
     products = None
     results = None
     product = None
+
+    collection_warning = False
+    collection_ids = []
+    collection_parent_product = None
+    collection_children_product = None
     # isbn = ''
     search_form = SearchForm()
     update_form = InvoiceAddForm()
@@ -246,6 +251,9 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
 
         # TODO: The loop should be replaced with a query to enhance the performance
         for item in order.lines.all():
+            if item.product.is_collection:
+                collection_warning = True
+                collection_ids.append((item.product.pk, item.product.collection_set, item.product.collection_parent))
             # update_forms[item.id]
             form  = InvoiceAddForm()
             update_forms[item.id] = form
@@ -507,6 +515,16 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
             pass
 
     search_form = SearchForm()
+
+    if collection_warning:
+        # collection_ids = [(id, collection_set, collection_parent), ]
+        parent_ids = [ids[0] for ids in collection_ids if ids[1]]
+        children_ids = [ids[0] for ids in collection_ids if ids[2]]
+
+        collection_parent_product = Product.objects.all().filter(pk__in=parent_ids)
+        collection_children_product = Product.objects.all().filter(pk__in=children_ids)
+
+
     return render(
         request,
         'staff/invoice_create.html',
@@ -517,7 +535,9 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
          'update_form': update_form,
          'search_form': search_form,
          'results': results,
-
+         'collection_warning': collection_warning,
+         'collection_parent_product': collection_parent_product,
+         'collection_children_product': collection_children_product,
     })
 
 
@@ -1116,6 +1136,7 @@ def collection_management_edit(request, product_id):
                 new_collection_set = f"{product.collection_set} {isbn}"
                 product.collection_set = new_collection_set
                 new_product.is_collection = True
+                new_product.collection_parent = product.isbn
 
                 product.save()
                 new_product.save()
@@ -1146,6 +1167,7 @@ def collection_management_remove(request, product_id, product_isbn):
     product.save()
 
     removed_product.is_collection = False
+    removed_product.collection_parent = None
     removed_product.save()
     messages.success(request, _('This product removed from the collection'))
     return redirect('staff:collection_management_edit', product.id)

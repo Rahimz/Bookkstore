@@ -21,8 +21,10 @@
         <h2>{% trans 'Create invoice' %}</h2>
 
         {% if order %}
+        {% if order.client %}
         <h4>{% trans 'Client' %}</h4>
         {% trans 'Name' %} : {{ order.client }} - {% trans 'Phone' %} : {{ order.client_phone }}
+        {% endif %}
         {% endif %}
 
         <h3 class="my-4">{% trans 'Add products' %}</h3>
@@ -33,15 +35,15 @@
             {% endif %}
             <div class="row">
 
-            <div class="col-md-9">
-              {{ search_form | crispy }}
-              {% csrf_token %}
-            </div>
+              <div class="col-md-9">
+                {{ search_form | crispy }}
+                {% csrf_token %}
+              </div>
 
-            <div class="col-md-3">
-              <input class="btn btn-outline-secondary form-control" type="submit" name="book" value="{% trans 'Submit' %}">
+              <div class="col-md-3">
+                <input class="btn btn-outline-secondary form-control" type="submit" name="book" value="{% trans 'Submit' %}">
+              </div>
             </div>
-          </div>
 
           </form>
 
@@ -51,28 +53,36 @@
             {% for result in results %}
             <div class="col-md-4 my-3">
 
-              <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new main' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new main' %}{% endif %}" class="btn btn-sm btn-outline-success m-1 fs-10 text-right">
-                {{ result.name | truncatechars:30 }} - {{ result.publisher | truncatechars:15 }} - {{ result.size }} - {{ result.cover_type }} - {% trans 'Quantity' %} {{ result.stock}} - <span class="fw-bolder">{{ result.price | intcomma:False }}</span>
+              <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new main' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new main' %}{% endif %}"
+                class="btn btn-sm btn-outline-success m-1 fs-10 text-right">
+                {{ result.name | truncatechars:30 }} - {{ result.publisher | truncatechars:15 }} - {{ result.size }} - {{ result.cover_type }} - {% trans 'Quantity' %} {{ result.stock}} - <span
+                  class="fw-bolder">{{ result.price | intcomma:False }}</span>
               </a>
               {% if result.has_other_prices %}
               {% if result.stock_1 %}
-                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v1' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new v1' %}{% endif %}" class="btn btn-sm btn-outline-success">{{ result.stock_1 }}: <span class="fw-bolder">{{ result.price_1 | intcomma:False }}</span></a>
+              <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v1' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new v1' %}{% endif %}"
+                class="btn btn-sm btn-outline-success">{{ result.stock_1 }}: <span class="fw-bolder">{{ result.price_1 | intcomma:False }}</span></a>
               {% endif %}
               {% if result.stock_2 %}
-                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v2' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new v2' %}{% endif %}" class="btn btn-sm btn-outline-success">{{ result.stock_2 }}: <span class="fw-bolder">{{ result.price_2 | intcomma:False }}</span></a>
+              <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v2' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new v2' %}{% endif %}"
+                class="btn btn-sm btn-outline-success">{{ result.stock_2 }}: <span class="fw-bolder">{{ result.price_2 | intcomma:False }}</span></a>
               {% endif %}
               {% if result.stock_3 %}
-                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v3' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new v3' %}{% endif %}" class="btn btn-sm btn-outline-success">{{ result.stock_3 }}: <span class="fw-bolder">{{ result.price_3 | intcomma:False }}</span></a>
+              <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v3' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new v3' %}{% endif %}"
+                class="btn btn-sm btn-outline-success">{{ result.stock_3 }}: <span class="fw-bolder">{{ result.price_3 | intcomma:False }}</span></a>
               {% endif %}
               {% if result.stock_4 %}
-                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v4' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new v4' %}{% endif %}" class="btn btn-sm btn-outline-success">{{ result.stock_4 }}: <span class="fw-bolder">{{ result.price_4 | intcomma:False }}</span></a>
+              <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v4' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new v4' %}{% endif %}"
+                class="btn btn-sm btn-outline-success">{{ result.stock_4 }}: <span class="fw-bolder">{{ result.price_4 | intcomma:False }}</span></a>
               {% endif %}
               {% if result.stock_5 %}
-                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v5' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new v5' %}{% endif %}" class="btn btn-sm btn-outline-success">{{ result.stock_5 }}: <span class="fw-bolder">{{ result.price_5 | intcomma:False }}</span></a>
+              <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new v5' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new v5' %}{% endif %}"
+                class="btn btn-sm btn-outline-success">{{ result.stock_5 }}: <span class="fw-bolder">{{ result.price_5 | intcomma:False }}</span></a>
               {% endif %}
 
               {% if result.stock_used %}
-                <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='used main' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='used main' %}{% endif %}" class="btn btn-sm btn-outline-warning">{{ result.stock_used }}: <span class="fw-bolder">{{ result.price_used | intcomma:False }}</span></a>
+              <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='used main' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='used main' %}{% endif %}"
+                class="btn btn-sm btn-outline-warning">{{ result.stock_used }}: <span class="fw-bolder">{{ result.price_used | intcomma:False }}</span></a>
               {% endif %}
               {% endif %}
             </div>
@@ -85,6 +95,23 @@
 
       <div class="">
         <h2 class="my-4">{% trans 'Invoice' %}</h2>
+        {% if collection_warning %}
+        <div class=" bg-danger text-center p-2 rounded text-light">
+          <h4 class="">{% trans 'This invoice has a book from a collection that can not be sold separately' %}</h4>
+          {% if collection_parent_product %}
+          {% for product in collection_parent_product %}
+          <p>{{ product.name }} - {{ product.isbn }} {% trans 'include' %} {{ product.collection_set}}</p>
+          {% endfor %}
+          {% endif %}
+
+          {% if collection_children_product %}
+          {% for product in collection_children_product %}
+          <p>{{ product.name }} - {{ product.isbn }} {% trans 'is in this collection' %} {{ product.collection_parent }}</p>
+          {% endfor %}
+          {% endif %}
+
+        </div>
+        {% endif %}
         <table class="table table-striped">
           <thead>
             <tr>
@@ -158,7 +185,7 @@
 
         <a {% if order and order.lines.all %}href="{% url 'staff:invoice_checkout' order.id %}" class="btn btn-success" {% else %}href="" class="btn btn-outline-success disabled" {% endif%}>{% trans 'Submit' %}</a>
 
-        <a {% if order %} href="{% url 'tools:print_invoice' order.id %}" class="btn btn-outline-secondary my-3" {% else %}href="" class="btn btn-outline-success disabled" {% endif %} target="_blank" >{% trans 'Print' %}</a>
+        <a {% if order %} href="{% url 'tools:print_invoice' order.id %}" class="btn btn-outline-secondary my-3" {% else %}href="" class="btn btn-outline-success disabled" {% endif %} target="_blank">{% trans 'Print' %}</a>
         {# <a onclick="window.print();return false;" class="btn btn-outline-secondary">{% trans 'Print' %}</a> #}
         {% if order %}
         <a href="{% url 'tools:make_invoice_pdf' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF' %}</a>
