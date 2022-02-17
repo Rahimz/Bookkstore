@@ -1,0 +1,52 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Products' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+      <div class="col-md-2">
+        {% include "staff/sidebar_staff.html" with barName="products" %}
+      </div>
+      <div class="col-md-10">
+    <h2>{% trans 'Product' %}: {{ product.name }}</h2>
+    <table class="table table-striped">
+      <tr>
+        <td>{% trans 'Is a collection' %}</td>
+        <td>{{ product.is_collection}}</td>
+      </tr>
+      <tr>
+        <td>{% trans 'Related products' %}</td>
+        <td>
+        {% for prd in products %}
+        <br>{{ prd.name }} - {{ prd.isbn }} <a href="{% url 'staff:collection_management_remove' product_id=product.id product_isbn=prd.isbn %}" class="btn btn-sm btn-outline-danger">{% trans 'Remove' %}</a>
+        {% endfor %}
+        </td>
+      </tr>
+    </table>
+    <form class="" action="." method="post"> {% csrf_token %}
+      {{ collection_form | crispy }}
+      <input type="submit" value="{% trans 'Add' %}" class="btn btn-outline-secondary my-3" >
+
+    </form>
+
+
+
+    </div>
+
+
+  </div>
+
+</div>
+{% endblock %}
+{% block script %}
+
+{% endblock %}

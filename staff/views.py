@@ -12,7 +12,7 @@ from django.utils.translation import gettext_lazy as _
 
 from django_countries.fields import Country
 
-from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm
+from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm, ProductCollectionForm
 from products.models import Product, Category
 from orders.models import Order, OrderLine, PurchaseLine
 from orders.forms import OrderAdminCheckoutForm
@@ -223,6 +223,11 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
     products = None
     results = None
     product = None
+
+    collection_warning = False
+    collection_ids = []
+    collection_parent_product = None
+    collection_children_product = None
     # isbn = ''
     search_form = SearchForm()
     update_form = InvoiceAddForm()
@@ -246,6 +251,9 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
 
         # TODO: The loop should be replaced with a query to enhance the performance
         for item in order.lines.all():
+            if item.product.is_collection:
+                collection_warning = True
+                collection_ids.append((item.product.pk, item.product.collection_set, item.product.collection_parent))
             # update_forms[item.id]
             form  = InvoiceAddForm()
             update_forms[item.id] = form
@@ -507,6 +515,16 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
             pass
 
     search_form = SearchForm()
+
+    if collection_warning:
+        # collection_ids = [(id, collection_set, collection_parent), ]
+        parent_ids = [ids[0] for ids in collection_ids if ids[1]]
+        children_ids = [ids[0] for ids in collection_ids if ids[2]]
+
+        collection_parent_product = Product.objects.all().filter(pk__in=parent_ids)
+        collection_children_product = Product.objects.all().filter(pk__in=children_ids)
+
+
     return render(
         request,
         'staff/invoice_create.html',
@@ -517,7 +535,9 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
          'update_form': update_form,
          'search_form': search_form,
          'results': results,
-
+         'collection_warning': collection_warning,
+         'collection_parent_product': collection_parent_product,
+         'collection_children_product': collection_children_product,
     })
 
 
@@ -1054,3 +1074,100 @@ def order_list_by_country(request, country_code=None):
             'country': country,
         }
     )
+
+
+@staff_member_required
+def collection_management(request):
+    products_object = Product.objects.all()
+
+    search_form = SearchForm()
+    if request.method == 'POST':
+        search_form = SearchForm(data=request.POST)
+        if search_form.is_valid():
+            search_query = search_form.cleaned_data['query']
+
+            products_object = ProductSearch(object=Product, query=search_query).order_by('name', 'publisher')
+
+    # pagination
+    paginator = Paginator(products_object, 50) # 50 posts in each page
+    page = request.GET.get('page')
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer deliver the first page
+        products = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range deliver last page of results
+        products = paginator.page(paginator.num_pages)
+
+    return render(
+        request,
+        'staff/collection_management.html',
+        {
+        'products':products,
+        'page': page,
+        'search_form': search_form,
+        }
+    )
+
+@staff_member_required
+def collection_management_edit(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    if product.collection_set:
+        product_isbn = product.collection_set.split()
+        products = Product.objects.all().filter(isbn__in=product_isbn).order_by('name')
+    else:
+        products = None
+        product_isbn = []
+    collection_form = ProductCollectionForm()
+    if request.method == 'POST':
+        collection_form = ProductCollectionForm(data=request.POST)
+        if collection_form.is_valid():
+            isbn = collection_form.cleaned_data['collection_field']
+            if isbn in product_isbn:
+                messages.warning(request, _('This product is in this collection'))
+                return redirect('staff:collection_management_edit', product.id)
+            new_product = None
+            try:
+                new_product = get_object_or_404(Product, isbn=isbn)
+            except:
+                messages.error(request, _('Product does not found'))
+            if new_product:
+                new_collection_set = f"{product.collection_set} {isbn}"
+                product.collection_set = new_collection_set
+                new_product.is_collection = True
+                new_product.collection_parent = product.isbn
+
+                product.save()
+                new_product.save()
+
+                messages.success(request, _('The product added to collection'))
+                return redirect('staff:collection_management_edit', product.id)
+    return render(
+        request,
+        'staff/collection_management_edit.html',
+        {
+            'product': product,
+            'products': products,
+            'collection_form': collection_form,
+        }
+    )
+
+
+@staff_member_required
+def collection_management_remove(request, product_id, product_isbn):
+    product = get_object_or_404(Product, pk=product_id)
+    removed_product = get_object_or_404(Product, isbn=product_isbn)
+
+    product_isbn_list = product.collection_set.split()
+    print(product_isbn_list)
+    product_isbn_list.remove(product_isbn)
+    product.collection_set = ' '.join(product_isbn_list)
+
+    product.save()
+
+    removed_product.is_collection = False
+    removed_product.collection_parent = None
+    removed_product.save()
+    messages.success(request, _('This product removed from the collection'))
+    return redirect('staff:collection_management_edit', product.id)

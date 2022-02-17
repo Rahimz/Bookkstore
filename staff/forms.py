@@ -64,3 +64,20 @@ class OrderShippingForm(forms.ModelForm):
         widgets = {
             'shipped_code': forms.TextInput(attrs={'autofocus': 'autofocus'})
         }
+
+
+class ProductCollectionForm(forms.Form):
+    collection_field = forms.CharField(
+        label=_('Related product'),
+        max_length=13,
+        widget=forms.TextInput(attrs={'placeholder': _('Please add one ISBN each time')})
+    )
+    # class Meta:
+    #     model = Product
+    #     fields = ['collection_set',]
+    #     labels = {
+    #         'collection_set': _('Enter just one ISBN each time')
+    #     }
+    #     widgets = {
+    #         'collection_set': forms.TextInput(attrs={'placeholder': _('Just enter each ISBN in a new line')})
+    #     }

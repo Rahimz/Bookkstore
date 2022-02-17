@@ -39,6 +39,10 @@ urlpatterns = [
     path('products/create/', views.product_create, name='product_create'),
     path('products/update/<int:product_id>/', views.product_update, name='product_update'),
 
+    path('products/collection-management/', views.collection_management, name='collection_management'),
+    path('products/collection-management/edit/<int:product_id>/', views.collection_management_edit, name='collection_management_edit'),
+    path('products/collection-management/edit/<int:product_id>/<str:product_isbn>/', views.collection_management_remove, name='collection_management_remove'),
+
     path('categories/', views.category_list, name='categories'),
     path('category/create/', views.category_create, name='category_create'),
 
