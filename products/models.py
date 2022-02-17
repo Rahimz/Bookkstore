@@ -158,6 +158,13 @@ class Product(models.Model):
         blank=True,
         null=True
     )
+    is_collection = models.BooleanField(
+        default=False
+    )
+    collection_set = models.TextField(
+        null=True,
+        blank=True
+    )
     age_range = models.CharField(
         max_length=150,
         default='',
@@ -372,6 +379,9 @@ class Product(models.Model):
 
         if self.stock_used == 0:
             self.price_used = 0
+
+        if self.collection_set:
+            self.is_collection = True
 
         super(Product, self).save(*args, **kwargs)
 
