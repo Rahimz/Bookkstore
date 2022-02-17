@@ -12,25 +12,24 @@
 </head>
 
 <body>
-  <div class="d-flex justify-content-center">
-    <img src="{% static 'img/logo_bw.png' %}" alt="{% trans 'Ketab Damavand' %}" class="rounded" width="90px;" height="auto">
-  </div>
-  <h2 class="text-center">{% trans 'Ketabe Damavand' %}</h2>
-  <p class="text-center">
+  <div class="d-flex justify-content-between">
+    <p class="">
     {% trans 'Invoice no.' %}: {{ order.id }}<br />
-  <p class="text-center small">
     {#{{ order.created|date:"M d, Y" }}#}
     {{ fa_date  }}
-  </p>
-  </p>
-  <p class="order-info text-center">
-    {% if order.client.username == "guest" %}
+    <br><br>{% if order.client.username == "guest" %}
     {% trans 'Client' %}: {% trans 'Guest' %}
     {% else %}
     {% trans 'Client' %}: {{ order.client.first_name }} {{ order.client.last_name }}
-    <br>{% trans 'Phone' %}: {{ order.phone }}
+    <br>{% trans 'Phone' %}: {{ order.client.phone }}
     {% endif %}
   </p>
+    <div class="">
+      <img src="{% static 'img/logo_bw.png' %}" alt="{% trans 'Ketab Damavand' %}" class="rounded" width="90px;" height="auto">
+    </div>
+  </div>
+
+
   {% comment %}
   <h3>{% trans 'Bill to' %}</h3>
   <p>
@@ -55,9 +54,9 @@
       {% for item in order.lines.all %}
       <tr class="row{% cycle "1" "2" %}">
         <td>{{ forloop.counter }}</td>
-        <td>{{ item.product.name | truncatechars:20 }}</td>
+        <td>{{ item.product.name | truncatechars:28 }}</td>
         <td class="num">{{ item.price | intcomma:False }}</td>
-        <td class="num">{{ item.quantity }}</td>
+        <td class="text-center">{{ item.quantity }}</td>
         <td class="num">{{ item.discount | intcomma:False }}</td>
         <td class="num">{{ item.get_cost_after_discount | intcomma:False }}</td>
       </tr>
@@ -81,7 +80,7 @@
       {% endif %}
       <tr class=total>
         <td colspan="5">{% trans 'PAYABLE'%}</td>
-        <td class="num"><b>{{ order.get_payable | intcomma:False }}</b></td>
+        <td class="num-sum">{{ order.get_payable | intcomma:False }}</td>
       </tr>
     </tfoot>
   </table>
@@ -90,15 +89,11 @@
     {% trans 'Registrar' %}: {{ order.user }} - {% trans 'Approver' %}: {{ order.approver }}
   </p>
   {% endcomment %}
-  {% if slogan %}<p class="text-center">{{ slogan.slogan }} {{ slogan.author }}</p>{% endif %}
-  <p class="text-center">{% trans '16 Azar St.' %}, {% trans 'Edward Brown St.' %}, {% trans 'No.7' %} - 66981024</p>
-  <p class="ending text-center">{{ order.token }}</p>
+  {% if slogan %}<span class="d-flex text-center">{{ slogan.slogan }} {{ slogan.author }}</span>{% endif %}
+  <span class="text-center">{% trans '16 Azar St.' %}, {% trans 'Edward Brown St.' %}, {% trans 'No.7' %} - 66981024</span>
+  <span class="d-flex ending justify-content-center my-1">{{ order.token }}</span>
 
-  {% comment %}
-  <span class="{% if order.paid %}paid{% else %}pending{% endif %}">
-    {% if order.paid %}Paid{% else %}{% trans 'Pending payment' %}{% endif %}
-  </span>
-  {% endcomment %}
+
 
 
 
