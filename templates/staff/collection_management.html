@@ -1,0 +1,78 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Products' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+      <div class="col-md-2">
+        {% include "staff/sidebar_staff.html" with barName="products" %}
+      </div>
+      <div class="col-md-10">
+    <h2>{% trans 'List of products' %}</h2>
+    <form class="" action="." method="post">
+      <div class="row">
+
+      <div class="col-md-9">
+        {{ search_form | crispy }}
+        {% csrf_token %}
+      </div>
+
+      <div class="col-md-3">
+        <input class="btn btn-outline-secondary form-control" type="submit" name="book" value="{% trans 'Submit' %}">
+      </div>
+    </div>
+
+    </form>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">#</th>
+          <th scope="col">{% trans 'Edit' %}</th>
+          <th scope="col">{% trans 'ISBN' %}</th>
+          <th scope="col">{% trans 'Name' %}</th>
+          <th scope="col">{% trans 'Author' %}</th>
+          <th scope="col">{% trans 'Translator' %}</th>
+          <th scope="col">{% trans 'Publisher' %}</th>
+          <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+        <tr>
+          {% if product.is_collection and not product.collection_set %}
+          <td>{% trans 'Already in a collection' %}</td>
+          {% else %}
+          <td><a href="{% url 'staff:collection_management_edit' product.id %}" class="btn btn-outline-secondary">{% trans 'Collection management' %}</a></td>
+          {% endif %}
+          <th scope="row">{{ product.pk }}</th>
+          <td><a href="{% url 'staff:product_update' product.id %}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+          <th scope="row">{{ product.isbn }}</th>
+          <td><a href="{% url 'shop:product_detail' product.pk %}">{{ product.name }}</a></td>
+          <td>{{ product.author }}</td>
+          <td>{{ product.translator }}</td>
+          <td>{{ product.publisher }}</td>
+          <td>{{ product.price | intcomma:False }}</td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+    {% include "shop/pagination.html" with page=products %}
+
+    </div>
+
+
+  </div>
+
+</div>
+{% endblock %}
