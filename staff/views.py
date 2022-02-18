@@ -124,10 +124,7 @@ def product_create(request):
     if request.method == 'POST':
         form = ProductCreateForm(request.POST)
         if form.is_valid():
-            product = form.save(commit=False)
-            product.category = Category.objects.get(name=form.cleaned_data['category'])
-
-            product.save()
+            form.save()
             messages.success(request, _('Product is created!'))
             if 'another' in request.POST:
                 return HttpResponseRedirect(reverse('staff:product_create'))
