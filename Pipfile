@@ -19,6 +19,7 @@ django-crispy-forms = "*"
 zeep = "*"
 weasyprint = "*"
 pandas = "*"
+django-simple-history = "*"
 
 [dev-packages]
 
