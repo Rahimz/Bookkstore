@@ -7,7 +7,10 @@
 {% load humanize %}
 {% load crispy_forms_tags %}
 
-{% block title %}{% trans 'Orders' %}{% endblock %}
+{% block title %}{% trans 'Order shipping' %}{% endblock %}
+
+
+{% block orders-btn %}btn-secondary text-dark{% endblock %}
 
 {% block content %}
 <div class="container-fluid overflow-hidden">
@@ -131,7 +134,7 @@
       </table>
 
       <div class="">
-        
+
       </div>
     </div>
   </div>
