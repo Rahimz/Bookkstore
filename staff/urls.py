@@ -2,6 +2,7 @@ from django.urls import path
 
 from . import views
 from .views import ProductCreate
+from warehouses.views import refund_from_client, refund_list_client
 
 app_name = 'staff'
 
@@ -34,6 +35,8 @@ urlpatterns = [
     path('warehouse/', views.warehouse, name='warehouse'),
     path('warehouse/sold-products/', views.sold_products, name='sold_products'),
     path('warehouse/purchased-products/', views.purchased_products, name='purchased_products'),
+    path('warehouse/refund/client/', refund_from_client, name="refund_from_client"),
+    path('warehouse/refund/client/list/', refund_list_client, name="refund_list_client"),
 
     path('products/', views.products, name='products'),
     path('products/create/', views.product_create, name='product_create'),
