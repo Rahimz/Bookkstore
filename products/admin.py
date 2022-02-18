@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Category, Product, Good
-
+import simple_history
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -9,7 +9,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+# class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(simple_history.admin.SimpleHistoryAdmin):
     list_display = ['name', 'isbn', 'price',
                     'available', 'stock', 'updated']
     list_filter = ['available', 'stock' ]
