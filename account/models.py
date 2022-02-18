@@ -7,6 +7,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
 from django.shortcuts import reverse
 
+from simple_history.models import HistoricalRecords
 
 class Address(models.Model):
     name = models.CharField(
@@ -130,3 +131,28 @@ class Vendor(CustomUser):
 
     def __str__(self):
         return self.first_name
+
+
+class Credit(models.Model):
+    user = models.OneToOneField(
+        CustomUser,
+        on_delete=models.CASCADE,
+    )
+    balance = models.DecimalField(
+        max_digits=10,
+        decimal_places=0,
+        null=True,
+        blank=True
+    )
+    expiration_date = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+    discount_percent = models.IntegerField(
+        null=True,
+        blank=True
+    )
+    history = HistoricalRecords()
+
+    def __str__(self):
+        return f"{self.balance}"
