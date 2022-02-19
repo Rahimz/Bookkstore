@@ -173,6 +173,14 @@ class Order(models.Model):
     )
     is_gift = models.BooleanField(default=False)
     paid = models.BooleanField(default=False)
+    pay_by_credit = models.BooleanField(
+        default=False
+    )
+    credit = models.DecimalField(
+        max_digits=settings.DEFAULT_MAX_DIGITS,
+        decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+        default=0,
+    )
 
     class Meta:
         ordering = ("-approved_date", "-pk",)

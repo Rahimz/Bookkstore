@@ -631,21 +631,28 @@ def invoice_checkout_credit(request, order_id, client_id):
 
         if order.payable == balance:
             order.paid = True
-        # order.pay_by_credit = True
-        # order.credit = balance
+        order.pay_by_credit = True
+        order.credit = balance
+
         order.save()
+
         client.credit.balance = 0
         client.credit.save()
+        messages(request, _('Credit of client added to discount of order'))
         return redirect('staff:invoice_checkout_client', order_id=order.id, client_id=client.id)
+
     elif order.payable < balance:
-         client.credit.balance = client.credit.balance - order.payable
-         order.discount = order.payable
-         order.paid = True
-         # order.pay_by_credit = True
-         # order.credit = balance
-         order.save()
-         client.credit.save()
-         return redirect('staff:invoice_checkout_client', order_id=order.id, client_id=client.id)
+        client.credit.balance = client.credit.balance - order.payable
+        order.discount = order.payable
+        order.paid = True
+        order.pay_by_credit = True
+        order.credit = balance
+
+        order.save()
+        client.credit.save()
+        messages(request, _('Order paid with credit'))
+
+        return redirect('staff:invoice_checkout_client', order_id=order.id, client_id=client.id)
 
 @staff_member_required
 def orderline_update(request, order_id, orderline_id):
