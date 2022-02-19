@@ -6,7 +6,7 @@ from django.contrib import messages
 from .forms import RefundClientForm
 from .models import Refund
 from orders.models import Order
-from account.models import CustomUser
+from account.models import CustomUser, Credit
 from products.models import Product
 
 
@@ -42,8 +42,21 @@ def refund_from_client(request):
                     from_client=client,
                     registrar=request.user,
                 )
+
                 messages.success(request, _('Refund order registered'))
-                return redirect('staff:warehouse')
+                try:
+                    client.credit.balance += refund_form.cleaned_data['price']
+                    messages.success(request, _('Client credit balance updated'))
+                    client.credit.save()
+                    return redirect('staff:refund_list_client')
+                except:
+                    Credit.objects.create(
+                        user=client,
+                        balance=refund_form.cleaned_data['price']
+                    )
+                    messages.success(request, _('Credit added to client balance'))
+                    return redirect('staff:refund_list_client')
+
     else:
         refund_form = RefundClientForm()
     return render(
@@ -53,6 +66,7 @@ def refund_from_client(request):
             'refund_form': refund_form,
         }
     )
+
 
 
 def refund_list_client(request):
