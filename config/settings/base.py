@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'rosetta',
     'crispy_forms',
+    'simple_history',
 
     # Local
     'account.apps.AccountConfig',
@@ -62,7 +63,7 @@ INSTALLED_APPS = [
     'discounts.apps.DiscountsConfig',
     'zarinpal.apps.ZarinpalConfig',
     'warehouses.apps.WarehousesConfig',
-    'tools.apps.ToolsConfig',    
+    'tools.apps.ToolsConfig',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +76,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'

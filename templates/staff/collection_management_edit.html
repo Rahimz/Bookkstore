@@ -8,7 +8,9 @@
 
 {% load crispy_forms_tags %}
 
-{% block title %}{% trans 'Products' %}{% endblock %}
+{% block title %}{% trans 'Collection management' %}{% endblock %}
+
+{% block products-btn %}btn-secondary text-dark{% endblock %}
 
 {% block content %}
 <div class="container-fluid overflow-hidden">
@@ -21,7 +23,7 @@
     <table class="table table-striped">
       <tr>
         <td>{% trans 'Is a collection' %}</td>
-        <td>{{ product.is_collection}}</td>
+        <td>{% if product.is_collection %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}</td>
       </tr>
       <tr>
         <td>{% trans 'Related products' %}</td>
@@ -34,7 +36,7 @@
     </table>
     <form class="" action="." method="post"> {% csrf_token %}
       {{ collection_form | crispy }}
-      <input type="submit" value="{% trans 'Add' %}" class="btn btn-outline-secondary my-3" >
+      <input type="submit" value="{% trans 'Add' %}" class="btn btn-success my-3" >
 
     </form>
 

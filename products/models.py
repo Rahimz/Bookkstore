@@ -6,6 +6,8 @@ from django.utils.text import slugify
 import string
 import random
 
+from simple_history.models import HistoricalRecords
+
 from files.models import ImportSession
 from account.models import Vendor
 # from discount.models import Cupon
@@ -343,6 +345,7 @@ class Product(models.Model):
     updated = models.DateTimeField(
         auto_now=True
     )
+    history = HistoricalRecords()
 
     class Meta:
         ordering = ('-updated', '-created',)

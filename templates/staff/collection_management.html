@@ -8,7 +8,9 @@
 
 {% load crispy_forms_tags %}
 
-{% block title %}{% trans 'Products' %}{% endblock %}
+{% block title %}{% trans 'Collection management' %}{% endblock %}
+
+{% block products-btn %}btn-secondary text-dark{% endblock %}
 
 {% block content %}
 <div class="container-fluid overflow-hidden">
@@ -52,7 +54,7 @@
           {% if product.is_collection and not product.collection_set %}
           <td>{% trans 'Already in a collection' %}</td>
           {% else %}
-          <td><a href="{% url 'staff:collection_management_edit' product.id %}" class="btn btn-outline-secondary">{% trans 'Collection management' %}</a></td>
+          <td><a href="{% url 'staff:collection_management_edit' product.id %}" class="btn btn-warning">{% trans 'Collection management' %}</a></td>
           {% endif %}
           <th scope="row">{{ product.pk }}</th>
           <td><a href="{% url 'staff:product_update' product.id %}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>

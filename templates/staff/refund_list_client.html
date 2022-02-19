@@ -1,0 +1,40 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Refund list' %}{% endblock %}
+
+{% block warehouses-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+      <div class="col-md-2">
+        {% include "staff/sidebar_staff.html" with barName="warehouse" %}
+      </div>
+      <div class="col-md-10">
+    <h2>{% trans 'Refund list'%}</h2>
+    <table class="table">
+      {% for refund in refunds %}
+    <tr>
+      <td>{{ refund.id }}</td>
+      <td>{{ refund.order }}</td>
+      <td>{{ refund.from_client }}</td>
+      <td>{{ refund.product }}</td>
+      <td>{{ refund.quantity }}</td>
+      <td>{{ refund.price }}</td>
+      <td>{{ refund.registrar }}</td>
+      <td>{{ refund.created }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+
+
+  </div>
+
+</div>
+{% endblock %}

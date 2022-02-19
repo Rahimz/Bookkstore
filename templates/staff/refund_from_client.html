@@ -4,7 +4,9 @@
 
 {% load static %}
 
-{% block title %}{% trans 'Warehouse' %}{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Refund product' %}{% endblock %}
 
 {% block warehouses-btn %}btn-secondary text-dark{% endblock %}
 
@@ -15,7 +17,12 @@
         {% include "staff/sidebar_staff.html" with barName="warehouse" %}
       </div>
       <div class="col-md-10">
-    <h2>{% trans 'List of warhouse'%}</h2>
+    <h2>{% trans 'Refund product'%}</h2>
+    <form class="" action="." method="post">
+      {{ refund_form | crispy }}
+      {% csrf_token %}
+      <input type="submit" name="" value="{% trans 'Submit' %}" class="btn btn-success my-3">
+    </form>
 
 
   </div>

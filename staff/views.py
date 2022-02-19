@@ -18,7 +18,7 @@ from orders.models import Order, OrderLine, PurchaseLine
 from orders.forms import OrderAdminCheckoutForm
 from search.forms import ClientSearchForm, BookIsbnSearchForm, SearchForm
 from search.views import ProductSearch
-from account.models import CustomUser, Vendor, Address
+from account.models import CustomUser, Vendor, Address, Credit
 from account.forms import VendorAddForm, AddressAddForm
 from tools.fa_to_en_num import number_converter
 
@@ -124,10 +124,7 @@ def product_create(request):
     if request.method == 'POST':
         form = ProductCreateForm(request.POST)
         if form.is_valid():
-            product = form.save(commit=False)
-            product.category = Category.objects.get(name=form.cleaned_data['category'])
-
-            product.save()
+            form.save()
             messages.success(request, _('Product is created!'))
             if 'another' in request.POST:
                 return HttpResponseRedirect(reverse('staff:product_create'))
@@ -547,6 +544,12 @@ def invoice_checkout(request, order_id, client_id=None):
     checkout_form = OrderAdminCheckoutForm(instance=order)
     client_search_form = ClientSearchForm()
     client = CustomUser.objects.get(pk=client_id) if client_id else None
+    credit = None
+    if client:
+        try:
+            credit = Credit.objects.get(user=client)
+        except:
+            pass
     clients = None
     client_add_notice = None
     if request.method == 'POST':
@@ -613,8 +616,43 @@ def invoice_checkout(request, order_id, client_id=None):
          'clients': clients,
          'client': client,
          'client_add_notice': client_add_notice,
+         'credit': credit,
     })
 
+
+def invoice_checkout_credit(request, order_id, client_id):
+    order = Order.objects.get(pk=order_id)
+    client = CustomUser.objects.get(pk=client_id)
+    order.client = client
+    balance = client.credit.balance
+
+    if order.payable >= balance:
+        order.discount = balance
+
+        if order.payable == balance:
+            order.paid = True
+        order.pay_by_credit = True
+        order.credit = balance
+
+        order.save()
+
+        client.credit.balance = 0
+        client.credit.save()
+        messages(request, _('Credit of client added to discount of order'))
+        return redirect('staff:invoice_checkout_client', order_id=order.id, client_id=client.id)
+
+    elif order.payable < balance:
+        client.credit.balance = client.credit.balance - order.payable
+        order.discount = order.payable
+        order.paid = True
+        order.pay_by_credit = True
+        order.credit = balance
+
+        order.save()
+        client.credit.save()
+        messages(request, _('Order paid with credit'))
+
+        return redirect('staff:invoice_checkout_client', order_id=order.id, client_id=client.id)
 
 @staff_member_required
 def orderline_update(request, order_id, orderline_id):
