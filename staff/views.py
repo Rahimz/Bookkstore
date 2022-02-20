@@ -87,7 +87,7 @@ def warehouse(request):
 
 @staff_member_required
 def products(request):
-    products_object = Product.objects.all()
+    products_object = Product.objects.all().filter(available=True)
 
     search_form = SearchForm()
     if request.method == 'POST':
@@ -528,8 +528,8 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
         parent_ids = [ids[0] for ids in collection_ids if ids[1]]
         children_ids = [ids[0] for ids in collection_ids if ids[2]]
 
-        collection_parent_product = Product.objects.all().filter(pk__in=parent_ids)
-        collection_children_product = Product.objects.all().filter(pk__in=children_ids)
+        collection_parent_product = Product.objects.all().filter(available=True).filter(pk__in=parent_ids)
+        collection_children_product = Product.objects.all().filter(available=True).filter(pk__in=children_ids)
 
     return render(
         request,
@@ -1163,7 +1163,7 @@ def order_list_by_country(request, country_code=None):
 
 @staff_member_required
 def collection_management(request):
-    products_object = Product.objects.all()
+    products_object = Product.objects.all().filter(available=True)
 
     search_form = SearchForm()
     if request.method == 'POST':
@@ -1202,7 +1202,7 @@ def collection_management_edit(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     if product.collection_set:
         product_isbn = product.collection_set.split()
-        products = Product.objects.all().filter(isbn__in=product_isbn).order_by('name')
+        products = Product.objects.all().filter(available=True).filter(isbn__in=product_isbn).order_by('name')
     else:
         products = None
         product_isbn = []
