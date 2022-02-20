@@ -34,15 +34,16 @@ def sales(request):
 @staff_member_required
 def orders(request, period=None, channel=None):
     # list of all approved or paid orders
-    if channel=='all' and period == 'all':
+    if channel == 'all' and period == 'all':
         orders = Order.objects.filter(
             Q(status='approved') | Q(paid=True))
 
     # 'mix' channel means we need the orders that should be collected
-    if channel == 'mix' and period=='all':
+    if channel == 'mix' and period == 'all':
         # orders = Order.objects.filter(
         #     Q(status='approved') | Q(paid=True)).exclude(channel='cashier')
-        orders = Order.objects.exclude(channel='cashier').exclude(status='draft')
+        orders = Order.objects.exclude(
+            channel='cashier').exclude(status='draft')
 
     # staff/orders/30/mix
     elif channel == 'mix' and period not in ('all', 'mix'):
@@ -94,10 +95,11 @@ def products(request):
         if search_form.is_valid():
             search_query = search_form.cleaned_data['query']
 
-            products_object = ProductSearch(object=Product, query=search_query).order_by('name', 'publisher')
+            products_object = ProductSearch(
+                object=Product, query=search_query).order_by('name', 'publisher')
 
     # pagination
-    paginator = Paginator(products_object, 50) # 50 posts in each page
+    paginator = Paginator(products_object, 50)  # 50 posts in each page
     page = request.GET.get('page')
     try:
         products = paginator.page(page)
@@ -112,9 +114,9 @@ def products(request):
         request,
         'staff/products.html',
         {
-        'products':products,
-        'page': page,
-        'search_form': search_form,
+            'products': products,
+            'page': page,
+            'search_form': search_form,
         }
     )
 
@@ -136,7 +138,7 @@ def product_create(request):
     return render(
         request,
         'staff/product_create.html',
-        {'form': form }
+        {'form': form}
     )
 
 
@@ -158,7 +160,7 @@ def category_create(request):
     return render(
         request,
         'staff/category_create.html',
-        {'form': form }
+        {'form': form}
     )
 
 
@@ -178,6 +180,7 @@ class ProductCreate(View):
 
     def get(self, request):
         return reverse('staff:product_create')
+
     def post(self, request):
         if request.method == 'POST':
             form = ProductCreateForm()
@@ -189,13 +192,11 @@ class ProductCreate(View):
             return HttpResponseRedirect(reverse('staff:products'))
         return super(ProductCreate, self).post(request, *args, **kwargs)
 
-
     def get_success_url(self):
         if "another" in self.request.POST:
             return reverse('staff:product_create')
         # else return the default `success_url`
         return super(ProductCreate, self).get_success_url()
-
 
         if request.method == 'POST':
             form = ProductCreateForm()
@@ -220,7 +221,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
     products = None
     results = None
     product = None
-
+    # warnin for collection
     collection_warning = False
     collection_ids = []
     collection_parent_product = None
@@ -241,18 +242,19 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
     # order_line.variation = variation
     # order_line.save()
 
-
     if order_id:
         order = Order.objects.get(pk=order_id)
-        product_ids = [(item.product.pk, item.variation) for item in order.lines.all()]
+        product_ids = [(item.product.pk, item.variation)
+                       for item in order.lines.all()]
 
         # TODO: The loop should be replaced with a query to enhance the performance
         for item in order.lines.all():
             if item.product.is_collection:
                 collection_warning = True
-                collection_ids.append((item.product.pk, item.product.collection_set, item.product.collection_parent))
+                collection_ids.append(
+                    (item.product.pk, item.product.collection_set, item.product.collection_parent))
             # update_forms[item.id]
-            form  = InvoiceAddForm()
+            form = InvoiceAddForm()
             update_forms[item.id] = form
 
     else:
@@ -313,17 +315,18 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
 
         # add product to invoice
         if (product.id, variation) in product_ids:
-            order_line = OrderLine.objects.get(order=order, product=product, variation=variation)
+            order_line = OrderLine.objects.get(
+                order=order, product=product, variation=variation)
             order_line.quantity += 1
             order_line.save()
             order.save()
         else:
             order_line = OrderLine.objects.create(
-                order = order,
-                product = product,
-                quantity = 1,
-                price = price,
-                variation = variation,
+                order=order,
+                product=product,
+                quantity=1,
+                price=price,
+                variation=variation,
             )
             order.save()
 
@@ -348,7 +351,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
             elif variation == 'new v4':
                 product.stock_5 = stock
 
-            elif variation  == 'used main':
+            elif variation == 'used main':
                 product.stock_used += stock
             product.save()
 
@@ -364,17 +367,18 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
 
         # if product.stock >=1:
         order = Order.objects.create(
-            user = request.user,
-            status = 'draft',
-            shipping_method = 'pickup',
+            user=request.user,
+            status='draft',
+            shipping_method='pickup',
         )
-        messages.success(request, _('Order is created') + ' : {}'.format(order.id))
+        messages.success(request, _('Order is created') +
+                         ' : {}'.format(order.id))
         order_line = OrderLine.objects.create(
-            order = order,
-            product = product,
-            quantity = 1,
-            price = price,
-            variation = variation,
+            order=order,
+            product=product,
+            quantity=1,
+            price=price,
+            variation=variation,
         )
         order.save()
 
@@ -399,7 +403,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
         elif variation == 'new v4':
             product.stock_5 = stock
 
-        elif variation  == 'used main':
+        elif variation == 'used main':
             product.stock_used += stock
 
         product.save()
@@ -407,17 +411,18 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
         messages.success(request,  _('Product is added to invoice'))
         return redirect('staff:invoice_create', order.id)
 
-
     # ::# TODO: should refactor shome of the codes does not use
     if request.method == 'POST':
-        isbn_search_form =BookIsbnSearchForm(data=request.POST)
+        isbn_search_form = BookIsbnSearchForm(data=request.POST)
         search_form = SearchForm(data=request.POST)
+
         if search_form.is_valid():
             search_query = search_form.cleaned_data['query']
 
             # Here we grab the quey search from database and
             # search the fields: name, author, translator, publisher, isbn
-            results = ProductSearch(object=Product, query=search_query).order_by('name', 'publisher')
+            results = ProductSearch(
+                object=Product, query=search_query).order_by('name', 'publisher')
 
             # if the results has only one item, the item automaticaly added to invoice
             if len(results) == 1:
@@ -458,10 +463,13 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
                     }
                 }
 
-                price = variation_dict[variation_list[0]][variation_list[1]]['price']
-                stock = variation_dict[variation_list[0]][variation_list[1]]['stock']
+                price = variation_dict[variation_list[0]
+                                       ][variation_list[1]]['price']
+                stock = variation_dict[variation_list[0]
+                                       ][variation_list[1]]['stock']
                 if product.has_other_prices:
-                    messages.warning(request, _('This product has other prices'))
+                    messages.warning(request, _(
+                        'This product has other prices'))
                     # if not order:
                     #     return redirect('staff:invoice_create')
                     # if order:
@@ -476,32 +484,34 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
                     # if the order has not created yet, we created it here
                     if not order:
                         order = Order.objects.create(
-                                    user = request.user,
-                                    status = 'draft',
-                                    shipping_method = 'pickup',
-                                )
-                        messages.success(request,  _('Order is created') + ' : {}'.format(order.id))
+                            user=request.user,
+                            status='draft',
+                            shipping_method='pickup',
+                        )
+                        messages.success(request,  _(
+                            'Order is created') + ' : {}'.format(order.id))
 
                     # if the product is added in the invoice we will update the quantity in invoice
                     if (product.pk, 'main') in product_ids and not product.has_other_prices:
-                        order_line = OrderLine.objects.get(order=order, product=product)
+                        order_line = OrderLine.objects.get(
+                            order=order, product=product)
                         order_line.quantity += 1
                         order_line.variation = 'main'
                         order_line.save()
                         order.save()
 
                         # Update product stock
-                        product.stock -=1
+                        product.stock -= 1
                         product.save()
 
                     # if the product is not in invoice we will create an invoice orderline
                     else:
                         order_line = OrderLine.objects.create(
-                            order = order,
-                            product = product,
-                            quantity = 1,
-                            price = product.price,
-                            variation = 'main'
+                            order=order,
+                            product=product,
+                            quantity=1,
+                            price=product.price,
+                            variation='main'
                         )
                         order.save()
 
@@ -521,7 +531,6 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
         collection_parent_product = Product.objects.all().filter(pk__in=parent_ids)
         collection_children_product = Product.objects.all().filter(pk__in=children_ids)
 
-
     return render(
         request,
         'staff/invoice_create.html',
@@ -535,7 +544,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
          'collection_warning': collection_warning,
          'collection_parent_product': collection_parent_product,
          'collection_children_product': collection_children_product,
-    })
+         })
 
 
 @staff_member_required
@@ -553,38 +562,21 @@ def invoice_checkout(request, order_id, client_id=None):
     clients = None
     client_add_notice = None
     if request.method == 'POST':
-        checkout_form = OrderAdminCheckoutForm(data=request.POST, instance=order)
+        checkout_form = OrderAdminCheckoutForm(
+            data=request.POST, instance=order)
         client_search_form = ClientSearchForm(data=request.POST)
         if client_search_form.is_valid():
             # messages.debug(request, 'client_search_form.is_valid')
-            query = client_search_form.cleaned_data['query']
+            client_query = client_search_form.cleaned_data['client_query']
 
-            #we will check if any farsi character is in the query we will changed it
-            query = number_converter(query)
-            clients = CustomUser.objects.filter(is_client=True).order_by('-pk').exclude(is_superuser=True).exclude(username='guest')
+            # we will check if any farsi character is in the query we will changed it
+            client_query = number_converter(client_query)
+            clients = CustomUser.objects.filter(is_client=True).order_by(
+                '-pk').exclude(is_superuser=True).exclude(username='guest')
             clients = clients.annotate(
-                search=SearchVector('first_name', 'last_name', 'username', 'phone'),).filter(search__contains=query)
+                search=SearchVector('first_name', 'last_name', 'username', 'phone'),).filter(search__contains=client_query)
             if len(clients) == 0:
                 client_add_notice = True
-            # try:
-            #     client = CustomUser.objects.get(phone=query, is_client=True)
-            # except:
-            #     pass
-            #
-            # if client:
-            #     messages.success(request, _('Client found'))
-            #
-            # elif query and not client:
-            #     client = CustomUser(
-            #         phone=query,
-            #         username=query,
-            #         email="{}@ketabedamavand.com".format(query)
-            #     )
-            #     client.save()
-            #     messages.success(request, _('Client added')+ ' {}'.format(client.phone))
-            #
-            # elif not client:
-            #     client = CustomUser.objects.get(username='guest')
 
         if checkout_form.is_valid():
             if not client:
@@ -617,7 +609,7 @@ def invoice_checkout(request, order_id, client_id=None):
          'client': client,
          'client_add_notice': client_add_notice,
          'credit': credit,
-    })
+         })
 
 
 def invoice_checkout_credit(request, order_id, client_id):
@@ -654,9 +646,55 @@ def invoice_checkout_credit(request, order_id, client_id):
 
         return redirect('staff:invoice_checkout_client', order_id=order.id, client_id=client.id)
 
+
+def invoice_create_add_client(request, order_id, client_id=None):
+    order = Order.objects.get(pk=order_id)
+
+    # search and add client
+    client_search_form = ClientSearchForm()
+    client = CustomUser.objects.get(pk=client_id) if client_id else None
+    client_add_notice = None
+    clients = None
+
+    if order and client:
+        order.client = client
+        order.save()
+        messages.success(request,  _('Client added to order'))
+        return redirect('staff:invoice_create', order.id)
+
+    if request.method == 'POST':
+        client_search_form = ClientSearchForm(data=request.POST)
+        if client_search_form.is_valid():
+            # messages.debug(request, 'client_search_form.is_valid')
+            client_query = client_search_form.cleaned_data['client_query']
+
+            # we will check if any farsi character is in the query we will changed it
+            client_query = number_converter(client_query)
+            clients = CustomUser.objects.filter(is_client=True).order_by(
+                '-pk').exclude(is_superuser=True).exclude(username='guest')
+            clients = clients.annotate(
+                search=SearchVector('first_name', 'last_name', 'username', 'phone'),).filter(search__contains=client_query)
+            if len(clients) == 0:
+                client_add_notice = True
+
+
+
+    # return redirect('staff:invoice_create', order_id=order.id)
+    return render(
+        request,
+        'staff/order_add_client.html',
+        {
+            'client_search_form': client_search_form,
+            'client_add_notice': client_add_notice,
+            'clients': clients,
+            'order': order,
+        }
+    )
+
+
 @staff_member_required
 def orderline_update(request, order_id, orderline_id):
-    update_form = InvoiceAddForm(initial={'quantity':"0"})
+    update_form = InvoiceAddForm(initial={'quantity': "0"})
     order = Order.objects.get(pk=order_id)
     if request.method == 'POST':
         update_form = InvoiceAddForm(data=request.POST)
@@ -728,8 +766,10 @@ def orderline_update(request, order_id, orderline_id):
                 }
             }
 
-            product_price = variation_dict[variation_list[0]][variation_list[1]]['price']
-            product_stock = variation_dict[variation_list[0]][variation_list[1]]['stock']
+            product_price = variation_dict[variation_list[0]
+                                           ][variation_list[1]]['price']
+            product_stock = variation_dict[variation_list[0]
+                                           ][variation_list[1]]['stock']
 
             if update_form.cleaned_data['remove'] == True:
                 """
@@ -763,7 +803,7 @@ def orderline_update(request, order_id, orderline_id):
                 elif variation == 'new v4':
                     product.stock_5 += product_stock
 
-                elif variation  == 'used main':
+                elif variation == 'used main':
                     product.stock_used += product_stock
 
                 product.save()
@@ -776,11 +816,13 @@ def orderline_update(request, order_id, orderline_id):
                 # increase the quantity of product in invoice
                 if update_form.cleaned_data['quantity'] > order_line.quantity:
                     if update_form.cleaned_data['quantity'] > order_line.quantity + product_stock:
-                        messages.error(request, _('Not enough stock') + ' ' + _('Quantity') + ' {}'.format(product_stock))
+                        messages.error(request, _(
+                            'Not enough stock') + ' ' + _('Quantity') + ' {}'.format(product_stock))
                         return redirect('staff:invoice_create', order.id)
                     else:
                         # Update product stock
-                        product_stock -= update_form.cleaned_data['quantity'] - order_line.quantity
+                        product_stock -= update_form.cleaned_data['quantity'] - \
+                            order_line.quantity
 
                         # if variation == 'main':
                         #     product.stock = product_stock
@@ -806,15 +848,15 @@ def orderline_update(request, order_id, orderline_id):
                         elif variation == 'new v4':
                             product.stock_5 = product_stock
 
-                        elif variation  == 'used main':
+                        elif variation == 'used main':
                             product.stock_used += product_stock
 
                         product.save()
 
-
                 elif update_form.cleaned_data['quantity'] < order_line.quantity:
                     # Update product stock
-                    product_stock += order_line.quantity - update_form.cleaned_data['quantity']
+                    product_stock += order_line.quantity - \
+                        update_form.cleaned_data['quantity']
 
                     if variation == 'new main':
                         product.stock = product_stock
@@ -835,7 +877,7 @@ def orderline_update(request, order_id, orderline_id):
                         product.stock_5 = product_stock
 
                     # we have some old row in purchase lines
-                    elif variation  == 'used main':
+                    elif variation == 'used main':
                         product.stock_used += product_stock
 
                     product.save()
@@ -843,7 +885,6 @@ def orderline_update(request, order_id, orderline_id):
                 order_line.quantity = update_form.cleaned_data['quantity']
                 order_line.save()
                 order.save()
-
 
             if update_form.cleaned_data['discount'] != 0:
                 order_line.discount = update_form.cleaned_data['discount']
@@ -874,12 +915,13 @@ def draft_orders(request):
 
 @staff_member_required
 def category_list(request):
-    main_categories = Category.objects.filter(active=True, parent_category=None)
+    main_categories = Category.objects.filter(
+        active=True, parent_category=None)
 
     return render(
         request,
         'staff/categories.html',
-        {'main_categories': main_categories }
+        {'main_categories': main_categories}
     )
 
 
@@ -891,7 +933,7 @@ def sold_products(request):
     for item in order_lines:
         # key = products.get(item.product.id)
         # print(item.product.id)
-        if  item.product.name in products:
+        if item.product.name in products:
             products[item.product.name] += item.quantity
         else:
             products[item.product.name] = item.quantity
@@ -901,8 +943,8 @@ def sold_products(request):
         request,
         'staff/sold_products.html',
         {'order_lines': order_lines,
-        'products':products,
-        }
+         'products': products,
+         }
     )
 
 
@@ -911,14 +953,12 @@ def purchased_products(request):
 
     purchase_lines = PurchaseLine.objects.all().order_by('purchase__created')
 
-
     # order_lines = OrderLine.objects.all().values_list(product.id, flat=True)
     products = dict()
-    i= 0
+    i = 0
     for line in purchase_lines:
 
-
-        if  line.product.name in products:
+        if line.product.name in products:
             # we grab the present value from the products dictionary
             quantity = products[line.product.name]['quantity']
             vendor = products[line.product.name]['vendor']
@@ -942,7 +982,7 @@ def purchased_products(request):
             products[line.product.name] = {
                 'quantity': line.quantity,
                 'vendor': line.purchase.vendor.first_name
-                }
+            }
         i += 1
     # products = sorted(products.lines(), key=lambda x: x[0], reverse=True)
 
@@ -960,9 +1000,9 @@ def purchased_products(request):
         request,
         'staff/purchased_products.html',
         {
-        'purchase_lines': purchase_lines,
-        'products':products,
-        # 'test': test,
+            'purchase_lines': purchase_lines,
+            'products': products,
+            # 'test': test,
         }
     )
 
@@ -970,7 +1010,8 @@ def purchased_products(request):
 @staff_member_required
 def vendor_add(request):
     vendor_form = VendorAddForm()
-    address_form = AddressAddForm(initial={'country':'IR', 'city':_('Tehran')})
+    address_form = AddressAddForm(
+        initial={'country': 'IR', 'city': _('Tehran')})
     if request.method == 'POST':
         vendor_form = VendorAddForm(request.POST)
         address_form = AddressAddForm(request.POST)
@@ -988,19 +1029,21 @@ def vendor_add(request):
 
             vendor.save()
 
-            messages.success(request, _('Vendor is added!') + ' {}'.format(vendor.first_name))
+            messages.success(request, _('Vendor is added!') +
+                             ' {}'.format(vendor.first_name))
 
             return HttpResponseRedirect(reverse('staff:vendor_list'))
         else:
             messages.error(request, _('Form is not valid'))
     else:
         vendor_form = VendorAddForm()
-        address_form = AddressAddForm(initial={'country':'IR', 'city':_('Tehran')})
+        address_form = AddressAddForm(
+            initial={'country': 'IR', 'city': _('Tehran')})
     return render(
         request,
         'staff/vendor_add.html',
         {'vendor_form': vendor_form,
-        'address_form': address_form}
+         'address_form': address_form}
     )
 
 
@@ -1009,11 +1052,13 @@ def vendor_edit(request, vendor_id):
     vendor = get_object_or_404(Vendor, pk=vendor_id)
     if request.method == 'POST':
         vendor_form = VendorAddForm(request.POST, instance=vendor)
-        address_form = AddressAddForm(request.POST, instance=vendor.default_billing_address)
+        address_form = AddressAddForm(
+            request.POST, instance=vendor.default_billing_address)
         if vendor_form.is_valid() and address_form.is_valid():
             vendor_form.save()
             address_form.save()
-            messages.success(request, _('Vendor is updated') + ': {}'.format(vendor.first_name))
+            messages.success(request, _('Vendor is updated') +
+                             ': {}'.format(vendor.first_name))
         else:
             messages.error(request, _('Form is not valid'))
     else:
@@ -1023,7 +1068,7 @@ def vendor_edit(request, vendor_id):
         request,
         'staff/vendor_add.html',
         {'vendor_form': vendor_form,
-        'address_form': address_form}
+         'address_form': address_form}
     )
 
 
@@ -1047,7 +1092,8 @@ def product_update(request, product_id):
             files=request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, _('Product updated') + ' {}'.format(product.name))
+            messages.success(request, _('Product updated') +
+                             ' {}'.format(product.name))
             return redirect('staff:products')
 
         else:
@@ -1076,8 +1122,8 @@ def order_shipping(request, order_id):
             # order.shipped_code = shipping_form.cleaned_data['shipped_code']
             # order.save()
             form_submit = True
-            messages.success(request, 'Shipping status is updated' )
-            messages.warning(request, 'Update the order list' )
+            messages.success(request, 'Shipping status is updated')
+            messages.warning(request, 'Update the order list')
             # return redirect('staff:order_shipped', order.id)
 
     else:
@@ -1087,17 +1133,18 @@ def order_shipping(request, order_id):
         request,
         'staff/order_shipped.html',
         {'order': order,
-        'shipping_form': shipping_form,
-        'form_submit': form_submit}
+         'shipping_form': shipping_form,
+         'form_submit': form_submit}
     )
 
 
 @staff_member_required
 def order_list_by_country(request, country_code=None):
-    orders = Order.objects.all().exclude(channel='cashier').filter(Q(status='approved') | Q(status='paid'))
+    orders = Order.objects.all().exclude(channel='cashier').filter(
+        Q(status='approved') | Q(status='paid'))
 
-    countries = set(list(filter(None, Address.objects.all().values_list('country', flat=True))))
-
+    countries = set(
+        list(filter(None, Address.objects.all().values_list('country', flat=True))))
 
     country = None
     if country_code:
@@ -1124,10 +1171,11 @@ def collection_management(request):
         if search_form.is_valid():
             search_query = search_form.cleaned_data['query']
 
-            products_object = ProductSearch(object=Product, query=search_query).order_by('name', 'publisher')
+            products_object = ProductSearch(
+                object=Product, query=search_query).order_by('name', 'publisher')
 
     # pagination
-    paginator = Paginator(products_object, 50) # 50 posts in each page
+    paginator = Paginator(products_object, 50)  # 50 posts in each page
     page = request.GET.get('page')
     try:
         products = paginator.page(page)
@@ -1142,11 +1190,12 @@ def collection_management(request):
         request,
         'staff/collection_management.html',
         {
-        'products':products,
-        'page': page,
-        'search_form': search_form,
+            'products': products,
+            'page': page,
+            'search_form': search_form,
         }
     )
+
 
 @staff_member_required
 def collection_management_edit(request, product_id):
@@ -1163,7 +1212,8 @@ def collection_management_edit(request, product_id):
         if collection_form.is_valid():
             isbn = collection_form.cleaned_data['collection_field']
             if isbn in product_isbn:
-                messages.warning(request, _('This product is in this collection'))
+                messages.warning(request, _(
+                    'This product is in this collection'))
                 return redirect('staff:collection_management_edit', product.id)
             new_product = None
             try:
