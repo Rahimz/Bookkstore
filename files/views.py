@@ -15,6 +15,17 @@ from django.core.files import File
 from products.models import Product, Category
 
 
+def list_of_files(request):
+    files = FileObject.objects.all()
+    return render(
+        request,
+        'files/list.html',
+        {
+        'files': files,
+        }
+    )
+
+
 @staff_member_required
 def add_to_database(request, file_slug=None):
     """
@@ -95,3 +106,102 @@ def add_to_database(request, file_slug=None):
                    'number_of_added_object': number_of_added_object,
                    'error_report': error_report,
                    })
+
+
+def add_new_book_to_database(request, file_slug, check='check'):
+    """
+    to add new-book of the bookstore to datebase
+    """
+
+    duplicate_isbn = []
+    isbn_error = []
+    update_product = 0
+    number_of_added_object = 0
+
+    file_object = get_object_or_404(FileObject, slug=file_slug)
+
+    myfile = File(file_object)
+
+    path = file_object.file.path
+
+    isbn_list = Product.objects.filter(isbn__isnull=False).values_list('isbn', flat=True)
+    name_list = Product.objects.values_list('name', flat=True)
+    barcode_number_list = Product.objects.filter(barcode_number__isnull=False).values_list('barcode_number', flat=True)
+
+    if check == 'add':
+
+        # we make a label for each import session to  control it
+        current_import_session = ImportSession.objects.create(user=request.user,)
+
+    with open(path, 'rb') as f:
+        # Load excel workbook
+        wb = load_workbook(f)
+        ws = wb.active
+        row_count = ws.max_row
+
+        # a loop for scrape the excel file
+        # read the data in cells
+        for i in range(2, row_count):
+
+            row = ws['A'+str(i):'M'+str(i)]
+            name = ws['B' + str(i)].value,
+            isbn = ws['C' + str(i)].value,
+            price = ws['D' + str(i)].value if not None else (0,),
+            page_number = ws['E' + str(i)].value,
+            publisher = ws['F' + str(i)].value,
+            stock = ws['G' + str(i)].value,
+
+            if page_number[0] == '':
+                page_number = [0,]
+            if price[0] == '----':
+                price = [0,]
+
+
+            if check == 'add':
+                product = Product.objects.create(
+                    name = name[0],
+                    isbn = str(isbn[0]),
+                    price = price[0],
+                    page_number =page_number[0],
+                    publisher = publisher[0],
+                    stock = stock[0],
+                    state = 'new',
+                    available = True,
+                    available_in_store = True,
+                    available_online = True,
+                    import_session=current_import_session,
+                )
+                number_of_added_object += 1
+                update_product += 1
+
+            # print(price, type(price))
+            # print(page_number, type(page_number))
+            if str(isbn[0]) in isbn_list:
+                duplicate_isbn.append((i, str(isbn[0])))
+
+            if str(name[0]) in name_list:
+                duplicate_isbn.append((i, str(isbn[0])))
+
+            if len(str(isbn[0]))!= 13:
+                isbn_error.append((i, str(isbn[0])))
+
+
+    current_import_session.quantity = number_of_added_object
+    current_import_session.save()
+
+    # print(len(duplicate_isbn))
+    # print(len(set(duplicate_isbn)))
+    return render(
+        request,
+        'files/check_update.html',
+        {
+            'file': myfile,
+            # 'number_of_added_object': number_of_added_object,
+            # 'error_report': error_report,
+            'isbn_list': isbn_list,
+            'isbn_error': isbn_error,
+            'duplicate_isbn': duplicate_isbn,
+            'row_count': row_count,
+            'update_product': update_product,
+         }
+    )

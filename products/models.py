@@ -367,6 +367,8 @@ class Product(models.Model):
                 self.isbn_9 = self.isbn[3:-1]
             elif len(self.isbn) == 10:
                 self.isbn_9 = self.isbn[:-1]
+            elif len(self.isbn) == 9:
+                self.isbn_9 = self.isbn
 
         # check all stock to remove price from zero stock
 

@@ -1,0 +1,12 @@
+{% extends '_base.html'%}
+{% block content %}
+{% if update_product %}
+<p class="bg-dannger">{{ update_product }}</p>
+{% endif %}
+<a href="{% url 'list_of_files' %}" class="btn btn-secondary">Back</a>
+{{ file.name }} - {{ file.type }} - {{ file.file.url}}
+<p>row_count: {{ row_count }}</p>
+
+<p>duplicate_isbn : {{ duplicate_isbn}}</p>
+<p>isbn_error {{ isbn_error}}</p>
+{% endblock %}
