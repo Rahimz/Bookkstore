@@ -92,6 +92,9 @@ class Refund(models.Model):
         blank=True,
         null=True
     )
+    active = models.BooleanField(
+        default=True
+    )
 
     def __str__(self):
         return f"{self.order.pk} {self.product.name}"

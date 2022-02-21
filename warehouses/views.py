@@ -70,7 +70,7 @@ def refund_from_client(request):
 
 
 def refund_list_client(request):
-    refunds = Refund.objects.all().filter(from_client__isnull=False)
+    refunds = Refund.objects.all().filter(from_client__isnull=False).filter(active=True)
     return render(
         request,
         'staff/refund_list_client.html',
