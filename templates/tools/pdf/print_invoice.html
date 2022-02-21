@@ -54,7 +54,7 @@
       {% for item in order.lines.all %}
       <tr class="row{% cycle "1" "2" %}">
         <td>{{ forloop.counter }}</td>
-        <td>{{ item.product.name | truncatechars:28 }}</td>
+        <td>{% if item.variation == "used main" %}* {% endif %}{{ item.product.name | truncatechars:28 }}</td>
         <td class="num">{{ item.price | intcomma:False }}</td>
         <td class="text-center">{{ item.quantity }}</td>
         <td class="num">{{ item.discount | intcomma:False }}</td>
@@ -89,7 +89,8 @@
     {% trans 'Registrar' %}: {{ order.user }} - {% trans 'Approver' %}: {{ order.approver }}
   </p>
   {% endcomment %}
-  {% if slogan %}<span class="d-flex text-center">{{ slogan.slogan }} {{ slogan.author }}</span>{% endif %}
+  <span class="d-flex text-center ">{% trans '* used-book' %}</span>
+  {% if slogan %}<span class="d-flex text-center text-small fs-9">{{ slogan.slogan }} {{ slogan.author }}</span>{% endif %}
   <span class="text-center">{% trans '16 Azar St.' %}, {% trans 'Edward Brown St.' %}, {% trans 'No.7' %} - 66981024</span>
   <span class="d-flex ending justify-content-center my-1">{{ order.token }}</span>
 
