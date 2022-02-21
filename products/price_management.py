@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-
+# from decimal import Deciaml
 from .models import Product
 
 
@@ -90,7 +90,7 @@ def sort_price(product):
 
 def add_price(price, stock, variation, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    # print(price, stock, variation, product_id)
+    print(price, stock, variation, product_id)
     # print( has_empty_price_row(product, variation))
     variations = {
         'new':{
@@ -142,6 +142,7 @@ def add_price(price, stock, variation, product_id):
         elif new_var == 'v2':
             product.price_2 = price
             product.stock_2 = stock
+            # print('in add price',product.price_2, product.stock_2)
         elif new_var == 'v3':
             product.price_3 = price
             product.stock_3 = stock
@@ -157,12 +158,13 @@ def add_price(price, stock, variation, product_id):
     elif variation == 'used':
         if new_var == 'main':
             product.price_used = price
-            product.stock_used = stock
+            # product.stock_used = stock
 
 
 
     product.has_other_prices = True
     product.save()
+    print('in add price',product.price_2, product.stock_2)
 
     sort_price(product)
 

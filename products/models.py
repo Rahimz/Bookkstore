@@ -372,23 +372,23 @@ class Product(models.Model):
 
         # check all stock to remove price from zero stock
 
-        if self.stock_1 == 0:
-            self.price_1 = 0
-
-        if self.stock_2 == 0:
-            self.price_2 = 0
-
-        if self.stock_3 == 0:
-            self.price_3 = 0
-
-        if self.stock_4 == 0:
-            self.price_4 = 0
-
-        if self.stock_5 == 0:
-            self.price_5 = 0
-
-        if self.stock_used == 0:
-            self.price_used = 0
+        # if self.stock_1 == 0:
+        #     self.price_1 = 0
+        #
+        # if self.stock_2 == 0:
+        #     self.price_2 = 0
+        #
+        # if self.stock_3 == 0:
+        #     self.price_3 = 0
+        #
+        # if self.stock_4 == 0:
+        #     self.price_4 = 0
+        #
+        # if self.stock_5 == 0:
+        #     self.price_5 = 0
+        #
+        # if self.stock_used == 0:
+        #     self.price_used = 0
 
         if self.collection_set:
             self.is_collection = True

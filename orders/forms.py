@@ -63,14 +63,14 @@ class PriceAddForm(forms.Form):
     )
     variation = forms.ChoiceField(choices = STATUS_CHOICES)
     price = forms.DecimalField(max_digits=10, decimal_places=0)
-    quantity = forms.IntegerField()
+    # quantity = forms.IntegerField()
 
 
 class PurchaseLineUpdateForm(forms.ModelForm):
     class Meta:
         model = PurchaseLine
         fields = [
-            'quantity', 'discount_percent', 'discount', 
+            'quantity', 'discount_percent', 'discount',
         ]
         labels = {
             'price': _('Purchase price'),

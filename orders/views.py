@@ -314,10 +314,11 @@ def price_management(request, product_id, purchase_id):
             new_price = price_form.cleaned_data['price']
             # 'new' , 'used'
             new_variation = price_form.cleaned_data['variation']
-            quantity = price_form.cleaned_data['quantity']
+            # quantity = price_form.cleaned_data['quantity']
             if new_price in new_prices:
                 messages.error(request, _(
                     'There is an equal price in the list'))
+                return redirect('orders:price_management', product_id=product.id, purchase_id=purchase.id)
 
             if has_empty_price_row(product=product, variation=new_variation) and not (new_price in new_prices):
 
@@ -325,7 +326,7 @@ def price_management(request, product_id, purchase_id):
                     product_id=product.id,
                     variation=new_variation,
                     price=new_price,
-                    stock=quantity)
+                    stock=0)
 
                 messages.success(request, _('Price added'))
                 # return redirect('orders:price_management', product_id=product.id , purchase_id=purchase.id)
