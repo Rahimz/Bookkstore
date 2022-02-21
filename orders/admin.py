@@ -36,7 +36,7 @@ class OrderLineAdmin(admin.ModelAdmin):
 @admin.register(Purchase)
 class PurchaseAdmin(admin.ModelAdmin):
     list_display = [
-        'pk', 'vendor'
+        'pk', 'vendor', 'paper_invoice_number'
     ]
     inlines = [PurchaseLineInline]
 

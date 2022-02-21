@@ -344,6 +344,11 @@ class Purchase(models.Model):
         blank=True,
         null=True
     )
+    paper_invoice_number = models.CharField(
+        max_length=50,
+        null=True,
+        blank=True
+    )
     status = models.CharField(
         max_length=32,
         default='draft',

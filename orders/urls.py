@@ -20,6 +20,7 @@ urlpatterns = [
     path('purchase/<int:purchase_id>/add/<int:product_id>/<str:variation>/', views.purchase_details, name='purchase_add_line_v'),
 
     path('purchase/price-management/<int:purchase_id>/<int:product_id>/', views.price_management, name='price_management'),
+    path('purchase/price-management/remove-price/<int:purchase_id>/<int:product_id>/<str:variation>/', views.price_remove, name='price_remove'),
 
     path('purchase/checkout/<int:purchase_id>/', views.purchase_checkout, name='purchase_checkout'),
 ]

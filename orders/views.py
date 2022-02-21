@@ -14,7 +14,7 @@ from discounts.forms import CouponApplyForm
 from search.forms import SearchForm
 from search.views import ProductSearch
 from products.models import Product
-from products.price_management import add_price, has_empty_price_row, get_price_index
+from products.price_management import add_price, has_empty_price_row, get_price_index, sort_price
 
 
 @login_required
@@ -72,7 +72,7 @@ def purchase_create(request):
             purchase = purchase_form.save(commit=False)
             purchase.registrar = request.user
             if not purchase_form.cleaned_data['deadline_days']:
-                purchase.payment_date = datetime.now() + timedelta(days=1)
+                purchase.payment_date = datetime.now() + timedelta(days=2)
             else:
                 purchase.payment_date = datetime.now(
                 ) + timedelta(days=purchase_form.cleaned_data['deadline_days'])
@@ -111,7 +111,7 @@ def purchase_details(request, purchase_id, product_id=None, variation='new main'
 
     # product_ids = purchase.lines.values_list('id', flat=True)
     # product_ids = [item.product.pk for item in purchase.lines.all()]
-    product_ids = [(item.product.pk, item.variation)
+    product_ids = [(item.product.pk, item.variation, item.price)
                    for item in purchase_lines]
 
     product = get_object_or_404(Product, pk=product_id) if product_id else None
@@ -157,7 +157,7 @@ def purchase_details(request, purchase_id, product_id=None, variation='new main'
         price = variation_dict[variation_list[0]][variation_list[1]]['price']
         stock = variation_dict[variation_list[0]][variation_list[1]]['stock']
 
-        if (product.id, variation) in product_ids:
+        if (product.id, variation, price) in product_ids:
             purchase_line = PurchaseLine.objects.get(
                 purchase=purchase, product=product, variation=variation)
             purchase_line.quantity += 1
@@ -314,10 +314,11 @@ def price_management(request, product_id, purchase_id):
             new_price = price_form.cleaned_data['price']
             # 'new' , 'used'
             new_variation = price_form.cleaned_data['variation']
-            quantity = price_form.cleaned_data['quantity']
+            # quantity = price_form.cleaned_data['quantity']
             if new_price in new_prices:
                 messages.error(request, _(
                     'There is an equal price in the list'))
+                return redirect('orders:price_management', product_id=product.id, purchase_id=purchase.id)
 
             if has_empty_price_row(product=product, variation=new_variation) and not (new_price in new_prices):
 
@@ -325,7 +326,7 @@ def price_management(request, product_id, purchase_id):
                     product_id=product.id,
                     variation=new_variation,
                     price=new_price,
-                    stock=quantity)
+                    stock=0)
 
                 messages.success(request, _('Price added'))
                 # return redirect('orders:price_management', product_id=product.id , purchase_id=purchase.id)
@@ -352,11 +353,49 @@ def price_management(request, product_id, purchase_id):
     )
 
 
+
+def price_remove(request,purchase_id, product_id, variation):
+    product = Product.objects.get(pk=product_id)
+    purchase = Purchase.objects.get(pk=purchase_id)
+
+
+    if variation in ('main', 'new main'):
+        product.price = 0
+
+    # we have some old row in purchase lines
+    elif variation in ('v1', 'new v1'):
+        product.price_1 = 0
+
+    elif variation == 'new v2':
+        product.price_2 = 0
+        print('here v2')
+
+    elif variation == 'new v3':
+        product.price_3 = 0
+
+    elif variation == 'new v3':
+        product.price_4 = 0
+
+    elif variation == 'new v4':
+        product.price_5 = 0
+
+    # we have some old row in purchase lines
+    elif variation in ('used', 'used main'):
+        product.price_used = 0
+
+    product.save()
+    sort_price(product)
+
+    messages.success(request, _('The price removed'))
+    return redirect('orders:price_management', purchase.id, product.id)
+
+
+
 def purchase_line_add(request, product_id, purchase_id, variation, purchaseline_id=None):
     purchase = get_object_or_404(Purchase, pk=purchase_id)
 
     product = get_object_or_404(Product, pk=product_id)
-    product_ids = [(item.product.pk, item.variation)
+    product_ids = [(item.product.pk, item.variation, item.price)
                    for item in purchase.lines.all()]
 
     if purchaseline_id:
@@ -422,7 +461,7 @@ def purchase_line_add(request, product_id, purchase_id, variation, purchaseline_
             quantity = new_form.quantity
 
 
-            if (product.id, variation) in product_ids:
+            if (product.id, variation, price) in product_ids:
                 purchase_line = PurchaseLine.objects.get(
                     purchase=purchase, product=product, variation=variation)
                 purchase_line.quantity = quantity

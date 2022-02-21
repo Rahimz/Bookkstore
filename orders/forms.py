@@ -43,10 +43,11 @@ class PurchaseCreateForm(forms.ModelForm):
 
     class Meta:
         model = Purchase
-        fields = ['vendor', 'deadline_days']
+        fields = ['vendor', 'deadline_days', 'paper_invoice_number']
         labels = {
             'vendor': _('Vendor'),
             'deadline_days': _('Payment deadline'),
+            'paper_invoice_number': _('Paper invoice number')
         }
 
 class PurchaseLineAddForm(forms.ModelForm):
@@ -63,14 +64,14 @@ class PriceAddForm(forms.Form):
     )
     variation = forms.ChoiceField(choices = STATUS_CHOICES)
     price = forms.DecimalField(max_digits=10, decimal_places=0)
-    quantity = forms.IntegerField()
+    # quantity = forms.IntegerField()
 
 
 class PurchaseLineUpdateForm(forms.ModelForm):
     class Meta:
         model = PurchaseLine
         fields = [
-            'quantity', 'discount_percent', 'discount', 
+            'quantity', 'discount_percent', 'discount',
         ]
         labels = {
             'price': _('Purchase price'),
