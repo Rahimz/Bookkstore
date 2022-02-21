@@ -41,6 +41,7 @@
           <th scope="col">{% trans 'Edit' %}</th>
           <th scope="col">{% trans 'ISBN' %}</th>
           <th scope="col">{% trans 'Name' %}</th>
+          <th scope="col">{% trans 'Stock' %}</th>
           <th scope="col">{% trans 'Author' %}</th>
           <th scope="col">{% trans 'Translator' %}</th>
           <th scope="col">{% trans 'Publisher' %}</th>
@@ -54,6 +55,7 @@
           <td><a href="{% url 'staff:product_update' product.id %}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
           <th scope="row">{{ product.isbn }}</th>
           <td><a href="{% url 'shop:product_detail' product.pk %}">{{ product.name }}</a></td>
+          <td>{{ product.stock }}</td>
           <td>{{ product.author }}</td>
           <td>{{ product.translator }}</td>
           <td>{{ product.publisher }}</td>

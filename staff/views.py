@@ -937,6 +937,39 @@ def sold_products(request):
     order_lines = OrderLine.objects.all().filter(active=True)
     # order_lines = OrderLine.objects.all().values_list(product.id, flat=True)
     products = dict()
+    main_stock = dict()
+    # i = 0
+    # for line in order_lines:
+    #
+    #     if line.product.name in products:
+    #         # we grab the present value from the products dictionary
+    #         quantity = products[line.product.name]['quantity']
+    #         vendor = products[line.product.name]['vendor']
+    #         stock = products[line.product.name]['stock']
+    #
+    #         # wether vendor in list is as the same as the vendor in orderline
+    #         if vendor == line.purchase.vendor.first_name:
+    #             quantity += line.quantity
+    #             products[line.product.name] = {
+    #                 'quantity': quantity,
+    #                 'vendor': vendor,
+    #
+    #             }
+    #         # wether the vendor is diffrent from the vendor in order line
+    #         else:
+    #             # this line makes a bug and override the availabel book not add a new line
+    #             products[line.product.name + str(i)] = {
+    #                 'quantity': line.quantity,
+    #                 'vendor': line.purchase.vendor.first_name,
+    #
+    #             }
+    #
+    #     else:
+    #         products[line.product.name] = {
+    #             'quantity': line.quantity,
+    #
+    #         }
+    #     i += 1
     for item in order_lines:
         # key = products.get(item.product.id)
         # print(item.product.id)
@@ -944,13 +977,15 @@ def sold_products(request):
             products[item.product.name] += item.quantity
         else:
             products[item.product.name] = item.quantity
+        main_stock[item.product.name] = item.product.stock
     products = sorted(products.items(), key=lambda x: x[1], reverse=True)
-
+    
     return render(
         request,
         'staff/sold_products.html',
         {'order_lines': order_lines,
          'products': products,
+         'main_stock': main_stock,
          }
     )
 
