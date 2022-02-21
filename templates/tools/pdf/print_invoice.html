@@ -14,14 +14,17 @@
 <body>
   <div class="d-flex justify-content-between">
     <p class="">
-    {% trans 'Invoice no.' %}: {{ order.id }}<br />
+    {% trans 'Invoice no.' %}: {{ order.id }} {% if order.status == "draft" %}<span class="fs-6">- {% trans 'Pre-Invoice'%}</span>{% endif %}<br />
     {#{{ order.created|date:"M d, Y" }}#}
     {{ fa_date  }}
-    <br><br>{% if order.client.username == "guest" %}
-    {% trans 'Client' %}: {% trans 'Guest' %}
+    <br><br>
+    {% if order.client.username == "guest" %}
+      {% trans 'Client' %}: {% trans 'Guest' %}
     {% else %}
-    {% trans 'Client' %}: {{ order.client.first_name }} {{ order.client.last_name }}
+      {% if order.client %}
+      {% trans 'Client' %}: {{ order.client.first_name }} {{ order.client.last_name }}
     <br>{% trans 'Phone' %}: {{ order.client.phone }}
+    {% endif %}
     {% endif %}
   </p>
     <div class="">
