@@ -309,8 +309,8 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
 
         # Check the stock of product
         if stock <= 0:
-            messages.error(request, _('Not enough stock!'))
-            return redirect('staff:invoice_create', order_id)
+            messages.error(request, _('You are adding zero stock!'))
+            # return redirect('staff:invoice_create', order_id)
 
         # add product to invoice
         if (product.id, variation) in product_ids:
@@ -329,30 +329,30 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
             )
             order.save()
 
-            # Update product stock
-            stock -= 1
+        # Update product stock
+        stock -= 1
 
-            if variation == 'new main':
-                product.stock = stock
+        if variation == 'new main':
+            product.stock = stock
 
-            elif variation == 'new v1':
-                product.stock_1 = stock
+        elif variation == 'new v1':
+            product.stock_1 = stock
 
-            elif variation == 'new v2':
-                product.stock_2 = stock
+        elif variation == 'new v2':
+            product.stock_2 = stock
 
-            elif variation == 'new v3':
-                product.stock_3 = stock
+        elif variation == 'new v3':
+            product.stock_3 = stock
 
-            elif variation == 'new v3':
-                product.stock_4 = stock
+        elif variation == 'new v3':
+            product.stock_4 = stock
 
-            elif variation == 'new v4':
-                product.stock_5 = stock
+        elif variation == 'new v4':
+            product.stock_5 = stock
 
-            elif variation == 'used main':
-                product.stock_used += stock
-            product.save()
+        elif variation == 'used main':
+            product.stock_used += stock
+        product.save()
 
         messages.success(request, _('Product is added to invoice'))
 
@@ -361,8 +361,8 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
     # When we add a product for first time and we dont have an order
     if (not order_id) and product_id:
         if stock <= 0:
-            messages.error(request, _('Not enough stock!'))
-            return redirect('staff:invoice_create')
+            messages.error(request, _('You are adding zero stock!'))
+            # return redirect('staff:invoice_create')
 
         # if product.stock >=1:
         order = Order.objects.create(
@@ -775,7 +775,10 @@ def orderline_update(request, order_id, orderline_id):
                 remove an orde line if remove checkbox is clicked
                 """
                 # Update product stock
-                product_stock += order_line.quantity
+                if product_stock < 0:
+                    product_stock += order_line.quantity + 1
+                else:
+                    product_stock += order_line.quantity
 
                 # if variation == 'main':
                 #     product.stock = product_stock
@@ -815,47 +818,52 @@ def orderline_update(request, order_id, orderline_id):
                 # increase the quantity of product in invoice
                 if update_form.cleaned_data['quantity'] > order_line.quantity:
                     if update_form.cleaned_data['quantity'] > order_line.quantity + product_stock:
-                        messages.error(request, _(
-                            'Not enough stock') + ' ' + _('Quantity') + ' {}'.format(product_stock))
-                        return redirect('staff:invoice_create', order.id)
+                        # return redirect('staff:invoice_create', order.id)
+                        messages.error(request, _('You are adding zero stock'))
+
+                    # Update product stock
+                    if product_stock < 0:
+                        product_stock = product_stock + order_line.quantity - update_form.cleaned_data['quantity']
                     else:
-                        # Update product stock
-                        product_stock -= update_form.cleaned_data['quantity'] - \
-                            order_line.quantity
+                        product_stock -= update_form.cleaned_data['quantity'] - order_line.quantity
 
-                        # if variation == 'main':
-                        #     product.stock = product_stock
-                        # elif variation  == 'v1':
-                        #     product.stock_1 = product_stock
-                        # elif variation == 'used':
-                        #     product.stock_used = product_stock
-                        if variation == 'new main':
-                            product.stock = product_stock
+                    # if variation == 'main':
+                    #     product.stock = product_stock
+                    # elif variation  == 'v1':
+                    #     product.stock_1 = product_stock
+                    # elif variation == 'used':
+                    #     product.stock_used = product_stock
+                    if variation == 'new main':
+                        product.stock = product_stock
 
-                        elif variation == 'new v1':
-                            product.stock_1 = product_stock
+                    elif variation == 'new v1':
+                        product.stock_1 = product_stock
 
-                        elif variation == 'new v2':
-                            product.stock_2 = product_stock
+                    elif variation == 'new v2':
+                        product.stock_2 = product_stock
 
-                        elif variation == 'new v3':
-                            product.stock_3 = product_stock
+                    elif variation == 'new v3':
+                        product.stock_3 = product_stock
 
-                        elif variation == 'new v3':
-                            product.stock_4 = product_stock
+                    elif variation == 'new v3':
+                        product.stock_4 = product_stock
 
-                        elif variation == 'new v4':
-                            product.stock_5 = product_stock
+                    elif variation == 'new v4':
+                        product.stock_5 = product_stock
 
-                        elif variation == 'used main':
-                            product.stock_used += product_stock
+                    elif variation == 'used main':
+                        product.stock_used += product_stock
 
-                        product.save()
+                    product.save()
+                    messages.success(request, _('Order line updated') + ' ' + _('Quantity') + ' {}'.format(product_stock))
 
                 elif update_form.cleaned_data['quantity'] < order_line.quantity:
                     # Update product stock
-                    product_stock += order_line.quantity - \
-                        update_form.cleaned_data['quantity']
+                    if product_stock < 0:
+                        product_stock += order_line.quantity + update_form.cleaned_data['quantity']
+                    else:
+                        product_stock += order_line.quantity - update_form.cleaned_data['quantity']
+
 
                     if variation == 'new main':
                         product.stock = product_stock
