@@ -17,6 +17,7 @@ from orders.models import Order, OrderLine
 from zarinpal.models import Payment
 from tools.gregory_to_hijry import hij_strf_date, greg_to_hij_date
 from shop.models import Slogan
+from account.models import CustomUser
 
 @staff_member_required
 def make_invoice_pdf(request, order_id=None):
@@ -48,6 +49,19 @@ def print_invoice(request, order_id=None):
             'order': order,
             'fa_date': fa_date,
             'slogan': slogan,
+        }
+    )
+
+
+@staff_member_required
+def print_address(request, client_id):
+    client = CustomUser.objects.get(pk=client_id)
+
+    return render(
+        request,
+        'tools/pdf/print_address.html',
+        {
+            'client': client,
         }
     )
 

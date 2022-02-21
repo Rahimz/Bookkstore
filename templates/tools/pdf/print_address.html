@@ -1,0 +1,38 @@
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+
+<html dir="rtl">
+
+<head>
+  <link href="{% static 'css/bootstrap.rtl.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/bootstrap-grid.rtl.css' %}" rel="stylesheet">
+  <link href="{% static 'css/bootstrap-utilities.rtl.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/print_address.css' %}" rel="stylesheet">
+</head>
+
+<body>
+  <div class="d-flex justify-content-between">
+    <p class="">
+    {% trans 'Address' %}:
+    <br>{{ client.default_billing_address.street_address_1 }}
+    <br>{{ client.default_billing_address.street_address_2 }}
+    <br>
+    <span>{% trans 'House unit' %}: {{ client.default_billing_address.house_unit }}</span>
+    <span>{% trans 'House number' %}: {{ client.default_billing_address.house_number }}</span>
+    <br>
+    {% trans 'Postal code' %}: {{ client.default_billing_address.postal_code }}
+    <br>
+    {% trans 'Phone' %}: {{ client.phone }}
+
+
+  </p>
+    <div class="">
+      <img src="{% static 'img/logo_bw.png' %}" alt="{% trans 'Ketab Damavand' %}" class="rounded" width="90px;" height="auto">
+    </div>
+  </div>
+
+
+</body>
+
+</html>

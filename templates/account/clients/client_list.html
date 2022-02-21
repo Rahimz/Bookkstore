@@ -49,6 +49,7 @@
             <td>{{ client.username }}</td>
             <td>{{ client.id }}</td>
             <td>{{ client.phone }}</td>
+            <td><a href="{% url 'tools:print_address' client.id %}" class="btn btn-outline-secondary">{% trans 'Print Address' %}</a></td>
           </tr>
           {% endfor %}
 
