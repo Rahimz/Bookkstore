@@ -43,10 +43,11 @@ class PurchaseCreateForm(forms.ModelForm):
 
     class Meta:
         model = Purchase
-        fields = ['vendor', 'deadline_days']
+        fields = ['vendor', 'deadline_days', 'paper_invoice_number']
         labels = {
             'vendor': _('Vendor'),
             'deadline_days': _('Payment deadline'),
+            'paper_invoice_number': _('Paper invoice number')
         }
 
 class PurchaseLineAddForm(forms.ModelForm):

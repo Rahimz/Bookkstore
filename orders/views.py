@@ -72,7 +72,7 @@ def purchase_create(request):
             purchase = purchase_form.save(commit=False)
             purchase.registrar = request.user
             if not purchase_form.cleaned_data['deadline_days']:
-                purchase.payment_date = datetime.now() + timedelta(days=1)
+                purchase.payment_date = datetime.now() + timedelta(days=2)
             else:
                 purchase.payment_date = datetime.now(
                 ) + timedelta(days=purchase_form.cleaned_data['deadline_days'])
