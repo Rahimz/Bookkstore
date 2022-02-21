@@ -1266,3 +1266,14 @@ def collection_management_remove(request, product_id, product_isbn):
     removed_product.save()
     messages.success(request, _('This product removed from the collection'))
     return redirect('staff:collection_management_edit', product.id)
+
+
+def zero_stock_list(request):
+    products = Product.objects.all().filter(available=True).filter(stock__lte=0).order_by('stock')
+    return render (
+        request,
+        'staff/zero_stock_list.html',
+        {
+            'products': products,
+        }
+    )

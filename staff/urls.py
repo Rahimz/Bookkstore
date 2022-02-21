@@ -42,6 +42,8 @@ urlpatterns = [
     path('warehouse/refund/client/', refund_from_client, name="refund_from_client"),
     path('warehouse/refund/client/list/', refund_list_client, name="refund_list_client"),
 
+    path('warehouse/zero-stock-list/', views.zero_stock_list, name="zero_stock_list"),
+
     path('products/', views.products, name='products'),
     path('products/create/', views.product_create, name='product_create'),
     path('products/update/<int:product_id>/', views.product_update, name='product_update'),
