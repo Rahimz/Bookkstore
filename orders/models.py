@@ -181,6 +181,9 @@ class Order(models.Model):
         decimal_places=settings.DEFAULT_DECIMAL_PLACES,
         default=0,
     )
+    active = models.BooleanField(
+        default= True
+    )
 
     class Meta:
         ordering = ("-approved_date", "-pk",)
@@ -257,6 +260,9 @@ class OrderLine(models.Model):
         null=True,
         blank=True
     )
+    active = models.BooleanField(
+        default= True
+    )
 
     class Meta:
         ordering = ("-product",)
@@ -289,6 +295,7 @@ class OrderLine(models.Model):
     #     self.order.save()
     #
     #     super(OrderLine, self).save(*args, **kwargs)
+
 
 class Purchase(models.Model):
     STATUS_CHOICES = [
@@ -371,6 +378,9 @@ class Purchase(models.Model):
         default=0,
     )
     paid = models.BooleanField(default=False)
+    active = models.BooleanField(
+        default= True
+    )
 
     class Meta:
         ordering = ("-payment_date", "approved_date", "-pk",)
@@ -447,6 +457,9 @@ class PurchaseLine(models.Model):
         max_length=50,
         blank=True,
         null=True,
+    )
+    active = models.BooleanField(
+        default= True
     )
 
     class Meta:

@@ -37,7 +37,7 @@ def make_invoice_pdf(request, order_id=None):
 @staff_member_required
 def print_invoice(request, order_id=None):
     order = Order.objects.get(pk=order_id)
-    slogan_id = random.choice(Slogan.objects.values_list('pk', flat=True))    
+    slogan_id = random.choice(Slogan.objects.values_list('pk', flat=True))
     slogan = Slogan.objects.get(pk=slogan_id)
     fa_date = hij_strf_date(greg_to_hij_date(order.created.date()), '%-d %B %Y')
 
@@ -71,7 +71,7 @@ def make_invoice_pdf_a4(request, order_id=None):
 def order_export_excel(request, criteria):
     # TODO: we handle all order export with one function but we should add parameter to
     # handle differnt kind of report
-    orders = Order.objects.filter(status=criteria)
+    orders = Order.objects.filter(status=criteria).filter(active=True)
 
     wb = openpyxl.Workbook()
     sheet = wb.active
@@ -152,7 +152,7 @@ def order_export_excel(request, criteria):
 
 def draft_order_export_excel(request):
     # TODO: Should mix with order_export_excel
-    orders = Order.objects.filter(status='draft')
+    orders = Order.objects.filter(status='draft').filter(active=True)
 
     wb = openpyxl.Workbook()
     sheet = wb.active
