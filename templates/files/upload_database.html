@@ -1,3 +1,5 @@
+{% extends '_base.html'%}
+{% block content %}
 {% for file in files %}
 {{ file.name }} {{ file.type }} {{ file.file.url}}
 <form class="" action="{% url 'upload_file' file.slug %}" method="post">
@@ -15,3 +17,4 @@
 {% for error in error_report %}
 {{ error }} : {{ error.value }}
 {% endfor %}
+{% endblock %}

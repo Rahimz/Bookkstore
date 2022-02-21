@@ -19,15 +19,26 @@
       {% include "staff/sidebar_staff.html" with barName="sales" %}
     </div>
     <div class="col-md-10">
-      <div>
-        <h2>{% trans 'Create invoice' %}</h2>
-
+      <div class="client">
         {% if order %}
         {% if order.client %}
-        <h4>{% trans 'Client' %}</h4>
-        {% trans 'Name' %} : {{ order.client }} - {% trans 'Phone' %} : {{ order.client_phone }}
+        <h3 class="mb-4">{% trans 'Client' %}</h3>
+        <p class="rounded p-2 col-md-4"><b>{{ order.client.first_name }} {{ order.client.last_name }}- {{ order.client.phone }}
+            <a href="{% url 'staff:invoice_add_client' order.id %}" class="btn btn-outline-secondary mx-3">{% trans 'Change client' %}</a>
+        </p>
+        {% else %}
+
+
+        <a href="{%url 'staff:invoice_add_client' order.id %} " class="btn btn-outline-secondary">{% trans 'Edit order client' %}</a>
+
         {% endif %}
+
+        {% else %}
+        <p>{% trans 'First add a book the you can add client' %}</p>
         {% endif %}
+      </div>
+      <div>
+        <h2>{% trans 'Create invoice' %}</h2>
 
         <h3 class="my-4">{% trans 'Add products' %}</h3>
         {% if order %}

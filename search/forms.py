@@ -15,12 +15,12 @@ class SearchForm(forms.Form):
 class ClientSearchForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['query'].required = False
+        self.fields['client_query'].required = False
 
-    query = forms.CharField(
+    client_query = forms.CharField(
         label=_('Client'),
         widget=forms.TextInput(attrs={'placeholder': _('Name or phonenumber')})
-    )    
+    )
 
 
 class CLientSearchStaffForm(forms.Form):

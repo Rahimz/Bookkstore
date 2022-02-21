@@ -11,7 +11,7 @@ from cart.forms import CartAddProductForm
 def home(request):
     search_form = SearchForm()
 
-    products_object = Product.objects.all()
+    products_object = Product.objects.all().filter(available=True)
     # pagination
     paginator = Paginator(products_object, 20) # 20 posts in each page
     page = request.GET.get('page')
@@ -38,11 +38,11 @@ def product_list(request, category_slug=None, ):
     category = None
 
     if category_slug == 'new' or category_slug == 'used':
-        products_object = Product.objects.filter(state=category_slug)
+        products_object = Product.objects.all().filter(available=True).filter(state=category_slug)
         page_title = category_slug
     else:
         category = get_object_or_404(Category, slug=category_slug)
-        products_object = Product.objects.filter(category=category)
+        products_object = Product.objects.all().filter(available=True).filter(category=category)
         page_title = category.name
 
 

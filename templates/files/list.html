@@ -1,0 +1,9 @@
+{% extends '_base.html'%}
+{% block content %}
+{% for file in files %}
+<p>{{ file.name }} {{ file.type }} {{ file.file.url}}
+<a href="{% url 'add_new_book_to_database_check' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check</a>
+<a href="{% url 'add_new_book_to_database_check' file_slug=file.slug check='add' %}" class="btn btn-secondary">Add</a>
+</p>
+{% endfor %}
+{% endblock %}
