@@ -90,7 +90,7 @@ def sort_price(product):
 
 def add_price(price, stock, variation, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    print(price, stock, variation, product_id)
+    # print(price, stock, variation, product_id)
     # print( has_empty_price_row(product, variation))
     variations = {
         'new':{
@@ -129,7 +129,7 @@ def add_price(price, stock, variation, product_id):
 
 
     new_var = has_empty_price_row(product, variation)
-    print('new_var', new_var)
+    # print('new_var', new_var)
     if variation == 'new':
         if new_var == 'main':
             product.price = price
@@ -164,7 +164,7 @@ def add_price(price, stock, variation, product_id):
 
     product.has_other_prices = True
     product.save()
-    print('in add price',product.price_2, product.stock_2)
+    # print('in add price',product.price_2, product.stock_2)
 
     sort_price(product)
 
@@ -204,9 +204,9 @@ def get_price_index(product_id, variation, price):
             }
         }
     }
-    print(variations[variation])
+    # print(variations[variation])
     for i in variations[variation].keys():
-        print(variation, i, variations[variation][i], price)
+        # print(variation, i, variations[variation][i], price)
 
         if variations[variation][i]['price'] == price:
             return i

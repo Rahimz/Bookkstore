@@ -25,43 +25,48 @@
           <td>{{ product.stock }}</td>
         </tr>
 
-        {% if product.stock_1 %}
+        {% if product.price_1 %}
         <tr>
           <td>{%trans 'Price variation 1' %}</td>
           <td>{{ product.price_1 | intcomma:False }}</td>
           <td>{{ product.stock_1 }}</td>
+          <td>{% if product.stock_1 == 0 %}<a href="{% url 'orders:price_remove' purchase_id=purchase.id product_id=product.id variation='new v1' %}" class="btn btn-outline-danger">{% trans 'Remove' %}</a>{% endif %}</td>
         </tr>
         {% endif %}
 
-        {% if product.stock_2 %}
+        {% if product.price_2 %}
         <tr>
           <td>{%trans 'Price variation 2' %}</td>
           <td>{{ product.price_2 | intcomma:False }}</td>
           <td>{{ product.stock_2 }}</td>
+          <td>{% if product.stock_2 == 0 %}<a href="{% url 'orders:price_remove' purchase_id=purchase.id product_id=product.id variation='new v2' %}" class="btn btn-outline-danger">{% trans 'Remove' %}</a>{% endif %}</td>
         </tr>
         {% endif %}
 
-        {% if product.stock_3 %}
+        {% if product.price_3 %}
         <tr>
           <td>{%trans 'Price variation 3' %}</td>
           <td>{{ product.price_3 | intcomma:False }}</td>
           <td>{{ product.stock_3 }}</td>
+          <td>{% if product.stock_3 == 0 %}<a href="{% url 'orders:price_remove' purchase_id=purchase.id product_id=product.id variation='new v3' %}" class="btn btn-outline-danger">{% trans 'Remove' %}</a>{% endif %}</td>
         </tr>
         {% endif %}
 
-        {% if product.stock_4 %}
+        {% if product.price_4 %}
         <tr>
           <td>{%trans 'Price variation 4' %}</td>
           <td>{{ product.price_4 | intcomma:False }}</td>
           <td>{{ product.stock_4 }}</td>
+          <td>{% if product.stock_4 == 0 %}<a href="{% url 'orders:price_remove' purchase_id=purchase.id product_id=product.id variation='new v4' %}" class="btn btn-outline-danger">{% trans 'Remove' %}</a>{% endif %}</td>
         </tr>
         {% endif %}
 
-        {% if product.stock_5 %}
+        {% if product.price_5 %}
         <tr>
           <td>{%trans 'Price variation 5' %}</td>
           <td>{{ product.price_5 | intcomma:False }}</td>
           <td>{{ product.stock_5 }}</td>
+          <td>{% if product.stock_5 == 0 %}<a href="{% url 'orders:price_remove' purchase_id=purchase.id product_id=product.id variation='new v5' %}" class="btn btn-outline-danger">{% trans 'Remove' %}</a>{% endif %}</td>
         </tr>
         {% endif %}
 
