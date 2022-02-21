@@ -1,0 +1,45 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load custom_tags %}
+
+{% block title %}{% trans 'Zero stock products' %}{% endblock %}
+
+{% block warehouses-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="warehouse" %}
+    </div>
+
+    <div class="col-md-10">
+      <h2>{% trans 'Zero stock products'%}</h2>
+
+      <table class="table table-striped">
+        <thead>
+          <th scope="col">{% trans 'Name' %}</th>
+          <th scope="col">{% trans 'Quantity' %}</th>
+          <th scope="col">{% trans 'Vendor' %}</th>
+
+        </thead>
+        <tbody>
+          {% for product in products %}
+          <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.stock }}</td>
+            <td>{{ product.price }}</td>
+        </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
