@@ -36,28 +36,27 @@ def orders(request, period=None, channel=None):
     # list of all approved or paid orders
     if channel == 'all' and period == 'all':
         orders = Order.objects.filter(
-            Q(status='approved') | Q(paid=True))
+            Q(status='approved') | Q(paid=True)).filter(active=True)
 
     # 'mix' channel means we need the orders that should be collected
     if channel == 'mix' and period == 'all':
         # orders = Order.objects.filter(
         #     Q(status='approved') | Q(paid=True)).exclude(channel='cashier')
         orders = Order.objects.exclude(
-            channel='cashier').exclude(status='draft')
+            channel='cashier').exclude(status='draft').filter(active=True)
 
     # staff/orders/30/mix
     elif channel == 'mix' and period not in ('all', 'mix'):
         orders = Order.objects.filter(
-            Q(status='approved') | Q(paid=True)).exclude(channel='cashier').filter(approved_date__gte=datetime.now() - timedelta(int(period)))
+            Q(status='approved') | Q(paid=True)).exclude(channel='cashier').filter(approved_date__gte=datetime.now() - timedelta(int(period))).filter(active=True)
 
     # staff/orders/365/cashier
     elif channel == 'cashier' and period not in ('all', 'mix'):
         orders = Order.objects.filter(
-            Q(status='approved') | Q(paid=True)).filter(channel='cashier').filter(approved_date__gte=datetime.now() - timedelta(int(period)))
-
+            Q(status='approved') | Q(paid=True)).filter(channel='cashier').filter(approved_date__gte=datetime.now() - timedelta(int(period))).filter(active=True)
     else:
         orders = Order.objects.filter(
-            Q(status='approved') | Q(paid=True))
+            Q(status='approved') | Q(paid=True)).filter(active=True)
 
     return render(
         request,
@@ -904,7 +903,7 @@ def orderline_update(request, order_id, orderline_id):
 @staff_member_required
 def draft_orders(request):
     # draft_orders = Order.objects.filter(status='draft').exclude(quantity=0)
-    draft_orders = Order.objects.filter(status='draft')
+    draft_orders = Order.objects.filter(status='draft').filter(active=True)
 
     return render(
         request,
@@ -927,7 +926,7 @@ def category_list(request):
 
 @staff_member_required
 def sold_products(request):
-    order_lines = OrderLine.objects.all()
+    order_lines = OrderLine.objects.all().filter(active=True)
     # order_lines = OrderLine.objects.all().values_list(product.id, flat=True)
     products = dict()
     for item in order_lines:
@@ -951,7 +950,7 @@ def sold_products(request):
 @staff_member_required
 def purchased_products(request):
 
-    purchase_lines = PurchaseLine.objects.all().order_by('purchase__created')
+    purchase_lines = PurchaseLine.objects.all().filter(active=True).order_by('purchase__created')
 
     # order_lines = OrderLine.objects.all().values_list(product.id, flat=True)
     products = dict()
@@ -1141,7 +1140,7 @@ def order_shipping(request, order_id):
 @staff_member_required
 def order_list_by_country(request, country_code=None):
     orders = Order.objects.all().exclude(channel='cashier').filter(
-        Q(status='approved') | Q(status='paid'))
+        Q(status='approved') | Q(status='paid')).filter(active=True)
 
     countries = set(
         list(filter(None, Address.objects.all().values_list('country', flat=True))))

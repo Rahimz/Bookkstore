@@ -92,7 +92,7 @@ def purchase_create(request):
 
 
 def purchase_list(request):
-    purchases = Purchase.objects.all()
+    purchases = Purchase.objects.all().filter(active=True)
 
     return render(
         request,
