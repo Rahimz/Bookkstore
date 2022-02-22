@@ -473,13 +473,16 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
                     #     return redirect('staff:invoice_create')
                     # if order:
                     #     return redirect('staff:invoice_create', order.id)
-                elif not product.has_other_prices:
-                    if product.stock <= 0:
-                        messages.error(request, _('Not enough stock!'))
-                        if not order:
-                            return redirect('staff:invoice_create')
-                        if order:
-                            return redirect('staff:invoice_create', order.id)
+
+                # this part remove to let zero stock add
+                # elif not product.has_other_prices:
+                #     if product.stock <= 0:
+                #         messages.error(request, _('You are adding zero stock!'))
+                #         if not order:
+                #             return redirect('staff:invoice_create')
+                #         if order:
+                #             return redirect('staff:invoice_create', order.id)
+
                     # if the order has not created yet, we created it here
                     if not order:
                         order = Order.objects.create(
@@ -491,11 +494,11 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
                             'Order is created') + ' : {}'.format(order.id))
 
                     # if the product is added in the invoice we will update the quantity in invoice
-                    if (product.pk, 'main') in product_ids and not product.has_other_prices:
+                    if (product.pk, 'new main') in product_ids and not product.has_other_prices:
                         order_line = OrderLine.objects.get(
                             order=order, product=product)
                         order_line.quantity += 1
-                        order_line.variation = 'main'
+                        order_line.variation = 'new main'
                         order_line.save()
                         order.save()
 
@@ -510,7 +513,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
                             product=product,
                             quantity=1,
                             price=product.price,
-                            variation='main'
+                            variation='new main'
                         )
                         order.save()
 
