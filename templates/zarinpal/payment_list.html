@@ -1,6 +1,7 @@
 {% extends "_base.html" %}
 {% load i18n %}
 {% load static %}
+{% load humanize %}
 {% load crispy_forms_tags %}
 
 {% block title %}{% trans 'Payment list' %} {% endblock %}
@@ -27,8 +28,11 @@
         <thead>
           <tr>
             <th scope="col">#</th>
+            <th scope="col">{% trans 'Payment number' %}</th>
             <th scope="col">{% trans 'Client name' %}</th>
             <th scope="col">{% trans 'Amount' %}</th>
+            <th scope="col">{% trans 'Order number' %}</th>
+            <th scope="col">{% trans 'Order client' %}</th>
             <th scope="col">{% trans 'Paid' %}</th>
             <th scope="col">{% trans 'Ref. ID' %}</th>
             <th scope="col">{% trans 'URL' %}</th>
@@ -39,8 +43,11 @@
           {% for pay in payments %}
           <tr>
             <td>{{ forloop.counter }}</td>
+            <td>{{ pay.pk }}</td>
             <td>{{ pay.client_name }}</td>
-            <td>{{ pay.amount }}</td>
+            <td>{{ pay.amount | intcomma:False }}</td>
+            <td>{% if pay.order %}{{ pay.order.pk  }}{% endif %}</td>
+            <td>{% if pay.order %}{{ pay.order.client  }}{% endif %}</td>
             <td>{% if pay.paid %}&#10004{% else %}&#10008{% endif %}</td>
             <td>{% if pay.paid %}{{ pay.ref_id }}{% endif %}</td>
             <td><a href="{% url 'zarinpal:payment_link_request' pay.id %}" {% if pay.paid %}disable{% endif %}>link</a></td>
