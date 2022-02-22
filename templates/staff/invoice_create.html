@@ -205,6 +205,12 @@
         <a href="{% url 'tools:make_invoice_pdf_a4' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF A4' %}</a>
         {% endif %}
         <a href="{% url 'staff:invoice_create' %}" class="btn btn-outline-secondary">{% trans 'Clear' %}</a>
+        {% if order and order.client %}
+        <a href="{% url 'zarinpal:payment_create_order' order.id %}" class="btn btn-secondary mx-4">{% trans 'Payment link'%}</a>
+        {% else %}
+        <a href="#" class="btn btn-secondary mx-4 disabled">{% trans 'Payment link'%}</a>
+        <p class="bg-warning">*{% trans 'For making payment link, you should first add a book to invoice and add a client' %}</p>
+        {% endif %}
       </div>
     </div>
 

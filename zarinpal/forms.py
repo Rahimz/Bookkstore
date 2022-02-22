@@ -8,5 +8,5 @@ class PaymentForm(forms.ModelForm):
     class Meta:
         model = Payment
         fields = [
-            'client_name' , 'client_phone', 'amount', 
+            'client_name' , 'client_phone', 'amount', 'payment_note'
         ]

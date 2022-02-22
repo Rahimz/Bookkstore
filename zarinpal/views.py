@@ -6,6 +6,7 @@ import json
 import datetime
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
+from django.contrib import messages
 
 from orders.models import Order
 # from .tasks import payment_completed
@@ -310,8 +311,33 @@ def payment_create(request):
     )
 
 
+def payment_create_order(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+    payment = Payment.objects.get(order=order)
+    if payment:
+        messages.warning(request, _('This payment is created before with number: ') + f"{payment.pk}")
+        return redirect('zarinpal:payment_list')
+    try:
+        payment = Payment.objects.get(order=order)
+        if payment:
+            messages.warning(request, _('This payment is created before with number: ') + f"{payment.pk}")
+            return redirect('zarinpal:payment_list')
+    except:
+        pass
+
+
+    Payment.objects.create(
+        client_name=f"{order.client.first_name} {order.client.last_name}",
+        client_phone=order.client.phone,
+        order=order,
+        amount=order.payable
+    )
+    messages.success(request, _('Payment link is created'))
+    return redirect('zarinpal:payment_list')
+
+
 def payment_list(request):
-    payments = Payment.objects.all()
+    payments = Payment.objects.all().order_by('-created')
     return render(
         request,
         'zarinpal/payment_list.html',
