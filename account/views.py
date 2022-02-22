@@ -12,7 +12,7 @@ from django.utils.html import strip_tags
 from django.contrib.postgres.search import SearchVector
 
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ClientAddForm, ClientUpdateForm, AddressAddForm
-from .models import CustomUser
+from .models import CustomUser, Address
 from search.forms import CLientSearchStaffForm
 from tools.fa_to_en_num import number_converter
 
@@ -134,33 +134,35 @@ def client_add(request):
         billing_address_form = AddressAddForm(data=request.POST)
         shipping_address_form = AddressAddForm(data=request.POST)
 
-        if client_form.is_valid() and billing_address_form.is_valid() and shipping_address_form.is_valid():
+        if client_form.is_valid():
             new_client = client_form.save(commit=False)
             new_client.is_client = True
             new_client.username = client_form.cleaned_data['phone']
+            new_client.phone = client_form.cleaned_data['phone']
             new_client.first_name = client_form.cleaned_data['first_name']
             new_client.last_name = client_form.cleaned_data['last_name']
             new_client.password = str(uuid.uuid4())
             new_client.email = "{}@ketabedamavand.com".format(
                 new_client.username)
+
             new_client.save()
+            if billing_address_form.is_valid() and shipping_address_form.is_valid():
+                billing = billing_address_form.save(commit=False)
+                shipping = shipping_address_form.save(commit=False)
 
-            billing = billing_address_form.save(commit=False)
-            shipping = shipping_address_form.save(commit=False)
+                # billing.name = '{} {}'.format(new_client.first_name, new_client.last_name + ' - ' + _('Billing address'))
+                # billing.name = '{}'.format(str(new_client.phone)) + ' - billing'
+                # billing.phone = new_client.phone
+                billing.save()
 
-            # billing.name = '{} {}'.format(new_client.first_name, new_client.last_name + ' - ' + _('Billing address'))
-            billing.name = '{}'.format(str(new_client.phone)) + ' - billing'
-            billing.phone = new_client.phone
-            billing.save()
+                # shipping.name = '{} {}'.format(new_client.first_name, new_client.last_name + ' - ' + _('Shipping address'))
+                # shipping.name = '{}'.format(str(new_client.phone)) + ' - shipping'
+                # shipping.phone = new_client.phone
+                shipping.save()
 
-            # shipping.name = '{} {}'.format(new_client.first_name, new_client.last_name + ' - ' + _('Shipping address'))
-            shipping.name = '{}'.format(str(new_client.phone)) + ' - shipping'
-            shipping.phone = new_client.phone
-            shipping.save()
-
-            new_client.default_billing_address = billing
-            new_client.default_shipping_address = shipping
-            new_client.save()
+                new_client.default_billing_address = billing
+                new_client.default_shipping_address = shipping
+                new_client.save()
 
             messages.success(request, _('Client added!'))
             return redirect('/account/clients/#clientTable')
@@ -173,8 +175,8 @@ def client_add(request):
         request,
         'account/clients/client_add.html',
         {'client_form': client_form,
-         'billing_address_form': billing_address_form,
-         'shipping_address_form': shipping_address_form,
+         # 'billing_address_form': billing_address_form,
+         # 'shipping_address_form': shipping_address_form,
          }
     )
 
@@ -220,6 +222,46 @@ def client_details(request, client_id):
         request,
         'account/clients/client_details.html',
         {
+            'client': client,
+        }
+    )
+
+def client_add_address(request, client_id, kind, address_id=None):
+    client = CustomUser.objects.get(pk=client_id)
+    if address_id:
+        address = Address.objects.get(pk=address_id)
+    address_form = AddressAddForm()
+    if request.method == 'POST':
+        if address_id:
+            address_form = AddressAddForm(data=request.POST, instance=address)
+        else:
+            address_form = AddressAddForm(data=request.POST, initial={'kind': kind})
+
+        if address_form.is_valid():
+            new_address = address_form.save(commit=False)
+            if not new_address.address_phone:
+                new_address.phone = client.phone
+            new_address.save()
+
+            if kind == 'billing':
+                client.default_billing_address = new_address
+            elif kind == 'shipping':
+                client.default_shipping_address = new_address
+            client.addresses.add(new_address)
+            client.save()
+            messages.success(request, _('Address added to client details'))
+            return redirect('client_details', client.id)
+    else:
+        if address_id:
+            address_form = AddressAddForm(instance=address)
+        else:
+            address_form = AddressAddForm()
+    return render(
+        request,
+        'account/clients/client_add_address.html',
+        {
+            'address_form': address_form,
+            'kind': kind,
             'client': client,
         }
     )

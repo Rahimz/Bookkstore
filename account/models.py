@@ -10,8 +10,23 @@ from django.shortcuts import reverse
 from simple_history.models import HistoricalRecords
 
 class Address(models.Model):
+    KIND_CHOICES = (
+        ('billing', _('Billing')),
+        ('shipping', _('Shipping'))
+    )
+
     name = models.CharField(
         max_length=256,
+        blank=True
+    )
+    address_phone = PhoneNumberField(
+        blank=True,
+        default=""
+    )
+    kind = models.CharField(
+        max_length=25,
+        choices=KIND_CHOICES,
+        null=True,
         blank=True
     )
     street_address_1 = models.CharField(
@@ -40,10 +55,7 @@ class Address(models.Model):
     )
 
     country = CountryField()
-    phone = PhoneNumberField(
-        blank=True,
-        default=""
-    )
+
 
     class Meta:
         ordering = ("pk",)

@@ -1,0 +1,50 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Client details' %} {{ client.username }}{% endblock %}
+
+{% block clients-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="clients" %}
+    </div>
+    <div class="col-md-10">
+      <h2 id="addClient">{% trans 'Add' %} {% trans kind %} {% trans 'Address' %}</h2>
+      <div class="">
+        {{client}}
+        <table class="table table-striped">
+          <tr>
+            <td>{% trans 'First name' %}</td>
+            <td>{{ client.first_name }}</td>
+          </tr>
+          <tr>
+            <td>{% trans 'Last name' %}</td>
+            <td>{{ client.last_name }}</td>
+          </tr>
+          <tr>
+            <td>{% trans 'Phone' %}</td>
+            <td>{{ client.phone }}</td>
+          </tr>
+        </table>
+        <h3>{% trans kind %} {% trans 'Address' %}</h3>
+        <form class="" action="." method="post">
+          {% csrf_token %}
+          {{ address_form | crispy }}
+          <input type="submit" name="" class="btn btn-success" value="{% trans 'Submit' %}">
+        </form>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+{% endblock %}
