@@ -111,6 +111,10 @@ def form_verify(request):
                 request.session['paid'] = True
                 payment.ref_id = request.GET['Authority']
                 payment.paid = True
+                if payment.order:
+                    order = payment.order
+                    order.paid = True
+                    order.save()
                 payment.save()
 
                 # send the result to admins
@@ -127,6 +131,10 @@ def form_verify(request):
                 request.session['paid'] = True
                 payment.ref_id = request.GET['Authority']
                 payment.paid = True
+                if payment.order:
+                    order = payment.order
+                    order.paid = True
+                    order.save()
                 payment.save()
 
                 # send the result to admins
