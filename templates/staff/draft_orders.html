@@ -44,8 +44,7 @@
               <td>{{ order.get_total_quantity}}</td>
               <td>{{ order.get_cost_after_discount | intcomma:False }}</td>
               <td>{{ order.discount | intcomma:False }}</td>
-              <td>{{ order.get_payable | intcomma:False }}</td>
-              <td><a href="{% url 'staff:invoice_checkout' order.id %}" class="btn btn-sm btn-outline-secondary">{% trans 'Submit' %}</a></td>
+              <td>{{ order.get_payable | intcomma:False }}</td>              
             </tr>
             {% endfor %}
           </tbody>

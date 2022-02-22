@@ -46,7 +46,7 @@
             <td>{% if order.paid %}&#10004{% else %}&#10008{% endif %}</td>
             <td>{% if order.is_gift %}&#10004{% else %}&#10008{% endif %}</td>
             <td>{% if order.shipping_status == "full" %}&#10004{% else %}<a href="{% url 'staff:order_shipped' order.id %}" onclick="return popitup('/staff/orders/shipping/{{ order.id }}')" class="btn btn-outline-secondary">{% if order.shipping_status == "semi" %}{% trans 'Semi shipped' %}{% else %}{% trans 'Ship order' %}{% endif %}</a>{% endif %}</td>
-
+            <td><a href="{% url 'tools:print_invoice' order.id %}" target="_blank" class="btn btn-outline-secondary ">{% trans 'Print' %}</a></td>
           </tr>
           {% endfor %}
         </tbody>

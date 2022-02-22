@@ -42,14 +42,25 @@
           </tr>
           <tr>
             <td>{% trans 'Billing address' %}</td>
-            <td>{{ client.default_billing_address }}
+            <td>
+              {% if client.default_billing_address %}
+              {{ client.default_billing_address }}
               <br>{{ client.default_billing_address.get_full_address }}
+              <a href="{% url 'client_update_address' client_id=client.id kind='billing' address_id=client.default_billing_address.pk %}" class="btn btn-outline-secondary">{% trans 'Edit address'%}</a>
+              {% endif %}
+              <a href="{% url 'client_add_address' client_id=client.id kind='billing' %}" class="btn btn-outline-secondary">{% trans 'Add address'%}</a>
             </td>
+            <td></td>
           </tr>
           <tr>
             <td>{% trans 'Shipping address' %}</td>
-            <td>{{ client.default_shipping_address }}
+            <td>
+              {% if client.default_shipping_address %}
+              {{ client.default_shipping_address }}
               <br>{{ client.default_shipping_address.get_full_address }}
+              <a href="{% url 'client_update_address' client_id=client.id kind='shipping' address_id=client.default_shipping_address.pk %}" class="btn btn-outline-secondary">{% trans 'Edit address'%}</a>
+              {% endif %}
+              <a href="{% url 'client_add_address' client_id=client.id kind='shipping' %}" class="btn btn-outline-secondary">{% trans 'Add address'%}</a>
             </td>
           </tr>
         </table>

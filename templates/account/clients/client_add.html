@@ -20,12 +20,7 @@
     <h2 id="addClient">{% trans 'Add client' %}</h2>
     <form class="" action="" method="post">
       {{ client_form | crispy }}
-      <p class="my-3 fw-bold">{% trans 'Billing address' %}</p>
-      {{ billing_address_form | crispy }}
 
-      <p class="my-3 fw-bold text-warning">*{% trans 'If Shipping address is as same as billing address, leave it empty' %}!</p>
-      <p class="my-3 fw-bold">{% trans 'Shipping address' %}</p>
-      {{ shipping_address_form | crispy }}
       {% csrf_token %}
       <input type="submit" name="" value="{% trans 'Submit' %}">
 

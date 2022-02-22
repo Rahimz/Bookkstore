@@ -74,16 +74,14 @@ class AddressAddForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 	    super().__init__(*args, **kwargs)
 	    self.fields['country'].required = False
+	    self.fields['name'].required = True
 	class Meta:
 		model = Address
-		exclude = ['name', 'phone', 'addresses']
-		# labels = {
-        #     'first_name': _('Name'),
-		# 	'overal_discount': _('Overal discount'),
-		# 	'default_billing_address': _('Address'),
-		# 	'contact_person': _('Contact person'),
-		# 	'other_phone': _('Other phone')
-        # }
+		exclude = ['addresses']
+		labels = {
+            'name': _('Reciever'),
+			'phone': _('Reciever phone'),
+        }
 		# widgets = {
         # 	'overal_discount': forms.TextInput(attrs={'placeholder': _('Percent')})
         # }
