@@ -551,7 +551,14 @@ def invoice_checkout(request, order_id, client_id=None):
     order = Order.objects.get(pk=order_id)
     checkout_form = OrderAdminCheckoutForm(instance=order)
     client_search_form = ClientSearchForm()
-    client = CustomUser.objects.get(pk=client_id) if client_id else None
+
+    if order.client:
+        client = order.client
+    elif client_id:
+        client = CustomUser.objects.get(pk=client_id)
+    else:
+        client = None
+
     credit = None
     if client:
         try:
@@ -979,7 +986,7 @@ def sold_products(request):
             products[item.product.name] = item.quantity
         main_stock[item.product.name] = item.product.stock
     products = sorted(products.items(), key=lambda x: x[1], reverse=True)
-    
+
     return render(
         request,
         'staff/sold_products.html',
