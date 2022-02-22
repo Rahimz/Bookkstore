@@ -715,22 +715,6 @@ def orderline_update(request, order_id, orderline_id):
             product = order_line.product
             variation = order_line.variation
 
-            # variation_dict = {
-            #     'main': {
-            #         'price': product.price,
-            #         'stock': product.stock,
-            #     },
-            #     'v1': {
-            #         'price': product.price_1,
-            #         'stock': product.stock_1,
-            #     },
-            #     'used': {
-            #         'price': product.price_used,
-            #         'stock': product.stock_used,}
-            # }
-            # product_price = variation_dict[order_line.variation]['price']
-            # product_stock = variation_dict[order_line.variation]['stock']
-
             # to work with orderlines that have been made before
             if variation == 'main':
                 variation = 'new main'
@@ -787,10 +771,11 @@ def orderline_update(request, order_id, orderline_id):
                 remove an orde line if remove checkbox is clicked
                 """
                 # Update product stock
-                if product_stock < 0:
-                    product_stock += order_line.quantity + 1
-                else:
-                    product_stock += order_line.quantity
+                product_stock += order_line.quantity
+                # if product_stock < 0:
+                # else:
+                #     product_stock += order_line.quantity
+                # product_stock += order_line.quantity
 
                 # if variation == 'main':
                 #     product.stock = product_stock
@@ -800,25 +785,25 @@ def orderline_update(request, order_id, orderline_id):
                 #     product.stock_used = product_stock
                 # we have some old row in purchase lines
                 if variation == 'new main':
-                    product.stock += product_stock
+                    product.stock = product_stock
 
                 elif variation == 'new v1':
-                    product.stock_1 += product_stock
+                    product.stock_1 = product_stock
 
                 elif variation == 'new v2':
-                    product.stock_2 += product_stock
+                    product.stock_2 = product_stock
 
                 elif variation == 'new v3':
-                    product.stock_3 += product_stock
+                    product.stock_3 = product_stock
 
                 elif variation == 'new v3':
-                    product.stock_4 += product_stock
+                    product.stock_4 = product_stock
 
                 elif variation == 'new v4':
-                    product.stock_5 += product_stock
+                    product.stock_5 = product_stock
 
                 elif variation == 'used main':
-                    product.stock_used += product_stock
+                    product.stock_used = product_stock
 
                 product.save()
 
@@ -871,10 +856,11 @@ def orderline_update(request, order_id, orderline_id):
 
                 elif update_form.cleaned_data['quantity'] < order_line.quantity:
                     # Update product stock
-                    if product_stock < 0:
-                        product_stock += order_line.quantity + update_form.cleaned_data['quantity']
-                    else:
-                        product_stock += order_line.quantity - update_form.cleaned_data['quantity']
+                    product_stock += order_line.quantity - update_form.cleaned_data['quantity']
+                    # if product_stock < 0:
+                    #     product_stock += order_line.quantity + update_form.cleaned_data['quantity']
+                    # else:
+                    #     product_stock += order_line.quantity - update_form.cleaned_data['quantity']
 
 
                     if variation == 'new main':
