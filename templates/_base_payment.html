@@ -1,0 +1,163 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html dir="rtl">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Open graph -->
+  <meta property="og:title" content="{% trans 'Ketab Damavand' %}" />
+  <meta name="description" property="og:description" content="{% trans 'Ketab Damavand' %}">
+  <meta property="og:image" content="{% static 'img/logo.png' %}" />
+  <meta property="og:image:alt" content="{% trans 'Ketab Damavand logo' %}" />
+
+  <!-- css files -->
+  <link href="{% static 'css/bootstrap.rtl.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/bootstrap-grid.rtl.css' %}" rel="stylesheet">
+  <link href="{% static 'css/bootstrap-utilities.rtl.min.css' %}" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="{% static 'css/base.css' %}" rel="stylesheet">
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F9RJ6DQ80X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-F9RJ6DQ80X');
+  </script>
+
+  {% block head %}{% endblock %}
+
+  <title>{% block title %}{% endblock %} | {% trans 'Ketab Damavand' %}</title>
+</head>
+
+<body>
+  <header class="mb-3">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid bg-main-color border-bottom border-2 border-dark">
+        <a class="navbar-brand p-3 fw-bolder" href="{% url 'shop:temp_home' %}"><img src="{% static 'img/logo.jpg' %}" alt="{% trans 'Ketab Damavand' %}" class="rounded" width="110px;" height="auto"></a>
+
+
+
+      </div>
+
+    </nav>
+
+    {% if messages %}
+    <div  id="hideme" class="hide-class">
+
+      <ul  class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">
+          {{ message|safe }}
+          <a href="#" class="close" class="toast" role="alert" aria-live="assertive" aria-atomic="true">x</a>
+        </li>
+        {% endfor %}
+      </ul>
+
+    </div>
+    {% endif %}
+
+
+
+
+  </header>
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer class="footer">
+    <div class="mt-3 container-fluid bg-second-color">
+      <div class="row row-cols-md-3 p-5">
+        <div class="col text-light">
+          <p>{% trans 'How to order books' %}</p>
+          <p>{% trans 'Website rules' %}</p>
+          <p>{% trans 'Q&A' %}</p>
+          <p>{% trans 'Contact us' %}</p>
+
+        </div>
+        <div class="col text-light">
+          <p class="fw-bold">{% trans 'Ketabe Damavand' %}</p>
+          <p>{% trans 'Address' %} :
+            <span class="text-center">{% trans '16 Azar St.' %}, {% trans 'Edward Brown St.' %}, {% trans 'No.7' %} - 66981024</span>
+
+          </p>
+          <p>{% trans 'Phone' %} :
+            <br><span>{% trans 'Bookstore' %} :</span>
+            <br><a href="tel:+982166981024" dir="ltr">+9821 66981024</a>
+            <br>
+            <br>
+            {% comment %}
+            <span>{% trans 'Orders followup' %} :</span>
+            <br><a href="tel:+989123487091" dir="ltr">+98 912 3487091</a>
+            {% endcomment %}
+          <p>
+            <a href="mailto:info@ketabedamavand.com">info@ketabedamavand.com</a>
+          </p>
+
+          </p>
+        </div>
+        <div class="col text-light social-network">
+          <p class="fw-bold">{% trans 'Social Media' %}</p>
+
+          <span>{% trans 'Ketabe Damavand' %}</span> <br>
+          <a href="https://t.me/bahmanbooks/">
+            <i class="fa fa-send"></i>
+          </a>
+          <br>
+          <br>
+
+          <span>{% trans 'Order books in social media' %}</span> <br>
+          <a href="https://instagram.com/bahmanbookz/">
+            <i class="fa fa-instagram"></i>
+          </a>
+          <a href="https://t.me/bahmanbookz/">
+            <i class="fa fa-send"></i>
+          </a>
+          <a href="https://twitter.com/bahmanbooks/">
+            <i class="fa fa-twitter"></i>
+          </a>
+          <br>
+          <br>
+
+          <span>{% trans 'Bahman Daroshafaei in social media' %}</span><br>
+          <a href="https://t.me/bahmanshafa/">
+            <i class="fa fa-send"></i>
+          </a>
+          <a href="https://instagram.com/bahman.daroshafaei/">
+            <i class="fa fa-instagram"></i>
+          </a>
+          <a href="https://twitter.com/bahmandaroshafa/">
+            <i class="fa fa-twitter"></i>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <div class="row bg-dark text-center">
+      <p class="text-light pt-3">{% trans 'Ketabe Damavand'%} 1400</p>
+    </div>
+
+  </footer>
+
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  {% comment %}
+  <script>
+    setTimeout(function() {
+      document.getElementById('hideme').className = 'waa';
+    }, 2500);
+  </script>
+  {% endcomment %}
+  {% block script %}
+  {% endblock %}
+</body>
+
+</html>
