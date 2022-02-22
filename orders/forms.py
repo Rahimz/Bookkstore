@@ -24,6 +24,7 @@ class OrderAdminCheckoutForm(forms.ModelForm):
         model = Order
         fields = [
             'discount', 'channel', 'is_gift', 'paid', 'customer_note',
+            'shipping_method', 'shipping_cost'
         ]
         labels ={
             'customer_note': _('Notes'),

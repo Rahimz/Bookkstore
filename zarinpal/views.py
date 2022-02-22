@@ -321,7 +321,7 @@ def payment_create(request):
 
 def payment_create_order(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
-    payment = Payment.objects.get(order=order)
+    payment = None
     if payment:
         messages.warning(request, _('This payment is created before with number: ') + f"{payment.pk}")
         return redirect('zarinpal:payment_list')

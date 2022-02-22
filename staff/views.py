@@ -599,8 +599,10 @@ def invoice_checkout(request, order_id, client_id=None):
             if order.channel == 'cashier':
                 order.shipping_method = 'pickup'
                 order.shipping_status = 'full'
-            else:
-                order.shipping_method = 'post'
+                order.paid = True
+
+            order.shipping_method = checkout_form.cleaned_data['shipping_method']
+            order.shipping_cost = checkout_form.cleaned_data['shipping_cost']
             order.save()
             messages.success(request, _('Order approved'))
             # return redirect('staff:order_list', period='all', channel='all')
