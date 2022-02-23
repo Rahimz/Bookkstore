@@ -216,7 +216,19 @@ def add_new_book_to_database_2(request, file_slug, check='check'):
     isbn_error = []
     update_product = 0
     number_of_added_object = 0
+    check_sum = 0
+    price_change_list_ids = []
+    product_updated_with_excel_ids = []
+    new_book_to_update = []
 
+    main_list_143 = []
+    excel_isbn_in_db = []
+    isbn_same_name_in_db = []
+    different_name_with_same_isbn = []
+    no_isbn_with_same_name_in_db = []
+    excel_dic = []
+
+    updated_product_to_keep_unchanged = Product.objects.filter(import_session__id='df0dca0d-4ba1-4b6f-b07a-8df5b8c3d121').values_list('isbn', flat=True)
 
     file_object = get_object_or_404(FileObject, slug=file_slug)
 
@@ -224,8 +236,8 @@ def add_new_book_to_database_2(request, file_slug, check='check'):
 
     path = file_object.file.path
 
-    isbn_list = Product.objects.filter(isbn__isnull=False).filter(available=True).values_list('isbn', flat=True)
-    name_list = Product.objects.filter(available=True).values_list('name', flat=True)
+    isbn_list = Product.objects.filter(available=True).exclude(import_session__id='df0dca0d-4ba1-4b6f-b07a-8df5b8c3d121').values_list('isbn', flat=True)
+    name_list = Product.objects.filter(available=True).exclude(import_session__id='df0dca0d-4ba1-4b6f-b07a-8df5b8c3d121').values_list('name', flat=True)
     barcode_number_list = Product.objects.filter(barcode_number__isnull=False).values_list('barcode_number', flat=True)
 
     if check == 'add':
@@ -257,31 +269,64 @@ def add_new_book_to_database_2(request, file_slug, check='check'):
                 price = [0,]
 
 
-            # print(price, type(price))
-            # print(page_number, type(page_number))
-            if str(isbn[0])!='None' and (str(isbn[0]) in isbn_list):
-                if ws['B' + str(i)].value != Product.objects.filter(available=True).get(isbn=str(isbn[0])):
-                    duplicate_isbn.append((i, str(isbn[0]),ws['B' + str(i)].value, [Product.objects.filter(available=True).filter(isbn=str(isbn[0]))]))
-            else:
-                if check == 'add':
-                    print(name[0])
-                    product = Product.objects.create(
-                        name = name[0],
-                        isbn = str(isbn[0]),
-                        price = price[0],
-                        page_number =page_number[0],
-                        publisher = publisher[0],
-                        stock = stock[0],
-                        state = 'new',
-                        available = True,
-                        available_in_store = True,
-                        available_online = True,
-                        publish_year=None,
-                        import_session=current_import_session,
-                    )
-                    number_of_added_object += 1
-                    update_product += 1
+            # print(isbn[0])
+            # print(len(isbn_list))
+            if str(isbn[0]) not in updated_product_to_keep_unchanged:
+                main_list_143.append(str(isbn[0]))
+                # if str(isbn[0]) != 'None':
+                database_product = Product.objects.filter(available=True).get(isbn=str(isbn[0]))
+                # print('isbn in database', isbn[0], name[0])
 
+
+                excel_isbn_in_db.append(str(isbn[0]))
+                if name[0] == database_product.name:
+                    if check == 'add':
+                        database_product.stock += stock[0]
+                        database_product.save()
+                    # print('same isbn same name', isbn[0], name[0])
+                    isbn_same_name_in_db.append(str(isbn[0]))
+                else:
+                    # print('different_name_with_same_isbn', isbn[0], name[0])
+                    different_name_with_same_isbn.append(str(isbn[0]))
+                    excel_dic.append((name[0], str(isbn[0]), stock[0]))
+
+                    # new_book_to_update.append((isbn[0], name[0]))
+
+
+
+            # # print(price, type(price))
+            # # print(page_number, type(page_number))
+            # if str(isbn[0])!='None' and (str(isbn[0]) in isbn_list):
+            #     database_product = Product.objects.filter(available=True).get(isbn=str(isbn[0]))
+            #
+            #     if name[0] == database_product.name:
+            #         product_updated_with_excel_ids.append(database_product.id)
+            #         if price[0] != database_product.price:
+            #             price_change_list_ids.append(database_product.id)
+            #
+            #
+            #     if ws['B' + str(i)].value != database_product.name:
+            #         duplicate_isbn.append((i, str(isbn[0]),ws['B' + str(i)].value, [Product.objects.filter(available=True).filter(isbn=str(isbn[0]))]))
+            # else:
+            #     if check == 'add':
+            #         # print(name[0])
+            #         product = Product.objects.create(
+            #             name = name[0],
+            #             isbn = str(isbn[0]),
+            #             price = price[0],
+            #             page_number =page_number[0],
+            #             publisher = publisher[0],
+            #             stock = stock[0],
+            #             state = 'new',
+            #             available = True,
+            #             available_in_store = True,
+            #             available_online = True,
+            #             publish_year=None,
+            #             import_session=current_import_session,
+            #         )
+            #         number_of_added_object += 1
+            #         update_product += 1
+            #
 
             if str(name[0]) in name_list:
                 duplicate_isbn.append((i, str(isbn[0])))
@@ -293,8 +338,26 @@ def add_new_book_to_database_2(request, file_slug, check='check'):
         current_import_session.quantity = number_of_added_object
         current_import_session.save()
 
-    print(len(duplicate_isbn))
+    price_change_list = Product.objects.filter(pk__in=price_change_list_ids)
+    product_updated_with_excel = Product.objects.filter(pk__in=product_updated_with_excel_ids)
+
+    diff_name = Product.objects.filter(available=True).filter(isbn__in=different_name_with_same_isbn).order_by('isbn')
+    # different_name_with_same_isbn = different_name_with_same_isbn.sort(key=lambda x:x[1])
+    excel_dic = sorted(excel_dic, key=lambda x:x[1])
+
+    print('should be as same as import session Q.',check_sum)
+    print(len(updated_product_to_keep_unchanged) )
+    # print(len(duplicate_isbn))
+    # print(len(price_change_list))
+    # print(len(product_updated_with_excel))
     # print(len(set(duplicate_isbn)))
+    print('None' in updated_product_to_keep_unchanged)
+    print('main_list_143: ', len(main_list_143))
+    print('excel_dic: ', len(excel_dic))
+    # print('excel_isbn_in_db: ', len(excel_isbn_in_db))
+    # print('isbn_same_name_in_db: ', len(isbn_same_name_in_db))
+    # print('different_name_with_same_isbn: ', len(different_name_with_same_isbn))
+    print('no_isbn_with_same_name_in_db: ', len(no_isbn_with_same_name_in_db))
     return render(
         request,
         'files/check_update.html',
@@ -307,5 +370,19 @@ def add_new_book_to_database_2(request, file_slug, check='check'):
             'duplicate_isbn': duplicate_isbn,
             'row_count': row_count,
             'update_product': update_product,
+            'price_change_list': price_change_list,
+            'product_updated_with_excel': product_updated_with_excel,
+
+            'excel_isbn_in_db': excel_isbn_in_db,
+            'isbn_same_name_in_db': isbn_same_name_in_db,
+            'different_name_with_same_isbn': different_name_with_same_isbn,
+            'no_isbn_with_same_name_in_db': no_isbn_with_same_name_in_db,
+            'main_list_143': main_list_143,
+            'diff_name': diff_name,
+            'excel_dic': excel_dic,
          }
     )
+
+
+def update_isbn_duplicate(request, product_isbn):
+    pass

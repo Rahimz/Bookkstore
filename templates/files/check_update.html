@@ -6,10 +6,52 @@
 <a href="{% url 'files:list_of_files' %}" class="btn btn-secondary">Back</a>
 {{ file.name }} - {{ file.type }} - {{ file.file.url}}
 <p>row_count: {{ row_count }}</p>
+<div class="container-fluid overflow-hidden">
+    <div class="row">
+        <div class="col-md-6">
+          {% for item in diff_name %}
+          {{item.name}} - {{item.isbn}}
+          <br>
+          <br>
+          {% endfor %}
+        </div>
+        <div class="col-md-6">
+          {% for item in excel_dic %}
+          {% for i in item %}
+          {{ i }}
+          {% endfor %}
+          <br>
+          <br>
+          {% endfor %}
+        </div>
+    </div>
+</div>
 
+
+
+<p>isbn_same_name_in_db,<p>
+  {{ isbn_same_name_in_db }}
+
+
+{% comment %}
+<p>excel_isbn_in_db,<p>
+  {{ excel_isbn_in_db }}
+
+<p>main_list_143</p>
+{{ main_list_143}}
+    <p>different_name_with_same_isbn,<p>
+      {{ different_name_with_same_isbn }}
+      <p>no_isbn_with_same_name_in_db,<p>
+        {{ no_isbn_with_same_name_in_db }}
+product update
+  <p>{{ product_updated_with_excel }}</p>
+price change
+  <p>{{ price_change_list  }}</p>
 {# <p>duplicate_isbn : {{ duplicate_isbn}}</p> #}
 {% for item in duplicate_isbn %}
 <p>{{ item }}</p>
 {% endfor %}
 <p>isbn_error {{ isbn_error}}</p>
+{% endcomment %}
+
 {% endblock %}
