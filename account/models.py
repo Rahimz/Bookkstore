@@ -37,11 +37,13 @@ class Address(models.Model):
         max_length=256,
         blank=True
     )
-    house_number = models.PositiveIntegerField(
+    house_number = models.CharField(
+        max_length=50,
         null=True,
         blank=True,
     )
-    house_unit = models.PositiveIntegerField(
+    house_unit = models.CharField(
+        max_length=50,
         null=True,
         blank=True,
     )
@@ -140,6 +142,10 @@ class Vendor(CustomUser):
         verbose_name = _('Vendor')
         verbose_name_plural = _('Vendors')
 
+    def save(self, *args, **kwargs):
+        if not self.overal_discount:
+            self.overal_discount = 0
+        super(Vendor, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.first_name

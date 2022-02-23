@@ -58,7 +58,7 @@ class ClientUpdateForm(forms.ModelForm):
 class VendorAddForm(forms.ModelForm):
 	class Meta:
 		model = Vendor
-		fields = ('first_name', 'overal_discount', 'phone', 'contact_person', 'other_phone')
+		fields = ('first_name', 'phone', 'contact_person', 'other_phone')
 		labels = {
             'first_name': _('Name'),
 			'overal_discount': _('Overal discount'),
@@ -84,4 +84,18 @@ class AddressAddForm(forms.ModelForm):
         }
 		# widgets = {
         # 	'overal_discount': forms.TextInput(attrs={'placeholder': _('Percent')})
+        # }
+
+
+class VendorAddressAddForm(forms.ModelForm):
+	def __init__(self, *args, **kwargs):
+	    super().__init__(*args, **kwargs)
+	    self.fields['country'].required = False
+	    # self.fields['name'].required = True
+	class Meta:
+		model = Address
+		exclude = ['name', 'kind', 'address_phone']
+		# labels = {
+        #     'name': _('Reciever'),
+		# 	'phone': _('Reciever phone'),
         # }

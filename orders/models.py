@@ -8,6 +8,7 @@ from datetime import datetime
 from math import trunc
 
 from phonenumber_field.modelfields import PhoneNumberField
+from simple_history.models import HistoricalRecords
 
 from account.models import Address, Vendor
 from products.models import Product
@@ -184,6 +185,12 @@ class Order(models.Model):
     active = models.BooleanField(
         default= True
     )
+    pay_receipt = models.ImageField(
+        upload_to='orders/receipts',
+        null=True,
+        blank=True
+    )
+    history = HistoricalRecords()
 
     class Meta:
         ordering = ("-approved_date", "-pk",)
@@ -197,6 +204,12 @@ class Order(models.Model):
 
         self.payable = self.get_payable()
 
+        if not self.billing_address:
+            if self.client:
+                self.billing_address = self.client.default_billing_address
+        if not self.shipping_address:
+            if self.client:
+                self.billing_address = self.client.default_shipping_address
         super(Order, self).save(*args, **kwargs)
 
     def __str__(self):

@@ -34,7 +34,17 @@ class OrderAdminCheckoutForm(forms.ModelForm):
         }
 
 
+class OrderPaymentManageForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = [
+            'pay_receipt', 'paid', 'customer_note'
+        ]
+
 class PurchaseCreateForm(forms.ModelForm):
+    # def __init__(self, *args, **kwargs):
+	#     super().__init__(*args, **kwargs)
+	#     self.fields['deadline_days'] = 10
     # payment_days = forms.IntegerField(
     #     required=False,
     #     label=_('Payment deadline'),

@@ -23,7 +23,7 @@
         <form class="" action="." method="post">
           {% csrf_token %}
           {{ purchase_form | crispy }}
-          <input type="submit" name="" value="{% trans 'Submit' %}">
+          <input type="submit" name="" class="btn btn-success my-3" value="{% trans 'Submit' %}">
         </form>
       </div>
     </div>

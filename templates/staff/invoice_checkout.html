@@ -32,7 +32,7 @@
 
             {% if clients %}
             {% for client in clients %}
-            <a href="{% url 'staff:invoice_checkout_client' order_id=order.id client_id=client.id %}" class="btn btn-success m-1">{{ client.first_name }} {{ client.last_name }}- {{ client.phone }}</a>
+            <a href="{% url 'staff:invoice_checkout_client' order_id=order.id client_id=client.id %}" class="btn btn-outline-success m-1">{{ client.first_name }} {{ client.last_name }}- {{ client.phone }}</a>
             {% endfor %}
             {% endif %}
 
@@ -96,6 +96,8 @@
 
 
               {% csrf_token %}
+
+              <input class="btn btn-outline-secondary my-4" type="submit" name="form-save" value="{% trans 'Save changes' %}">
               <input class="btn btn-success my-4" type="submit" name="client" value="{% trans 'Submit' %}">
             </form>
 

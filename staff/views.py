@@ -15,11 +15,11 @@ from django_countries.fields import Country
 from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm, ProductCollectionForm
 from products.models import Product, Category
 from orders.models import Order, OrderLine, PurchaseLine
-from orders.forms import OrderAdminCheckoutForm
+from orders.forms import OrderAdminCheckoutForm, OrderPaymentManageForm
 from search.forms import ClientSearchForm, BookIsbnSearchForm, SearchForm
 from search.views import ProductSearch
 from account.models import CustomUser, Vendor, Address, Credit
-from account.forms import VendorAddForm, AddressAddForm
+from account.forms import VendorAddForm, AddressAddForm, VendorAddressAddForm
 from tools.fa_to_en_num import number_converter
 
 
@@ -555,10 +555,10 @@ def invoice_checkout(request, order_id, client_id=None):
     checkout_form = OrderAdminCheckoutForm(instance=order)
     client_search_form = ClientSearchForm()
 
-    if order.client:
-        client = order.client
-    elif client_id:
+    if client_id:
         client = CustomUser.objects.get(pk=client_id)
+    elif order.client:
+        client = order.client
     else:
         client = None
 
@@ -587,9 +587,16 @@ def invoice_checkout(request, order_id, client_id=None):
             if len(clients) == 0:
                 client_add_notice = True
 
+
         if checkout_form.is_valid():
             if not client:
                 client = CustomUser.objects.get(username='guest')
+            if 'form-save' in request.POST:
+                checkout_form.save()
+                order.client = client
+                order.save()
+                return redirect('staff:invoice_checkout', order.id)
+
             order.client = client
             order.paid = checkout_form.cleaned_data['paid']
             order.customer_note = checkout_form.cleaned_data['customer_note']
@@ -599,6 +606,10 @@ def invoice_checkout(request, order_id, client_id=None):
             order.status = 'approved'
             order.approver = request.user
             order.approved_date = datetime.now()
+
+            order.billing_address = client.default_billing_address
+            order.shipping_address = client.default_shipping_address
+
             if order.channel == 'cashier':
                 order.shipping_method = 'pickup'
                 order.shipping_status = 'full'
@@ -918,6 +929,38 @@ def draft_orders(request):
     )
 
 
+def invoice_back_to_draft(request, order_id):
+    order = Order.objects.get(pk=order_id)
+    if order.shipping_status == 'full':
+        messages.warning(request, _('This order is shipped'))
+
+    order.approver = None
+    order.approved_date = None
+    order.status = 'draft'
+    order.save()
+    messages.success(request, _('Order status changed to draft'))
+    return redirect('staff:invoice_checkout', order.id)
+
+
+def order_payment_manage(request, order_id):
+    order = Order.objects.get(pk=order_id)
+    if request.method == 'POST':
+        payment_form = OrderPaymentManageForm(request.POST, files=request.FILES, instance=order)
+        if payment_form.is_valid():
+            payment_form.save()
+            return redirect('staff:order_detail_for_admin', order.id)
+
+    else:
+        payment_form = OrderPaymentManageForm(instance=order)
+    return render(
+        request,
+        'staff/order_payment_manage.html',
+        {
+        'order': order,
+        'payment_form': payment_form,
+        }
+    )
+
 @staff_member_required
 def category_list(request):
     main_categories = Category.objects.filter(
@@ -1050,11 +1093,11 @@ def purchased_products(request):
 @staff_member_required
 def vendor_add(request):
     vendor_form = VendorAddForm()
-    address_form = AddressAddForm(
+    address_form = VendorAddressAddForm(
         initial={'country': 'IR', 'city': _('Tehran')})
     if request.method == 'POST':
         vendor_form = VendorAddForm(request.POST)
-        address_form = AddressAddForm(request.POST)
+        address_form = VendorAddressAddForm(request.POST)
         if vendor_form.is_valid() and address_form.is_valid():
             vendor = vendor_form.save(commit=False)
             vendor.username = vendor_form.cleaned_data['first_name']
@@ -1077,7 +1120,7 @@ def vendor_add(request):
             messages.error(request, _('Form is not valid'))
     else:
         vendor_form = VendorAddForm()
-        address_form = AddressAddForm(
+        address_form = VendorAddressAddForm(
             initial={'country': 'IR', 'city': _('Tehran')})
     return render(
         request,
@@ -1092,7 +1135,7 @@ def vendor_edit(request, vendor_id):
     vendor = get_object_or_404(Vendor, pk=vendor_id)
     if request.method == 'POST':
         vendor_form = VendorAddForm(request.POST, instance=vendor)
-        address_form = AddressAddForm(
+        address_form = VendorAddressAddForm(
             request.POST, instance=vendor.default_billing_address)
         if vendor_form.is_valid() and address_form.is_valid():
             vendor_form.save()
@@ -1103,7 +1146,7 @@ def vendor_edit(request, vendor_id):
             messages.error(request, _('Form is not valid'))
     else:
         vendor_form = VendorAddForm(instance=vendor)
-        address_form = AddressAddForm(instance=vendor.default_billing_address)
+        address_form = VendorAddressAddForm(instance=vendor.default_billing_address)
     return render(
         request,
         'staff/vendor_add.html',

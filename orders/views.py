@@ -82,7 +82,7 @@ def purchase_create(request):
             messages.success(request, _('Purchase is created'))
             return redirect('orders:purchase_details', purchase.id)
     else:
-        purchase_form = PurchaseCreateForm()
+        purchase_form = PurchaseCreateForm(initial={'deadline_days': 10})
 
     return render(
         request,
