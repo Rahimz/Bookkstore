@@ -199,6 +199,12 @@ class Order(models.Model):
 
         self.payable = self.get_payable()
 
+        if not self.billing_address:
+            if self.client:
+                self.billing_address = self.client.default_billing_address
+        if not self.shipping_address:
+            if self.client:
+                self.billing_address = self.client.default_shipping_address
         super(Order, self).save(*args, **kwargs)
 
     def __str__(self):

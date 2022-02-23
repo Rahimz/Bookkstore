@@ -555,10 +555,10 @@ def invoice_checkout(request, order_id, client_id=None):
     checkout_form = OrderAdminCheckoutForm(instance=order)
     client_search_form = ClientSearchForm()
 
-    if order.client:
-        client = order.client
-    elif client_id:
+    if client_id:
         client = CustomUser.objects.get(pk=client_id)
+    elif order.client:
+        client = order.client
     else:
         client = None
 
@@ -589,11 +589,14 @@ def invoice_checkout(request, order_id, client_id=None):
 
 
         if checkout_form.is_valid():
-            if 'form-save' in request.POST:
-                checkout_form.save()
-                return redirect('staff:invoice_checkout', order.id)
             if not client:
                 client = CustomUser.objects.get(username='guest')
+            if 'form-save' in request.POST:
+                checkout_form.save()
+                order.client = client
+                order.save()
+                return redirect('staff:invoice_checkout', order.id)
+
             order.client = client
             order.paid = checkout_form.cleaned_data['paid']
             order.customer_note = checkout_form.cleaned_data['customer_note']
