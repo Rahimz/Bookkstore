@@ -587,7 +587,11 @@ def invoice_checkout(request, order_id, client_id=None):
             if len(clients) == 0:
                 client_add_notice = True
 
+
         if checkout_form.is_valid():
+            if 'form-save' in request.POST:
+                checkout_form.save()
+                return redirect('staff:invoice_checkout', order.id)
             if not client:
                 client = CustomUser.objects.get(username='guest')
             order.client = client
