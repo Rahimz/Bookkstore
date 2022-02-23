@@ -12,5 +12,6 @@ urlpatterns = [
     path('upload/new-product/<slug:file_slug>/', views.add_new_book_to_database, name='add_new_book_to_database'),
 
     path('upload/new-product-2/<slug:file_slug>/<str:check>/', views.add_new_book_to_database_2, name='add_new_book_to_database_check_2'),
-    
+    path('upload/new-product-2/<str:product_isbn>/<int:quantity>/', views.update_isbn_duplicate, name='update_isbn_duplicate'),
+
 ]
