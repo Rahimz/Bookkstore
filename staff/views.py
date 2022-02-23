@@ -19,7 +19,7 @@ from orders.forms import OrderAdminCheckoutForm
 from search.forms import ClientSearchForm, BookIsbnSearchForm, SearchForm
 from search.views import ProductSearch
 from account.models import CustomUser, Vendor, Address, Credit
-from account.forms import VendorAddForm, AddressAddForm
+from account.forms import VendorAddForm, AddressAddForm, VendorAddressAddForm
 from tools.fa_to_en_num import number_converter
 
 
@@ -1072,11 +1072,11 @@ def purchased_products(request):
 @staff_member_required
 def vendor_add(request):
     vendor_form = VendorAddForm()
-    address_form = AddressAddForm(
+    address_form = VendorAddressAddForm(
         initial={'country': 'IR', 'city': _('Tehran')})
     if request.method == 'POST':
         vendor_form = VendorAddForm(request.POST)
-        address_form = AddressAddForm(request.POST)
+        address_form = VendorAddressAddForm(request.POST)
         if vendor_form.is_valid() and address_form.is_valid():
             vendor = vendor_form.save(commit=False)
             vendor.username = vendor_form.cleaned_data['first_name']
@@ -1099,7 +1099,7 @@ def vendor_add(request):
             messages.error(request, _('Form is not valid'))
     else:
         vendor_form = VendorAddForm()
-        address_form = AddressAddForm(
+        address_form = VendorAddressAddForm(
             initial={'country': 'IR', 'city': _('Tehran')})
     return render(
         request,
@@ -1114,7 +1114,7 @@ def vendor_edit(request, vendor_id):
     vendor = get_object_or_404(Vendor, pk=vendor_id)
     if request.method == 'POST':
         vendor_form = VendorAddForm(request.POST, instance=vendor)
-        address_form = AddressAddForm(
+        address_form = VendorAddressAddForm(
             request.POST, instance=vendor.default_billing_address)
         if vendor_form.is_valid() and address_form.is_valid():
             vendor_form.save()
@@ -1125,7 +1125,7 @@ def vendor_edit(request, vendor_id):
             messages.error(request, _('Form is not valid'))
     else:
         vendor_form = VendorAddForm(instance=vendor)
-        address_form = AddressAddForm(instance=vendor.default_billing_address)
+        address_form = VendorAddressAddForm(instance=vendor.default_billing_address)
     return render(
         request,
         'staff/vendor_add.html',

@@ -142,6 +142,10 @@ class Vendor(CustomUser):
         verbose_name = _('Vendor')
         verbose_name_plural = _('Vendors')
 
+    def save(self, *args, **kwargs):
+        if not self.overal_discount:
+            self.overal_discount = 0
+        super(Vendor, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.first_name
