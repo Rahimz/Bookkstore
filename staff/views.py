@@ -602,7 +602,7 @@ def invoice_checkout(request, order_id, client_id=None):
 
             order.billing_address = client.default_billing_address
             order.shipping_address = client.default_shipping_address
-            
+
             if order.channel == 'cashier':
                 order.shipping_method = 'pickup'
                 order.shipping_status = 'full'
@@ -920,6 +920,20 @@ def draft_orders(request):
         'staff/draft_orders.html',
         {'draft_orders': draft_orders}
     )
+
+
+def invoice_back_to_draft(request, order_id):
+    order = Order.objects.get(pk=order_id)
+    if order.shipping_status == 'full':
+        messages.warning(request, _('This order is shipped'))
+
+    order.approver = None
+    order.approved_date = None
+    order.status = 'draft'
+    order.save()
+    messages.success(request, _('Order status changed to draft'))
+    return redirect('staff:invoice_checkout', order.id)
+
 
 
 @staff_member_required
