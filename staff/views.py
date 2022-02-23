@@ -15,7 +15,7 @@ from django_countries.fields import Country
 from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm, ProductCollectionForm
 from products.models import Product, Category
 from orders.models import Order, OrderLine, PurchaseLine
-from orders.forms import OrderAdminCheckoutForm
+from orders.forms import OrderAdminCheckoutForm, OrderPaymentManageForm
 from search.forms import ClientSearchForm, BookIsbnSearchForm, SearchForm
 from search.views import ProductSearch
 from account.models import CustomUser, Vendor, Address, Credit
@@ -942,6 +942,24 @@ def invoice_back_to_draft(request, order_id):
     return redirect('staff:invoice_checkout', order.id)
 
 
+def order_payment_manage(request, order_id):
+    order = Order.objects.get(pk=order_id)
+    if request.method == 'POST':
+        payment_form = OrderPaymentManageForm(request.POST, files=request.FILES, instance=order)
+        if payment_form.is_valid():
+            payment_form.save()
+            return redirect('staff:order_detail_for_admin', order.id)
+
+    else:
+        payment_form = OrderPaymentManageForm(instance=order)
+    return render(
+        request,
+        'staff/order_payment_manage.html',
+        {
+        'order': order,
+        'payment_form': payment_form,
+        }
+    )
 
 @staff_member_required
 def category_list(request):

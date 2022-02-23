@@ -185,6 +185,11 @@ class Order(models.Model):
     active = models.BooleanField(
         default= True
     )
+    pay_receipt = models.ImageField(
+        upload_to='orders/receipts',
+        null=True,
+        blank=True
+    )
     history = HistoricalRecords()
 
     class Meta:
