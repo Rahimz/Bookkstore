@@ -1,6 +1,7 @@
 from django.urls import path, include
 from . import views
 
+app_name = 'files'
 
 urlpatterns = [
     path('list/', views.list_of_files, name='list_of_files'),
@@ -9,4 +10,7 @@ urlpatterns = [
 
     path('upload/new-product/<slug:file_slug>/<str:check>/', views.add_new_book_to_database, name='add_new_book_to_database_check'),
     path('upload/new-product/<slug:file_slug>/', views.add_new_book_to_database, name='add_new_book_to_database'),
+
+    path('upload/new-product-2/<slug:file_slug>/<str:check>/', views.add_new_book_to_database_2, name='add_new_book_to_database_check_2'),
+    
 ]
