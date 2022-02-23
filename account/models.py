@@ -37,11 +37,13 @@ class Address(models.Model):
         max_length=256,
         blank=True
     )
-    house_number = models.PositiveIntegerField(
+    house_number = models.CharField(
+        max_length=50,
         null=True,
         blank=True,
     )
-    house_unit = models.PositiveIntegerField(
+    house_unit = models.CharField(
+        max_length=50,
         null=True,
         blank=True,
     )

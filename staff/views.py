@@ -599,6 +599,10 @@ def invoice_checkout(request, order_id, client_id=None):
             order.status = 'approved'
             order.approver = request.user
             order.approved_date = datetime.now()
+
+            order.billing_address = client.default_billing_address
+            order.shipping_address = client.default_shipping_address
+            
             if order.channel == 'cashier':
                 order.shipping_method = 'pickup'
                 order.shipping_status = 'full'
