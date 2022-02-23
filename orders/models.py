@@ -8,6 +8,7 @@ from datetime import datetime
 from math import trunc
 
 from phonenumber_field.modelfields import PhoneNumberField
+from simple_history.models import HistoricalRecords
 
 from account.models import Address, Vendor
 from products.models import Product
@@ -184,6 +185,7 @@ class Order(models.Model):
     active = models.BooleanField(
         default= True
     )
+    history = HistoricalRecords()
 
     class Meta:
         ordering = ("-approved_date", "-pk",)
