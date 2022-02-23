@@ -158,7 +158,8 @@
       {% block staff_tab %}{% endblock %}
       {% if user.is_superuser %}
       <a href="{% url 'admin:index' %}" class="btn btn-dark btn-outline-secondary ">{% trans 'Admin' %}</a>
-      <a href="{% url 'rosetta-old-home-redirect' %}" class="btn btn-dark btn-outline-secondary ">{% trans 'Rosetta' %}</a>
+      <a href="{% url 'rosetta-old-home-redirect' %}" class="btn btn-dark btn-outline-secondary ">Rosetta</a>
+      <a href="{% url 'files:list_of_files' %}" class="btn btn-dark btn-outline-secondary ">Files</a>
       {% endif  %}
     </div>
     {% endif %}
