@@ -41,7 +41,7 @@ class ClientAddForm(forms.ModelForm):
 	    self.fields['phone'].required = True
 	class Meta:
 		model = CustomUser
-		fields = ('first_name', 'last_name', 'phone')
+		fields = ('first_name', 'last_name', 'phone', 'social_media_name')
 		widgets = {
             'first_name': forms.TextInput(attrs={'autofocus': 'autofocus'})
         }
@@ -52,7 +52,7 @@ class ClientUpdateForm(forms.ModelForm):
 	class Meta:
 		model = CustomUser
 		fields = (
-			'username', 'first_name', 'last_name', 'phone', 'email',
+			'username', 'first_name', 'last_name', 'phone', 'email', 'social_media_name'
 		)
 
 class VendorAddForm(forms.ModelForm):

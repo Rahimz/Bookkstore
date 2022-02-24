@@ -110,7 +110,7 @@ def client_list(request):
             query = number_converter(query)
 
             clients = clients.annotate(
-                search=SearchVector('first_name', 'last_name', 'username', 'phone'),).filter(search__contains=query)
+                search=SearchVector('first_name', 'last_name', 'username', 'phone', 'social_media_name'),).filter(search__contains=query)
     else:
         client_search_form = CLientSearchStaffForm()
 
@@ -126,13 +126,13 @@ def client_list(request):
 
 def client_add(request):
     form = ClientAddForm()
-    billing_address_form = AddressAddForm()
-    shipping_address_form = AddressAddForm()
+    # billing_address_form = AddressAddForm()
+    # shipping_address_form = AddressAddForm()
 
     if request.method == "POST":
         client_form = ClientAddForm(data=request.POST)
-        billing_address_form = AddressAddForm(data=request.POST)
-        shipping_address_form = AddressAddForm(data=request.POST)
+        # billing_address_form = AddressAddForm(data=request.POST)
+        # shipping_address_form = AddressAddForm(data=request.POST)
 
         if client_form.is_valid():
             new_client = client_form.save(commit=False)
@@ -186,14 +186,14 @@ def client_update(request, client_id):
 
     if request.method == "POST":
         client_form = ClientUpdateForm(data=request.POST, instance=client)
-        billing_address_form = AddressAddForm(
-            data=request.POST, instance=client.default_billing_address)
-        shipping_address_form = AddressAddForm(
-            data=request.POST, instance=client.default_shipping_address)
-        if client_form.is_valid() and shipping_address_form.is_valid() and billing_address_form.is_valid():
+        # billing_address_form = AddressAddForm(
+        #     data=request.POST, instance=client.default_billing_address)
+        # shipping_address_form = AddressAddForm(
+        #     data=request.POST, instance=client.default_shipping_address)
+        if client_form.is_valid():
             client_form.save()
-            billing_address_form.save()
-            shipping_address_form.save()
+            # billing_address_form.save()
+            # shipping_address_form.save()
 
             messages.success(request, _('Client details updated'))
             return redirect('/account/clients')
@@ -201,17 +201,17 @@ def client_update(request, client_id):
             messages.error(request, _('Form is not valid'))
     else:
         client_form = ClientUpdateForm(instance=client)
-        billing_address_form = AddressAddForm(
-            instance=client.default_billing_address)
-        shipping_address_form = AddressAddForm(
-            instance=client.default_shipping_address)
+        # billing_address_form = AddressAddForm(
+        #     instance=client.default_billing_address)
+        # shipping_address_form = AddressAddForm(
+        #     instance=client.default_shipping_address)
     return render(
         request,
         'account/clients/client_add.html',
         {'client': client,
          'client_form': client_form,
-         'billing_address_form': billing_address_form,
-         'shipping_address_form': shipping_address_form,
+         # 'billing_address_form': billing_address_form,
+         # 'shipping_address_form': shipping_address_form,
          }
     )
 

@@ -24,13 +24,16 @@ class OrderAdminCheckoutForm(forms.ModelForm):
         model = Order
         fields = [
             'discount', 'channel', 'is_gift', 'paid', 'customer_note',
-            'shipping_method', 'shipping_cost'
+            'shipping_method', 'shipping_cost', 'shipping_time',
         ]
         labels ={
             'customer_note': _('Notes'),
             'is_gift': _('Is a gift'),
             'channel': _('Cahnnel'),
             'discount': _('Invoice discount'),
+            'shipping_method': _('Shipping method'),
+            'shipping_cost': _('Shipping cost'),
+            'shipping_time': _('Shipping time'),
         }
 
 
@@ -38,7 +41,7 @@ class OrderPaymentManageForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = [
-            'pay_receipt', 'paid', 'customer_note'
+            'pay_receipt', 'paid', 'customer_note', 'shipping_time'
         ]
 
 class PurchaseCreateForm(forms.ModelForm):

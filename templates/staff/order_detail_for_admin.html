@@ -21,7 +21,7 @@
         <a href="{% url 'tools:print_invoice' order.id %}" target="_blank" class="btn btn-lg btn-success my-3">{% trans 'Print' %}</a>
         <a href="{% if order.paid %}#{% else %}{% url 'zarinpal:payment_create_order' order.id %}{% endif %}" class="btn btn-secondary mx-3 {% if order.paid %}disabled{% endif %}">{% trans 'Payment link'%}</a>
         <a href="{% url 'staff:order_payment_manage' order.id %}" class="btn btn-secondary">{% trans 'Payment receipt'%}</a>
-        <a href="{% url 'staff:invoice_back_to_draft' order.id %}" class="btn btn-outline-warning mx-3 ">{% trans 'Back to draft'%}</a>
+        <a href="{% if order.shipping_status == 'full' %}#{% else %}{% url 'staff:invoice_back_to_draft' order.id %}{% endif %}" class="btn btn-outline-warning mx-3 {% if order.shipping_status == 'full' %}disabled{% endif %}">{% trans 'Back to draft'%}</a>
       </div>
       <table class="table table-striped">
         <tr>
@@ -37,6 +37,10 @@
         <tr>
           <td>{%trans 'Client' %}</td>
           <td>{{ order.client }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Social name' %}</td>
+          <td>{% if order.client.social_media_name %}{{ order.client.social_media_name }}{% endif %}</td>
         </tr>
         <tr>
           <td>{%trans 'Order Status' %}</td>
@@ -65,6 +69,10 @@
         <tr>
           <td>{%trans 'Shipping method' %}</td>
           <td>{{ order.shipping_method }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Shipping time' %}</td>
+          <td>{% if order.shipping_time %}{{ order.shipping_time }}{% endif %}</td>
         </tr>
 
       </table>

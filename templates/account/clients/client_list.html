@@ -35,9 +35,10 @@
             <th scope="col">#</th>
             <th scope="col">{% trans 'Edit' %}</th>
             <th scope="col">{% trans 'Name' %}</th>
-            <th scope="col">{% trans 'Username' %}</th>
-            <th scope="col">{% trans 'Client code' %}</th>
             <th scope="col">{% trans 'Phone' %}</th>
+            <th scope="col">{% trans 'Social name' %}</th>
+            <th scope="col">{% trans 'Client code' %}</th>
+            <th scope="col">{% trans 'Username' %}</th>
           </tr>
         </thead>
         <tbody id="clientTable">
@@ -46,9 +47,10 @@
             <th scope="row">{{ forloop.counter }}</th>
             <td><a href="{% url 'client_update' client.id %}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
             <td><a href="{% url 'client_details' client.id %}">{{ client }}</a></td>
-            <td>{{ client.username }}</td>
-            <td>{{ client.id }}</td>
             <td>{{ client.phone }}</td>
+            <td>{% if client.social_media_name %}{{ client.social_media_name }}{% endif %}</td>
+            <td>{{ client.id }}</td>
+            <td>{{ client.username }}</td>
             <td><a href="{% url 'tools:print_address' client.id %}" class="btn btn-outline-secondary">{% trans 'Print Address' %}</a></td>
           </tr>
           {% endfor %}

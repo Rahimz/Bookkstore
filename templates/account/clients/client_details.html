@@ -21,16 +21,20 @@
       <div class="">
         <table class="table table-striped">
           <tr>
-            <td>{% trans 'Username' %}</td>
-            <td>{{ client.username }}</td>
-          </tr>
-          <tr>
             <td>{% trans 'First name' %}</td>
             <td>{{ client.first_name }}</td>
           </tr>
           <tr>
             <td>{% trans 'Last name' %}</td>
             <td>{{ client.last_name }}</td>
+          </tr>
+          <tr>
+            <td>{% trans 'Social name' %}</td>
+            <td>{{ client.social_media_name }}</td>
+          </tr>
+          <tr>
+            <td>{% trans 'Username' %}</td>
+            <td>{{ client.username }}</td>
           </tr>
           <tr>
             <td>{% trans 'Phone' %}</td>

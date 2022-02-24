@@ -35,6 +35,10 @@
           <td>{{ order.client }}</td>
         </tr>
         <tr>
+          <td>{%trans 'Social name' %}</td>
+          <td>{% if order.client.social_media_name %}{{ order.client.social_media_name }}{% endif %}</td>
+        </tr>
+        <tr>
           <td>{%trans 'Order Status' %}</td>
           <td>{{ order.status }}</td>
         </tr>
@@ -61,6 +65,10 @@
         <tr>
           <td>{%trans 'Shipping method' %}</td>
           <td>{{ order.shipping_method }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Shipping time' %}</td>
+          <td>{% if order.shipping_time %}{{ order.shipping_time }}{% endif %}</td>
         </tr>
 
       </table>

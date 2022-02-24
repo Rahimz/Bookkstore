@@ -139,6 +139,7 @@
               <th scope="col">{% trans 'Price' %}</th>
               <th scope="col">{% trans 'Discount' %}</th>
               <th scope="col">{% trans 'Cost' %}</th>
+              <th scope="col">{% trans 'Weight' %}</th>
             </tr>
           </thead>
           <tbody>
@@ -165,6 +166,7 @@
               <td>{{ order_line.price | intcomma:False }}</td>
               <td>{{ order_line.discount | intcomma:False }}</td>
               <td>{{ order_line.get_cost_after_discount | intcomma:False }}</td>
+              <td>{{ order_line.get_weight }}</td>
             </tr>
             {% endfor %}
           </tbody>
@@ -175,6 +177,7 @@
               <td>{{ order.get_total_quantity }}</td>
               <td colspan="2"></td>
               <td>{{ order.get_cost_after_discount | intcomma:False }}</td>
+              <td>{{ order.get_total_weight | intcomma:False }}</td>
             </tr>
             <tr>
               <th scope="row"></th>

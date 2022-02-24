@@ -18,6 +18,7 @@ from zarinpal.models import Payment
 from tools.gregory_to_hijry import hij_strf_date, greg_to_hij_date
 from shop.models import Slogan
 from account.models import CustomUser
+from products.models import Product
 
 @staff_member_required
 def make_invoice_pdf(request, order_id=None):
@@ -226,3 +227,112 @@ def email_to_admin(paymaent_id):
         message,
         fail_silently=False
         )
+
+
+def product_export_excel(request):
+
+    products = Product.objects.filter(available=True).order_by('name')
+
+    wb = openpyxl.Workbook()
+    sheet = wb.active
+
+    headers = [
+        '#',
+        'Product ID.',
+        'Name',
+        'isbn',
+        'Publisher',
+        'Stock',
+        'Price',
+        'Weight',
+        'size',
+        'Cover type',
+        'Page number',
+        'Edition',
+        'Other prices',
+        'Price 1',
+        'Stock 1',
+        'Price 2',
+        'Stock 2',
+        'Price 3',
+        'Stock 3',
+        'Price 4',
+        'Stock 4',
+        'Price 5',
+        'Stock 5',
+        'Price used',
+        'Stock used',
+        'Available online',
+        'Available in store',
+        'Category',
+        'Author',
+        'Translator',
+        'Publisher 2',
+        'Publish year',
+        'Product Latin name',
+        'Author latin name',
+        'Age range',
+        'Is collection',
+        'Admin note',
+        'Description',
+    ]
+
+    for i in range(len(headers)):
+        c = sheet.cell(row = 1, column = i + 1 )
+        c.value = headers[i]
+
+
+    for count , product in enumerate(products):
+        # product.save()
+        title_list = [
+            count,
+            product.id,
+            product.name,
+            product.isbn,
+            product.publisher,
+            product.stock,
+            product.price,
+            product.weight,
+            product.size,
+            product.cover_type,
+            product.page_number,
+            product.edition,
+            product.has_other_prices,
+            product.price_1,
+            product.stock_1,
+            product.price_2,
+            product.stock_2,
+            product.price_3,
+            product.stock_3,
+            product.price_4,
+            product.stock_4,
+            product.price_5,
+            product.stock_5,
+            product.price_used,
+            product.stock_used,
+            product.available_online,
+            product.available_in_store,
+            product.category,
+            product.author,
+            product.translator,
+            product.publisher_2,
+            product.publish_year,
+            product.latin_name,
+            product.author_latin_name,
+            product.age_range,
+            product.is_collection,
+            product.admin_note,
+            product.description,
+        ]
+        for i in range(len(headers)):
+            c = sheet.cell(row = count + 2 , column = i + 1)
+            c.value = title_list[i]
+
+
+    filename = 'media/excel/available-products-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
+    wb.save(filename)
+    excel = open(filename, 'rb')
+    response = FileResponse(excel)
+
+
+    return response

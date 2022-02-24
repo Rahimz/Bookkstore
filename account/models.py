@@ -109,6 +109,11 @@ class CustomUser(AbstractUser):
         default=timezone.now,
         editable=False
     )
+    social_media_name = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
 
     def get_absolute_url(self):
         return reverse('client_update',

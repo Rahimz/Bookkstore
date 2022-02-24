@@ -129,6 +129,11 @@ class Order(models.Model):
         default=0,
 
     )
+    shipping_time = models.CharField(
+        max_length=250,
+        null=True,
+        blank=True
+    )
     shipped_code = models.CharField(
         max_length=24,
         blank=True,
@@ -292,7 +297,7 @@ class OrderLine(models.Model):
 
     def get_weight(self):
         if self.product.weight:
-            return self.product.weight * self.quantity
+            return int(self.product.weight * self.quantity)
         else:
             return 0
 
