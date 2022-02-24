@@ -292,7 +292,7 @@ class OrderLine(models.Model):
 
     def get_weight(self):
         if self.product.weight:
-            return self.product.weight * self.quantity
+            return int(self.product.weight * self.quantity)
         else:
             return 0
 
