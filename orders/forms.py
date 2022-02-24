@@ -41,7 +41,7 @@ class OrderPaymentManageForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = [
-            'pay_receipt', 'paid', 'customer_note'
+            'pay_receipt', 'paid', 'customer_note', 'shipping_time'
         ]
 
 class PurchaseCreateForm(forms.ModelForm):
