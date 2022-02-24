@@ -137,6 +137,12 @@
             </tr>
             <tr>
               <th scope="row"></th>
+              <td colspan="10">{% trans 'Discount percent' %}</td>
+              <td class="text-danger">{{ purchase.discount_percent  }} %</td>
+
+            </tr>
+            <tr>
+              <th scope="row"></th>
               <td colspan="10" class="fw-bolder">{% trans 'Payable' %}</td>
               <td class="fw-bolder">{{ purchase.payable | intcomma:False }}</td>
             </tr>

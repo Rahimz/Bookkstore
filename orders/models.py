@@ -392,6 +392,14 @@ class Purchase(models.Model):
         decimal_places=settings.DEFAULT_DECIMAL_PLACES,
         default=0,
     )
+    discount_percent = models.DecimalField(
+        max_digits=4,
+        decimal_places=1,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
+        default=0,
+        # null=True,
+        # blank=True,
+    )
     payable = models.DecimalField(
         max_digits=settings.DEFAULT_MAX_DIGITS,
         decimal_places=settings.DEFAULT_DECIMAL_PLACES,
@@ -414,7 +422,10 @@ class Purchase(models.Model):
 
         self.quantity = self.get_total_quantity()
 
-        self.payable = self.get_cost_after_discount() - self.discount
+
+        
+        self.payable = self.get_payable() - self.discount
+
 
         super(Purchase, self).save(*args, **kwargs)
 
@@ -431,7 +442,7 @@ class Purchase(models.Model):
         return sum(item.get_cost_after_discount() for item in self.lines.all())
 
     def get_payable(self):
-        return self.get_cost_after_discount() - self.discount
+        return self.get_cost_after_discount() - self.discount - (self.get_cost_after_discount() * self.discount_percent/100)
 
     def get_total_weight(self):
         return sum(item.get_weight() for item in self.lines.all())
