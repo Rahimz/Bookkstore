@@ -275,6 +275,7 @@ def product_export_excel(request):
         'Is collection',
         'Admin note',
         'Description',
+        'Import session',
     ]
 
     for i in range(len(headers)):
@@ -312,7 +313,7 @@ def product_export_excel(request):
             product.stock_used,
             product.available_online,
             product.available_in_store,
-            product.category,
+            str(product.category),
             product.author,
             product.translator,
             product.publisher_2,
@@ -323,6 +324,7 @@ def product_export_excel(request):
             product.is_collection,
             product.admin_note,
             product.description,
+            str(product.import_session),
         ]
         for i in range(len(headers)):
             c = sheet.cell(row = count + 2 , column = i + 1)
