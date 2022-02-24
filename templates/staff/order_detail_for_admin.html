@@ -70,6 +70,10 @@
           <td>{%trans 'Shipping method' %}</td>
           <td>{{ order.shipping_method }}</td>
         </tr>
+        <tr>
+          <td>{%trans 'Shipping time' %}</td>
+          <td>{% if order.shipping_time %}{{ order.shipping_time }}{% endif %}</td>
+        </tr>
 
       </table>
       {% if order.pay_receipt %}

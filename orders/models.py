@@ -129,6 +129,11 @@ class Order(models.Model):
         default=0,
 
     )
+    shipping_time = models.CharField(
+        max_length=250,
+        null=True,
+        blank=True
+    )
     shipped_code = models.CharField(
         max_length=24,
         blank=True,
