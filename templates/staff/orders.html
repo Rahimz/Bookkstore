@@ -21,8 +21,9 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">{% trans 'Order No' %}</th>
+            <th scope="col">{% trans 'Number' %}</th>
             <th scope="col">{% trans 'Client' %}</th>
+            <th scope="col">{% trans 'Social name' %}</th>
             <th scope="col">{% trans 'Quantity' %}</th>
             <th scope="col">{% trans 'Weight' %}</th>
             <th scope="col">{% trans 'Channel' %}</th>
@@ -38,6 +39,7 @@
             <th scope="row">{{ forloop.counter}}</th>
             <td><a href="{% url 'staff:order_detail_for_admin' order.pk %}">{{ order.pk }}</a></td>
             <td>{{ order.client }}</td>
+            <td>{% if order.client.social_media_name %}{{ order.client.social_media_name }}{% endif %}</td>
             <td>{{ order.get_total_quantity }}</td>
             {# <!-- TODO: we have some problem to grab the order weight -->#}
             <td>{{ order.get_total_weight }}</td>
