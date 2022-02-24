@@ -12,4 +12,6 @@ urlpatterns = [
 
     path('order-export/<str:criteria>/', views.order_export_excel, name="order_export_excel"),
     path('draft-order-export/', views.draft_order_export_excel, name="draft_order_export_excel"),
+
+    path('product-export/', views.product_export_excel, name="product_export_excel"),
 ]
