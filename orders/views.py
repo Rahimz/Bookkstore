@@ -78,6 +78,7 @@ def purchase_create(request):
                 ) + timedelta(days=purchase_form.cleaned_data['deadline_days'])
 
             purchase.deadline_days = purchase_form.cleaned_data['deadline_days']
+            purchase_form.save
             purchase.save()
             messages.success(request, _('Purchase is created'))
             return redirect('orders:purchase_details', purchase.id)

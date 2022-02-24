@@ -45,9 +45,9 @@ class OrderPaymentManageForm(forms.ModelForm):
         ]
 
 class PurchaseCreateForm(forms.ModelForm):
-    # def __init__(self, *args, **kwargs):
-	#     super().__init__(*args, **kwargs)
-	#     self.fields['deadline_days'] = 10
+    def __init__(self, *args, **kwargs):
+	    super().__init__(*args, **kwargs)
+	    self.fields['vendor'].required = True
     # payment_days = forms.IntegerField(
     #     required=False,
     #     label=_('Payment deadline'),
@@ -57,11 +57,12 @@ class PurchaseCreateForm(forms.ModelForm):
 
     class Meta:
         model = Purchase
-        fields = ['vendor', 'deadline_days', 'paper_invoice_number']
+        fields = ['vendor', 'deadline_days', 'paper_invoice_number', 'discount']
         labels = {
             'vendor': _('Vendor'),
             'deadline_days': _('Payment deadline'),
-            'paper_invoice_number': _('Paper invoice number')
+            'paper_invoice_number': _('Paper invoice number'),
+            'discount': _('Invoice overal discount'),
         }
 
 class PurchaseLineAddForm(forms.ModelForm):
