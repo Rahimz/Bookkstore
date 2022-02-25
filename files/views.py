@@ -386,3 +386,55 @@ def add_new_book_to_database_2(request, file_slug, check='check'):
 
 def update_isbn_duplicate(request, product_isbn):
     pass
+
+
+def name_correction(request, file_slug, check='check'):
+    # variables
+    updated_product_count = 0
+    more_than_one = 0
+    not_updated = []
+    # excel file handle
+    file_object = get_object_or_404(FileObject, slug=file_slug)
+
+    myfile = File(file_object)
+
+    path = file_object.file.path
+    with open(path, 'rb') as f:
+        # Load excel workbook
+        wb = load_workbook(f)
+        ws = wb.active
+        row_count = ws.max_row
+
+        # a loop for scrape the excel file
+        # read the data in cells
+        for i in range(2, row_count):
+
+            row = ws['A'+str(i):'M'+str(i)]
+            p_ex_id = ws['C' + str(i)].value,
+            new_name = ws['F' + str(i)].value,
+
+
+            try:
+                database_product = Product.objects.get(pk=p_ex_id[0])
+                if check == 'add':
+                    updated_product_count +=1
+                    database_product.name = new_name[0]
+                    database_product.save()
+            except:
+                # print(p_ex_id[0], new_name[0])
+                # print(new_name[0], type(new_name[0]))
+                more_than_one +=1
+
+
+    # print('updated_product_count', updated_product_count)
+    # print('more_than_one', more_than_one)
+    return render(
+        request,
+        'files/name_correction.html',
+        {
+            'file': myfile,
+            'row_count': row_count,
+            'updated_product_count': updated_product_count,
+            'more_than_one': more_than_one,
+         }
+    )

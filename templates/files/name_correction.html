@@ -1,0 +1,14 @@
+{% extends '_base.html'%}
+{% block content %}
+{% if update_product %}
+<p class="bg-dannger">{{ update_product }}</p>
+{% endif %}
+<a href="{% url 'files:list_of_files' %}" class="btn btn-secondary">Back</a>
+{{ file.name }} - {{ file.type }} - {{ file.file.url}}
+<p>row_count: {{ row_count }}</p>
+<div class="container-fluid overflow-hidden">
+<p>updated_product_count: {{ updated_product_count }}</p>
+<p>more_than_one: {{ more_than_one }}</p>
+</div>
+
+{% endblock %}

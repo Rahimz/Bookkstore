@@ -11,13 +11,13 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Product)
 # class ProductAdmin(admin.ModelAdmin):
 class ProductAdmin(simple_history.admin.SimpleHistoryAdmin):
-    list_display = ['name', 'isbn', 'price',
+    list_display = ['pk', 'name', 'isbn', 'price',
                     'available', 'stock', 'updated']
     list_filter = ['available', 'stock' ]
     list_editable = ['price', 'available', 'stock',]
     prepopulated_fields = {'slug': ('name',)}
     ordering = ['name', 'created', 'updated']
-    search_fields = ['name', 'author', 'isbn']
+    search_fields = ['name', 'author', 'isbn', 'pk', 'publisher']
 
 @admin.register(Good)
 class GoodAdmin(admin.ModelAdmin):
