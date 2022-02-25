@@ -1,0 +1,18 @@
+{% extends '_base.html'%}
+{% block content %}
+{% if update_product %}
+<p class="bg-dannger">{{ update_product }}</p>
+{% endif %}
+<a href="{% url 'files:list_of_files' %}" class="btn btn-secondary">Back</a>
+<br>{{ file_object.name }} - {{ file_object.type }} - {{ file_object.file.url}} - {{file_object.slug}}
+<a href="{% url 'files:correction_140' file_slug=file_object.slug check='add' %}" class="btn btn-warning">Add 140</a>
+<p>row_count: {{ row_count }}</p>
+<p>just_stock_update: {{ just_stock_update }}</p>
+<p>new_price_row: {{ new_price_row }}</p>
+<div class="container-fluid overflow-hidden">
+{% for item in data_check %}
+{{ item }}
+<br>{% endfor %}
+</div>
+
+{% endblock %}

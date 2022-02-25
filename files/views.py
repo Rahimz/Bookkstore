@@ -438,3 +438,69 @@ def name_correction(request, file_slug, check='check'):
             'more_than_one': more_than_one,
          }
     )
+
+
+def correction_140(request, file_slug, check='check'):
+    data_check = []
+    new_price_row = 0
+    just_stock_update = 0
+    # excel file handle
+    file_object = get_object_or_404(FileObject, slug=file_slug)
+
+    myfile = File(file_object)
+
+    path = file_object.file.path
+    with open(path, 'rb') as f:
+        # Load excel workbook
+        wb = load_workbook(f)
+        ws = wb.active
+        row_count = ws.max_row
+
+        # a loop for scrape the excel file
+        # read the data in cells
+        for i in range(2, row_count):
+
+            row = ws['A'+str(i):'M'+str(i)]
+            isbn = ws['C' + str(i)].value,
+            price_1 = ws['D' + str(i)].value,
+            stock_1 = ws['G' + str(i)].value,
+            price = ws['H' + str(i)].value,
+            price_change = ws['I' + str(i)].value,
+
+            database_product = Product.objects.filter(available=True).get(isbn=isbn[0])
+
+            # data_check.append((isbn[0], price_1[0], stock_1[0], price[0], price_change[0], database_product.pk, database_product.has_other_prices))
+            if price_change[0]:
+                # with two prices
+                data_check.append(('*', isbn[0], price_1[0], stock_1[0], price[0], price_change[0], database_product.pk, database_product.has_other_prices))
+            else:
+                # just update stock
+                data_check.append(( isbn[0], price_1[0], stock_1[0], price[0], price_change[0], database_product.pk, database_product.has_other_prices))
+
+
+            if check == 'add':
+                if price_change[0]:
+                    # with two prices
+                    database_product.has_other_prices = True
+                    database_product.price_1 = price_1[0]
+                    database_product.stock_1 = stock_1[0]
+                    database_product.save()
+                    new_price_row += 1
+                else:
+                    # just update stock
+                    database_product.stock += stock_1[0]
+                    database_product.save()
+                    just_stock_update +=1
+
+    return render(
+        request,
+        'files/correction_140.html',
+        {
+            'file': myfile,
+            'file_object': file_object,
+            'row_count': row_count,
+            'data_check': data_check,
+            'new_price_row': new_price_row,
+            'just_stock_update': just_stock_update,
+         }
+    )

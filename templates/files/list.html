@@ -3,11 +3,12 @@
 {% for file in files %}
 <p>{{ file.name }} {{ file.type }} {{ file.file.url}}
 <a href="{% url 'files:add_new_book_to_database_check' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check</a>
-<a href="{% url 'files:add_new_book_to_database_check' file_slug=file.slug check='add' %}" class="btn btn-secondary">Add</a>
+
 <a href="{% url 'files:add_new_book_to_database_check_2' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check new 2</a>
-<a href="{% url 'files:add_new_book_to_database_check_2' file_slug=file.slug check='add' %}" class="btn btn-secondary">Add new 2</a>
 <a href="{% url 'files:name_correction' file_slug=file.slug check='check' %}" class="btn btn-secondary">Name correction</a>
-<a href="{% url 'files:name_correction' file_slug=file.slug check='add' %}" class="btn btn-secondary">Please correct name</a>
+
+
+<a href="{% url 'files:correction_140' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check 140</a>
 </p>
 {% endfor %}
 {% endblock %}
