@@ -6,6 +6,8 @@
 <a href="{% url 'files:add_new_book_to_database_check' file_slug=file.slug check='add' %}" class="btn btn-secondary">Add</a>
 <a href="{% url 'files:add_new_book_to_database_check_2' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check new 2</a>
 <a href="{% url 'files:add_new_book_to_database_check_2' file_slug=file.slug check='add' %}" class="btn btn-secondary">Add new 2</a>
+<a href="{% url 'files:name_correction' file_slug=file.slug check='check' %}" class="btn btn-secondary">Name correction</a>
+<a href="{% url 'files:name_correction' file_slug=file.slug check='add' %}" class="btn btn-secondary">Please correct name</a>
 </p>
 {% endfor %}
 {% endblock %}
