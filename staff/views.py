@@ -901,12 +901,15 @@ def orderline_update(request, order_id, orderline_id):
                 order_line.quantity = update_form.cleaned_data['quantity']
                 order_line.save()
                 order.save()
-
+                return redirect('staff:invoice_create', order.id)
             if update_form.cleaned_data['discount'] != 0:
                 order_line.discount = update_form.cleaned_data['discount']
                 order_line.save()
                 order.save()
-
+            elif update_form.cleaned_data['discount'] == 0:
+                order_line.discount = update_form.cleaned_data['discount']
+                order_line.save()
+                order.save()
             update_form = InvoiceAddForm()
             return redirect('staff:invoice_create', order.id)
 

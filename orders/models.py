@@ -264,7 +264,9 @@ class OrderLine(models.Model):
     discount = models.DecimalField(
         max_digits=settings.DEFAULT_MAX_DIGITS,
         decimal_places=settings.DEFAULT_DECIMAL_PLACES,
-        default=0
+        # default=0
+        null=True,
+        blank=True
     )
     variation = models.CharField(
         max_length=50,
@@ -293,7 +295,10 @@ class OrderLine(models.Model):
         return self.price * self.quantity
 
     def get_cost_after_discount(self):
-        return self.price * self.quantity - self.discount
+        if self.discount:
+            return self.price * self.quantity - self.discount
+        else:
+            return self.price * self.quantity
 
     def get_weight(self):
         if self.product.weight:
@@ -423,7 +428,7 @@ class Purchase(models.Model):
         self.quantity = self.get_total_quantity()
 
 
-        
+
         self.payable = self.get_payable() - self.discount
 
 
