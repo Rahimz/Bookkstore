@@ -15,4 +15,6 @@ urlpatterns = [
     path('upload/new-product-2/<str:product_isbn>/<int:quantity>/', views.update_isbn_duplicate, name='update_isbn_duplicate'),
 
     path('upload/name-correction/<slug:file_slug>/<str:check>/', views.name_correction, name='name_correction'),
+
+    path('upload/correction_140/<slug:file_slug>/<str:check>/', views.correction_140, name='correction_140'),
 ]
