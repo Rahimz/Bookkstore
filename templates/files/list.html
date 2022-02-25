@@ -9,6 +9,8 @@
 
 
 <a href="{% url 'files:correction_140' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check 140</a>
+
+<a href="{% url 'files:add_new_book_to_database_3' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check series 3</a>
 </p>
 {% endfor %}
 {% endblock %}

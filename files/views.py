@@ -504,3 +504,85 @@ def correction_140(request, file_slug, check='check'):
             'just_stock_update': just_stock_update,
          }
     )
+
+
+def add_new_book_to_database_3(request, file_slug, check='check'):
+    isbn_in_database = []
+    not_in_database = []
+    number_of_added_object = 0
+
+
+    current_import_session = ImportSession.objects.create(user=request.user,)
+
+    # excel file handle
+    file_object = get_object_or_404(FileObject, slug=file_slug)
+
+    myfile = File(file_object)
+
+    path = file_object.file.path
+    with open(path, 'rb') as f:
+        # Load excel workbook
+        wb = load_workbook(f)
+        ws = wb.active
+        row_count = ws.max_row
+
+        # a loop for scrape the excel file
+        # read the data in cells
+        for i in range(2, row_count):
+
+            row = ws['A'+str(i):'M'+str(i)]
+
+            name = ws['B' + str(i)].value,
+            isbn = ws['C' + str(i)].value,
+            price = ws['D' + str(i)].value,
+            page_number = ws['E' + str(i)].value,
+            publisher = ws['F' + str(i)].value,
+            stock = ws['G' + str(i)].value,
+
+            if not page_number[0]:
+                page_number = [0,]
+
+            try:
+                database_product = Product.objects.filter(available=True).get(isbn=isbn[0])
+                isbn_in_database.append(( isbn[0], price[0], stock[0], price[0],  database_product.pk, database_product.has_other_prices))
+                if check == 'add':
+                    database_product.stock += stock[0]
+                    database_product.save()
+            except:
+                not_in_database.append(( isbn[0], price[0], stock[0],  ))
+                if check == 'add':
+                    product = Product.objects.create(
+                        name = name[0],
+                        isbn = str(isbn[0]),
+                        price = price[0],
+                        page_number =page_number[0],
+                        publisher = publisher[0],
+                        stock = stock[0],
+                        state = 'new',
+                        available = True,
+                        available_in_store = True,
+                        available_online = True,
+                        import_session=current_import_session,
+                    )
+                    number_of_added_object += 1
+
+
+
+    if check == 'add':
+        current_import_session.quantity = number_of_added_object
+        current_import_session.save()
+    if current_import_session.quantity == 0:
+        current_import_session.delete()
+    return render(
+        request,
+        'files/add_series_3.html',
+        {
+            'file': myfile,
+            'file_object': file_object,
+            'row_count': row_count,
+            'isbn_in_database': isbn_in_database,
+            'not_in_database': not_in_database,
+            # 'new_price_row': new_price_row,
+            # 'just_stock_update': just_stock_update,
+         }
+    )
