@@ -146,23 +146,7 @@ def client_add(request):
                 new_client.username)
 
             new_client.save()
-            if billing_address_form.is_valid() and shipping_address_form.is_valid():
-                billing = billing_address_form.save(commit=False)
-                shipping = shipping_address_form.save(commit=False)
 
-                # billing.name = '{} {}'.format(new_client.first_name, new_client.last_name + ' - ' + _('Billing address'))
-                # billing.name = '{}'.format(str(new_client.phone)) + ' - billing'
-                # billing.phone = new_client.phone
-                billing.save()
-
-                # shipping.name = '{} {}'.format(new_client.first_name, new_client.last_name + ' - ' + _('Shipping address'))
-                # shipping.name = '{}'.format(str(new_client.phone)) + ' - shipping'
-                # shipping.phone = new_client.phone
-                shipping.save()
-
-                new_client.default_billing_address = billing
-                new_client.default_shipping_address = shipping
-                new_client.save()
 
             messages.success(request, _('Client added!'))
             return redirect('/account/clients/#clientTable')
