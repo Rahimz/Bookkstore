@@ -27,7 +27,7 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(OrderLine)
 class OrderLineAdmin(admin.ModelAdmin):
     list_display = [
-        'id', 'order', 'product',
+        'id', 'order', 'product', 'active',
         'price', 'quantity', 'variation',
     ]
     search_fields = ['order', 'product', 'variation']
