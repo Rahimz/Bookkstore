@@ -46,10 +46,12 @@
           <th scope="col">{% trans 'ISBN' %}</th>
           <th scope="col">{% trans 'Name' %}</th>
           <th scope="col">{% trans 'Stock' %}</th>
-          <th scope="col">{% trans 'Author' %}</th>
+          <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
+          <th scope="col">{% trans 'Other prices' %}</th>
+          <th scope="col">{% trans 'Used' %}</th>
+          <th scope="col">{% trans 'Used stock' %}</th>
           <th scope="col">{% trans 'Store position' %}</th>
           <th scope="col">{% trans 'Publisher' %}</th>
-          <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
         </tr>
       </thead>
       <tbody>
@@ -60,10 +62,12 @@
           <th scope="row">{{ product.isbn }}</th>
           <td><a href="{% url 'shop:product_detail' product.pk %}">{{ product.name }}</a></td>
           <td>{{ product.stock }}</td>
-          <td>{{ product.author }}</td>
+          <td>{{ product.price | intcomma:False }}</td>
+          <td>{% if product.has_other_prices %}&#10004{% endif %}</td>
+          <td>{{ product.price_used | intcomma:False }}</td>
+          <td>{{ product.stock_used  }}</td>
           <td>{{ product.store_positon }}</td>
           <td>{{ product.publisher }}</td>
-          <td>{{ product.price | intcomma:False }}</td>
         </tr>
         {% endfor %}
 
