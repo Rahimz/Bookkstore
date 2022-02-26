@@ -18,21 +18,37 @@
       <h2>{% trans 'Sold products'%}</h2>
       <table class="table table-striped">
         <thead>
+          <th scope="">{% trans 'Product ID' %}</th>
           <th scope="">{% trans 'Name' %}</th>
           <th scope="">{% trans 'Quantity' %}</th>
+          <th scope="">{% trans 'Date' %}</th>
+          <th scope="">{% trans 'Quantity in stock' %}</th>
+
 
         </thead>
         <tbody>
-          {% for item  in products %}
+          {% for line, item  in added_line.items %}
           <tr>
-            {% for i in item %}
-            <td>{{ i }}</td>
-            {% endfor %}
+          <td>{{ line }}</td>
+
+          <td>{{ item.name }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.created }}</td>
+
+          <td><span class="{% if item.stock <= 0 %}bg-warning text-dark p-2 rounded{% endif %}">{{ item.stock }}</span></td>
+          {% for item in line %}
+          {% endfor %}
+          {%comment %}
+{% endcomment%}
+
           </tr>
           {% endfor %}
 
         </tbody>
       </table>
+
+
+
     </div>
 
   </div>

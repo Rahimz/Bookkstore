@@ -154,7 +154,7 @@
       <a href="{% url 'staff:warehouse' %}" class="btn btn-outline-secondary {% block warehouses-btn %}{% endblock %}">{% trans 'Warehouse' %}</a>
       <a href="{% url 'staff:products' %}" class="btn btn-outline-secondary {% block products-btn %}{% endblock %}">{% trans 'Products' %}</a>
       <a href="{% url 'client_list' %}" class="btn btn-outline-secondary {% block clients-btn %}{% endblock %}">{% trans 'Clients' %}</a>
-      <span class="text-danger">{% trans 'The datat of products is synced with bookstore data' %}</span>
+      
       {% block staff_tab %}{% endblock %}
       {% if user.is_superuser %}
       <a href="{% url 'admin:index' %}" class="btn btn-dark btn-outline-secondary ">{% trans 'Admin' %}</a>

@@ -21,6 +21,7 @@ from search.views import ProductSearch
 from account.models import CustomUser, Vendor, Address, Credit
 from account.forms import VendorAddForm, AddressAddForm, VendorAddressAddForm
 from tools.fa_to_en_num import number_converter
+from tools.gregory_to_hijry import *
 
 
 def sales(request):
@@ -991,52 +992,39 @@ def category_list(request):
 
 
 @staff_member_required
-def sold_products(request):
-    order_lines = OrderLine.objects.all().filter(active=True)
+def sold_products(request, days=365):
+    order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.now() - timedelta(days)).order_by('-created')
     # order_lines = OrderLine.objects.all().values_list(product.id, flat=True)
     products = dict()
     main_stock = dict()
-    # i = 0
-    # for line in order_lines:
-    #
-    #     if line.product.name in products:
-    #         # we grab the present value from the products dictionary
-    #         quantity = products[line.product.name]['quantity']
-    #         vendor = products[line.product.name]['vendor']
-    #         stock = products[line.product.name]['stock']
-    #
-    #         # wether vendor in list is as the same as the vendor in orderline
-    #         if vendor == line.purchase.vendor.first_name:
-    #             quantity += line.quantity
-    #             products[line.product.name] = {
-    #                 'quantity': quantity,
-    #                 'vendor': vendor,
-    #
-    #             }
-    #         # wether the vendor is diffrent from the vendor in order line
-    #         else:
-    #             # this line makes a bug and override the availabel book not add a new line
-    #             products[line.product.name + str(i)] = {
-    #                 'quantity': line.quantity,
-    #                 'vendor': line.purchase.vendor.first_name,
-    #
-    #             }
-    #
-    #     else:
-    #         products[line.product.name] = {
-    #             'quantity': line.quantity,
-    #
-    #         }
-    #     i += 1
+    check_list =[]
+    added_line = {}
+    # added_line = {
+    #     'pk': {
+    #         'quantity': 'x',
+    #         'name': 'str',
+    #         'created': 'created',
+    #         'stock': 'y',
+    #     }
+    # }
     for item in order_lines:
         # key = products.get(item.product.id)
         # print(item.product.id)
-        if item.product.name in products:
-            products[item.product.name] += item.quantity
+        # if item.product.name in added_line:
+        if str(item.product.id) in added_line:
+            added_line[str(item.product.id)]['quantity'] += item.quantity
+            pass
         else:
-            products[item.product.name] = item.quantity
-        main_stock[item.product.name] = item.product.stock
-    products = sorted(products.items(), key=lambda x: x[1], reverse=True)
+            # messages.warning(request, 'hi')
+            # check_list.append(item.product.name)
+            added_line[str(item.product.id)] = {
+                'name': item.product.name,
+                'quantity': item.quantity,
+                'created': hij_strf_date(greg_to_hij_date(item.created.date()), '%-d %B %Y'),
+                'stock': item.product.stock
+                }
+
+
 
     return render(
         request,
@@ -1044,6 +1032,8 @@ def sold_products(request):
         {'order_lines': order_lines,
          'products': products,
          'main_stock': main_stock,
+         'added_line': added_line,
+         'check_list': check_list,
          }
     )
 
