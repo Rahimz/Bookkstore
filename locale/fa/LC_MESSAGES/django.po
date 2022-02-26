@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-26 11:16+0330\n"
-"PO-Revision-Date: 2022-02-26 11:17+0330\n"
+"POT-Creation-Date: 2022-02-26 20:10+0330\n"
+"PO-Revision-Date: 2022-02-26 20:12+0330\n"
 "Last-Translator: رحیم  <rahim.aghareb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -52,6 +52,7 @@ msgstr "تخفیف کلی"
 
 #: account/forms.py:65 templates/_base.html:188
 #: templates/_base_files_app.html:158 templates/_base_payment.html:89
+#: templates/_temp_base.html:66
 #: templates/account/clients/client_add_address.html:20
 #: templates/account/clients/client_add_address.html:37
 #: templates/tools/pdf/invoice_pdf_a4.html:21
@@ -191,12 +192,12 @@ msgstr "شماره فاکتور کاغذی"
 msgid "Invoice overal discount"
 msgstr "تخفیف کلی فاکتور"
 
-#: orders/forms.py:80 products/models.py:65 products/models.py:404
+#: orders/forms.py:80 products/models.py:65 products/models.py:409
 #: templates/_base.html:72 templates/_base_files_app.html:42
 msgid "New"
 msgstr "نو"
 
-#: orders/forms.py:81 products/models.py:66 products/models.py:405
+#: orders/forms.py:81 products/models.py:66 products/models.py:410
 #: templates/_base.html:75 templates/_base_files_app.html:45
 #: templates/staff/products.html:51
 msgid "Used"
@@ -270,11 +271,11 @@ msgstr "دیگر"
 msgid "Purchase is created"
 msgstr "خرید ایجاد شد"
 
-#: orders/views.py:169 orders/views.py:475
+#: orders/views.py:169 orders/views.py:478
 msgid "Purchase row updated"
 msgstr "ردیف خرید به‌روزرسانی شد"
 
-#: orders/views.py:183 orders/views.py:491
+#: orders/views.py:183 orders/views.py:494
 msgid "Purchase row added"
 msgstr "ردیف خرید اضافه شد"
 
@@ -282,31 +283,31 @@ msgstr "ردیف خرید اضافه شد"
 msgid "Purchase is updated"
 msgstr "خرید به‌روزرسانی شد"
 
-#: orders/views.py:297
+#: orders/views.py:300
 msgid "Purchase added to stock"
 msgstr "خرید به انبار موجودی اضافه شد"
 
-#: orders/views.py:299
+#: orders/views.py:302
 msgid "This purchase is already approved"
 msgstr "این خرید قبلاً تأیید شده است"
 
-#: orders/views.py:322
+#: orders/views.py:325
 msgid "There is an equal price in the list"
 msgstr "یک قیمت مشابه در لیست قیمت‌ها موجود است"
 
-#: orders/views.py:333
+#: orders/views.py:336
 msgid "Price added"
 msgstr "قیمت اضافه شد"
 
-#: orders/views.py:343
+#: orders/views.py:346
 msgid "There is not empty price row for this product variation"
 msgstr "ردیف خالی برای اضافه کردن قیمت وجود ندارد"
 
-#: orders/views.py:391
+#: orders/views.py:394
 msgid "The price removed"
 msgstr "این قیمت حذف شد"
 
-#: orders/views.py:517
+#: orders/views.py:520
 msgid "Purchaseline row removed"
 msgstr "ردیف خرید حذف شد"
 
@@ -344,6 +345,7 @@ msgid "Name or phonenumber"
 msgstr "نام یا شماره تلفن"
 
 #: search/forms.py:34 templates/shop/product_detail.html:89
+#: templates/shop/store_book_search.html:73
 #: templates/staff/collection_management.html:43
 #: templates/staff/products.html:46 templates/tools/pdf/invoice_pdf_a4.html:43
 msgid "ISBN"
@@ -608,7 +610,7 @@ msgstr "تماس با ما"
 #: templates/_base_files_app.html:157 templates/_base_files_app.html:181
 #: templates/_base_files_app.html:216 templates/_base_payment.html:88
 #: templates/_base_payment.html:112 templates/_base_payment.html:147
-#: templates/_base_popup.html:80
+#: templates/_base_popup.html:80 templates/_temp_base.html:65
 #: templates/tools/emails/registration_email.html:21
 #: templates/tools/pdf/invoice_pdf.html:7
 #: templates/tools/pdf/invoice_pdf_a4.html:7
@@ -616,22 +618,25 @@ msgid "Ketabe Damavand"
 msgstr "کتاب دماوند"
 
 #: templates/_base.html:189 templates/_base_files_app.html:159
-#: templates/_base_payment.html:90 templates/tools/pdf/print_invoice.html:99
+#: templates/_base_payment.html:90 templates/_temp_base.html:67
+#: templates/tools/pdf/print_invoice.html:99
 msgid "16 Azar St."
 msgstr "خیابان ۱۶ آذر"
 
 #: templates/_base.html:189 templates/_base_files_app.html:159
-#: templates/_base_payment.html:90 templates/tools/pdf/print_invoice.html:99
+#: templates/_base_payment.html:90 templates/_temp_base.html:67
+#: templates/tools/pdf/print_invoice.html:99
 msgid "Edward Brown St."
 msgstr "خیابان ادوارد براون"
 
 #: templates/_base.html:189 templates/_base_files_app.html:159
-#: templates/_base_payment.html:90 templates/tools/pdf/print_invoice.html:99
+#: templates/_base_payment.html:90 templates/_temp_base.html:67
+#: templates/tools/pdf/print_invoice.html:99
 msgid "No.7"
 msgstr "شماره ۷"
 
 #: templates/_base.html:193 templates/_base_files_app.html:162
-#: templates/_base_payment.html:93
+#: templates/_base_payment.html:93 templates/_temp_base.html:70
 #: templates/account/clients/client_add_address.html:33
 #: templates/account/clients/client_details.html:40
 #: templates/account/clients/client_list.html:38
@@ -644,7 +649,7 @@ msgid "Phone"
 msgstr "تلفن"
 
 #: templates/_base.html:194 templates/_base_files_app.html:163
-#: templates/_base_payment.html:94
+#: templates/_base_payment.html:94 templates/_temp_base.html:70
 msgid "Bookstore"
 msgstr "فروشگاه"
 
@@ -678,6 +683,7 @@ msgstr "اضافه کردن مشتری"
 #: templates/account/clients/client_add.html:25
 #: templates/account/clients/client_add_address.html:41
 #: templates/account/clients/client_update.html:25
+#: templates/shop/store_book_search.html:29
 #: templates/staff/category_create.html:25
 #: templates/staff/category_create.html:26
 #: templates/staff/collection_management.html:32
@@ -1220,8 +1226,10 @@ msgid "Out of stock"
 msgstr "ناموجود"
 
 #: templates/shop/product_card.html:18 templates/shop/product_detail.html:33
-#: templates/shop/product_detail.html:123 templates/staff/_order_table.html:17
-#: templates/staff/_order_table.html:19
+#: templates/shop/product_detail.html:123
+#: templates/shop/store_book_search.html:45
+#: templates/shop/store_book_search.html:60
+#: templates/staff/_order_table.html:17 templates/staff/_order_table.html:19
 #: templates/staff/collection_management.html:48
 #: templates/staff/draft_orders.html:33 templates/staff/draft_orders.html:34
 #: templates/staff/draft_orders.html:35 templates/staff/order_shipping.html:76
@@ -1259,6 +1267,7 @@ msgid "Translator"
 msgstr "مترجم"
 
 #: templates/shop/product_detail.html:34 templates/shop/product_detail.html:35
+#: templates/shop/store_book_search.html:67
 #: templates/staff/_order_table.html:14
 #: templates/staff/collection_management.html:47
 #: templates/staff/order_shipping.html:73 templates/staff/products.html:54
@@ -1373,6 +1382,32 @@ msgstr "فقط برای فروش آنلاین"
 #: templates/shop/product_detail.html:132
 msgid "Just for store sales"
 msgstr "فقط برای فروش در فروشگاه"
+
+#: templates/shop/store_book_search.html:11
+msgid "Store book search"
+msgstr "جستجوی کتاب‌های فروشگاه"
+
+#: templates/shop/store_book_search.html:19
+msgid "Search in new books"
+msgstr "جستجوی کتاب‌های نو  "
+
+#: templates/shop/store_book_search.html:22
+msgid "Search in used books"
+msgstr "جستجوی کتاب‌های دست‌دوم  "
+
+#: templates/shop/store_book_search.html:23
+msgid "For product without price please ask our staff"
+msgstr "برای محصولات بدون قیمت لطفاً به همکاران ما مراجعه کنید"
+
+#: templates/shop/store_book_search.html:54
+#| msgid "Unit price"
+msgid "Without price"
+msgstr "بدون قیمت"
+
+#: templates/shop/store_book_search.html:70
+#| msgid "Payment number"
+msgid "Pages number"
+msgstr "تعداد صفحه"
 
 #: templates/staff/_order_table.html:11
 #: templates/staff/invoice_create.html:132
@@ -2016,10 +2051,9 @@ msgstr "کد محصول"
 
 #: templates/staff/sold_products.html:24
 msgid "Date"
-msgstr ""
+msgstr "تاریخ"
 
 #: templates/staff/sold_products.html:25
-#| msgid "Quantity"
 msgid "Quantity in stock"
 msgstr "تعداد در انبار"
 
