@@ -21,7 +21,7 @@
     <div class="col-md-10">
       <h2 class="my-4">{% trans 'Products price management' %}</h2>
       <h3>{% trans 'Product' %}: {{ product.name}}</h3>
-      <table class="table striped-table w-50">
+      <table class="table table-striped w-50">
         <tr>
           <td>{% trans 'ISBN' %}</td>
           <td>{{ product.isbn }}</td>
@@ -37,6 +37,14 @@
       <tr>
         <td>{% trans 'Price' %}</td>
         <td>{{ product.price }}</td>
+      </tr>
+      <tr>
+        <td>{% trans 'Stock' %}</td>
+        <td>{{ product.stock }}</td>
+      </tr>
+      <tr>
+        <td>{% trans 'Stock used' %}</td>
+        <td>{{ product.stock_used }}</td>
       </tr>
       </table>
 
