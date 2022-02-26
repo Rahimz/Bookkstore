@@ -911,3 +911,74 @@ def add_new_book_to_database_4(request, file_slug, check='check'):
             'new_row_price': new_row_price,
          }
     )
+
+def add_crafts(request, file_slug, check='check'):
+    in_database = []
+    number_of_added_object = 0
+
+    if check == 'add':
+        current_import_session = ImportSession.objects.create(user=request.user,)
+
+    # excel file handle
+    file_object = get_object_or_404(FileObject, slug=file_slug)
+
+    myfile = File(file_object)
+
+    path = file_object.file.path
+    with open(path, 'rb') as f:
+        # Load excel workbook
+        wb = load_workbook(f)
+        ws = wb.active
+        row_count = ws.max_row
+
+        # a loop for scrape the excel file
+        # read the data in cells
+        # for i in range(2, 3):
+        for i in range(2, row_count):
+            row = ws['A'+str(i):'M'+str(i)]
+
+            barcode_number = ws['A' + str(i)].value,
+            name = ws['B' + str(i)].value,
+            stock = ws['C' + str(i)].value,
+            price = ws['D' + str(i)].value,
+            category = ws['E1'].value,
+
+            # print(stock[0], type(stock[0]))
+            # print(price[0], type(price[0]))
+            in_database.append((category[0], name[0], price[0], stock[0]))
+
+            if check == 'add':
+                Product.objects.create(
+                    barcode_number = barcode_number[0],
+                    name = name[0],
+                    stock = stock[0],
+                    price = price[0],
+                    craft_category = category[0],
+                    product_type = 'craft',
+                    publish_year = None,
+                    available_online = False,
+                )
+
+                number_of_added_object += 1
+
+
+    if check == 'add':
+        current_import_session.quantity = number_of_added_object
+        current_import_session.save()
+    # if current_import_session.quantity == 0:
+    #     current_import_session.delete()
+
+    return render(
+        request,
+        'files/add_crafts.html',
+        {
+            'file': myfile,
+            'file_object': file_object,
+            'row_count': row_count,
+            'in_database': in_database,
+         #    'number_of_added_object': number_of_added_object,
+         #    'not_in_database': not_in_database,
+         #    'new_price': new_price,
+         #    'new_row_price': new_row_price,
+         }
+    )

@@ -115,9 +115,9 @@ def store_book_search(request, state):
             products = ProductSearch(
                 object=Product, query=search_query).order_by('name', 'publisher')
             if state == 'used':
-                products = products.filter(available=True).filter(stock_used__isnull=False)
+                products = products.filter(available=True).filter(stock_used__isnull=False).exclude(product_type='craft')
             if state == 'new':
-                products = products.filter(available=True).filter(price__isnull=False).filter(Q(stock__gte=0) | Q(stock_1__gte=0))
+                products = products.filter(available=True).filter(price__isnull=False).exclude(product_type='craft').filter(Q(stock__gte=0) | Q(stock_1__gte=0))
     else:
         search_form = SearchForm()
 

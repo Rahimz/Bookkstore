@@ -13,6 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from django_countries.fields import Country
 
 from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm, ProductCollectionForm, AdminPriceManagementForm
+from .forms import CraftUpdateForm
 from products.models import Product, Category
 from orders.models import Order, OrderLine, PurchaseLine
 from orders.forms import OrderAdminCheckoutForm, OrderPaymentManageForm
@@ -22,6 +23,7 @@ from account.models import CustomUser, Vendor, Address, Credit
 from account.forms import VendorAddForm, AddressAddForm, VendorAddressAddForm
 from tools.fa_to_en_num import number_converter
 from tools.gregory_to_hijry import *
+from products.models import Craft
 
 
 def sales(request):
@@ -87,14 +89,14 @@ def warehouse(request):
 
 @staff_member_required
 def products(request):
-    products_object = Product.objects.all().filter(available=True)
+    products_object = Product.objects.all().filter(available=True).exclude(product_type='craft')
 
     search_form = SearchForm()
     if request.method == 'POST':
         search_form = SearchForm(data=request.POST)
         if search_form.is_valid():
             search_query = search_form.cleaned_data['query']
-
+            search_query = number_converter(search_query)
             products_object = ProductSearch(
                 object=Product, query=search_query).order_by('name', 'publisher')
 
@@ -426,7 +428,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
 
         if search_form.is_valid():
             search_query = search_form.cleaned_data['query']
-
+            search_query = number_converter(search_query)
             # Here we grab the quey search from database and
             # search the fields: name, author, translator, publisher, isbn
             results = ProductSearch(
@@ -993,7 +995,7 @@ def category_list(request):
 
 @staff_member_required
 def sold_products(request, days=365):
-    order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.now() - timedelta(days)).order_by('-created')
+    order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.now() - timedelta(days)).exclude(product__product_type='craft').order_by('-created')
     # order_lines = OrderLine.objects.all().values_list(product.id, flat=True)
     products = dict()
     main_stock = dict()
@@ -1378,5 +1380,36 @@ def used_book_prices(request, product_id):
         {
             'product': product,
             'price_form': price_form,
+        }
+    )
+
+
+@staff_member_required
+def craft_list(request):
+    crafts = Product.objects.filter(available=True).filter(product_type='craft').order_by('category', 'name' )
+    return render(
+        request,
+        'staff/crafts/craft_list.html',
+        {
+            'crafts': crafts,
+        }
+    )
+
+
+@staff_member_required
+def craft_update(request, craft_id):
+    craft = get_object_or_404(Product, pk=craft_id)
+    if request.method == 'POST':
+        update_form = CraftUpdateForm(data=request.POST, instance=craft)
+        if update_form.is_valid():
+            update_form.save()
+    else:
+        update_form = CraftUpdateForm(instance=craft)
+    return render(
+        request,
+        'staff/crafts/craft_update.html',
+        {
+            'craft': craft,
+            'update_form': update_form,
         }
     )

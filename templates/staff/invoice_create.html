@@ -67,7 +67,7 @@
             <div class="col-md-4 my-3">
 
               <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new main' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new main' %}{% endif %}"
-                class="btn btn-sm btn-outline-success m-1 fs-10 text-right">
+                class="btn btn-sm {% if result.product_type == 'craft' %}btn-outline-primary{%else%}btn-outline-success{% endif %} m-1 fs-10 text-right">
                 {{ result.name | truncatechars:30 }} - {{ result.publisher | truncatechars:15 }} - {{ result.size }} - {{ result.cover_type }} - {% trans 'Quantity' %} {{ result.stock}} - <span
                   class="fw-bolder">{{ result.price | intcomma:False }}</span>
               </a>

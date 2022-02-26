@@ -1,0 +1,78 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Crafts' %}{% endblock %}
+
+{% block products-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+      <div class="col-md-2">
+        {% include "staff/sidebar_staff.html" with barName="products" %}
+      </div>
+      <div class="col-md-10">
+    <h2>{% trans 'List of crafts' %}</h2>
+    <div class="my-3">
+
+    </div>
+    {% comment %}
+    <form class="" action="." method="post">
+      <div class="row">
+
+      <div class="col-md-9">
+        {{ search_form | crispy }}
+        {% csrf_token %}
+      </div>
+      <div class="col-md-3">
+        <input class="btn btn-outline-secondary form-control" type="submit" name="book" value="{% trans 'Submit' %}">
+      </div>
+    </div>
+
+    </form>
+    {% endcomment %}
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">{% trans 'Edit' %}</th>
+          <th scope="col">{% trans '‌Barcode number' %}</th>
+          <th scope="col">{% trans 'Name' %}</th>
+          <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
+          <th scope="col">{% trans 'Stock' %}</th>
+          <th scope="col">{% trans 'Category' %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in crafts %}
+        <tr>
+          <th scope="row">{{ product.pk }}</th>
+          <td><a href="{% url 'staff:craft_update' product.id %}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+          <td>{{ product.barcode_number }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.price | intcomma:False }}</td>
+          <td>{{ product.stock }}</td>
+          <td>{{ product.craft_category }}</td>
+
+
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+    {% include "shop/pagination.html" with page=products %}
+    </div>
+
+
+  </div>
+
+</div>
+{% endblock %}

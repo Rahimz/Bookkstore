@@ -1,0 +1,19 @@
+{% extends '_base_files_app.html'%}
+{% block content %}
+{% if update_product %}
+<p class="bg-dannger">{{ update_product }}</p>
+{% endif %}
+<a href="{% url 'files:list_of_files' %}" class="btn btn-secondary">Back</a>
+<br>{{ file_object.name }} - {{ file_object.type }} - {{ file_object.file.url}} - {{file_object.slug}}
+<a href="{% url 'files:add_crafts' file_slug=file_object.slug check='add' %}" class="btn btn-warning">Add Crafts</a>
+<p>row_count: {{ row_count }}</p>
+
+<div class="">
+  <p>crafts:</p>
+  {% for item in in_database %}
+  {{ item }}
+  <br>{% endfor %}
+
+</div>
+
+{% endblock %}

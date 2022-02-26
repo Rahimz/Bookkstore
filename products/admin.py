@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Good
+from .models import Category, Product, Good, Craft
 import simple_history
 
 @admin.register(Category)
@@ -22,3 +22,11 @@ class ProductAdmin(simple_history.admin.SimpleHistoryAdmin):
 @admin.register(Good)
 class GoodAdmin(admin.ModelAdmin):
     list_display = ['product', 'price', 'stock']
+
+
+@admin.register(Craft)
+class CraftAdmin(admin.ModelAdmin):
+    list_display = ['name',  'available', 'category']
+    prepopulated_fields = {'slug': ('name',)}
+    list_filter = ['available', 'category']
+    search_fields = ['name', 'pk', 'category',]

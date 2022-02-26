@@ -63,4 +63,7 @@ urlpatterns = [
     path('vendor/edit/<int:vendor_id>/', views.vendor_edit, name='vendor_edit'),
 
     path('products/used-book/price-management/<int:product_id>/', views.used_book_prices, name="used_book_prices"),
+
+    path('products/crafts/', views.craft_list, name="craft_list"),
+    path('products/crafts-update/<int:craft_id>/', views.craft_update, name="craft_update"),
 ]

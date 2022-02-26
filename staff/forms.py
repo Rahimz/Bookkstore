@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from products.models import Product, Good, Category
+from products.models import Product, Good, Category, Craft
 from orders.models import Order, OrderLine
 
 
@@ -94,3 +94,14 @@ class AdminPriceManagementForm(forms.ModelForm):
         labels ={
             'price_used': _('Price used'),
         }
+
+
+class CraftUpdateForm(forms.ModelForm):
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['slug'].required = False
+
+    class Meta:
+        model = Product
+        fields = [
+            'name', 'craft_category', 'stock', 'price', 'description', 'available']
