@@ -97,10 +97,11 @@ class AdminPriceManagementForm(forms.ModelForm):
 
 
 class CraftUpdateForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['slug'].required = False
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['slug'].required = False
 
     class Meta:
-        model = Craft
-        exclude = ['image', 'image_alt', 'created', 'available_online', 'history']
+        model = Product
+        fields = [
+            'name', 'craft_category', 'stock', 'price', 'description', 'available']

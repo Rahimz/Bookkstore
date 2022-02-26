@@ -89,7 +89,7 @@ def warehouse(request):
 
 @staff_member_required
 def products(request):
-    products_object = Product.objects.all().filter(available=True)
+    products_object = Product.objects.all().filter(available=True).exclude(product_type='craft')
 
     search_form = SearchForm()
     if request.method == 'POST':
@@ -1386,7 +1386,7 @@ def used_book_prices(request, product_id):
 
 @staff_member_required
 def craft_list(request):
-    crafts = Craft.objects.filter(available=True).order_by('category', 'name' )
+    crafts = Product.objects.filter(available=True).filter(product_type='craft').order_by('category', 'name' )
     return render(
         request,
         'staff/crafts/craft_list.html',
@@ -1398,7 +1398,7 @@ def craft_list(request):
 
 @staff_member_required
 def craft_update(request, craft_id):
-    craft = get_object_or_404(Craft, pk=craft_id)
+    craft = get_object_or_404(Product, pk=craft_id)
     if request.method == 'POST':
         update_form = CraftUpdateForm(data=request.POST, instance=craft)
         if update_form.is_valid():
