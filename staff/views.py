@@ -308,6 +308,10 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
     if order_id and product_id:
 
         # Check the stock of product
+        if price == 0:
+            messages.error(request, _('You could not add product without price'))
+            return redirect('staff:invoice_create', order_id)
+
         if stock <= 0:
             messages.error(request, _('You are adding zero stock!'))
             # return redirect('staff:invoice_create', order_id)
@@ -360,6 +364,10 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
 
     # When we add a product for first time and we dont have an order
     if (not order_id) and product_id:
+        if price == 0:
+            messages.error(request, _('You could not add product without price'))
+            return redirect('staff:invoice_create', order_id)
+
         if stock <= 0:
             messages.error(request, _('You are adding zero stock!'))
             # return redirect('staff:invoice_create')
@@ -424,7 +432,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
                 object=Product, query=search_query).order_by('name', 'publisher')
 
             # if the results has only one item, the item automaticaly added to invoice
-            if len(results) == 1:
+            if len(results) == 1 and not results.first().has_other_prices:
                 product = results.first()
                 # Check the stock of product
                 variation_dict = {
@@ -466,6 +474,12 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
                                        ][variation_list[1]]['price']
                 stock = variation_dict[variation_list[0]
                                        ][variation_list[1]]['stock']
+                if price == 0:
+                    messages.error(request, _('You could not add product without price'))
+                    return redirect('staff:invoice_create', order_id)
+                if stock <= 0:
+                    messages.error(request, _('You are adding zero stock!'))
+
                 if product.has_other_prices:
                     messages.warning(request, _(
                         'This product has other prices'))

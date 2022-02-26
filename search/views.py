@@ -10,7 +10,7 @@ def ProductSearch(object, query):
     Search an object model base on a search query
     """
     results = object.objects.all().filter(available=True).annotate(
-        search=SearchVector('name', 'author', 'translator', 'publisher', 'isbn'),
+        search=SearchVector('name', 'author', 'translator', 'publisher', 'isbn', 'isbn_9'),
     ).filter(search=query)
     return results
 
