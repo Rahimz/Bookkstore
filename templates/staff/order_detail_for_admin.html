@@ -19,7 +19,7 @@
       <h2>{% trans 'Order details' %} : {{ order.id }}</h2>
       <div class="">
         <a href="{% url 'tools:print_invoice' order.id %}" target="_blank" class="btn btn-lg btn-success my-3">{% trans 'Print' %}</a>
-        <a href="{% url 'zarinpal:payment_create_order' order.id %}" class="btn btn-secondary mx-3 {% if order.paid %}disabled{% endif %}">{% trans 'Payment link'%}</a>
+        <a href="{% url 'zarinpal:payment_create_order' order.id %}" class="btn btn-secondary mx-3 ">{% trans 'Payment link'%}</a>
         <a href="{% url 'staff:order_payment_manage' order.id %}" class="btn btn-secondary">{% trans 'Payment receipt'%}</a>
         <a href="{% if order.shipping_status == 'full' %}#{% else %}{% url 'staff:invoice_back_to_draft' order.id %}{% endif %}" class="btn btn-outline-warning mx-3 {% if order.shipping_status == 'full' %}disabled{% endif %}">{% trans 'Back to draft'%}</a>
       </div>

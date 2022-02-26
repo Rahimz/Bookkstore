@@ -786,3 +786,128 @@ def add_used_book_with_no_isbn(request, file_slug, check='check'):
 
          }
     )
+
+
+def add_new_book_to_database_4(request, file_slug, check='check'):
+    isbn_in_database = []
+    not_in_database = []
+
+    number_of_added_object = 0
+    new_price = []
+    new_row_price = []
+
+    if check == 'add':
+        current_import_session = ImportSession.objects.create(user=request.user,)
+
+    # excel file handle
+    file_object = get_object_or_404(FileObject, slug=file_slug)
+
+    myfile = File(file_object)
+
+    path = file_object.file.path
+    with open(path, 'rb') as f:
+        # Load excel workbook
+        wb = load_workbook(f)
+        ws = wb.active
+        row_count = ws.max_row
+
+        # a loop for scrape the excel file
+        # read the data in cells
+        # for i in range(2, 3):
+        for i in range(2, row_count):
+            row = ws['A'+str(i):'M'+str(i)]
+
+            name = ws['B' + str(i)].value,
+            isbn = ws['C' + str(i)].value,
+            price = ws['D' + str(i)].value,
+            page_number = ws['E' + str(i)].value,
+            publisher = ws['F' + str(i)].value,
+            stock = ws['G' + str(i)].value,
+            # print(price[0], type(price[0]))
+            if not page_number[0]:
+                page_number = [0,]
+            if not price[0]:
+                price = [0,]
+
+            if len(str(isbn[0])) == 13:
+                isbn_9 = str(isbn[0])[3:-1]
+            elif len(str(isbn[0])) == 10:
+                isbn_9 = str(isbn[0])[:-1]
+            elif len(str(isbn[0])) == 9:
+                isbn_9 = str(isbn[0])
+
+            try:
+                database_product = Product.objects.filter(available=True).get(isbn_9=isbn_9)
+                isbn_in_database.append(( isbn[0], price[0], stock[0], price[0],  database_product.pk, database_product.has_other_prices))
+                if check == 'add':
+                    # these are the same with databse and
+                    # just should update stock
+                    database_product.stock += stock[0]
+                    database_product.save()
+
+                if int(price[0]) != int(database_product.price):
+                    # prices in excel and databse are not the same
+                    if int(database_product.price) == 0 :
+
+                        # we have this books as used and their main price is empty
+                        new_row_price.append(( 'excel',isbn[0], name[0], price[0], publisher[0], 'product', int(database_product.price) ,'other prices', database_product.has_other_prices))
+                        if check == 'add':
+                            # to change 9 digits isbn to 13
+                            if len(database_product.isbn) < len(str(isbn[0])):
+                                database_product.isbn = str(isbn[0])
+
+                            database_product.price = price[0]
+                            database_product.stock = stock[0]
+                            database_product.save()
+
+                    else:
+                        # these product should have a new price upper than what we have in database
+                        new_price.append(( 'excel',isbn[0], name[0], price[0], publisher[0], 'product', int(database_product.price) ,'other prices', database_product.has_other_prices))
+                        if check == 'add':
+                            database_product.name = name[0]
+                            database_product.stock_1 = database_product.stock
+                            database_product.price_1 = database_product.price
+                            database_product.stock = stock[0]
+                            database_product.price = price[0]
+                            database_product.has_other_prices = True
+                            database_product.save()
+
+            except:
+                not_in_database.append(( isbn[0], price[0], stock[0],  ))
+                if check == 'add':
+                    product = Product.objects.create(
+                        name = name[0],
+                        isbn = str(isbn[0]),
+                        price = price[0],
+                        page_number =page_number[0],
+                        publisher = publisher[0],
+                        stock = stock[0],
+                        state = 'new',
+                        available = True,
+                        available_in_store = True,
+                        available_online = True,
+                        import_session=current_import_session,
+                    )
+                    number_of_added_object += 1
+
+
+    if check == 'add':
+        current_import_session.quantity = number_of_added_object
+        current_import_session.save()
+    # if current_import_session.quantity == 0:
+    #     current_import_session.delete()
+
+    return render(
+        request,
+        'files/add_series_4.html',
+        {
+            'file': myfile,
+            'file_object': file_object,
+            'row_count': row_count,
+            'number_of_added_object': number_of_added_object,
+            'isbn_in_database': isbn_in_database,
+            'not_in_database': not_in_database,
+            'new_price': new_price,
+            'new_row_price': new_row_price,
+         }
+    )
