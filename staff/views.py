@@ -12,7 +12,7 @@ from django.utils.translation import gettext_lazy as _
 
 from django_countries.fields import Country
 
-from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm, ProductCollectionForm, AdminPriceManagementForm 
+from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm, ProductCollectionForm, AdminPriceManagementForm
 from .forms import CraftUpdateForm
 from products.models import Product, Category
 from orders.models import Order, OrderLine, PurchaseLine
@@ -995,7 +995,7 @@ def category_list(request):
 
 @staff_member_required
 def sold_products(request, days=365):
-    order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.now() - timedelta(days)).order_by('-created')
+    order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.now() - timedelta(days)).exclude(product__product_type='craft').order_by('-created')
     # order_lines = OrderLine.objects.all().values_list(product.id, flat=True)
     products = dict()
     main_stock = dict()
