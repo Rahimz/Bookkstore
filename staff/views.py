@@ -12,7 +12,8 @@ from django.utils.translation import gettext_lazy as _
 
 from django_countries.fields import Country
 
-from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm, ProductCollectionForm, AdminPriceManagementForm
+from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm, ProductCollectionForm, AdminPriceManagementForm 
+from .forms import CraftUpdateForm
 from products.models import Product, Category
 from orders.models import Order, OrderLine, PurchaseLine
 from orders.forms import OrderAdminCheckoutForm, OrderPaymentManageForm
@@ -22,6 +23,7 @@ from account.models import CustomUser, Vendor, Address, Credit
 from account.forms import VendorAddForm, AddressAddForm, VendorAddressAddForm
 from tools.fa_to_en_num import number_converter
 from tools.gregory_to_hijry import *
+from products.models import Craft
 
 
 def sales(request):
@@ -1378,5 +1380,36 @@ def used_book_prices(request, product_id):
         {
             'product': product,
             'price_form': price_form,
+        }
+    )
+
+
+@staff_member_required
+def craft_list(request):
+    crafts = Craft.objects.filter(available=True).order_by('category', 'name' )
+    return render(
+        request,
+        'staff/crafts/craft_list.html',
+        {
+            'crafts': crafts,
+        }
+    )
+
+
+@staff_member_required
+def craft_update(request, craft_id):
+    craft = get_object_or_404(Craft, pk=craft_id)
+    if request.method == 'POST':
+        update_form = CraftUpdateForm(data=request.POST, instance=craft)
+        if update_form.is_valid():
+            update_form.save()
+    else:
+        update_form = CraftUpdateForm(instance=craft)
+    return render(
+        request,
+        'staff/crafts/craft_update.html',
+        {
+            'craft': craft,
+            'update_form': update_form,
         }
     )

@@ -1,0 +1,42 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Crafts' %}{% endblock %}
+
+{% block products-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+      <div class="col-md-2">
+        {% include "staff/sidebar_staff.html" with barName="products" %}
+      </div>
+      <div class="col-md-10">
+    <h2>{% trans 'List of crafts' %}</h2>
+    <div class="my-3">
+
+    </div>
+    <form class="" action="." method="post">
+
+        {{ update_form | crispy }}
+        {% csrf_token %}
+        <input class="btn btn-outline-secondary form-control" type="submit" name="book" value="{% trans 'Submit' %}">
+
+    </form>
+    {% comment %}
+    {% endcomment %}
+
+    </div>
+
+
+  </div>
+
+</div>
+{% endblock %}

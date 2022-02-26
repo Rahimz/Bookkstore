@@ -487,8 +487,7 @@ class Craft(models.Model):
     )
     barcode_number = models.CharField(
         max_length=13,
-        blank=True,
-        null=True
+        unique=True
     )
     category = models.CharField(
         max_length = 100,
@@ -543,3 +542,5 @@ class Craft(models.Model):
 
         if not self.slug:
             self.slug = slugify(self.name, allow_unicode=True)
+
+        super(Craft, self).save(*args, **kwargs)
