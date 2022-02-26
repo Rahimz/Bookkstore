@@ -14,13 +14,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='craft',
             name='barcode_number',
-            field=models.CharField(default=django.utils.timezone.now, max_length=13, unique=True),
+            field=models.CharField(default=django.utils.timezone.now, max_length=100, unique=True),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name='historicalcraft',
             name='barcode_number',
-            field=models.CharField(db_index=True, default=django.utils.timezone.now, max_length=13),
+            field=models.CharField(db_index=True, default=django.utils.timezone.now, max_length=100),
             preserve_default=False,
         ),
     ]

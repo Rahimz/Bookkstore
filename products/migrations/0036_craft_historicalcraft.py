@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=250)),
                 ('slug', models.SlugField(allow_unicode=True, max_length=550)),
-                ('barcode_number', models.CharField(blank=True, max_length=13, null=True)),
+                ('barcode_number', models.CharField(blank=True, max_length=100, null=True)),
                 ('category', models.CharField(blank=True, max_length=100, null=True)),
                 ('weight', models.FloatField(blank=True, null=True)),
                 ('price', models.DecimalField(decimal_places=0, default=0, max_digits=10)),

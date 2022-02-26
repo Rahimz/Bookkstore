@@ -26,7 +26,7 @@ class GoodAdmin(admin.ModelAdmin):
 
 @admin.register(Craft)
 class CraftAdmin(admin.ModelAdmin):
-    list_display = ['name', 'barcode_number', 'available', 'category']
+    list_display = ['name',  'available', 'category']
     prepopulated_fields = {'slug': ('name',)}
     list_filter = ['available', 'category']
-    search_fields = ['name', 'pk', 'category', 'barcode_number']
+    search_fields = ['name', 'pk', 'category',]

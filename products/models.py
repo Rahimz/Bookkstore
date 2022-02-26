@@ -93,6 +93,11 @@ class Product(models.Model):
         blank=True,
         null=True
     )
+    craft_category = models.CharField(
+        max_length=150,
+        null=True,
+        blank=True
+    )
     name = models.CharField(
         max_length=500,
         db_index=True
@@ -486,8 +491,9 @@ class Craft(models.Model):
         allow_unicode=True
     )
     barcode_number = models.CharField(
-        max_length=13,
-        unique=True
+        max_length=100,
+        null=True,
+        blank=True
     )
     category = models.CharField(
         max_length = 100,
