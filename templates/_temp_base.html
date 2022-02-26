@@ -37,41 +37,54 @@
 
 <body>
   <header class="mb-3">
-      <div class="container-fluid">
-        <div class="row text-center my-3">
-          <h1 class="bg-main-color p-3 fw-bolder"><img src="{% static 'img/logo.jpg' %}" alt="{% trans 'Ketab Damavand' %}" class="rounded" width="110px;" height="auto"></h1>
-        </div>
-        <!-- navbar button -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="container-fluid">
+      <div class="row text-center my-3">
+        <h1 class="bg-main-color p-3 fw-bolder"><img src="{% static 'img/logo.jpg' %}" alt="{% trans 'Ketab Damavand' %}" class="rounded" width="110px;" height="auto"></h1>
+      </div>
+      <!-- navbar button -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-
-        </div>
 
       </div>
 
-
-
-
+    </div>
   </header>
   <main>
     {% block content %}
     {% endblock %}
   </main>
 
-  <footer class="footer  mt-3 container-fluid ">
-    <div class="row p-4 bg-second-color">
+  <footer class="footer">
+    <div class="mt-3 container-fluid bg-second-color text-center">
+      <div class="row p-3">
 
+        <div class="col text-light">
+          <p class="fw-bold">{% trans 'Ketabe Damavand' %}
+            {% trans 'Address' %} :
+            <span class="text-center">{% trans '16 Azar St.' %}, {% trans 'Edward Brown St.' %}, {% trans 'No.7' %}</span>
+          </p>
+          <p>
+            <span>{% trans 'Phone' %} {% trans 'Bookstore' %} : <a href="tel:+982166981024" dir="ltr" style="text-decoration: None;">+9821 66981024</a></span>
+            <a href="mailto:info@ketabedamavand.com" style="text-decoration: None;">info@ketabedamavand.com</a>
+          </p>
+
+          </p>
+        </div>
+
+      </div>
     </div>
-    <div class="row text-center" style="background-color: #5f6b6b;">
-      <a href="{% url 'shop:temp_home'%}" style="text-decoration: None;"><p class="text-light pt-3 fs-6">www.ketabedamavand.com</p></a>
+    <div class="row bg-dark text-center">
+      <a href="{% url 'shop:temp_home'%}" style="text-decoration: None;">
+        <p class="text-light pt-3 fs-6">www.ketabedamavand.com</p>
+      </a>
     </div>
 
-  </footer>
 
-  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
 
 </html>

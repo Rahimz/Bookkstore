@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from products.models import Product, Good, Category
 from search.forms import SearchForm
 from cart.forms import CartAddProductForm
-
+from search.views import ProductSearch
 
 def home(request):
     search_form = SearchForm()
@@ -98,4 +98,35 @@ def category_list(request):
         'shop/category_list.html',
         {'main_categories': main_categories,
         'search_form': search_form }
+    )
+
+
+def store_book_search(request, state):
+    # products = Product.objects.all().filter(available=True).filter(stock_used__isnull=False)
+
+    products = None
+    if request.method == 'POST':
+        search_form = SearchForm(data=request.POST)
+        if search_form.is_valid():
+            search_query = search_form.cleaned_data['query']
+            if search_query == ' ':
+                return redirect('shop:store_book_search')
+
+            products = ProductSearch(
+                object=Product, query=search_query).order_by('name', 'publisher')
+            if state == 'used':
+                products = products.filter(available=True).filter(stock_used__isnull=False)
+            if state == 'new':
+                products = products.filter(available=True).filter(price__isnull=False).filter(Q(stock__gte=0) | Q(stock_1__gte=0))
+    else:
+        search_form = SearchForm()
+
+    return render(
+        request,
+        'shop/store_book_search.html',
+        {
+            'products': products,
+            'state': state,
+            'search_form': search_form,
+        }
     )
