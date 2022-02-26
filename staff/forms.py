@@ -82,3 +82,15 @@ class ProductCollectionForm(forms.Form):
     #     widgets = {
     #         'collection_set': forms.TextInput(attrs={'placeholder': _('Just enter each ISBN in a new line')})
     #     }
+
+
+class AdminPriceManagementForm(forms.ModelForm):
+
+    class Meta:
+        model = Product
+        fields = [
+            'price_used',
+            ]
+        labels ={
+            'price_used': _('Price used'),
+        }

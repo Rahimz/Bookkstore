@@ -12,7 +12,7 @@ from django.utils.translation import gettext_lazy as _
 
 from django_countries.fields import Country
 
-from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm, ProductCollectionForm
+from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm, ProductCollectionForm, AdminPriceManagementForm
 from products.models import Product, Category
 from orders.models import Order, OrderLine, PurchaseLine
 from orders.forms import OrderAdminCheckoutForm, OrderPaymentManageForm
@@ -1358,5 +1358,25 @@ def zero_stock_list(request):
         'staff/zero_stock_list.html',
         {
             'products': products,
+        }
+    )
+
+
+@staff_member_required
+def used_book_prices(request, product_id):
+    product = Product.objects.get(pk=product_id)
+    if request.method == 'POST':
+        price_form = AdminPriceManagementForm(data=request.POST, instance=product)
+        if price_form.is_valid():
+            price_form.save()
+            return redirect('staff:products')
+    else:
+        price_form = AdminPriceManagementForm(instance=product)
+    return render(
+        request,
+        'staff/used_book_prices.html',
+        {
+            'product': product,
+            'price_form': price_form,
         }
     )
