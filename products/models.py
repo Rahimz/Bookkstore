@@ -177,9 +177,7 @@ class Product(models.Model):
         default='',
         choices=AGE_RANGE_CHOICES,
     )
-    stock = models.IntegerField(
-        default=0,
-    )
+
     # warehouse = models.ForeignKey(
     #     Warehouse,
     #     on_delete=SET_NULL,
@@ -253,6 +251,9 @@ class Product(models.Model):
         decimal_places=0,
         default=0
     )
+    stock = models.IntegerField(
+        default=0,
+    )
     has_other_prices = models.BooleanField(
         default=False
     )
@@ -322,7 +323,7 @@ class Product(models.Model):
         blank=True
     )
     vendors = models.ManyToManyField(
-        Vendor,        
+        Vendor,
         blank=True,
         related_name='products_vendor'
     )
@@ -473,3 +474,72 @@ class Good(models.Model):
             self.cover_type = self.product.cover_type
 
         super(Good, self).save(*args, **kwargs)
+
+
+class Craft(models.Model):
+    name = models.CharField(
+        max_length=250,
+    )
+    slug = models.SlugField(
+        max_length=550,
+        db_index=True,
+        allow_unicode=True
+    )
+    barcode_number = models.CharField(
+        max_length=13,
+        blank=True,
+        null=True
+    )
+    category = models.CharField(
+        max_length = 100,
+        null=True,
+        blank=True,
+    )
+    weight = models.FloatField(
+        null=True,
+        blank=True
+    )
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=0,
+        default=0
+    )
+    stock = models.IntegerField(
+        default=0,
+    )
+    image = models.ImageField(
+        upload_to='products/images/',
+        blank=True
+    )
+    image_alt = models.CharField(
+        max_length=300,
+        blank=True,
+        null=True
+    )
+    description = models.TextField(
+        null=True,
+        blank=True
+    )
+    created = models.DateTimeField(
+        auto_now_add=True
+    )
+    available = models.BooleanField(
+        default=True
+    )
+    available_in_store = models.BooleanField(
+        default=True
+    )
+    available_online = models.BooleanField(
+        default=False
+    )
+    history = HistoricalRecords()
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if self.image and not self.image_alt:
+            self.image_alt = self.name
+
+        if not self.slug:
+            self.slug = slugify(self.name, allow_unicode=True)
