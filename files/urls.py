@@ -20,6 +20,8 @@ urlpatterns = [
 
     path('upload/new-product-3/<slug:file_slug>/<str:check>/', views.add_new_book_to_database_3, name='add_new_book_to_database_3'),
 
+    path('upload/new-product-4/<slug:file_slug>/<str:check>/', views.add_new_book_to_database_4, name='add_new_book_to_database_4'),
+
     path('upload/used-product-isbn/<slug:file_slug>/<str:check>/', views.add_used_book_with_isbn, name='add_used_book_with_isbn'),
 
     path('upload/used-product-no-isbn/<slug:file_slug>/<str:check>/', views.add_used_book_with_no_isbn, name='add_used_book_with_no_isbn'),

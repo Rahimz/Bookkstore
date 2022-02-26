@@ -1,0 +1,36 @@
+{% extends '_base_files_app.html'%}
+{% block content %}
+{% if update_product %}
+<p class="bg-dannger">{{ update_product }}</p>
+{% endif %}
+<a href="{% url 'files:list_of_files' %}" class="btn btn-secondary">Back</a>
+<br>{{ file_object.name }} - {{ file_object.type }} - {{ file_object.file.url}} - {{file_object.slug}}
+<a href="{% url 'files:add_new_book_to_database_4' file_slug=file_object.slug check='add' %}" class="btn btn-warning">Add series 4</a>
+<p>row_count: {{ row_count }}</p>
+
+<div class="">
+  <p>new_row_price:</p>
+  {% for item in new_row_price%}
+  {{ item }}
+  <br>{% endfor %}
+</div>
+<div class="">
+  <p>new_price:</p>
+  {% for item in new_price %}
+  {{ item }}
+  <br>{% endfor %}
+</div>
+<div class="">
+  <p>isbn_in_database</p>
+  {% for item in isbn_in_database %}
+  {{ item }}
+  <br>{% endfor %}
+</div>
+<div class="">
+  <p>not_in_database</p>
+  {% for item in not_in_database %}
+  {{ item }}
+  <br>{% endfor %}
+</div>
+
+{% endblock %}

@@ -13,8 +13,9 @@
 
 <a href="{% url 'files:add_new_book_to_database_3' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check series 3</a>
 <a href="{% url 'files:add_used_book_with_isbn' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check used book with isbn</a>
-{% endcomment %}
 <a href="{% url 'files:add_used_book_with_no_isbn' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check used book with NO isbn</a>
+{% endcomment %}
+<a href="{% url 'files:add_new_book_to_database_4' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check New series 4</a>
 </p>
 {% endfor %}
 {% endblock %}
