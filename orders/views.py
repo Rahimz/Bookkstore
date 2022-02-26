@@ -15,6 +15,7 @@ from search.forms import SearchForm
 from search.views import ProductSearch
 from products.models import Product
 from products.price_management import add_price, has_empty_price_row, get_price_index, sort_price
+from tools.fa_to_en_num import number_converter
 
 
 @login_required
@@ -188,6 +189,7 @@ def purchase_details(request, purchase_id, product_id=None, variation='new main'
         search_form = SearchForm(data=request.POST)
         if search_form.is_valid():
             search_query = search_form.cleaned_data['query']
+            search_query= number_converter(search_query)
             results = ProductSearch(
                 object=Product, query=search_query).order_by('name', 'publisher')
 

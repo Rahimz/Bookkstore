@@ -94,7 +94,7 @@ def products(request):
         search_form = SearchForm(data=request.POST)
         if search_form.is_valid():
             search_query = search_form.cleaned_data['query']
-
+            search_query = number_converter(search_query)
             products_object = ProductSearch(
                 object=Product, query=search_query).order_by('name', 'publisher')
 
@@ -426,7 +426,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
 
         if search_form.is_valid():
             search_query = search_form.cleaned_data['query']
-
+            search_query = number_converter(search_query)
             # Here we grab the quey search from database and
             # search the fields: name, author, translator, publisher, isbn
             results = ProductSearch(
