@@ -51,7 +51,7 @@
 
 {% if barName == "warehouse" %}
 <div class="sidebar drop_shadow border border-1 rounded-2">
-  <p><a href="{% url 'staff:sold_products' %}">{% trans 'Sold products' %}</a></p>
+  <p><a href="{% url 'staff:sold_products' days=365 %}">{% trans 'Sold products' %}</a></p>
   <p><a href="{% url 'staff:purchased_products' %}">{% trans 'Purchased products' %}</a></p>
   <p><a href="{% url 'staff:zero_stock_list' %}">{% trans 'Zero stock' %}</a></p>
   <p><a href="" >{% trans 'Warehouse Managment' %}</a></p>

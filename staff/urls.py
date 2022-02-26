@@ -40,7 +40,7 @@ urlpatterns = [
     path('invoice/payment-manage/<int:order_id>/', views.order_payment_manage, name='order_payment_manage'),
 
     path('warehouse/', views.warehouse, name='warehouse'),
-    path('warehouse/sold-products/', views.sold_products, name='sold_products'),
+    path('warehouse/sold-products/<int:days>/', views.sold_products, name='sold_products'),
     path('warehouse/purchased-products/', views.purchased_products, name='purchased_products'),
     path('warehouse/refund/client/', refund_from_client, name="refund_from_client"),
     path('warehouse/refund/client/list/', refund_list_client, name="refund_list_client"),

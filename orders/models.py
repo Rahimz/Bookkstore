@@ -283,6 +283,10 @@ class OrderLine(models.Model):
     active = models.BooleanField(
         default= True
     )
+    created = models.DateTimeField(
+        null=True,
+        blank=True
+    )
 
     class Meta:
         ordering = ("-product",)
@@ -312,12 +316,11 @@ class OrderLine(models.Model):
     def update_discount(self, new_discount):
         self.discount = new_discount
 
-    # def save(self, *args, **kwargs):
-    #     self.order.update_quantity()
-    #     self.order.update_weight()
-    #     self.order.save()
-    #
-    #     super(OrderLine, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        if not self.created:
+            self.created = self.order.created
+
+        super(OrderLine, self).save(*args, **kwargs)
 
 
 class Purchase(models.Model):
