@@ -610,8 +610,8 @@ def add_used_book_with_isbn(request, file_slug, check='check'):
 
         # a loop for scrape the excel file
         # read the data in cells
-        # for i in range(2, row_count):
-        for i in range(2, 15):
+        for i in range(2, row_count):
+        # for i in range(2, 15):
             in_db = False
             not_in_db = False
 

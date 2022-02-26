@@ -2,6 +2,7 @@
 {% block content %}
 {% for file in files %}
 <p>{{ file.name }} {{ file.type }} {{ file.file.url}}
+{% comment %}
 <a href="{% url 'files:add_new_book_to_database_check' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check</a>
 
 <a href="{% url 'files:add_new_book_to_database_check_2' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check new 2</a>
@@ -11,7 +12,7 @@
 <a href="{% url 'files:correction_140' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check 140</a>
 
 <a href="{% url 'files:add_new_book_to_database_3' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check series 3</a>
-
+{% endcomment %}
 <a href="{% url 'files:add_used_book_with_isbn' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check used book with isbn</a>
 </p>
 {% endfor %}
