@@ -101,7 +101,7 @@ def category_list(request):
     )
 
 
-def store_book_search(request):
+def store_book_search(request, state):
     # products = Product.objects.all().filter(available=True).filter(stock_used__isnull=False)
 
     products = None
@@ -114,7 +114,10 @@ def store_book_search(request):
 
             products = ProductSearch(
                 object=Product, query=search_query).order_by('name', 'publisher')
-            products = products.filter(available=True).filter(stock_used__isnull=False)
+            if state == 'used':
+                products = products.filter(available=True).filter(stock_used__isnull=False)
+            if state == 'new':
+                products = products.filter(available=True).filter(price__isnull=False).filter(Q(stock__gte=0) | Q(stock_1__gte=0))
     else:
         search_form = SearchForm()
 
@@ -123,21 +126,7 @@ def store_book_search(request):
         'shop/store_book_search.html',
         {
             'products': products,
-
-            'search_form': search_form,
-        }
-    )
-
-
-def products(request):
-
-
-    return render(
-        request,
-        'staff/products.html',
-        {
-            'products': products,
-            'page': page,
+            'state': state,
             'search_form': search_form,
         }
     )

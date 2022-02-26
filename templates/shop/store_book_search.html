@@ -10,12 +10,18 @@
 
 {% block title %}{% trans 'Store book search' %}{% endblock %}
 
+
 {% block content %}
 <div class="container">
   <div class="row text-center">
-    <h1>{% trans 'Search in used books' %}</h1>
     <div class="">
+      {% if state == "new" %}
+      <h1>{% trans 'Search in new books' %}</h1>
+      {% endif %}
+      {% if state == "used" %}
+      <h1>{% trans 'Search in used books' %}</h1>
       <p class="border border-warning rounded p-3 m-3 lead">{% trans 'For product without price please ask our staff' %}</p>
+      {% endif %}
 
       <form class="p-3 " action="." method="post">
         {{ search_form | crispy }}
@@ -23,41 +29,58 @@
         <input type="submit" name="" class="btn btn-success my-3" value="{% trans 'Submit'%}">
       </form>
     </div>
-    </div>
-    <div class="row">
-      {% for product in products %}
-      <div class="col-md-3 col-sm-12  d-flex align-items-stretch">
-        <!--CARD HERE-->
-        <div class="card col-md-12 text-center m-1 w-100">
-          <img src="{% static 'img/logo_bw_card.png' %}" class="card-img-top p-4 position-relative" alt="{{ product.name }}">
-          {% if product.price_used == 0 %}
-          <p class="badge rounded bg-warning mx-5">
-            {% trans 'Without price' %}</p>
-          {% endif %}
-          <div class="card-body m-2 p-2">
-            <h5 class="card-title">{{ product.name  }}</h5>
-            <h6 class="cart-subtitle text-dark">
-              {% if product.price_used %}
-              {{ product.price_used | intcomma:False }} {% trans 'Rial' %}
-              {% endif %}
-            </h6>
-            {% if product.publisher %}
-            <p class="p-1">{% trans 'Publisher'%}: {{ product.publisher }}</p>
-            {% endif %}
-            {% if product.page_number %}
-            <p class="p-1">{% trans 'Pages number'%}: {{ product.page_number }}</p>
-            {% endif %}
-            {% if product.isbn %}
-            <p class="p-1">{% trans 'ISBN'%}: {{ product.isbn }}</p>
-            {% endif %}
+  </div>
+  <div class="row">
+    {% for product in products %}
+    <div class="col-md-3 col-sm-12  d-flex align-items-stretch">
+      <!--CARD HERE-->
+      <div class="card col-md-12 text-center m-1 w-100">
+        <img src="{% static 'img/logo_bw_card.png' %}" class="card-img-top p-4 position-relative" alt="{{ product.name }}">
 
-            {% if product.author %}<p class="p-1">{{ product.author }} {{ product.ahthor | truncatechars:40 }}{% else %} <br /> {% endif %}</p>
-          </div>
+        {% if state == "new" %}
+        <div class="card-body m-2 p-2">
+          <h5 class="card-title">{{ product.name  }}</h5>
+          <h6 class="cart-subtitle text-dark">
+            {% if product.price %}
+            {{ product.price | intcomma:False }} {% trans 'Rial' %}
+            {% endif %}
+          </h6>
+        {% endif %}
+
+
+        {% if state == "used" %}
+        {% if product.price_used == 0 %}
+        <p class="badge rounded bg-warning mx-5">
+          {% trans 'Without price' %}</p>
+        {% endif %}
+        <div class="card-body m-2 p-2">
+          <h5 class="card-title">{{ product.name  }}</h5>
+          <h6 class="cart-subtitle text-dark">
+            {% if product.price_used %}
+            {{ product.price_used | intcomma:False }} {% trans 'Rial' %}
+            {% endif %}
+          </h6>
+          {% endif %}
+
+
+          {% if product.publisher %}
+          <p class="p-1">{% trans 'Publisher'%}: {{ product.publisher }}</p>
+          {% endif %}
+          {% if product.page_number %}
+          <p class="p-1">{% trans 'Pages number'%}: {{ product.page_number }}</p>
+          {% endif %}
+          {% if product.isbn %}
+          <p class="p-1">{% trans 'ISBN'%}: {{ product.isbn }}</p>
+          {% endif %}
+
+          {% if product.author %}<p class="p-1">{{ product.author }} {{ product.ahthor | truncatechars:40 }}{% else %} <br /> {% endif %}</p>
         </div>
       </div>
-
-      {% endfor %}
     </div>
+    {% endfor %}
+
+
+  </div>
 
 
 
