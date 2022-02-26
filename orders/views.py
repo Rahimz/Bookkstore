@@ -288,6 +288,9 @@ def purchase_checkout(request, purchase_id):
             elif item.variation in ('used', 'used main'):
                 product.stock_used += item.quantity
 
+            product.vendor = purchase.vendor
+            product.vendors.add(purchase.vendor)
+            # messages.success(request, _('Vendor added to product vendors'))
             product.save()
 
         purchase.approver = request.user

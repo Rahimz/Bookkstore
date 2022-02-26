@@ -321,6 +321,11 @@ class Product(models.Model):
         null=True,
         blank=True
     )
+    vendors = models.ManyToManyField(
+        Vendor,        
+        blank=True,
+        related_name='products_vendor'
+    )
     # vendor = models.CharField(
     #     max_length=100,
     #     null=True,
