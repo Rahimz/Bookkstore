@@ -1,0 +1,60 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Products price management' %}{% endblock %}
+
+{% block products-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="products" %}
+    </div>
+    <div class="col-md-10">
+      <h2 class="my-4">{% trans 'Products price management' %}</h2>
+      <h3>{% trans 'Product' %}: {{ product.name}}</h3>
+      <table class="table striped-table w-50">
+        <tr>
+          <td>{% trans 'ISBN' %}</td>
+          <td>{{ product.isbn }}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'Publisher' %}</td>
+        <td>{{ product.publisher }}</td>
+      </tr>
+      <tr>
+        <td>{% trans 'Page number' %}</td>
+        <td>{{ product.page_namber }}</td>
+      </tr>
+      <tr>
+        <td>{% trans 'Price' %}</td>
+        <td>{{ product.price }}</td>
+      </tr>
+      </table>
+
+      <h3 class=" mt-5">{% trans 'Used price update' %}</h3>
+      <div class="w-50 ">
+        <form class="" action="." method="post">
+          {{ price_form | crispy }}
+          {% csrf_token %}
+          <input class="btn btn-outline-secondary my-3" type="submit" name=""value="{% trans 'Submit' %}">
+        </form>
+      </div>
+
+
+
+    </div>
+
+
+  </div>
+
+</div>
+{% endblock %}

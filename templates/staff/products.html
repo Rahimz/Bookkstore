@@ -68,6 +68,8 @@
           <td>{{ product.stock_used  }}</td>
           <td>{{ product.store_positon }}</td>
           <td>{{ product.publisher }}</td>
+          <td>{% if request.user.is_staff %}<a href="{% url 'staff:used_book_prices' product.id %}" class="btn btn-danger">{% trans 'Bahman' %}</a>{% endif %}</td>
+
         </tr>
         {% endfor %}
 
