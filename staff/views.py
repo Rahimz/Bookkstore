@@ -333,6 +333,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
                 quantity=1,
                 price=price,
                 variation=variation,
+                discount=0
             )
             order.save()
 
@@ -389,6 +390,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
             quantity=1,
             price=price,
             variation=variation,
+            discount=0
         )
         order.save()
 
@@ -530,7 +532,8 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
                             product=product,
                             quantity=1,
                             price=product.price,
-                            variation='new main'
+                            variation='new main',
+                            discount=0
                         )
                         order.save()
 
