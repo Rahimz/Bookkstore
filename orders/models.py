@@ -195,6 +195,11 @@ class Order(models.Model):
         null=True,
         blank=True
     )
+    qrcode = models.ImageField(
+        upload_to='orders/receipts',
+        null=True,
+        blank=True
+    )
     history = HistoricalRecords()
 
     class Meta:

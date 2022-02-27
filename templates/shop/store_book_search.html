@@ -14,92 +14,58 @@
 {% block content %}
 <div class="container">
   <div class="row text-center">
-    <div class="">
-      {% if state == "new" %}
-      <h1>{% trans 'Search in new books' %}</h1>
-      {% endif %}
-      {% if state == "used" %}
-      <h1>{% trans 'Search in used books' %}</h1>
-      <p class="border border-warning rounded p-3 m-3 lead">{% trans 'For product without price please ask our staff' %}</p>
-      {% endif %}
 
-      <form class="p-3 " action="." method="post">
-        {{ search_form | crispy }}
-        {% csrf_token %}
-        <input type="submit" name="" class="btn btn-success my-3" value="{% trans 'Submit'%}">
-      </form>
-    </div>
+    <h3>{% trans 'Search in used books' %}</h3>
+    <p class="border border-warning rounded p-1 m-1 ">{% trans 'For product without price please ask our staff' %}</p>
+
+    <form class="p-2 " action="." method="post">
+      {{ search_form | crispy }}
+      {% csrf_token %}
+      <input type="submit" name="" class="btn btn-success my-2" value="{% trans 'Submit'%}">
+    </form>
+
   </div>
 
 
   <div class="row">
-    {% for product in products %}
-    <div class="col-lg-3 col-md-4 col-sm-12  d-flex align-items-stretch">
-      <!--CARD HERE-->
-      <div class="card col-md-12 text-center m-1 w-100">
-        <img src="{% static 'img/logo_bw_card.png' %}" class="card-img-top p-4 position-relative" alt="{{ product.name }}">
+    {% if all_products%}
+    <h3>{% trans 'Available books' %}</h3>
+    {% endif %}
+    {% for product in all_products %}
+    <div class="">
 
-        {% if state == "new" %}
-        <div class="card-body m-2 p-2">
-          <h5 class="card-title">{{ product.name  }}</h5>
-          <h6 class="cart-subtitle text-dark">
-            {% if product.price %}
-            {{ product.price | intcomma:False }} {% trans 'Rial' %}
-            {% endif %}
-          </h6>
-          {% endif %}
-
-
-          {% if state == "used" %}
-              {% if product.price_used == 0 %}
-              <p class="badge rounded bg-warning mx-5">
-                {% trans 'Without price' %}</p>
-                      {% if request.user.is_staff %}
-                      <a href="{% url 'staff:used_book_prices' product.id %}" class="btn btn-danger">
-                        {% trans 'Add price' %}
-                            {% if product.about == '*' %}
-                            {% trans 'Not in market'%}
-                            {% endif %}
-                        </a>
-                        {% endif %}
-                {% endif %}
-
-                {% if request.user.is_staff %}
-                    {% if product.about == '*' %}
-                    <span class="text-warning">{% trans 'Not in market'%}</span>
-                    {% endif %}
-                {% endif %}
-              <div class="card-body m-2 p-2">
-                <h5 class="card-title">{{ product.name  }}</h5>
-                <h6 class="cart-subtitle text-dark">
-                  {% if product.price_used %}
-                  {{ product.price_used | intcomma:False }} {% trans 'Rial' %}
-                  {% endif %}
-                </h6>
-            {% endif %}
-
-
-            {% if product.publisher %}
-            <p class="p-1">{% trans 'Publisher'%}: {{ product.publisher }}</p>
-            {% endif %}
-            {% if product.page_number %}
-            <p class="p-1">{% trans 'Pages number'%}: {{ product.page_number }}</p>
-            {% endif %}
-            {% if product.isbn %}
-            <p class="p-1">{% trans 'ISBN'%}: {{ product.isbn }}</p>
-            {% endif %}
-
-            {% if product.author %}<p class="p-1">{{ product.author }} {{ product.ahthor | truncatechars:40 }}{% else %} <br /> {% endif %}</p>
-          </div>
-        </div>
-      </div>
+      {% if product.stock or product.stock_1 %}
+      <p class="">
+        <img src="{% static 'img/logo_bw.png' %}" class=" " width="40px" height="auto" alt="{{ product.name }}">
+        <span class="badge bg-success rounded-pill">{% trans 'Book' %} {% trans 'New' %}</span>
+        <span class=" p-2">
+          {{ product.name }}
+          {% if product.publisher %} - {{ product.publisher }}{% endif %}
+          {% if product.page_number %} - {% trans 'Page number' %}: {{ product.page_number }}{% endif %}
+          {% if product.price %} - {% trans 'Price' %}: {{ product.price | intcomma:False }}{% endif %}
+         </span>
+      </p>
+      {% else %}
+      <p class="">
+        <img src="{% static 'img/logo_bw.png' %}" class=" " width="40px" height="auto" alt="{{ product.name }}">
+        <span class="badge bg-warning rounded-pill">{% trans 'Book' %} {% trans 'Used' %}</span>
+        <span class=" p-2">
+          {{ product.name }}
+        {% if product.publisher %}  - {{ product.publisher }}{% endif %}
+        {% if product.page_number %}  - {% trans 'Page number' %}: {{ product.page_number }}{% endif %}
+        {% if product.price_used %}  - {% trans 'Price' %}: {{ product.price_used | intcomma:False }}{% endif %}
+        </span>
+      </p>
+      {% endif %}
       {% endfor %}
 
+    </div>
 
 
     </div>
     {% if note %}
-    <div class="row mt-3 text-center"> <!-- The rule of used book pricing -->
+    <div class="row mt-3 text-center">
+      <!-- The rule of used book pricing -->
       <div class="col-md-12">
         <div class="drop_shadow border rounded-2">
 
@@ -112,7 +78,7 @@
             <div class="col">
               <div class="" id="info-1">
                 <div class="card card-body">
-                  <p > {{ note.body | linebreaksbr }}</p>
+                  <p> {{ note.body | linebreaksbr }}</p>
                 </div>
               </div>
             </div>
