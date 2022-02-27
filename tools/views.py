@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.template.loader import get_template
 from django.conf import settings
 from django.http import HttpResponse, FileResponse
@@ -9,9 +9,13 @@ from django.db.models import Q
 import datetime
 from django.core.mail import EmailMessage, mail_admins
 import random
+from django.core.files.base import ContentFile
+from django.core.files import File
 
 import weasyprint
 import openpyxl
+import qrcode
+import qrcode.image.svg
 
 from orders.models import Order, OrderLine
 from zarinpal.models import Payment
@@ -338,3 +342,32 @@ def product_export_excel(request):
 
 
     return response
+
+
+def qrcode_create(request, order_id, payment_id):
+    order = get_object_or_404(Order, pk=order_id)
+    payment = get_object_or_404(Payment, pk=payment_id)
+    context = {}
+    factory = qrcode.image.svg.SvgImage
+    img = qrcode.make(payment.url, image_factory=factory, box_size=20)
+    stream = BytesIO()
+    # img.save(stream, img.format)
+    img.save(stream)
+
+    # image.save(strem)
+    # context['svg'] = stream.getvalue().decode()
+    # return render('staff:order_checkout', order.id)
+    f = open('media/test.svg', 'w')
+    f.write(stream.getvalue().decode())
+    order.qrcode = f
+    order.save()
+    f.close()
+
+    return render(
+        request,
+        'tools/qrcode_test.html',
+        {
+            'svg': stream.getvalue().decode()
+            # 'svg': img
+        }
+    )

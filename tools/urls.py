@@ -14,4 +14,6 @@ urlpatterns = [
     path('draft-order-export/', views.draft_order_export_excel, name="draft_order_export_excel"),
 
     path('product-export/', views.product_export_excel, name="product_export_excel"),
+
+    path('qrcode/create/<int:order_id>/<int:payment_id>/', views.qrcode_create, name='qrcode_create'),
 ]

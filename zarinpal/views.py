@@ -322,9 +322,9 @@ def payment_create(request):
 def payment_create_order(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     payment = None
-    if payment:
-        messages.warning(request, _('This payment is created before with number: ') + f"{payment.pk}")
-        return redirect('zarinpal:payment_list')
+    # if payment:
+    #     messages.warning(request, _('This payment is created before with number: ') + f"{payment.pk}")
+    #     return redirect('zarinpal:payment_list')
     try:
         payment = Payment.objects.get(order=order)
         if payment:
@@ -338,7 +338,9 @@ def payment_create_order(request, order_id):
         client_name=f"{order.client.first_name} {order.client.last_name}",
         client_phone=order.client.phone,
         order=order,
-        amount=order.payable
+        amount=order.payable,
+        url=request.build_absolute_uri()
+        # url=request.get_absolute_url('zarinpal:payment_create_order', order.id )
     )
     messages.success(request, _('Payment link is created'))
     return redirect('zarinpal:payment_list')
