@@ -105,27 +105,24 @@ def category_list(request):
 def store_book_search(request, state):
     # products = Product.objects.all().filter(available=True).filter(stock_used__isnull=False)
     note = None
-    if state == 'used':
-        try:
-            note = get_object_or_404(Note, tag='clients')
-        except:
-            pass
 
+    try:
+        note = get_object_or_404(Note, tag='clients')
+    except:
+        pass
 
+    all_products = None
     products = None
     if request.method == 'POST':
         search_form = SearchForm(data=request.POST)
         if search_form.is_valid():
             search_query = search_form.cleaned_data['query']
             if search_query == ' ':
-                return redirect('shop:store_book_search')
+                return redirect('shop:store_book_search', 'used')
 
-            products = ProductSearch(
+            all_products = ProductSearch(
                 object=Product, query=search_query).order_by('name', 'publisher')
-            if state == 'used':
-                products = products.filter(available=True).filter(stock_used__isnull=False).exclude(product_type='craft')
-            if state == 'new':
-                products = products.filter(available=True).filter(price__isnull=False).exclude(product_type='craft').filter(Q(stock__gte=0) | Q(stock_1__gte=0))
+
     else:
         search_form = SearchForm()
 
@@ -134,6 +131,7 @@ def store_book_search(request, state):
         'shop/store_book_search.html',
         {
             'products': products,
+            'all_products': all_products,
             'state': state,
             'search_form': search_form,
             'note': note,
