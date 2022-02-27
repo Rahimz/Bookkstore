@@ -36,7 +36,13 @@
       </tr>
       <tr>
         <td>{% trans 'Price' %}</td>
+        {% if product.price == 0 %}
+        {% if product.about == '*' %}
+        <td><span class="text-warning">{% trans 'Not in market'%}</span></td>
+        {% endif %}
+        {% else %}
         <td>{{ product.price }}</td>
+        {% endif %}
       </tr>
       <tr>
         <td>{% trans 'Stock' %}</td>

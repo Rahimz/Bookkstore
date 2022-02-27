@@ -32,7 +32,7 @@
   </div>
   <div class="row">
     {% for product in products %}
-    <div class="col-md-3 col-sm-12  d-flex align-items-stretch">
+    <div class="col-lg-3 col-md-4 col-sm-12  d-flex align-items-stretch">
       <!--CARD HERE-->
       <div class="card col-md-12 text-center m-1 w-100">
         <img src="{% static 'img/logo_bw_card.png' %}" class="card-img-top p-4 position-relative" alt="{{ product.name }}">
@@ -45,45 +45,59 @@
             {{ product.price | intcomma:False }} {% trans 'Rial' %}
             {% endif %}
           </h6>
-        {% endif %}
+          {% endif %}
 
 
-        {% if state == "used" %}
-        {% if product.price_used == 0 %}
-        <p class="badge rounded bg-warning mx-5">
-          {% trans 'Without price' %}</p>
-        {% endif %}
-        <div class="card-body m-2 p-2">
-          <h5 class="card-title">{{ product.name  }}</h5>
-          <h6 class="cart-subtitle text-dark">
-            {% if product.price_used %}
-            {{ product.price_used | intcomma:False }} {% trans 'Rial' %}
+          {% if state == "used" %}
+              {% if product.price_used == 0 %}
+              <p class="badge rounded bg-warning mx-5">
+                {% trans 'Without price' %}</p>
+                      {% if request.user.is_staff %}
+                      <a href="{% url 'staff:used_book_prices' product.id %}" class="btn btn-danger">
+                        {% trans 'Add price' %}
+                            {% if product.about == '*' %}
+                            {% trans 'Not in market'%}
+                            {% endif %}
+                        </a>
+                        {% endif %}
+                {% endif %}
+
+                {% if request.user.is_staff %}
+                    {% if product.about == '*' %}
+                    <span class="text-warning">{% trans 'Not in market'%}</span>
+                    {% endif %}
+                {% endif %}
+              <div class="card-body m-2 p-2">
+                <h5 class="card-title">{{ product.name  }}</h5>
+                <h6 class="cart-subtitle text-dark">
+                  {% if product.price_used %}
+                  {{ product.price_used | intcomma:False }} {% trans 'Rial' %}
+                  {% endif %}
+                </h6>
             {% endif %}
-          </h6>
-          {% endif %}
 
 
-          {% if product.publisher %}
-          <p class="p-1">{% trans 'Publisher'%}: {{ product.publisher }}</p>
-          {% endif %}
-          {% if product.page_number %}
-          <p class="p-1">{% trans 'Pages number'%}: {{ product.page_number }}</p>
-          {% endif %}
-          {% if product.isbn %}
-          <p class="p-1">{% trans 'ISBN'%}: {{ product.isbn }}</p>
-          {% endif %}
+            {% if product.publisher %}
+            <p class="p-1">{% trans 'Publisher'%}: {{ product.publisher }}</p>
+            {% endif %}
+            {% if product.page_number %}
+            <p class="p-1">{% trans 'Pages number'%}: {{ product.page_number }}</p>
+            {% endif %}
+            {% if product.isbn %}
+            <p class="p-1">{% trans 'ISBN'%}: {{ product.isbn }}</p>
+            {% endif %}
 
-          {% if product.author %}<p class="p-1">{{ product.author }} {{ product.ahthor | truncatechars:40 }}{% else %} <br /> {% endif %}</p>
+            {% if product.author %}<p class="p-1">{{ product.author }} {{ product.ahthor | truncatechars:40 }}{% else %} <br /> {% endif %}</p>
+          </div>
         </div>
       </div>
+      {% endfor %}
+
+
     </div>
-    {% endfor %}
+
 
 
   </div>
 
-
-
-</div>
-
-{% endblock %}
+  {% endblock %}
