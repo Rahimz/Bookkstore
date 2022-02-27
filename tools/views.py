@@ -359,9 +359,9 @@ def qrcode_create(request, order_id, payment_id):
     # return render('staff:order_checkout', order.id)
     f = open('media/test.svg', 'w')
     f.write(stream.getvalue().decode())
+    f.close()
     order.qrcode = f
     order.save()
-    f.close()
 
     return render(
         request,
