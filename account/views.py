@@ -170,14 +170,9 @@ def client_update(request, client_id):
 
     if request.method == "POST":
         client_form = ClientUpdateForm(data=request.POST, instance=client)
-        # billing_address_form = AddressAddForm(
-        #     data=request.POST, instance=client.default_billing_address)
-        # shipping_address_form = AddressAddForm(
-        #     data=request.POST, instance=client.default_shipping_address)
+
         if client_form.is_valid():
             client_form.save()
-            # billing_address_form.save()
-            # shipping_address_form.save()
 
             messages.success(request, _('Client details updated'))
             return redirect('/account/clients')
@@ -185,17 +180,13 @@ def client_update(request, client_id):
             messages.error(request, _('Form is not valid'))
     else:
         client_form = ClientUpdateForm(instance=client)
-        # billing_address_form = AddressAddForm(
-        #     instance=client.default_billing_address)
-        # shipping_address_form = AddressAddForm(
-        #     instance=client.default_shipping_address)
+
     return render(
         request,
         'account/clients/client_add.html',
         {'client': client,
          'client_form': client_form,
-         # 'billing_address_form': billing_address_form,
-         # 'shipping_address_form': shipping_address_form,
+
          }
     )
 

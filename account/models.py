@@ -84,6 +84,10 @@ class CustomUser(AbstractUser):
         blank=True,
         default=""
     )
+    phone_2 = PhoneNumberField(
+        blank=True,
+        null=True
+    )
     is_client= models.BooleanField(
         default=False
     )

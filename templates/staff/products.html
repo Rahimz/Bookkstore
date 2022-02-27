@@ -62,7 +62,8 @@
           <th scope="row">{{ product.isbn }}</th>
           <td><a href="{% url 'shop:product_detail' product.pk %}">{{ product.name }}</a></td>
           <td>{{ product.stock }}</td>
-          <td>{{ product.price | intcomma:False }}</td>
+          {#<!-- we add this if statement to show ther is not any new version of this book -->#}
+          <td>{% if product.about == '*' %}{% trans 'Not in market' %}{% else %}{{ product.price | intcomma:False }}{% endif %}</td>
           <td>{% if product.has_other_prices %}&#10004{% endif %}</td>
           <td>{{ product.price_used | intcomma:False }}</td>
           <td>{{ product.stock_used  }}</td>
