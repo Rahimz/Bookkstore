@@ -52,7 +52,8 @@ class ClientUpdateForm(forms.ModelForm):
 	class Meta:
 		model = CustomUser
 		fields = (
-			'username', 'first_name', 'last_name', 'phone', 'email', 'social_media_name'
+			'username', 'first_name', 'last_name', 'phone','phone_2', 'email', 
+			'social_media_name'
 		)
 
 class VendorAddForm(forms.ModelForm):

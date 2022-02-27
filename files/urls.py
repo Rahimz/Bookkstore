@@ -27,4 +27,6 @@ urlpatterns = [
     path('upload/used-product-no-isbn/<slug:file_slug>/<str:check>/', views.add_used_book_with_no_isbn, name='add_used_book_with_no_isbn'),
 
     path('upload/add-craft/<slug:file_slug>/<str:check>/', views.add_crafts, name='add_crafts'),
+
+    path('upload/update-used-book/<slug:file_slug>/<str:check>/', views.used_book_update, name='used_book_update'),
 ]
