@@ -30,6 +30,8 @@
       </form>
     </div>
   </div>
+
+
   <div class="row">
     {% for product in products %}
     <div class="col-lg-3 col-md-4 col-sm-12  d-flex align-items-stretch">
@@ -94,8 +96,36 @@
       {% endfor %}
 
 
-    </div>
 
+    </div>
+    {% if note %}
+    <div class="row mt-3 text-center"> <!-- The rule of used book pricing -->
+      <div class="col-md-12">
+        <div class="drop_shadow border rounded-2">
+
+          <!-- Info buttons -->
+          <a class="btn btn-light btn-outline-warning text-dark mt-3" data-bs-toggle="collapse" href="#info-1" role="button" aria-expanded="false" aria-controls="info-1">
+            {{ note.title }}
+          </a>
+          <div class="row mt-3">
+
+            <div class="col">
+              <div class="" id="info-1">
+                <div class="card card-body">
+                  <p > {{ note.body | linebreaksbr }}</p>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+
+
+        </div>
+      </div>
+    </div> <!-- The rule of used book pricing -->
+    {% endif %}
 
 
   </div>
