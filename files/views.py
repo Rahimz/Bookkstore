@@ -1026,7 +1026,7 @@ def used_book_update(request, file_slug, check='check'):
                 page_number = [0,]
             if not price[0]:
                 price = [0,]
-            if type(pric)
+        
             # print(price[0], type(price[0]))
             if price_of_new_book[0] == '-':
                 no_price_for_new_book.append(( name[0],isbn[0], price[0], price_of_new_book[0] ))

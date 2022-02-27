@@ -7,6 +7,7 @@ from products.models import Product, Good, Category
 from search.forms import SearchForm
 from cart.forms import CartAddProductForm
 from search.views import ProductSearch
+from .models import Note
 
 def home(request):
     search_form = SearchForm()
@@ -103,6 +104,13 @@ def category_list(request):
 
 def store_book_search(request, state):
     # products = Product.objects.all().filter(available=True).filter(stock_used__isnull=False)
+    note = None
+    if state == 'used':
+        try:
+            note = get_object_or_404(Note, tag='clients')
+        except:
+            pass
+
 
     products = None
     if request.method == 'POST':
@@ -128,5 +136,6 @@ def store_book_search(request, state):
             'products': products,
             'state': state,
             'search_form': search_form,
+            'note': note,
         }
     )
