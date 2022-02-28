@@ -1021,6 +1021,7 @@ def sold_products(request, days=365):
     #         'name': 'str',
     #         'created': 'created',
     #         'stock': 'y',
+    #          'variation': 'new main'
     #     }
     # }
     for item in order_lines:
@@ -1037,7 +1038,9 @@ def sold_products(request, days=365):
                 'name': item.product.name,
                 'quantity': item.quantity,
                 'created': hij_strf_date(greg_to_hij_date(item.created.date()), '%-d %B %Y'),
-                'stock': item.product.stock
+                'stock': item.product.stock,
+                'variaton': item.variation,
+                'isbn': item.product.isbn,
                 }
 
 
