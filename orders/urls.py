@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from . import report_views
 
 
 app_name = 'orders'
@@ -23,4 +24,6 @@ urlpatterns = [
     path('purchase/price-management/remove-price/<int:purchase_id>/<int:product_id>/<str:variation>/', views.price_remove, name='price_remove'),
 
     path('purchase/checkout/<int:purchase_id>/', views.purchase_checkout, name='purchase_checkout'),
+
+    path('report/sales-by-days/<int:days>/', report_views.sales_by_days, name='sales_by_days'),
 ]

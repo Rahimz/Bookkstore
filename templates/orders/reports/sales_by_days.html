@@ -1,0 +1,67 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Reports' %}{% endblock %}
+
+{% block reports-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="reports" %}
+    </div>
+    <div class="col-md-10">
+      <h2>{% trans 'Reports' %}</h2>
+      <div class="my-3">
+        <table class="table table-striped">
+          <tr>
+            <td>Today</td>
+            <td><b>{% if order_0_day.total_sales %}{{ order_0_day.total_sales | intcomma:False }}{% else %}0{% endif %}</b></td>
+          </tr>
+          <tr>
+            <td>Yesterday</td>
+            <td><b>{% if order_1_day.total_sales %}{{ order_1_day.total_sales | intcomma:False }}{% else %}0{% endif %}</b></td>
+          </tr>
+          <tr>
+            <td>The day befor yeterday</td>
+            <td><b>{% if order_2_day.total_sales %}{{ order_2_day.total_sales | intcomma:False }}{% else %}0{% endif %}</b></td>
+          </tr>
+          <tr>
+            <td>Two days befor yesterday</td>
+            <td><b>{% if order_3_day.total_sales %}{{ order_3_day.total_sales | intcomma:False }}{% else %}0{% endif %}</b></td>
+          </tr>
+
+          <tr>
+            <td class="bg-success text-light fs-5"><span>All sales</span></td>
+            <td class="bg-success text-light fs-5"><span>{{ order_all.total_sales | intcomma:False }}</span> {% trans 'Rial' %}</td>
+          </tr>
+
+          <tr>
+            <td>Approved sales</td>
+            <td><b>{{ order_approved.total_sales | intcomma:False }}</b> {% trans 'Rial' %}</td>
+          </tr>
+          <tr>
+            <td>Draft sales</td>
+            <td><b>{{ order_draft.total_sales | intcomma:False }}</b> {% trans 'Rial' %}</td>
+          </tr>
+        </table>
+
+      </div>
+
+        <div class="row">
+
+        </div>
+
+
+    </div>
+
+  </div>
+  {% endblock %}

@@ -245,7 +245,10 @@ class Order(models.Model):
         return sum(item.discount for item in self.lines.all())
 
     def get_fa_approved(self):
-        return hij_strf_date(greg_to_hij_date(self.approved_date.date()), '%-d %B %Y')
+        if self.approved_date:
+            return hij_strf_date(greg_to_hij_date(self.approved_date.date()), '%-d %B %Y')
+        else:
+            return
     # def get_absolute_url(self):
     #     return reverse('shop:product_detail',
     #                    args=[self.id])

@@ -46,7 +46,7 @@
             <td>{{ order.get_total_weight }}</td>
             <td>{{ order.get_channel_display }}</td>
             {#<td>{{ order.approved_date | date:"d, M Y" }}</td>#}
-            <td>{{ order.get_fa_approved }}</td>
+            <td>{% if order.approved_date %}{{ order.get_fa_approved }}{% endif %}</td>
             <td>{% if order.paid %}&#10004{% else %}&#10008{% endif %}</td>
             <td>{{ order.get_shipping_method_display }}</td>
             <td>{% if order.shipping_time %}{{ order.shipping_time }}{% endif %}</td>
