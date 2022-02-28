@@ -22,36 +22,86 @@
       <h2>{% trans 'Reports' %}</h2>
       <div class="my-3">
         <table class="table table-striped">
+          <thead>
+
+          <tr>
+            <th>Days</th>
+            <th>Sales</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
           <tr>
             <td>Today</td>
-            <td><b>{% if order_0_day.total_sales %}{{ order_0_day.total_sales | intcomma:False }}{% else %}0{% endif %}</b></td>
-          </tr>
-          <tr>
-            <td>Yesterday</td>
-            <td><b>{% if order_1_day.total_sales %}{{ order_1_day.total_sales | intcomma:False }}{% else %}0{% endif %}</b></td>
-          </tr>
-          <tr>
-            <td>The day befor yeterday</td>
-            <td><b>{% if order_2_day.total_sales %}{{ order_2_day.total_sales | intcomma:False }}{% else %}0{% endif %}</b></td>
-          </tr>
-          <tr>
-            <td>Two days befor yesterday</td>
-            <td><b>{% if order_3_day.total_sales %}{{ order_3_day.total_sales | intcomma:False }}{% else %}0{% endif %}</b></td>
-          </tr>
 
+            <td><b>{% if order_0_day.total_sales %}{{ order_0_day.total_sales | intcomma:False }}{% else %}0{% endif %}</b></td>
+            <td>{% if order_0_day.total_quantity %}{{ order_0_day.total_quantity }}{% else %}0{% endif %}</td>
+          </tr>
+          <tr>
+            <td>-1</td>
+            <td><b>{% if order_1_day.total_sales %}{{ order_1_day.total_sales | intcomma:False }}{% else %}0{% endif %}</b></td>
+            <td>{% if order_1_day.total_quantity %}{{ order_1_day.total_quantity }}{% else %}0{% endif %}</td>
+          </tr>
+          <tr>
+            <td>-2</td>
+            <td><b>{% if order_2_day.total_sales %}{{ order_2_day.total_sales | intcomma:False }}{% else %}0{% endif %}</b></td>
+            <td>{% if order_2_day.total_quantity %}{{ order_2_day.total_quantity }}{% else %}0{% endif %}</td>
+          </tr>
+          <tr>
+            <td>-3</td>
+            <td><b>{% if order_3_day.total_sales %}{{ order_3_day.total_sales | intcomma:False }}{% else %}0{% endif %}</b></td>
+            <td>{% if order_3_day.total_quantity %}{{ order_3_day.total_quantity }}{% else %}0{% endif %}</td>
+          </tr>
+          <tr>
+            <td>-4</td>
+            <td><b>{% if order_4_day.total_sales %}{{ order_4_day.total_sales | intcomma:False }}{% else %}0{% endif %}</b></td>
+            <td>{% if order_4_day.total_quantity %}{{ order_4_day.total_quantity }}{% else %}0{% endif %}</td>
+          </tr>
+          <tr>
+            <td>-5</td>
+            <td><b>{% if order_5_day.total_sales %}{{ order_5_day.total_sales | intcomma:False }}{% else %}0{% endif %}</b></td>
+            <td>{% if order_5_day.total_quantity %}{{ order_5_day.total_quantity }}{% else %}0{% endif %}</td>
+          </tr>
+          <tr>
+            <td>-6</td>
+            <td><b>{% if order_6_day.total_sales %}{{ order_6_day.total_sales | intcomma:False }}{% else %}0{% endif %}</b></td>
+            <td>{% if order_6_day.total_quantity %}{{ order_6_day.total_quantity }}{% else %}0{% endif %}</td>
+          </tr>
+          <tr>
+            <td>-7</td>
+            <td><b>{% if order_7_day.total_sales %}{{ order_7_day.total_sales | intcomma:False }}{% else %}0{% endif %}</b></td>
+            <td>{% if order_7_day.total_quantity %}{{ order_7_day.total_quantity }}{% else %}0{% endif %}</td>
+          </tr>
+          <tr>
+            <td>-8</td>
+            <td><b>{% if order_8_day.total_sales %}{{ order_8_day.total_sales | intcomma:False }}{% else %}0{% endif %}</b></td>
+            <td>{% if order_8_day.total_quantity %}{{ order_8_day.total_quantity }}{% else %}0{% endif %}</td>
+          </tr>
+          <tr>
+            <td>-9</td>
+            <td><b>{% if order_9_day.total_sales %}{{ order_9_day.total_sales | intcomma:False }}{% else %}0{% endif %}</b></td>
+            <td>{% if order_9_day.total_quantity %}{{ order_9_day.total_quantity }}{% else %}0{% endif %}</td>
+          </tr>
+        </tbody>
+<tfoot>
           <tr>
             <td class="bg-success text-light fs-5"><span>All sales</span></td>
             <td class="bg-success text-light fs-5"><span>{{ order_all.total_sales | intcomma:False }}</span> {% trans 'Rial' %}</td>
+
+            <td class="bg-success text-light fs-5">{% if order_all.total_quantity %}{{ order_all.total_quantity }}{% else %}0{% endif %}</td>
           </tr>
 
           <tr>
             <td>Approved sales</td>
             <td><b>{{ order_approved.total_sales | intcomma:False }}</b> {% trans 'Rial' %}</td>
+            <td>{% if order_approved.total_quantity %}{{ order_approved.total_quantity }}{% else %}0{% endif %}</td>
           </tr>
           <tr>
             <td>Draft sales</td>
             <td><b>{{ order_draft.total_sales | intcomma:False }}</b> {% trans 'Rial' %}</td>
+            <td>{% if order_draft.total_quantity %}{{ order_draft.total_quantity }}{% else %}0{% endif %}</td>
           </tr>
+</tfoot>
         </table>
 
       </div>

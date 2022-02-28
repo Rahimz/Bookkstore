@@ -27,15 +27,21 @@ def sales_by_days(request, days=365):
     print(datetime.now().date()- timedelta(days=3))
     # order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.now() - timedelta(days)).exclude(product__product_type='craft').order_by('-created')
     order_0_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date())).aggregate(total_sales=Sum('payable'))
-    order_1_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date() - timedelta(days=1))).aggregate(total_sales=Sum('payable'))
-    order_2_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date()- timedelta(days=2))).aggregate(total_sales=Sum('payable'))
-    order_3_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date()- timedelta(days=3))).aggregate(total_sales=Sum('payable'))
+    order_1_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date() - timedelta(days=1))).aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
+    order_2_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date()- timedelta(days=2))).aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
+    order_3_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date()- timedelta(days=3))).aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
+    order_4_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date()- timedelta(days=4))).aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
+    order_5_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date()- timedelta(days=5))).aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
+    order_6_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date()- timedelta(days=6))).aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
+    order_7_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date()- timedelta(days=7))).aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
+    order_8_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date()- timedelta(days=8))).aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
+    order_9_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date()- timedelta(days=9))).aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
 
 
 
-    order_approved = Order.objects.filter(active=True).filter(status='approved').aggregate(total_sales=Sum('payable'))
-    order_draft = Order.objects.filter(active=True).filter(status='draft').aggregate(total_sales=Sum('payable'))
-    order_all = Order.objects.filter(active=True).aggregate(total_sales=Sum('payable'))
+    order_approved = Order.objects.filter(active=True).filter(status='approved').aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
+    order_draft = Order.objects.filter(active=True).filter(status='draft').aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
+    order_all = Order.objects.filter(active=True).aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
 
     # report = {
     #     'sum':
@@ -51,5 +57,11 @@ def sales_by_days(request, days=365):
             'order_1_day': order_1_day,
             'order_2_day': order_2_day,
             'order_3_day': order_3_day,
+            'order_4_day': order_4_day,
+            'order_5_day': order_5_day,
+            'order_6_day': order_6_day,
+            'order_7_day': order_7_day,
+            'order_8_day': order_8_day,
+            'order_9_day': order_9_day,
         }
     )
