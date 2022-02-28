@@ -10,8 +10,7 @@
   </tr>
   <tr>
     <td>{%trans 'Approver' %}</td>
-    <td>{{ purchase.approver }}
-      <br>{% if purchase.approved_date %}{{ purchase.approved_date}}{% endif %}
+    <td>{{ purchase.approver }} - {% if purchase.approved_date %}{{ purchase.get_fa_approved }}{% endif %}
     </td>
   </tr>
   <tr>
@@ -24,7 +23,7 @@
   </tr>
   <tr>
     <td>{%trans 'Payment deadline' %}</td>
-    <td>{{ purchase.payment_date }} - {{ purchase.deadline_days }} {% trans 'days is remained' %}</td>
+    <td>{{ purchase.get_fa_payment }} - {{ purchase.deadline_days }} {% trans 'days is remained' %}</td>
   </tr>
   <tr>
     <td>{%trans 'Purchase status' %}</td>

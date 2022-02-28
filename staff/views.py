@@ -14,16 +14,16 @@ from django_countries.fields import Country
 
 from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm, ProductCollectionForm, AdminPriceManagementForm
 from .forms import CraftUpdateForm
-from products.models import Product, Category
-from orders.models import Order, OrderLine, PurchaseLine
 from orders.forms import OrderAdminCheckoutForm, OrderPaymentManageForm
 from search.forms import ClientSearchForm, BookIsbnSearchForm, SearchForm
-from search.views import ProductSearch
-from account.models import CustomUser, Vendor, Address, Credit
 from account.forms import VendorAddForm, AddressAddForm, VendorAddressAddForm
+from products.models import Product, Category
+from orders.models import Order, OrderLine, PurchaseLine
+from products.models import Craft
+from account.models import CustomUser, Vendor, Address, Credit
+from search.views import ProductSearch
 from tools.fa_to_en_num import number_converter
 from tools.gregory_to_hijry import *
-from products.models import Craft
 
 
 def sales(request):

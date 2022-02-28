@@ -13,7 +13,6 @@
       <th scope="col">{% trans 'Author' %}</th>
       <th scope="col">{% trans 'Publisher' %}</th>
       <th scope="col">{% trans 'Quantity' %}</th>
-      <th scope="col"></th>
       <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
       <th scope="col">{% trans 'Discount' %}</th>
       <th scope="col">{% trans 'Cost' %} ({% trans 'Rial' %})</th>
@@ -23,13 +22,12 @@
     {% for order_line in order.lines.all %}
     <tr>
       <th scope="row">{{ forloop.counter }}</th>
-      <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="60px" height="auto"></td>
+      <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="auto" height="40px"></td>
       <td>{{ order_line.product.isbn }}</td>
       <td>{{ order_line.product.name }}</td>
-      <td>{{ order_line.product.author }}</td>
+      <td>{% if order_line.product.author %}{{ order_line.product.author }}{% endif%}</td>
       <td>{{ order_line.product.publisher }}</td>
       <td>{{ order_line.quantity }}</td>
-      <td></td>
       <td>{{ order_line.get_cost | intcomma:False }}</td>
       <td>{{ order_line.discount | intcomma:False }}</td>
       <td>{{ order_line.get_cost_after_discount | intcomma:False }}</td>
@@ -37,32 +35,33 @@
     {% endfor %}
 
 
-
+  <tfoot>
     <tr>
       <th scope="row"></th>
       <td colspan="5">{% trans 'Sum' %}</td>
       <td>{{ order.get_total_quantity }}</td>
-      <td colspan="3"></td>
+      <td>{{ order.get_total_cost }}</td>
+      <td class="text-danger">{{ order.get_total_discount }}</td>
       <td>{{ order.get_cost_after_discount | intcomma:False }}</td>
     </tr>
     <tr>
       <th scope="row"></th>
-      <td colspan="9">{% trans 'Discount' %}</td>
+      <td colspan="8">{% trans 'Discount' %}</td>
       <td class="text-danger">{{ order.discount | intcomma:False }}</td>
 
     </tr>
     <tr>
       {% if order.shipping_cost %}
       <th scope="row"></th>
-      <td colspan="9">{% trans 'Shipping cost' %}</td>
+      <td colspan="8">{% trans 'Shipping cost' %}</td>
       <td class="">{{ order.shipping_cost | intcomma:False }}</td>
       {% endif %}
     </tr>
     <tr>
       <th scope="row"></th>
-      <td colspan="9" class="fw-bolder">{% trans 'Payable' %}</td>
+      <td colspan="8" class="fw-bolder">{% trans 'Payable' %}</td>
       <td class="fw-bolder">{{ order.payable | intcomma:False }}</td>
     </tr>
-
+  </tfoot>
   </tbody>
 </table>

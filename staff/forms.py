@@ -28,8 +28,8 @@ class OrderCreateForm(forms.ModelForm):
 class InvoiceAddForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['quantity'].widget.attrs.update(style='max-width: 4em')
-        self.fields['discount'].widget.attrs.update(style='max-width: 6em')
+        self.fields['quantity'].widget.attrs.update(style='max-width: 2em')
+        self.fields['discount'].widget.attrs.update(style='max-width: 4em')
 
     remove = forms.BooleanField(required=False)
 

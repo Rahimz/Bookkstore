@@ -48,12 +48,6 @@ class PurchaseCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
 	    super().__init__(*args, **kwargs)
 	    self.fields['vendor'].required = True
-    # payment_days = forms.IntegerField(
-    #     required=False,
-    #     label=_('Payment deadline'),
-    #     help_text=_('Payment term in days between 1 and 120'),
-    #     validators=[MinValueValidator(1), MaxValueValidator(120)],
-    # )
 
     class Meta:
         model = Purchase
@@ -63,6 +57,7 @@ class PurchaseCreateForm(forms.ModelForm):
             'deadline_days': _('Payment deadline'),
             'paper_invoice_number': _('Paper invoice number'),
             'discount': _('Invoice overal discount'),
+            'discount_percent': _('Overal discount percent'),
         }
         validators = {
             'discount_percent': [MinValueValidator(0), MaxValueValidator(100)]
@@ -89,7 +84,7 @@ class PurchaseLineUpdateForm(forms.ModelForm):
     class Meta:
         model = PurchaseLine
         fields = [
-            'quantity', 'discount_percent', 'discount',
+            'quantity', 'discount', 'discount_percent', 
         ]
         labels = {
             'price': _('Purchase price'),
