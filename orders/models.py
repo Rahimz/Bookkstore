@@ -12,6 +12,7 @@ from simple_history.models import HistoricalRecords
 
 from account.models import Address, Vendor
 from products.models import Product
+from tools.gregory_to_hijry import hij_strf_date, greg_to_hij_date
 
 
 PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
@@ -243,6 +244,8 @@ class Order(models.Model):
     def get_total_discount(self):
         return sum(item.discount for item in self.lines.all())
 
+    def get_fa_approved(self):
+        return hij_strf_date(greg_to_hij_date(self.approved_date.date()), '%-d %B %Y')
     # def get_absolute_url(self):
     #     return reverse('shop:product_detail',
     #                    args=[self.id])

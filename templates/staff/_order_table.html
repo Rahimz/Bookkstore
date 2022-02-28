@@ -13,7 +13,6 @@
       <th scope="col">{% trans 'Author' %}</th>
       <th scope="col">{% trans 'Publisher' %}</th>
       <th scope="col">{% trans 'Quantity' %}</th>
-
       <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
       <th scope="col">{% trans 'Discount' %}</th>
       <th scope="col">{% trans 'Cost' %} ({% trans 'Rial' %})</th>
@@ -29,7 +28,6 @@
       <td>{% if order_line.product.author %}{{ order_line.product.author }}{% endif%}</td>
       <td>{{ order_line.product.publisher }}</td>
       <td>{{ order_line.quantity }}</td>
-
       <td>{{ order_line.get_cost | intcomma:False }}</td>
       <td>{{ order_line.discount | intcomma:False }}</td>
       <td>{{ order_line.get_cost_after_discount | intcomma:False }}</td>

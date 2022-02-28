@@ -21,7 +21,7 @@
         <a href="{% url 'tools:print_invoice' order.id %}" target="_blank" class="btn btn-lg btn-success my-3">{% trans 'Print' %}</a>
         <a href="{% url 'zarinpal:payment_create_order' order.id %}" class="btn btn-secondary mx-3 ">{% trans 'Payment link'%}</a>
         <a href="{% url 'staff:order_payment_manage' order.id %}" class="btn btn-secondary">{% trans 'Payment receipt'%}</a>
-        <a href="{% if order.shipping_status == 'full' %}#{% else %}{% url 'staff:invoice_back_to_draft' order.id %}{% endif %}" class="btn btn-outline-warning mx-3 {% if order.shipping_status == 'full' %}disabled{% endif %}">{% trans 'Back to draft'%}</a>        
+        <a href="{% if order.shipping_status == 'full' %}#{% else %}{% url 'staff:invoice_back_to_draft' order.id %}{% endif %}" class="btn btn-outline-warning mx-3 {% if order.shipping_status == 'full' %}disabled{% endif %}">{% trans 'Back to draft'%}</a>
       </div>
       <table class="table table-striped">
         <tr>
@@ -30,8 +30,7 @@
         </tr>
         <tr>
           <td>{%trans 'Approver' %}</td>
-          <td>{{ order.approver }}
-            <br>{% if order.approved_date %}{{ order.approved_date}}{% endif %}
+          <td>{{ order.approver }} - {% if order.approved_date %}{{ order.get_fa_approved }}{% endif %}
           </td>
         </tr>
         <tr>
