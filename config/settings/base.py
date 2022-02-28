@@ -204,6 +204,8 @@ EMAIL_HOST_USER = email_host_user
 EMAIL_HOST_PASSWORD = email_host_password
 DEFAULT_FROM_EMAIL = 'noreply@ketabedamavand.com'
 
+EMAIL_SUBJECT_PREFIX = '[Damavand] '
+
 #  Django drispy form settings
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

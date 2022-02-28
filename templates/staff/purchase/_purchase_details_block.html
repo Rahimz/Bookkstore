@@ -10,7 +10,7 @@
   </tr>
   <tr>
     <td>{%trans 'Approver' %}</td>
-    <td>{{ purchase.approver }} - {% if purchase.approved_date %}{{ purchase.get_fa_approved }}{% endif %}
+    <td>{% if purchase.approver %}{{ purchase.approver }} {% endif %}{% if purchase.approved_date %}- {{ purchase.get_fa_approved }}{% endif %}
     </td>
   </tr>
   <tr>
@@ -19,7 +19,7 @@
   </tr>
   <tr>
     <td>{%trans 'Paper invoice number' %}</td>
-    <td>{{ purchase.paper_invoice_number }}</td>
+    <td>{% if purchase.paper_invoice_number %}{{ purchase.paper_invoice_number }}{% endif %}</td>
   </tr>
   <tr>
     <td>{%trans 'Payment deadline' %}</td>

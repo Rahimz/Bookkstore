@@ -19,8 +19,10 @@
       <table class="table table-striped">
         <thead>
           <th scope="">{% trans 'Product ID' %}</th>
+          <th scope="">{% trans 'ISBN' %}</th>
           <th scope="">{% trans 'Name' %}</th>
           <th scope="">{% trans 'Quantity' %}</th>
+          <th scope="">{% trans 'Status' %}</th>
           <th scope="">{% trans 'Date' %}</th>
           <th scope="">{% trans 'Quantity in stock' %}</th>
 
@@ -31,8 +33,16 @@
           <tr>
           <td>{{ line }}</td>
 
+          <td>{{ item.isbn }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.quantity }}</td>
+          <td>
+            {% if 'new' in item.variaton %}
+            <span class="border border-success p-1 rounded">{% trans 'New' %}</span>
+            {% else %}
+            <span class="border border-warning p-1 rounded">{% trans 'Used' %}</span>
+            {% endif %}
+          </td>
           <td>{{ item.created }}</td>
 
           <td><span class="{% if item.stock <= 0 %}bg-warning text-dark p-2 rounded{% endif %}">{{ item.stock }}</span></td>

@@ -11,7 +11,6 @@
       <th scope="col">{% trans 'Image' %}</th>
       <th scope="col">{% trans 'isbn' %}</th>
       <th scope="col">{% trans 'Name' %}</th>
-      <th scope="col">{% trans 'Author' %}</th>
       <th scope="col">{% trans 'Publisher' %}</th>
       <th scope="col">{% trans 'Quantity' %}</th>
       <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
@@ -32,7 +31,6 @@
       {% else %}
       <td>{{ purchase_line.product.name }}</td>
       {% endif %}
-      <td>{{ purchase_line.product.author }}</td>
       <td>{{ purchase_line.product.publisher }}</td>
       <td>{{ purchase_line.quantity }}</td>
       <td>{{ purchase_line.price | intcomma:False }}</td>
@@ -47,7 +45,7 @@
   <tfoot>
     <tr>
       <th scope="row"></th>
-      <td colspan="5">{% trans 'Sum' %}</td>
+      <td colspan="4">{% trans 'Sum' %}</td>
       <td>{{ purchase.get_total_quantity }}</td>
       <td ></td>
       <td>{{ purchase.get_total_cost | intcomma:False}}</td>
@@ -57,19 +55,19 @@
     </tr>
     <tr>
       <th scope="row"></th>
-      <td colspan="10">{% trans 'Overal discount' %}</td>
+      <td colspan="9">{% trans 'Overal discount' %}</td>
       <td class="text-danger">{{ purchase.discount | intcomma:False }}</td>
 
     </tr>
     <tr>
       <th scope="row"></th>
-      <td colspan="10">{% trans 'Overal discount percent' %}</td>
+      <td colspan="9">{% trans 'Overal discount percent' %}</td>
       <td class="text-danger">{{ purchase.discount_percent }} %</td>
 
     </tr>
     <tr>
       <th scope="row"></th>
-      <td colspan="10" class="fw-bolder">{% trans 'Payable' %}</td>
+      <td colspan="9" class="fw-bolder">{% trans 'Payable' %}</td>
       <td class="fw-bolder">{{ purchase.payable | intcomma:False }}</td>
     </tr>
   </tfoot>

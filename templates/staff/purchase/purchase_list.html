@@ -23,6 +23,7 @@
           <thead>
             <tr>
               <th scope="col">#</th>
+              <th scope="col">{% trans 'Number' %}</th>
               <th scope="col">{% trans 'Vendor' %}</th>
               <th scope="col">{% trans 'Paper invoice number' %}</th>
               <th scope="col">{% trans 'Craeted date' %}</th>
@@ -36,6 +37,7 @@
             {% for purchase in purchases %}
             <tr>
               <th scope="row">{{ forloop.counter }}</th>
+              <td>{{ purchase.id }}</td>
               <td><a href="{% url 'orders:purchase_details' purchase_id=purchase.id  %}">{{ purchase.vendor }}</a></td>
               <td>{% if purchase.paper_invoice_number %}{{ purchase.paper_invoice_number }}{% endif %}</td>
               <td>{{ purchase.get_fa_created }}</td>

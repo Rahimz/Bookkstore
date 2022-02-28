@@ -91,6 +91,9 @@ class CustomUser(AbstractUser):
     is_client= models.BooleanField(
         default=False
     )
+    is_manager = models.BooleanField(
+        default = False
+    )
     addresses = models.ManyToManyField(
         Address, blank=True,
         related_name="user_addresses"
