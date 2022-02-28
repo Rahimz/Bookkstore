@@ -159,7 +159,9 @@ def purchase_details(request, purchase_id, product_id=None, variation='new main'
 
         price = variation_dict[variation_list[0]][variation_list[1]]['price']
         stock = variation_dict[variation_list[0]][variation_list[1]]['stock']
-
+        if price == 0:
+            messages.error(request, _('You can not add product without price'))
+            return redirect('orders:purchase_details', purchase.id)
         if (product.id, variation, price) in product_ids:
             purchase_line = PurchaseLine.objects.get(
                 purchase=purchase, product=product, variation=variation)
