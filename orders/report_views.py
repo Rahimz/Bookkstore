@@ -26,7 +26,7 @@ def sales_by_days(request, days=365):
     print(datetime.now().date()- timedelta(days=2))
     print(datetime.now().date()- timedelta(days=3))
     # order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.now() - timedelta(days)).exclude(product__product_type='craft').order_by('-created')
-    order_0_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date())).aggregate(total_sales=Sum('payable'))
+    order_0_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date())).aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
     order_1_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date() - timedelta(days=1))).aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
     order_2_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date()- timedelta(days=2))).aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
     order_3_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date()- timedelta(days=3))).aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
