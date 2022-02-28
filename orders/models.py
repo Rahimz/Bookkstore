@@ -469,6 +469,15 @@ class Purchase(models.Model):
     def get_total_quantity(self):
         return sum(item.quantity for item in self.lines.all())
 
+    def get_fa_approved(self):
+        return hij_strf_date(greg_to_hij_date(self.approved_date.date()), '%-d %B %Y')
+
+    def get_fa_created(self):
+        return hij_strf_date(greg_to_hij_date(self.created.date()), '%-d %B %Y')
+
+    def get_fa_payment(self):
+        return hij_strf_date(greg_to_hij_date(self.payment_date), '%-d %B %Y')
+
 
 class PurchaseLine(models.Model):
     purchase = models.ForeignKey(
