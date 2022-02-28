@@ -952,6 +952,17 @@ def draft_orders(request):
     )
 
 
+@staff_member_required
+def remove_draft_order(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+    if len(order.lines.all())>0:
+        messages.error(request, _('This order is not empty'))
+    else:
+        order.delete()
+        messages.success(request, _('Draft order removed'))
+
+    return redirect('staff:draft_orders')
+
 def invoice_back_to_draft(request, order_id):
     order = Order.objects.get(pk=order_id)
     if order.shipping_status == 'full':

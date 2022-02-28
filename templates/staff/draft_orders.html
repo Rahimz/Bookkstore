@@ -49,11 +49,12 @@
                 {% trans 'Not registered' %}
                 {% endif %}</a></td>
               <td>{% if order.client.social_media_name %}{{ order.client.social_media_name }}{% endif %}</td>
-              <td>{{ order.get_total_quantity}}</td>
+              <td>{{ order.get_total_quantity }}</td>
               <td>{{ order.get_cost_after_discount | intcomma:False }}</td>
               <td>{{ order.discount | intcomma:False }}</td>
               <td>{{ order.get_payable | intcomma:False }}</td>
               <td>{{ order.get_total_weight }}</td>
+              <td>{% if order.get_total_quantity == 0 %}<a href="{% url 'staff:remove_draft_order' order.id %}" class="btn btn-sm btn-outline-danger">{% trans 'Remove' %}</a>{% endif %}</td>
             </tr>
             {% endfor %}
           </tbody>
