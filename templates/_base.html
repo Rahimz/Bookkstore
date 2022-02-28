@@ -41,7 +41,7 @@
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-F9RJ6DQ80X"></script>
-  <script>
+  <script defer>
     window.dataLayer = window.dataLayer || [];
 
     function gtag() {
@@ -246,9 +246,9 @@
 
   </footer>
 
-  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}" async></script>
   {% comment %}
-  <script>
+  <script defer>
     setTimeout(function() {
       document.getElementById('hideme').className = 'waa';
     }, 2500);
