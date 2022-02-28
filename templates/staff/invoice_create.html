@@ -132,7 +132,7 @@
               <th scope="col">{% trans 'isbn' %}</th>
               <th scope="col">{% trans 'Image' %}</th>
               <th scope="col">{% trans 'Name' %}</th>
-              <th scope="col">{% trans 'Author' %}</th>
+              <th scope="col">{% trans 'Publisher' %}</th>
               <th scope="col" colspan="2">{% trans 'Update' %} <span class="fw-lighter">({% trans 'Remove' %} - {% trans 'Quantity' %} - {% trans 'Discount' %})</span></th>
               <th scope="col">{% trans 'State' %}</th>
               <th scope="col">{% trans 'Quantity' %}</th>
@@ -147,9 +147,9 @@
             <tr>
               <th scope="row">{{ forloop.counter }}</th>
               <td>{{ order_line.product.isbn }}</td>
-              <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="60px" height="auto"></td>
+              <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="auto" height="40px"></td>
               <td>{{ order_line.product.name }}</td>
-              <td>{{ order_line.product.author }}</td>
+              <td>{% if order_line.poruct.publisher %}{{ order_line.product.publisher }}{% endif %}</td>
               <td></td>
               <td>
                 <form action="{% url 'staff:orderline_update' order_id=order.id orderline_id=order_line.id %}" method="post">
@@ -175,7 +175,8 @@
               <th scope="row"></th>
               <td colspan="7">{% trans 'SUM' %}</td>
               <td>{{ order.get_total_quantity }}</td>
-              <td colspan="2"></td>
+              <td>{{ order.get_total_cost | intcomma:False }}</td>
+              <td class="text-danger">{{ order.get_total_discount }}</td>
               <td>{{ order.get_cost_after_discount | intcomma:False }}</td>
               <td>{{ order.get_total_weight | intcomma:False }}</td>
             </tr>

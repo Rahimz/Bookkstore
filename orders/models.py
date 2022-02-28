@@ -240,6 +240,9 @@ class Order(models.Model):
     def get_total_quantity(self):
         return sum(item.quantity for item in self.lines.all())
 
+    def get_total_discount(self):
+        return sum(item.discount for item in self.lines.all())
+
     # def get_absolute_url(self):
     #     return reverse('shop:product_detail',
     #                    args=[self.id])
