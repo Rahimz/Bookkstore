@@ -38,8 +38,8 @@
               <th scope="row">{{ forloop.counter }}</th>
               <td><a href="{% url 'orders:purchase_details' purchase_id=purchase.id  %}">{{ purchase.vendor }}</a></td>
               <td>{% if purchase.paper_invoice_number %}{{ purchase.paper_invoice_number }}{% endif %}</td>
-              <td>{{ purchase.created }}</td>
-              <td>{{ purchase.payment_date }}</td>
+              <td>{{ purchase.get_fa_created }}</td>
+              <td>{{ purchase.get_fa_payment }}</td>
               <td>{{ purchase.quantity }}</td>
               <td>{{ purchase.payable }}</td>
               <td><span class="badge {% if purchase.status == 'draft' %}bg-warning{% else %}bg-success {% endif %}">{{ purchase.status }} </span></td>

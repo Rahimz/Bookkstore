@@ -450,7 +450,8 @@ class Purchase(models.Model):
             if round(self.discount / self.get_cost_after_discount() * 100, 1) != self.discount_percent:
                 self.discount_percent = round(self.discount / self.get_cost_after_discount() * 100, 1)
 
-        self.payable = self.get_payable() - self.discount
+        # self.payable = self.get_payable() - self.discount
+        self.payable = self.get_cost_after_discount() - self.discount
 
 
         super(Purchase, self).save(*args, **kwargs)
