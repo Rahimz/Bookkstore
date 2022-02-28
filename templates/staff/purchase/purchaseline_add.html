@@ -41,10 +41,9 @@
       <a href="{% url 'orders:purchaseline_remove' purchaseline_id %}" class="btn btn-danger">{% trans 'Remove this purchase row' %}</a>
       {% endif %}
       {% endif %}
-
-
-
-
+    </div>
+    <div class="">
+      <p class="p-2"><span class="text-danger">{% trans 'Notice' %}: </span>{% trans 'If you assign discount and percent discount at the same time discount will be choose as the main factor' %}</p>
     </div>
   </div>
 

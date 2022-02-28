@@ -441,7 +441,14 @@ class Purchase(models.Model):
 
         self.quantity = self.get_total_quantity()
 
-
+        # managing discounts
+        if self.discount == 0 and self.discount_percent != 0:
+            self.discount =  self.get_cost_after_discount() * self.discount_percent / 100
+        elif self.discount and not self.discount_percent:
+            self.discount_percent = round(self.discount / self.get_cost_after_discount() * 100, 1)
+        elif self.discount and self.discount_percent:
+            if round(self.discount / self.get_cost_after_discount() * 100, 1) != self.discount_percent:
+                self.discount_percent = round(self.discount / self.get_cost_after_discount() * 100, 1)
 
         self.payable = self.get_payable() - self.discount
 
@@ -508,12 +515,12 @@ class PurchaseLine(models.Model):
         default=0
     )
     discount_percent = models.DecimalField(
-        max_digits=3,
-        decimal_places=0,
-        default=Decimal(0),
+        max_digits=4,
+        decimal_places=1,
+        default=0,
         validators=PERCENTAGE_VALIDATOR,
-        null=True,
-        blank=True,
+        # null=True,
+        # blank=True,
     )
     variation = models.CharField(
         max_length=50,
@@ -535,10 +542,10 @@ class PurchaseLine(models.Model):
         if self.discount == 0 and self.discount_percent != 0:
             self.discount =  self.price * self.discount_percent / 100
         elif self.discount and not self.discount_percent:
-            self.discount_percent = trunc(self.discount / self.price * 100)
+            self.discount_percent = round(self.discount / self.price * 100, 1)
         elif self.discount and self.discount_percent:
-            if trunc(self.discount / self.price * 100) != self.discount_percent:
-                self.discount_percent = trunc(self.discount / self.price * 100)
+            if round(self.discount / self.price * 100, 1) != self.discount_percent:
+                self.discount_percent = round(self.discount / self.price * 100, 1)
 
         super(PurchaseLine, self).save(*args, **kwargs)
 
