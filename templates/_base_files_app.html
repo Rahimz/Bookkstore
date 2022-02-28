@@ -118,7 +118,7 @@
     {% endif %}
     {% if user.is_staff %}
     <div class="m-2">
-      <a href="{% url 'staff:sales_list' %}" class="btn btn-outline-secondary {% block slaes-btn %}{% endblock %}">{% trans 'Sales' %}</a>
+      <a href="{% url 'staff:draft_orders' %}" class="btn btn-outline-secondary {% block slaes-btn %}{% endblock %}">{% trans 'Sales' %}</a>
       <a href="{% url 'staff:order_list' period='all' channel='mix' %}" class="btn btn-outline-secondary {% block orders-btn %}{% endblock %}">{% trans 'Orders' %}</a>
       <a href="{% url 'orders:purchase_list' %}" class="btn btn-outline-secondary {% block purchases-btn %}{% endblock %}">{% trans 'Purchase' %}</a>
       <a href="{% url 'staff:warehouse' %}" class="btn btn-outline-secondary {% block warehouses-btn %}{% endblock %}">{% trans 'Warehouse' %}</a>
