@@ -1414,14 +1414,30 @@ def craft_list(request):
 
 
 @staff_member_required
-def craft_update(request, craft_id):
-    craft = get_object_or_404(Product, pk=craft_id)
-    if request.method == 'POST':
-        update_form = CraftUpdateForm(data=request.POST, instance=craft)
-        if update_form.is_valid():
-            update_form.save()
+def craft_update(request, craft_id=None):
+    if craft_id:
+        craft = get_object_or_404(Product, pk=craft_id)
     else:
-        update_form = CraftUpdateForm(instance=craft)
+        craft = None
+    if request.method == 'POST':
+        if craft_id:
+            update_form = CraftUpdateForm(data=request.POST, instance=craft)
+        else:
+            update_form = CraftUpdateForm(data=request.POST)
+
+        if update_form.is_valid():
+            new_product = update_form.save(commit=False)
+            new_product.product_type = 'craft'
+            new_product.available_online = False
+            new_product.save()
+            messages.success(request, _('New craft is created'))
+            return redirect('staff:craft_list')
+    else:
+        if craft_id:
+            update_form = CraftUpdateForm(instance=craft)
+        else:
+            update_form = CraftUpdateForm()
+
     return render(
         request,
         'staff/crafts/craft_update.html',

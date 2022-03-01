@@ -104,4 +104,4 @@ class CraftUpdateForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = [
-            'name', 'craft_category', 'stock', 'price', 'description', 'available']
+            'name', 'craft_category', 'barcode_number', 'stock', 'price', 'description', 'available']
