@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-01 10:27+0330\n"
-"PO-Revision-Date: 2022-03-01 10:29+0330\n"
+"POT-Creation-Date: 2022-03-01 11:54+0330\n"
+"PO-Revision-Date: 2022-03-01 11:58+0330\n"
 "Last-Translator: رحیم  <rahim.aghareb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -103,9 +103,8 @@ msgstr "تامین‌کننده"
 msgid "Vendors"
 msgstr "تامین‌کنندگان"
 
-#: account/views.py:57 account/views.py:180 staff/views.py:137
-#: staff/views.py:159 staff/views.py:1146 staff/views.py:1172
-#: staff/views.py:1209
+#: account/views.py:57 account/views.py:180 staff/views.py:189
+#: staff/views.py:213 staff/views.py:1200 staff/views.py:1226
 msgid "Form is not valid"
 msgstr "فرم معتبر نیست"
 
@@ -174,7 +173,7 @@ msgstr "روش ارسال"
 msgid "Shipping cost"
 msgstr "هزینه ارسال"
 
-#: orders/forms.py:36 staff/forms.py:63
+#: orders/forms.py:36 staff/forms.py:71
 #: templates/staff/order_detail_for_admin.html:73
 #: templates/staff/order_payment_manage.html:70 templates/staff/orders.html:33
 msgid "Shipping time"
@@ -365,7 +364,7 @@ msgstr "نام یا شماره تلفن"
 msgid "ISBN"
 msgstr "شابک"
 
-#: staff/forms.py:40 staff/views.py:886 templates/cart/detail.html:17
+#: staff/forms.py:48 staff/views.py:940 templates/cart/detail.html:17
 #: templates/staff/_order_table.html:15 templates/staff/draft_orders.html:32
 #: templates/staff/invoice_create.html:71
 #: templates/staff/invoice_create.html:136
@@ -387,140 +386,142 @@ msgstr "شابک"
 msgid "Quantity"
 msgstr "تعداد"
 
-#: staff/forms.py:61
+#: staff/forms.py:69
 msgid "Shipping code"
 msgstr "کد پیگیری ارسال"
 
-#: staff/forms.py:62 templates/staff/order_list_by_country.html:37
+#: staff/forms.py:70 templates/staff/order_list_by_country.html:37
 #: templates/staff/orders.html:34
 msgid "Shipping status"
 msgstr "وضعیت ارسال"
 
-#: staff/forms.py:72
+#: staff/forms.py:80
 msgid "Related product"
 msgstr "محصولات وابسته "
 
-#: staff/forms.py:74
+#: staff/forms.py:82
 msgid "Please add one ISBN each time"
 msgstr "لطفاً هر بار فقط یک شابک وارد کنید"
 
-#: staff/forms.py:95 templates/shop/product_detail.html:125
+#: staff/forms.py:103 templates/shop/product_detail.html:125
 #: templates/staff/price_management.html:75
 msgid "Price used"
 msgstr "قیمت دست‌دوم"
 
-#: staff/views.py:132 staff/views.py:192
-msgid "Product is created!"
-msgstr "محصول ساخته شد!"
-
-#: staff/views.py:154
-msgid "Category is created!"
-msgstr "دسته‌بندی ساخته شد!"
-
-#: staff/views.py:207
-msgid "Product created"
-msgstr "محصول ساخته شد!"
-
-#: staff/views.py:210
-msgid "Product does not created!"
-msgstr "محصول ساخته نشد!"
-
-#: staff/views.py:315 staff/views.py:372 staff/views.py:483
-msgid "You could not add product without price"
-msgstr "شما نمی‌توانید محصول بدون قیمت به فاکتور اضافه کنید "
-
-#: staff/views.py:319 staff/views.py:376 staff/views.py:486
-msgid "You are adding zero stock!"
-msgstr "شما بیشتر از موجودی این محصول سفارش ثبت کرده‌اید"
-
-#: staff/views.py:365 staff/views.py:423 staff/views.py:542
-msgid "Product is added to invoice"
-msgstr "محصول به فاکتور اضافه شد"
-
-#: staff/views.py:385 staff/views.py:513
-msgid "Order is created"
-msgstr "سفارش ایجاد شد"
-
-#: staff/views.py:490
-msgid "This product has other prices"
-msgstr "این کتاب قیمت‌های دیگری دارد"
-
-#: staff/views.py:641
-msgid "Order approved"
-msgstr "سفارش تأیید شد"
-
-#: staff/views.py:675
-msgid "Credit of client added to discount of order"
-msgstr "اعتبار مشتری به مبلغ تخفیف سفارش اضافه شد"
-
-#: staff/views.py:687
-msgid "Order paid with credit"
-msgstr "سفارش با اعتبار مشتری پرداخت شد"
-
-#: staff/views.py:704
-msgid "Client added to order"
-msgstr "مشتری به سفارش اضافه شد"
-
-#: staff/views.py:850
-msgid "You are adding zero stock"
-msgstr "شما بیشتر از موجودی این محصول سفارش ثبت کرده‌اید"
-
-#: staff/views.py:886
-msgid "Order line updated"
-msgstr "ردیف سفارش به‌روزرسانی شد "
-
-#: staff/views.py:959
-#| msgid "This order is shipped"
-msgid "This order is not empty"
-msgstr "این سفارش خالی نیست"
-
-#: staff/views.py:962
-#| msgid "The price removed"
-msgid "Draft order removed"
-msgstr "سفارش پیش‌نویس حذف شد"
-
-#: staff/views.py:969
-msgid "This order is shipped"
-msgstr "این سفارش ارسال شده‌است"
-
-#: staff/views.py:975
-msgid "Order status changed to draft"
-msgstr "وضعیت سفارش به پیش نویس تغییر کرد"
-
-#: staff/views.py:1123 staff/views.py:1150
-msgid "Tehran"
-msgstr "تهران"
-
-#: staff/views.py:1141
-msgid "Vendor is added!"
-msgstr "تأمین‌کننده اضافه شد!"
-
-#: staff/views.py:1169
-msgid "Vendor is updated"
-msgstr "تأمین‌کننده به‌روزرسانی شد!"
-
-#: staff/views.py:1204
+#: staff/views.py:155 staff/views.py:184
 msgid "Product updated"
 msgstr "محصول به‌روزرسانی شد!"
 
-#: staff/views.py:1325
+#: staff/views.py:157
+#| msgid "Product is created!"
+msgid "Product is created"
+msgstr "محصول ساخته شد"
+
+#: staff/views.py:208
+msgid "Category is created!"
+msgstr "دسته‌بندی ساخته شد!"
+
+#: staff/views.py:246
+msgid "Product is created!"
+msgstr "محصول ساخته شد!"
+
+#: staff/views.py:261
+msgid "Product created"
+msgstr "محصول ساخته شد!"
+
+#: staff/views.py:264
+msgid "Product does not created!"
+msgstr "محصول ساخته نشد!"
+
+#: staff/views.py:369 staff/views.py:426 staff/views.py:537
+msgid "You could not add product without price"
+msgstr "شما نمی‌توانید محصول بدون قیمت به فاکتور اضافه کنید "
+
+#: staff/views.py:373 staff/views.py:430 staff/views.py:540
+msgid "You are adding zero stock!"
+msgstr "شما بیشتر از موجودی این محصول سفارش ثبت کرده‌اید"
+
+#: staff/views.py:419 staff/views.py:477 staff/views.py:596
+msgid "Product is added to invoice"
+msgstr "محصول به فاکتور اضافه شد"
+
+#: staff/views.py:439 staff/views.py:567
+msgid "Order is created"
+msgstr "سفارش ایجاد شد"
+
+#: staff/views.py:544
+msgid "This product has other prices"
+msgstr "این کتاب قیمت‌های دیگری دارد"
+
+#: staff/views.py:695
+msgid "Order approved"
+msgstr "سفارش تأیید شد"
+
+#: staff/views.py:729
+msgid "Credit of client added to discount of order"
+msgstr "اعتبار مشتری به مبلغ تخفیف سفارش اضافه شد"
+
+#: staff/views.py:741
+msgid "Order paid with credit"
+msgstr "سفارش با اعتبار مشتری پرداخت شد"
+
+#: staff/views.py:758
+msgid "Client added to order"
+msgstr "مشتری به سفارش اضافه شد"
+
+#: staff/views.py:904
+msgid "You are adding zero stock"
+msgstr "شما بیشتر از موجودی این محصول سفارش ثبت کرده‌اید"
+
+#: staff/views.py:940
+msgid "Order line updated"
+msgstr "ردیف سفارش به‌روزرسانی شد "
+
+#: staff/views.py:1013
+msgid "This order is not empty"
+msgstr "این سفارش خالی نیست"
+
+#: staff/views.py:1016
+msgid "Draft order removed"
+msgstr "سفارش پیش‌نویس حذف شد"
+
+#: staff/views.py:1023
+msgid "This order is shipped"
+msgstr "این سفارش ارسال شده‌است"
+
+#: staff/views.py:1029
+msgid "Order status changed to draft"
+msgstr "وضعیت سفارش به پیش نویس تغییر کرد"
+
+#: staff/views.py:1177 staff/views.py:1204
+msgid "Tehran"
+msgstr "تهران"
+
+#: staff/views.py:1195
+msgid "Vendor is added!"
+msgstr "تأمین‌کننده اضافه شد!"
+
+#: staff/views.py:1223
+msgid "Vendor is updated"
+msgstr "تأمین‌کننده به‌روزرسانی شد!"
+
+#: staff/views.py:1352
 msgid "This product is in this collection"
 msgstr "این کتاب در این مجموعه وجود دارد "
 
-#: staff/views.py:1331
+#: staff/views.py:1358
 msgid "Product does not found"
 msgstr "محصول پیدا نشد"
 
-#: staff/views.py:1341
+#: staff/views.py:1368
 msgid "The product added to collection"
 msgstr "محصول به این مجموعه اضافه شد"
 
-#: staff/views.py:1369
+#: staff/views.py:1396
 msgid "This product removed from the collection"
 msgstr "این کتاب از این مجموعه حذف شد"
 
-#: staff/views.py:1433
-#| msgid "Order is created"
+#: staff/views.py:1460
 msgid "New craft is created"
 msgstr "محصول صنایع‌دستی ایجاد شد"
 
@@ -734,8 +735,8 @@ msgstr "اضافه کردن مشتری"
 #: templates/staff/order_payment_manage.html:79
 #: templates/staff/order_shipped.html:34
 #: templates/staff/price_management.html:95
-#: templates/staff/product_create.html:25
-#: templates/staff/product_create.html:26 templates/staff/products.html:36
+#: templates/staff/product_create.html:32
+#: templates/staff/product_create.html:33 templates/staff/products.html:36
 #: templates/staff/purchase/purchase_create.html:26
 #: templates/staff/purchase/purchase_details.html:32
 #: templates/staff/purchase/purchaseline_add.html:38
@@ -1505,12 +1506,12 @@ msgid "Category create"
 msgstr "ایجاد دسته‌بندی"
 
 #: templates/staff/category_create.html:24
-#: templates/staff/product_create.html:24
+#: templates/staff/product_create.html:31
 msgid "Cancel"
 msgstr "لغو"
 
 #: templates/staff/category_create.html:26
-#: templates/staff/product_create.html:26
+#: templates/staff/product_create.html:33
 msgid "Save and add another"
 msgstr "ذخیره و اضافه کردن یکی دیگر"
 
@@ -1884,6 +1885,36 @@ msgstr "اضافه کردن تنوع قیمت"
 msgid "Product create"
 msgstr "محصول جدید"
 
+#: templates/staff/product_create.html:20
+#| msgid "Notice"
+msgid "Notice "
+msgstr "توجه"
+
+#: templates/staff/product_create.html:22
+msgid "If you add other prices check the field"
+msgstr ""
+"اگر قیمت‌ یا موجودی دیگری غیر از قیمت اصلی تعیین می‌کنید حتماً این گزینه را "
+"تیک بزنید:"
+
+#: templates/staff/product_create.html:23
+msgid "For define used book you should add stock used or price used"
+msgstr ""
+"برای تعریف نسخه دست‌دوم از یک کتاب ابتدا کتاب را بسازید و سپس قیمت یا موجودی"
+" دست‌دوم برای آن تعریف کنید و تیک «دارای قیمت‌های دیگر» را هم بزنید. اگر "
+"کتاب نسخه نو ندارد موجودی و قیمت اصلی را صفر در نظر بگیرید"
+
+#: templates/staff/product_create.html:24
+msgid ""
+"Usually you should not add price 1 to 5 unless some problem happens these "
+"prices are made in purchase invoice"
+msgstr ""
+"معمولاً نباید قیمت‌های ۱ تا ۵ در این صفحه تعریف شوند مگر موارد خاص. این "
+"قیمت‌ها در صفحه فاکتور خرید قابل مدیریت و اضافه شدن به محصول هستند"
+
+#: templates/staff/product_create.html:25
+msgid "All prices and stocks should be zero"
+msgstr ""
+
 #: templates/staff/products.html:50
 msgid "Other prices"
 msgstr "قیمت‌های دیگر"
@@ -2040,7 +2071,6 @@ msgid "List of categories"
 msgstr "لیست دسته‌بندی‌ها"
 
 #: templates/staff/sidebar_staff.html:15
-#| msgid "Create product"
 msgid "Create craft product"
 msgstr "ایجاد محصول صنایع‌دستی"
 
