@@ -51,6 +51,11 @@ class Address(models.Model):
         max_length=20,
         blank=True
     )
+    state = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True
+    )
     city = models.CharField(
         max_length=256,
         blank=True
@@ -73,7 +78,7 @@ class Address(models.Model):
                        args=[self.id])
     def get_full_address(self):
         try:
-            return f"{self.country.name} - {self.city} - {self.street_address_1}, {self.street_address_2} - {self.house_number} - {self.house_unit} - {self.postal_code}"
+            return f"{self.country.name} - {self.state} - {self.city} - {self.street_address_1}, {self.street_address_2} - {self.house_number} - {self.house_unit} - {self.postal_code}"
         except:
             return ""
 

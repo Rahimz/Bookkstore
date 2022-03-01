@@ -13,7 +13,7 @@ urlpatterns = [
     path('orders/shipping/<int:order_id>/', views.order_shipping, name='order_shipped'),
     # path('orders/sipping/<int:order_id>/', views.order_shipping, name='order_shipping'),
     path('orders/drafts/', views.draft_orders, name='draft_orders'),
-    path('orders/remove-draft/<int:order_id>/', views.remove_draft_order, name='remove_draft_order'),    
+    path('orders/remove-draft/<int:order_id>/', views.remove_draft_order, name='remove_draft_order'),
 
     path('orders/create/', views.order_create, name='order_create'),
     path('orders/<str:period>/<str:channel>/', views.orders, name='order_list'),
@@ -68,4 +68,5 @@ urlpatterns = [
 
     path('products/crafts/', views.craft_list, name="craft_list"),
     path('products/crafts-update/<int:craft_id>/', views.craft_update, name="craft_update"),
+    path('products/crafts-create/', views.craft_update, name="craft_create"),
 ]
