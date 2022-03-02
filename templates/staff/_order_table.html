@@ -29,7 +29,7 @@
       <td>{{ order_line.product.publisher }}</td>
       <td>{{ order_line.quantity }}</td>
       <td>{{ order_line.get_cost | intcomma:False }}</td>
-      <td>{{ order_line.discount | intcomma:False }}</td>
+      <td>{{ order_line.get_discount | intcomma:False }}</td>
       <td>{{ order_line.get_cost_after_discount | intcomma:False }}</td>
     </tr>
     {% endfor %}

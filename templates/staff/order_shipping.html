@@ -91,7 +91,7 @@
             <td>{{ order_line.quantity }}</td>
             <td></td>
             <td>{{ order_line.get_cost | intcomma:False }}</td>
-            <td>{{ order_line.discount | intcomma:False }}</td>
+            <td>{{ order_line.get_discount | intcomma:False }}</td>
             <td>{{ order_line.get_cost_after_discount | intcomma:False }}</td>
             <td>
               <form class="" action="" method="post">
