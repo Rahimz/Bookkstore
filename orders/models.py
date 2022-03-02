@@ -244,6 +244,9 @@ class Order(models.Model):
     def get_total_discount(self):
         return sum(item.discount for item in self.lines.all())
 
+    def get_total_discounts_with_order_discount(self):
+        return self.get_total_discount() + self.discount
+
     def get_fa_approved(self):
         if self.approved_date:
             return hij_strf_date(greg_to_hij_date(self.approved_date.date()), '%-d %B %Y')
