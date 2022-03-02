@@ -7,13 +7,14 @@ from django.contrib.admin.views.decorators import staff_member_required
 from io import BytesIO
 from django.db.models import Q
 import datetime
-from django.core.mail import EmailMessage, mail_admins, mail_managers
+from django.core.mail import EmailMessage, mail_admins, mail_managers, get_connection
 import random
 from django.core.files.base import ContentFile
 from django.core.files import File
 
 import weasyprint
 import openpyxl
+from openpyxl.styles import Color, Fill
 import qrcode
 import qrcode.image.svg
 
@@ -213,9 +214,12 @@ def email_to_managers(paymaent_id):
     Function to send email to admin when a payment is done.
     """
     payment = Payment.objects.get(pk=paymaent_id)
+    order_number = '-'
+    if payment.order:
+        order_number = payment.order.pk
 
     #email body
-    subject = 'Successful payment in Ketabedamavand.com {}'.format(payment.id)
+    subject = '[Damavand] Successful payment: {} order:{}'.format(payment.id, order_number)
     # message = 'A successful payment registered at Zarinpal: \nPayment ID.: {} \nName: {} \nPhone: {} \nAmount: {:,} \n Date & Time:{} \n Ref ID.:{}'.format(
     #     payment.id,
     #     payment.client_name,
@@ -223,119 +227,173 @@ def email_to_managers(paymaent_id):
     #     payment.amount,
     #     payment.created,
     #     payment.ref_id)
-    message = f"Successful payment at Zarinpal: \nPayment ID.: {payment.id} \nAmount: {payment.amount:,} \n\nName: {payment.client_name} \nPhone: {payment.client_phone} \n\nDate & Time:{payment.created.isoformat(sep='-')} \n Ref ID.:{payment.ref_id}"
+    message = f"Successful payment at Zarinpal: \nPayment ID.: {payment.id} \nOrder ID.: {order_number} \nAmount: {payment.amount:,} \n\nName: {payment.client_name} \nPhone: {payment.client_phone} \n\nDate & Time:{payment.created.isoformat(sep='-')} \n Ref ID.:{payment.ref_id}"
 
     # send email
-    mail_managers(
+    # mail_managers(
+    #     subject,
+    #     message,
+    #     fail_silently=False
+    #     )
+    connection = get_connection()
+    connection.open()
+    admin_email = EmailMessage(
         subject,
         message,
-        fail_silently=False
-        )
+        'noreply@ketabedamavand.com',
+        [
+        'rahim.aghareb@gmail.com',
+        'bahman.shafaa@gmail.com'
+        ]
+    )
+    admin_email.send()
+    connection.close()
 
+def product_export_excel(request, filter='all'):
 
-def product_export_excel(request):
-
-    products = Product.objects.filter(available=True).order_by('name')
+    if filter == 'used-noprice':
+        products = Product.objects.filter(available=True).filter(stock_used__gte=1).filter(price_used=0).order_by('name')
+    else:
+        products = Product.objects.filter(available=True).order_by('name')
 
     wb = openpyxl.Workbook()
     sheet = wb.active
+    if filter=='used-noprice':
+        headers = [
+            '#',
+            'Product ID.',
+            'Name',
+            'isbn',
+            'Publisher',
+            'Main price',
+            'Main stock',
+            'Price used',
+            'Stock used',
+            'Not in market',
+            'Page number',
+            'Weight',
+        ]
+    else:
+        headers = [
+            '#',
+            'Product ID.',
+            'Name',
+            'isbn',
+            'Publisher',
+            'Stock',
+            'Price',
+            'Weight',
+            'size',
+            'Cover type',
+            'Page number',
+            'Edition',
+            'Other prices',
+            'Price 1',
+            'Stock 1',
+            'Price 2',
+            'Stock 2',
+            'Price 3',
+            'Stock 3',
+            'Price 4',
+            'Stock 4',
+            'Price 5',
+            'Stock 5',
+            'Price used',
+            'Stock used',
+            'Not in market',
+            'Available online',
+            'Available in store',
+            'Category',
+            'Author',
+            'Translator',
+            'Publisher 2',
+            'Publish year',
+            'Product Latin name',
+            'Author latin name',
+            'Age range',
+            'Is collection',
+            'Admin note',
+            'Description',
+            'Import session',
+        ]
 
-    headers = [
-        '#',
-        'Product ID.',
-        'Name',
-        'isbn',
-        'Publisher',
-        'Stock',
-        'Price',
-        'Weight',
-        'size',
-        'Cover type',
-        'Page number',
-        'Edition',
-        'Other prices',
-        'Price 1',
-        'Stock 1',
-        'Price 2',
-        'Stock 2',
-        'Price 3',
-        'Stock 3',
-        'Price 4',
-        'Stock 4',
-        'Price 5',
-        'Stock 5',
-        'Price used',
-        'Stock used',
-        'Available online',
-        'Available in store',
-        'Category',
-        'Author',
-        'Translator',
-        'Publisher 2',
-        'Publish year',
-        'Product Latin name',
-        'Author latin name',
-        'Age range',
-        'Is collection',
-        'Admin note',
-        'Description',
-        'Import session',
-    ]
-
+    # writing header
     for i in range(len(headers)):
         c = sheet.cell(row = 1, column = i + 1 )
         c.value = headers[i]
+        # c.style.fill.fill_type = Fill
+        # c.style.fill.start_color.index = Color.BLUE
 
 
+    # writing body
     for count , product in enumerate(products):
         # product.save()
-        title_list = [
-            count,
-            product.id,
-            product.name,
-            product.isbn,
-            product.publisher,
-            product.stock,
-            product.price,
-            product.weight,
-            product.size,
-            product.cover_type,
-            product.page_number,
-            product.edition,
-            product.has_other_prices,
-            product.price_1,
-            product.stock_1,
-            product.price_2,
-            product.stock_2,
-            product.price_3,
-            product.stock_3,
-            product.price_4,
-            product.stock_4,
-            product.price_5,
-            product.stock_5,
-            product.price_used,
-            product.stock_used,
-            product.available_online,
-            product.available_in_store,
-            str(product.category),
-            product.author,
-            product.translator,
-            product.publisher_2,
-            product.publish_year,
-            product.latin_name,
-            product.author_latin_name,
-            product.age_range,
-            product.is_collection,
-            product.admin_note,
-            product.description,
-            str(product.import_session),
-        ]
+        if filter=='used-noprice':
+            title_list = [
+                count,
+                product.id,
+                product.name,
+                product.isbn,
+                product.publisher,
+                product.price,
+                product.stock,
+                product.price_used,
+                product.stock_used,
+                True if product.about=='*' else False,
+                product.page_number,
+                product.weight,
+            ]
+        else:
+            title_list = [
+                count,
+                product.id,
+                product.name,
+                product.isbn,
+                product.publisher,
+                product.stock,
+                product.price,
+                product.weight,
+                product.size,
+                product.cover_type,
+                product.page_number,
+                product.edition,
+                product.has_other_prices,
+                product.price_1,
+                product.stock_1,
+                product.price_2,
+                product.stock_2,
+                product.price_3,
+                product.stock_3,
+                product.price_4,
+                product.stock_4,
+                product.price_5,
+                product.stock_5,
+                product.price_used,
+                product.stock_used,
+                True if product.about=='*' else False,
+                product.available_online,
+                product.available_in_store,
+                str(product.category),
+                product.author,
+                product.translator,
+                product.publisher_2,
+                product.publish_year,
+                product.latin_name,
+                product.author_latin_name,
+                product.age_range,
+                product.is_collection,
+                product.admin_note,
+                product.description,
+                str(product.import_session),
+            ]
         for i in range(len(headers)):
             c = sheet.cell(row = count + 2 , column = i + 1)
             c.value = title_list[i]
 
-
-    filename = 'media/excel/available-products-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
+    if filter=='used-noprice':
+        filename = 'media/excel/used-noprice-products-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
+    else:
+        filename = 'media/excel/available-products-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
     wb.save(filename)
     excel = open(filename, 'rb')
     response = FileResponse(excel)

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-01 11:54+0330\n"
-"PO-Revision-Date: 2022-03-01 11:58+0330\n"
+"PO-Revision-Date: 2022-03-02 08:41+0330\n"
 "Last-Translator: رحیم  <rahim.aghareb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -1914,6 +1914,7 @@ msgstr ""
 #: templates/staff/product_create.html:25
 msgid "All prices and stocks should be zero"
 msgstr ""
+"اگر برای محصول قیمت یا موجودی تعریف نشده است فیلد مورد نظر باید صفر باشد"
 
 #: templates/staff/products.html:50
 msgid "Other prices"

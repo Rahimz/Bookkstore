@@ -18,6 +18,7 @@ from search.views import ProductSearch
 from products.models import Product
 from products.price_management import add_price, has_empty_price_row, get_price_index, sort_price
 from tools.fa_to_en_num import number_converter
+from zarinpal.models import Payment
 
 
 @staff_member_required
@@ -43,6 +44,11 @@ def sales_by_days(request, days=365):
     order_draft = Order.objects.filter(active=True).filter(status='draft').aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
     order_all = Order.objects.filter(active=True).aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
 
+
+    all_payment = Payment.objects.filter(created__date__gte='2022-02-01').aggregate(total_amount=Sum('amount'))
+    paid = Payment.objects.filter(created__date__gte='2022-02-01').filter(paid=True).aggregate(total_amount=Sum('amount'))
+    pended = Payment.objects.filter(created__date__gte='2022-02-01').filter(paid=False).aggregate(total_amount=Sum('amount'))
+
     # report = {
     #     'sum':
     # }
@@ -63,5 +69,8 @@ def sales_by_days(request, days=365):
             'order_7_day': order_7_day,
             'order_8_day': order_8_day,
             'order_9_day': order_9_day,
+            'all_payment': all_payment,
+            'paid': paid,
+            'pended': pended,
         }
     )

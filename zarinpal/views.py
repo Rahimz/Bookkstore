@@ -111,6 +111,7 @@ def form_verify(request):
                 request.session['paid'] = True
                 payment.ref_id = request.GET['Authority']
                 payment.paid = True
+                paid_date = datetime.datetime.now()
                 if payment.order:
                     order = payment.order
                     order.paid = True
@@ -131,6 +132,7 @@ def form_verify(request):
                 request.session['paid'] = True
                 payment.ref_id = request.GET['Authority']
                 payment.paid = True
+                paid_date = datetime.datetime.now()
                 if payment.order:
                     order = payment.order
                     order.paid = True
