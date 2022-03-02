@@ -9,6 +9,10 @@ class Payment(models.Model):
     amount = models.PositiveIntegerField()
     created = models.DateTimeField(auto_now_add=True)
     paid = models.BooleanField(default=False)
+    paid_date = models.DateTimeField(
+        null=True,
+        blank=True
+    )
     order = models.ForeignKey(
         Order,
         on_delete=models.SET_NULL,
