@@ -7,7 +7,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from io import BytesIO
 from django.db.models import Q
 import datetime
-from django.core.mail import EmailMessage, mail_admins, mail_managers
+from django.core.mail import EmailMessage, mail_admins, mail_managers, get_connection
 import random
 from django.core.files.base import ContentFile
 from django.core.files import File
@@ -213,9 +213,12 @@ def email_to_managers(paymaent_id):
     Function to send email to admin when a payment is done.
     """
     payment = Payment.objects.get(pk=paymaent_id)
+    order_number = '-'
+    if payment.order:
+        order_number = payment.order.pk
 
     #email body
-    subject = 'Successful payment in Ketabedamavand.com {}'.format(payment.id)
+    subject = '[Damavand] Successful payment: {} order:{}'.format(payment.id, order_number)
     # message = 'A successful payment registered at Zarinpal: \nPayment ID.: {} \nName: {} \nPhone: {} \nAmount: {:,} \n Date & Time:{} \n Ref ID.:{}'.format(
     #     payment.id,
     #     payment.client_name,
@@ -223,15 +226,27 @@ def email_to_managers(paymaent_id):
     #     payment.amount,
     #     payment.created,
     #     payment.ref_id)
-    message = f"Successful payment at Zarinpal: \nPayment ID.: {payment.id} \nAmount: {payment.amount:,} \n\nName: {payment.client_name} \nPhone: {payment.client_phone} \n\nDate & Time:{payment.created.isoformat(sep='-')} \n Ref ID.:{payment.ref_id}"
+    message = f"Successful payment at Zarinpal: \nPayment ID.: {payment.id} \nOrder ID.: {order_number} \nAmount: {payment.amount:,} \n\nName: {payment.client_name} \nPhone: {payment.client_phone} \n\nDate & Time:{payment.created.isoformat(sep='-')} \n Ref ID.:{payment.ref_id}"
 
     # send email
-    mail_managers(
+    # mail_managers(
+    #     subject,
+    #     message,
+    #     fail_silently=False
+    #     )
+    connection = get_connection()
+    connection.open()
+    admin_email = EmailMessage(
         subject,
         message,
-        fail_silently=False
-        )
-
+        'noreply@ketabedamavand.com',
+        [
+        'rahim.aghareb@gmail.com',
+        'bahman.shafaa@gmail.com'
+        ]
+    )
+    admin_email.send()
+    connection.close()
 
 def product_export_excel(request):
 
