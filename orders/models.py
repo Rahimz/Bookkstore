@@ -242,7 +242,7 @@ class Order(models.Model):
         return sum(item.quantity for item in self.lines.all())
 
     def get_total_discount(self):
-        return sum(item.discount for item in self.lines.all())
+        return sum(item.get_discount() for item in self.lines.all())
 
     def get_total_discounts_with_order_discount(self):
         return self.get_total_discount() + self.discount
@@ -315,11 +315,13 @@ class OrderLine(models.Model):
     def get_cost(self):
         return self.price * self.quantity
 
-    def get_cost_after_discount(self):
+    def get_discount(self):
         if self.discount:
-            return self.price * self.quantity - self.discount
-        else:
-            return self.price * self.quantity
+            return self.discount
+        return 0
+
+    def get_cost_after_discount(self):
+        return self.price * self.quantity - self.get_discount()
 
     def get_weight(self):
         if self.product.weight:

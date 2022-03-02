@@ -16,12 +16,15 @@ class PurchaseLineInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     list_display = [
         'id', 'client', 'user',
-        'user_email', 'paid', 'approved_date',
+        'paid', 'active',
     ]
-    list_filter = ['paid', 'approved_date', ]
-    list_editable = ['paid', 'approved_date', ]
-    search_fields = ['first_name', 'last_name', 'email']
+    list_filter = ['paid', 'active', 'status', 'approved_date',  ]
+    # list_editable = ['paid', ]
+    search_fields = ['client', 'pk', 'user']
     inlines = [OrderLineInline]
+
+    class Meta:
+        ordering = ['created']
 
 
 @admin.register(OrderLine)
