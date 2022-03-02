@@ -164,7 +164,7 @@
               <td>{{ order_line.variation }}</td>
               <td>{{ order_line.quantity }}</td>
               <td>{{ order_line.price | intcomma:False }}</td>
-              <td>{{ order_line.discount | intcomma:False }}</td>
+              <td>{{ order_line.get_discount | intcomma:False }}</td>
               <td>{{ order_line.get_cost_after_discount | intcomma:False }}</td>
               <td>{{ order_line.get_weight }}</td>
             </tr>
