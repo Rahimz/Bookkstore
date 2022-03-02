@@ -3,6 +3,7 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django_countries.fields import Country, CountryField
+from django_countries import countries
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
 from django.shortcuts import reverse
@@ -76,9 +77,13 @@ class Address(models.Model):
     def get_absolute_url(self):
         return reverse('address_detail',
                        args=[self.id])
+
     def get_full_address(self):
         try:
-            return f"{self.country.name} - {self.state} - {self.city} - {self.street_address_1}, {self.street_address_2} - {self.house_number} - {self.house_unit} - {self.postal_code}"
+            if self.country == 'IR':
+                return f"{self.country.name} {self.state if self.state else ''} {self.city} - {self.street_address_1} {self.street_address_2} {self.house_number if self.house_number else ''} {self.house_unit if self.house_unit else ''} {self.postal_code}"
+            else:
+                return f"No. {self.house_unit if self.house_unit else ''} {', ' + self.house_number if self.house_number else ''} \n{self.street_address_2},  {self.street_address_1}  \n{self.city} {', ' + self.state if self.state else ''} {dict(countries)[self.country.code]}"
         except:
             return ""
 
