@@ -38,7 +38,7 @@
         {% endif %}
       </div>
       <div>
-        <h2>{% trans 'Create invoice' %}</h2>
+        <h2>{% trans 'Create invoice' %} {% if order %}{% trans 'Number' %}: {{ order.id }}{% endif %}</h2>
 
         <h3 class="my-4">{% trans 'Add products' %}</h3>
         {% if order %}

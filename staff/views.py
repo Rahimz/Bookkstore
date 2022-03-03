@@ -71,6 +71,13 @@ def orders(request, period=None, channel=None):
 @staff_member_required
 def order_detail_for_admin(request, pk):
     order = get_object_or_404(Order, pk=pk)
+
+    # this part added for updating those orders that have not the client address in them
+    client = order.client
+    order.billing_address = client.default_billing_address
+    order.shipping_address = client.default_shipping_address
+    # print(order.billing_address.get_full_address())
+    order.save()
     return render(
         request,
         'staff/order_detail_for_admin.html',
@@ -754,6 +761,8 @@ def invoice_create_add_client(request, order_id, client_id=None):
 
     if order and client:
         order.client = client
+        order.billing_address = client.default_billing_address
+        order.shipping_address = client.default_shipping_address
         order.save()
         messages.success(request,  _('Client added to order'))
         return redirect('staff:invoice_create', order.id)

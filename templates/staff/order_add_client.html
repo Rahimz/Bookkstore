@@ -50,11 +50,14 @@
         </div>
         {% endif %}
       </div>
+      <div class="">
+        <a href="{% url 'staff:invoice_create' order.id %}" class="btn btn-outline-secondary">{% trans 'Back to invoice' %}</a>
+      </div>
       <div>
 
 
         <div class="">
-          <h2 class="my-4">{% trans 'Invoice' %}</h2>
+          <h2 class="my-4">{% trans 'Invoice' %}{% if order %}{% trans 'Number' %}: {{ order.id }}{% endif %}</h2>
 
           {% include "staff/_order_table.html" %}
 

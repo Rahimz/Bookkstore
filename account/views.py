@@ -205,7 +205,7 @@ def client_add_address(request, client_id, kind, address_id=None):
     client = CustomUser.objects.get(pk=client_id)
     if address_id:
         address = Address.objects.get(pk=address_id)
-    address_form = AddressAddForm()
+    # address_form = AddressAddForm()
     if request.method == 'POST':
         if address_id:
             address_form = AddressAddForm(data=request.POST, instance=address)
@@ -230,7 +230,7 @@ def client_add_address(request, client_id, kind, address_id=None):
         if address_id:
             address_form = AddressAddForm(instance=address)
         else:
-            address_form = AddressAddForm()
+            address_form = AddressAddForm(initial={'kind':kind})
     return render(
         request,
         'account/clients/client_add_address.html',

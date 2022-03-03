@@ -81,9 +81,9 @@ class Address(models.Model):
     def get_full_address(self):
         try:
             if self.country == 'IR':
-                return f"{self.country.name} {self.state if self.state else ''} {self.city} - {self.street_address_1} {self.street_address_2} {self.house_number if self.house_number else ''} {self.house_unit if self.house_unit else ''} {self.postal_code}"
+                return f"{self.country.name} {'- ' + self.state if self.state else ''} {'- ' + self.city if self.city else self.city} - {self.street_address_1} {'- ' + self.street_address_2 if self.street_address_2 else self.street_address_2} {_('House number') + ' ' + self.house_number if self.house_number else ''} {_('House unit') + ' ' + self.house_unit if self.house_unit else ''} {_('Postal code') + ' ' + self.postal_code if self.postal_code else self.postal_code}"
             else:
-                return f"No. {self.house_unit if self.house_unit else ''} {', ' + self.house_number if self.house_number else ''} \n{self.street_address_2},  {self.street_address_1}  \n{self.city} {', ' + self.state if self.state else ''} {dict(countries)[self.country.code]}"
+                return f"{'Unit ' + self.house_unit if self.house_unit else ''} {'No. ' + self.house_number if self.house_number else ''} \n{self.street_address_2 + ' ,' if self.street_address_2 else self.street_address_2}  {self.street_address_1}  \n{self.city} {', ' + self.state if self.state else ''} {dict(countries)[self.country.code]}"
         except:
             return ""
 
@@ -104,9 +104,12 @@ class CustomUser(AbstractUser):
     is_manager = models.BooleanField(
         default = False
     )
-    addresses = models.ManyToManyField(
-        Address, blank=True,
-        related_name="user_addresses"
+    default_billing_address = models.ForeignKey(
+    Address,
+    related_name="billing",
+    null=True,
+    blank=True,
+    on_delete=models.SET_NULL
     )
     default_shipping_address = models.ForeignKey(
         Address,
@@ -115,12 +118,9 @@ class CustomUser(AbstractUser):
         blank=True,
         on_delete=models.SET_NULL
     )
-    default_billing_address = models.ForeignKey(
-        Address,
-        related_name="billing",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL
+    addresses = models.ManyToManyField(
+        Address, blank=True,
+        related_name="user_addresses"
     )
     date_joined = models.DateTimeField(
         default=timezone.now,
