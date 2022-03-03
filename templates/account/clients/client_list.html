@@ -51,7 +51,17 @@
             <td>{% if client.social_media_name %}{{ client.social_media_name }}{% endif %}</td>
             <td>{{ client.id }}</td>
             <td>{{ client.username }}</td>
-            <td><a href="{% url 'tools:print_address' client.id %}" class="btn btn-outline-secondary">{% trans 'Print Address' %}</a></td>
+            <td>
+              {%if client.default_billing_address %}
+              <a href="{% url 'tools:print_address' client_id=client.id kind='billing' %}" class="btn btn-sm btn-outline-secondary">{% trans 'Print billing address' %}</a>
+              {% endif %}
+            </td>
+
+            <td>
+              {%if client.default_shipping_address %}
+              <a href="{% url 'tools:print_address' client_id=client.id kind='shipping' %}" class="btn btn-sm btn-outline-secondary">{% trans 'Print shipping address' %}</a>
+              {% endif %}
+            </td>
           </tr>
           {% endfor %}
 

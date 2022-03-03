@@ -54,16 +54,13 @@
           <td>{% if order.paid %}&#10004{% else %}&#10008{% endif %}</td>
         </tr>
         <tr>
-          <td>{%trans 'Note' %}</td>
-          <td>{{ order.customer_note }}</td>
-        </tr>
-        <tr>
           <td>{%trans 'Billing address' %}</td>
-          <td>{{ order.billing_address.get_full_address }}</td>
+          <td>{{ order.billing_address.get_full_address | linebreaksbr }}</td>
         </tr>
         <tr>
           <td>{%trans 'Shipping address' %}</td>
-          <td>{{ order.shipping_address.get_full_address }}</td>
+          <td>{{ order.shipping_address.get_full_address | linebreaksbr }}</td>
+
         </tr>
         <tr>
           <td>{%trans 'Shipping method' %}</td>
@@ -72,6 +69,10 @@
         <tr>
           <td>{%trans 'Shipping time' %}</td>
           <td>{% if order.shipping_time %}{{ order.shipping_time }}{% endif %}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Note' %}</td>
+          <td>{{ order.customer_note }}</td>
         </tr>
 
       </table>

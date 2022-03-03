@@ -60,7 +60,7 @@ def print_invoice(request, order_id=None):
 
 
 @staff_member_required
-def print_address(request, client_id):
+def print_address(request, client_id, kind='billing'):
     client = CustomUser.objects.get(pk=client_id)
 
     return render(
@@ -68,6 +68,7 @@ def print_address(request, client_id):
         'tools/pdf/print_address.html',
         {
             'client': client,
+            'kind': kind
         }
     )
 
