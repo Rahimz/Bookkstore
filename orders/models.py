@@ -453,11 +453,16 @@ class Purchase(models.Model):
         if self.discount == 0 and self.discount_percent != 0:
             self.discount =  self.get_cost_after_discount() * self.discount_percent / 100
         elif self.discount and not self.discount_percent:
-            self.discount_percent = round(self.discount / self.get_cost_after_discount() * 100, 1)
-        elif self.discount and self.discount_percent:
-            if round(self.discount / self.get_cost_after_discount() * 100, 1) != self.discount_percent:
+            if self.get_cost_after_discount():
                 self.discount_percent = round(self.discount / self.get_cost_after_discount() * 100, 1)
-
+            else:
+                self.discount_percent = 0
+        elif self.discount and self.discount_percent:
+            if self.get_cost_after_discount():
+                if round(self.discount / self.get_cost_after_discount() * 100, 1) != self.discount_percent:
+                    self.discount_percent = round(self.discount / self.get_cost_after_discount() * 100, 1)
+            else:
+                self.discount_percent = 0
         # self.payable = self.get_payable() - self.discount
         self.payable = self.get_cost_after_discount() - self.discount
 
