@@ -148,8 +148,8 @@ def product_create(request, product_id=None):
                 request.POST,
                 files=request.FILES)
         if form.is_valid():
+            new_product = form.save(commit=False)
             # # TODO: this part does not work properly
-            # new_product = form.save(commit=False)
             # new_product.product_type = 'book'
             # if form.price_1 or form.price_2 or form.price_3 or form.price_4 or form.price_5 or form.price_used:
             #     new_product.has_other_prices = True
@@ -158,7 +158,30 @@ def product_create(request, product_id=None):
             # if form.stock_used:
             #     new_product.has_other_prices = True
             # new_product.save()
-            form.save()
+            if not product:
+                isbn = new_product.isbn if new_product.isbn else None
+                if isbn:
+                    if len(isbn) == 13:
+                        isbn_9 = isbn[3:-1]
+                    elif len(isbn) == 10:
+                        isbn_9 = isbn[:-1]
+                    elif len(isbn) == 9:
+                        isbn_9 = isbn
+                    else:
+                        isbn_9 = None
+                try:
+                    products = Product.objects.filter(Q(isbn=isbn) | Q(isbn_9=isbn_9))
+                except:
+                    pass
+                if len(products) > 0:
+                    if isbn_9:
+                        product = Product.objects.get(isbn_9=isbn_9)
+                    else:
+                        product = Product.objects.get(isbn=isbn)
+                    messages.error(request, _('A product with same isbn is available') + ': {} - {}'.format(product.name, product.isbn))
+                    return redirect('staff:product_create')
+            new_product.save()
+
             if product_id:
                 messages.success(request, _('Product updated'))
             else:
