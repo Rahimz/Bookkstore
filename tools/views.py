@@ -277,12 +277,14 @@ def product_export_excel(request, filter='all'):
 
     if filter == 'used-noprice':
         products = Product.objects.filter(available=True).filter(stock_used__gte=1).filter(price_used=0).order_by('name')
+    elif filter == 'used-all':
+        products = Product.objects.filter(available=True).filter(stock_used__gte=1).order_by('name')
     else:
         products = Product.objects.filter(available=True).order_by('name')
 
     wb = openpyxl.Workbook()
     sheet = wb.active
-    if filter=='used-noprice':
+    if filter in ('used-noprice', 'used-all'):
         headers = [
             '#',
             'Product ID.',
@@ -352,7 +354,7 @@ def product_export_excel(request, filter='all'):
     # writing body
     for count , product in enumerate(products):
         # product.save()
-        if filter=='used-noprice':
+        if filter in ('used-noprice', 'used-all'):
             title_list = [
                 count,
                 product.id,
@@ -416,6 +418,8 @@ def product_export_excel(request, filter='all'):
 
     if filter=='used-noprice':
         filename = 'media/excel/used-noprice-products-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
+    elif filter == 'used-all':
+        filename = 'media/excel/used-all-products-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
     else:
         filename = 'media/excel/available-products-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
     wb.save(filename)
