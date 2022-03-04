@@ -64,11 +64,12 @@ class OrderShippingForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ['shipped_code', 'shipping_status', 'shipping_time']
+        fields = ['shipped_code', 'shipping_status', 'shipping_time', 'is_packaged']
         labels = {
             'shipped_code': _('Shipping code'),
             'shipping_status': _('Shipping status'),
-            'shipping_time': _('Shipping time')
+            'shipping_time': _('Shipping time'),
+            'is_packaged': _('Is packaged')
         }
         widgets = {
             'shipped_code': forms.TextInput(attrs={'autofocus': 'autofocus'})

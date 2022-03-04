@@ -24,6 +24,7 @@ from account.models import CustomUser, Vendor, Address, Credit
 from search.views import ProductSearch
 from tools.fa_to_en_num import number_converter
 from tools.gregory_to_hijry import *
+from tools.views import notif_email_to_managers
 
 
 def sales(request):
@@ -687,7 +688,6 @@ def invoice_checkout(request, order_id, client_id=None):
             order.status = 'approved'
             order.approver = request.user
             order.approved_date = datetime.now()
-
             order.billing_address = client.default_billing_address
             order.shipping_address = client.default_shipping_address
 
@@ -698,6 +698,7 @@ def invoice_checkout(request, order_id, client_id=None):
 
             order.shipping_method = checkout_form.cleaned_data['shipping_method']
             order.shipping_cost = checkout_form.cleaned_data['shipping_cost']
+
             order.save()
             messages.success(request, _('Order approved'))
             # return redirect('staff:order_list', period='all', channel='all')
@@ -1030,6 +1031,12 @@ def invoice_back_to_draft(request, order_id):
     order = Order.objects.get(pk=order_id)
     if order.shipping_status == 'full':
         messages.warning(request, _('This order is shipped'))
+    if order.is_packaged :
+        messages.warning(request, _('This order is completely packaged'))
+        subject = '[Warning] ' + 'A packaged order is changed'
+        message = f"A packaged order send back to draft \nOrder no.: {order_id} \nClient: {order.client.first_name} {order.client.last_name}"
+        recivers = ['rahim.aghareb@gmail.com', 'mahazr77@gmail.com']
+        notif_email_to_managers(subject, message, recivers)
 
     order.approver = None
     order.approved_date = None
@@ -1262,10 +1269,13 @@ def order_shipping(request, order_id):
     if request.method == 'POST':
         shipping_form = OrderShippingForm(data=request.POST, instance=order)
         if shipping_form.is_valid():
-            shipping_form.save()
+            form = shipping_form.save(commit=False)
+            if form.is_packaged:
+                order.packaged_quantity = order.quantity
             # order.status = shipping_form.cleaned_data['shipping_status']
             # order.shipped_code = shipping_form.cleaned_data['shipped_code']
-            # order.save()
+            form.save()
+            order.save()
             form_submit = True
             messages.success(request, 'Shipping status is updated')
             messages.warning(request, 'Update the order list')

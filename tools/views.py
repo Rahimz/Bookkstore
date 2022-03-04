@@ -250,6 +250,29 @@ def email_to_managers(paymaent_id):
     admin_email.send()
     connection.close()
 
+
+def notif_email_to_managers(subject, message, recivers):
+    """
+    Function to send notification email to admin when it's needed.
+    """
+
+    #email body
+    # subject = string
+    # message = string
+    # recivers = list()
+
+    connection = get_connection()
+    connection.open()
+    admin_email = EmailMessage(
+        subject,
+        message,
+        'noreply@ketabedamavand.com',
+        recivers
+    )
+    admin_email.send()
+    connection.close()
+
+
 def product_export_excel(request, filter='all'):
 
     if filter == 'used-noprice':
