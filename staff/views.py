@@ -169,17 +169,19 @@ def product_create(request, product_id=None):
                         isbn_9 = isbn
                     else:
                         isbn_9 = None
+                products = None
                 try:
                     products = Product.objects.filter(Q(isbn=isbn) | Q(isbn_9=isbn_9))
                 except:
                     pass
-                if len(products) > 0:
-                    if isbn_9:
-                        product = Product.objects.get(isbn_9=isbn_9)
-                    else:
-                        product = Product.objects.get(isbn=isbn)
-                    messages.error(request, _('A product with same isbn is available') + ': {} - {}'.format(product.name, product.isbn))
-                    return redirect('staff:product_create')
+                if products:
+                    if len(products) > 0:
+                        if isbn_9:
+                            product = Product.objects.get(isbn_9=isbn_9)
+                        else:
+                            product = Product.objects.get(isbn=isbn)
+                        messages.error(request, _('A product with same isbn is available') + ': {} - {}'.format(product.name, product.isbn))
+                        return redirect('staff:product_create')
             new_product.save()
 
             if product_id:
