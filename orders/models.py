@@ -147,6 +147,13 @@ class Order(models.Model):
         blank=True,
         null=True
     )
+    is_packaged = models.BooleanField(
+        default = False
+    )
+    packaged_quantity = models.IntegerField(
+        blank=True,
+        null=True
+    )
     total_cost = models.DecimalField(
         max_digits=settings.DEFAULT_MAX_DIGITS,
         decimal_places=settings.DEFAULT_DECIMAL_PLACES,

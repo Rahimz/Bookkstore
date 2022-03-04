@@ -13,10 +13,12 @@ class ProductCreateForm(forms.ModelForm):
             'name', 'category', 'isbn', 'author', 'translator', 'illustrator', 'latin_name',
             'author_latin_name', 'image', 'image_alt', 'description', 'age_range', 'product_type', 'weight',
             'size', 'cover_type', 'page_number', 'publisher', 'publisher_2', 'publish_year',
-            'edition', 'price', 'stock',
-            'has_other_prices',
-            'price_1', 'stock_1', 'price_2', 'stock_2', 'price_3', 'stock_3', 'price_4', 'stock_4', 'price_5', 'stock_5',
-            'price_used', 'stock_used', 'store_positon', 'admin_note',
+            'edition',
+            # 'price', 'stock',
+            # 'has_other_prices',
+            # 'price_1', 'stock_1', 'price_2', 'stock_2', 'price_3', 'stock_3', 'price_4', 'stock_4', 'price_5', 'stock_5',
+            # 'price_used', 'stock_used',
+            'store_positon', 'admin_note',
             'available', 'available_in_store', 'available_online',
         ]
 
@@ -64,11 +66,12 @@ class OrderShippingForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ['shipped_code', 'shipping_status', 'shipping_time']
+        fields = ['shipped_code', 'shipping_status', 'shipping_time', 'is_packaged']
         labels = {
             'shipped_code': _('Shipping code'),
             'shipping_status': _('Shipping status'),
-            'shipping_time': _('Shipping time')
+            'shipping_time': _('Shipping time'),
+            'is_packaged': _('Is packaged')
         }
         widgets = {
             'shipped_code': forms.TextInput(attrs={'autofocus': 'autofocus'})

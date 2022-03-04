@@ -17,6 +17,7 @@
     </div>
     <div class="col-md-8">
       <h2>{% trans 'Product create' %}</h2>
+      {% comment %}
       <p>{% trans 'Notice '%}:</p>
       <ul>
         <li>{% trans 'If you add other prices check the field' %} <b>Has other prices</b></li>
@@ -24,6 +25,7 @@
         <li>{% trans 'Usually you should not add price 1 to 5 unless some problem happens these prices are made in purchase invoice' %}</li>
         <li>{% trans 'All prices and stocks should be zero' %}</li>
       </ul>
+      {% endcomment %}
       <form class="" action="." method="post" enctype="multipart/form-data">
         {{ form | crispy }}
         {% csrf_token %}

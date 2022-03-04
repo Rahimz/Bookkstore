@@ -17,7 +17,7 @@
     <div class="col-md-10">
       <h2>{% trans 'List of orders' %}</h2>
       <a href="{% url 'tools:order_export_excel' criteria='approved' %}" class="my-2"><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto"></a>
-      <table class="table table-striped">
+      <table class="table table-striped table-responsive">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -28,10 +28,11 @@
             <th scope="col">{% trans 'Weight' %}</th>
             <th scope="col">{% trans 'Channel' %}</th>
             <th scope="col">{% trans 'Approved date' %}</th>
-            <th scope="col">{% trans 'Paid' %}</th>
+            <th scope="col">{% trans 'Payment' %}</th>
             <th scope="col">{% trans 'Shipping method' %}</th>
             <th scope="col">{% trans 'Shipping time' %}</th>
-            <th scope="col">{% trans 'Shipping status' %}</th>
+            <th scope="col">{% trans 'Is packaged' %}</th>
+            <th scope="col">{% trans 'Shipping' %}</th>
           </tr>
         </thead>
         <tbody>
@@ -50,7 +51,8 @@
             <td>{% if order.paid %}&#10004{% else %}&#10008{% endif %}</td>
             <td>{{ order.get_shipping_method_display }}</td>
             <td>{% if order.shipping_time %}{{ order.shipping_time }}{% endif %}</td>
-            <td>{% if order.shipping_status == "full" %}&#10004{% else %}<a href="{% url 'staff:order_shipped' order.id %}" onclick="return popitup('/staff/orders/shipping/{{ order.id }}')" class="btn btn-outline-secondary">{% if order.shipping_status == "semi" %}{% trans 'Semi shipped' %}{% else %}{% trans 'Ship order' %}{% endif %}</a>{% endif %}</td>
+            <td>{% if order.is_packaged %}&#10004{% endif %}</td>
+            <td>{% if order.shipping_status == "full" %}&#10004 {% if order.shipped_code %}- {{ order.shipped_code }}{% endif %}{% else %}<a href="{% url 'staff:order_shipped' order.id %}" onclick="return popitup('/staff/orders/shipping/{{ order.id }}')" class="btn btn-outline-secondary">{% if order.shipping_status == "semi" %}{% trans 'Semi shipped' %}{% else %}{% trans 'Shipping' %}{% endif %}</a>{% endif %}</td>
             <td><a href="{% url 'tools:print_invoice' order.id %}" target="_blank" class="btn btn-outline-secondary ">{% trans 'Print' %}</a></td>
           </tr>
           {% endfor %}

@@ -54,6 +54,18 @@
           <td>{% if order.paid %}&#10004{% else %}&#10008{% endif %}</td>
         </tr>
         <tr>
+          <td>{%trans 'Order quantity' %}</td>
+          <td>{{ order.quantity }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Is packacge' %}</td>
+          <td>{% if order.is_packaged %}&#10004{% else %}&#10008{% endif %}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Packacged quantity' %}</td>
+          <td>{% if order.packaged_quantity %}{{ order.packaged_quantity}}{% endif %}</td>
+        </tr>
+        <tr>
           <td>{%trans 'Billing address' %}</td>
           <td>{{ order.billing_address.get_full_address | linebreaksbr }}</td>
         </tr>

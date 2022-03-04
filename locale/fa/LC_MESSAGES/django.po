@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-03 10:16+0330\n"
-"PO-Revision-Date: 2022-03-03 10:18+0330\n"
+"POT-Creation-Date: 2022-03-04 12:22+0330\n"
+"PO-Revision-Date: 2022-03-04 12:23+0330\n"
 "Last-Translator: رحیم  <rahim.aghareb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -36,7 +36,7 @@ msgstr "پسوردها یکسان نیستند"
 #: templates/staff/collection_management.html:44
 #: templates/staff/crafts/craft_list.html:49
 #: templates/staff/invoice_create.html:134
-#: templates/staff/order_shipping.html:71 templates/staff/products.html:49
+#: templates/staff/order_shipping.html:71 templates/staff/products.html:50
 #: templates/staff/purchase/_purchase_list_block.html:13
 #: templates/staff/purchase_create.html:25
 #: templates/staff/purchase_create.html:83
@@ -87,9 +87,10 @@ msgstr "تلفن گیرنده"
 msgid "Billing"
 msgstr "آدرس خرید"
 
-#: account/models.py:16
+#: account/models.py:16 templates/staff/orders.html:35
+#: templates/staff/orders.html:55
 msgid "Shipping"
-msgstr "آدرس ارسال"
+msgstr "ارسال"
 
 #: account/models.py:164 orders/forms.py:56
 #: templates/shop/product_detail.html:128
@@ -104,8 +105,8 @@ msgstr "تامین‌کننده"
 msgid "Vendors"
 msgstr "تامین‌کنندگان"
 
-#: account/views.py:57 account/views.py:180 staff/views.py:196
-#: staff/views.py:220 staff/views.py:1209 staff/views.py:1235
+#: account/views.py:57 account/views.py:180 staff/views.py:220
+#: staff/views.py:244 staff/views.py:1239 staff/views.py:1265
 msgid "Form is not valid"
 msgstr "فرم معتبر نیست"
 
@@ -158,7 +159,7 @@ msgstr "کانال"
 msgid "Invoice discount"
 msgstr "تخفیف فاکتور"
 
-#: orders/forms.py:34 templates/staff/order_detail_for_admin.html:66
+#: orders/forms.py:34 templates/staff/order_detail_for_admin.html:78
 #: templates/staff/order_payment_manage.html:66
 #: templates/staff/order_shipped.html:74
 #: templates/staff/order_shipping.html:59 templates/staff/orders.html:32
@@ -174,8 +175,8 @@ msgstr "روش ارسال"
 msgid "Shipping cost"
 msgstr "هزینه ارسال"
 
-#: orders/forms.py:36 staff/forms.py:71
-#: templates/staff/order_detail_for_admin.html:70
+#: orders/forms.py:36 staff/forms.py:73
+#: templates/staff/order_detail_for_admin.html:82
 #: templates/staff/order_payment_manage.html:70 templates/staff/orders.html:33
 msgid "Shipping time"
 msgstr "زمان ارسال"
@@ -206,7 +207,7 @@ msgstr "نو"
 
 #: orders/forms.py:76 products/models.py:66 products/models.py:416
 #: templates/_base.html:75 templates/_base_files_app.html:45
-#: templates/shop/store_book_search.html:51 templates/staff/products.html:53
+#: templates/shop/store_book_search.html:51 templates/staff/products.html:54
 #: templates/staff/sold_products.html:43
 msgid "Used"
 msgstr "دست دوم"
@@ -221,7 +222,7 @@ msgstr "پیش‌نویس"
 
 #: orders/models.py:23 templates/staff/order_detail_for_admin.html:53
 #: templates/staff/order_list_by_country.html:35
-#: templates/staff/order_payment_manage.html:50 templates/staff/orders.html:31
+#: templates/staff/order_payment_manage.html:50
 #: templates/tools/pdf/invoice_pdf_a4.html:34
 #: templates/zarinpal/payment_list.html:36
 msgid "Paid"
@@ -255,7 +256,7 @@ msgstr "ارسال موتوری"
 msgid "Pickup"
 msgstr "تحویل حضوری"
 
-#: orders/models.py:36 templates/staff/orders.html:53
+#: orders/models.py:36 templates/staff/orders.html:55
 msgid "Semi shipped"
 msgstr "ارسال ناقص"
 
@@ -359,13 +360,13 @@ msgstr "نام یا شماره تلفن"
 
 #: search/forms.py:34 templates/shop/product_detail.html:89
 #: templates/staff/collection_management.html:43
-#: templates/staff/products.html:48 templates/staff/sold_products.html:22
+#: templates/staff/products.html:49 templates/staff/sold_products.html:22
 #: templates/staff/used_book_prices.html:26
 #: templates/tools/pdf/invoice_pdf_a4.html:43
 msgid "ISBN"
 msgstr "شابک"
 
-#: staff/forms.py:48 staff/views.py:949 templates/cart/detail.html:17
+#: staff/forms.py:50 staff/views.py:973 templates/cart/detail.html:17
 #: templates/staff/_order_table.html:15 templates/staff/draft_orders.html:32
 #: templates/staff/invoice_create.html:71
 #: templates/staff/invoice_create.html:136
@@ -387,142 +388,153 @@ msgstr "شابک"
 msgid "Quantity"
 msgstr "تعداد"
 
-#: staff/forms.py:69
+#: staff/forms.py:71
 msgid "Shipping code"
 msgstr "کد پیگیری ارسال"
 
-#: staff/forms.py:70 templates/staff/order_list_by_country.html:37
-#: templates/staff/orders.html:34
+#: staff/forms.py:72 templates/staff/order_list_by_country.html:37
 msgid "Shipping status"
 msgstr "وضعیت ارسال"
 
-#: staff/forms.py:80
+#: staff/forms.py:74 templates/staff/orders.html:34
+msgid "Is packaged"
+msgstr "بسته‌بندی"
+
+#: staff/forms.py:83
 msgid "Related product"
 msgstr "محصولات وابسته "
 
-#: staff/forms.py:82
+#: staff/forms.py:85
 msgid "Please add one ISBN each time"
 msgstr "لطفاً هر بار فقط یک شابک وارد کنید"
 
-#: staff/forms.py:103 templates/shop/product_detail.html:125
+#: staff/forms.py:106 templates/shop/product_detail.html:125
 #: templates/staff/price_management.html:75
 msgid "Price used"
 msgstr "قیمت دست‌دوم"
 
-#: staff/views.py:162 staff/views.py:191
+#: staff/views.py:181
+msgid "A product with same isbn is available"
+msgstr "یک محصول مشابه با این شابک وجود دارد"
+
+#: staff/views.py:186 staff/views.py:215
 msgid "Product updated"
 msgstr "محصول به‌روزرسانی شد!"
 
-#: staff/views.py:164
+#: staff/views.py:188
 msgid "Product is created"
 msgstr "محصول ساخته شد"
 
-#: staff/views.py:215
+#: staff/views.py:239
 msgid "Category is created!"
 msgstr "دسته‌بندی ساخته شد!"
 
-#: staff/views.py:253
+#: staff/views.py:277
 msgid "Product is created!"
 msgstr "محصول ساخته شد!"
 
-#: staff/views.py:268
+#: staff/views.py:292
 msgid "Product created"
 msgstr "محصول ساخته شد!"
 
-#: staff/views.py:271
+#: staff/views.py:295
 msgid "Product does not created!"
 msgstr "محصول ساخته نشد!"
 
-#: staff/views.py:376 staff/views.py:433 staff/views.py:544
+#: staff/views.py:400 staff/views.py:457 staff/views.py:568
 msgid "You could not add product without price"
 msgstr "شما نمی‌توانید محصول بدون قیمت به فاکتور اضافه کنید "
 
-#: staff/views.py:380 staff/views.py:437 staff/views.py:547
+#: staff/views.py:404 staff/views.py:461 staff/views.py:571
 msgid "You are adding zero stock!"
 msgstr "شما بیشتر از موجودی این محصول سفارش ثبت کرده‌اید"
 
-#: staff/views.py:426 staff/views.py:484 staff/views.py:603
+#: staff/views.py:450 staff/views.py:508 staff/views.py:627
 msgid "Product is added to invoice"
 msgstr "محصول به فاکتور اضافه شد"
 
-#: staff/views.py:446 staff/views.py:574
+#: staff/views.py:470 staff/views.py:598
 msgid "Order is created"
 msgstr "سفارش ایجاد شد"
 
-#: staff/views.py:551
+#: staff/views.py:575
 msgid "This product has other prices"
 msgstr "این کتاب قیمت‌های دیگری دارد"
 
-#: staff/views.py:702
+#: staff/views.py:726
 msgid "Order approved"
 msgstr "سفارش تأیید شد"
 
-#: staff/views.py:736
+#: staff/views.py:760
 msgid "Credit of client added to discount of order"
 msgstr "اعتبار مشتری به مبلغ تخفیف سفارش اضافه شد"
 
-#: staff/views.py:748
+#: staff/views.py:772
 msgid "Order paid with credit"
 msgstr "سفارش با اعتبار مشتری پرداخت شد"
 
-#: staff/views.py:767
+#: staff/views.py:791
 msgid "Client added to order"
 msgstr "مشتری به سفارش اضافه شد"
 
-#: staff/views.py:913
+#: staff/views.py:937
 msgid "You are adding zero stock"
 msgstr "شما بیشتر از موجودی این محصول سفارش ثبت کرده‌اید"
 
-#: staff/views.py:949
+#: staff/views.py:973
 msgid "Order line updated"
 msgstr "ردیف سفارش به‌روزرسانی شد "
 
-#: staff/views.py:1022
+#: staff/views.py:1046
 msgid "This order is not empty"
 msgstr "این سفارش خالی نیست"
 
-#: staff/views.py:1025
+#: staff/views.py:1049
 msgid "Draft order removed"
 msgstr "سفارش پیش‌نویس حذف شد"
 
-#: staff/views.py:1032
+#: staff/views.py:1056
 msgid "This order is shipped"
 msgstr "این سفارش ارسال شده‌است"
 
-#: staff/views.py:1038
+#: staff/views.py:1058
+msgid "This order is completely packaged"
+msgstr "این سفارش به طور کامل بسته‌بندی شده"
+
+#: staff/views.py:1068
 msgid "Order status changed to draft"
 msgstr "وضعیت سفارش به پیش نویس تغییر کرد"
 
-#: staff/views.py:1186 staff/views.py:1213
+#: staff/views.py:1216 staff/views.py:1243
 #: templates/tools/pdf/print_address.html:29
 msgid "Tehran"
 msgstr "تهران"
 
-#: staff/views.py:1204
+#: staff/views.py:1234
 msgid "Vendor is added!"
 msgstr "تأمین‌کننده اضافه شد!"
 
-#: staff/views.py:1232
+#: staff/views.py:1262
 msgid "Vendor is updated"
 msgstr "تأمین‌کننده به‌روزرسانی شد!"
 
-#: staff/views.py:1361
+#: staff/views.py:1394
 msgid "This product is in this collection"
 msgstr "این کتاب در این مجموعه وجود دارد "
 
-#: staff/views.py:1367
+#: staff/views.py:1400
 msgid "Product does not found"
 msgstr "محصول پیدا نشد"
 
-#: staff/views.py:1377
+#: staff/views.py:1410
 msgid "The product added to collection"
 msgstr "محصول به این مجموعه اضافه شد"
 
-#: staff/views.py:1405
+#: staff/views.py:1438
 msgid "This product removed from the collection"
 msgstr "این کتاب از این مجموعه حذف شد"
 
-#: staff/views.py:1469
+#: staff/views.py:1502
 msgid "New craft is created"
 msgstr "محصول صنایع‌دستی ایجاد شد"
 
@@ -742,8 +754,8 @@ msgstr "اضافه کردن مشتری"
 #: templates/staff/order_payment_manage.html:79
 #: templates/staff/order_shipped.html:34
 #: templates/staff/price_management.html:95
-#: templates/staff/product_create.html:32
-#: templates/staff/product_create.html:33 templates/staff/products.html:38
+#: templates/staff/product_create.html:35
+#: templates/staff/product_create.html:36 templates/staff/products.html:39
 #: templates/staff/purchase/purchase_create.html:26
 #: templates/staff/purchase/purchase_details.html:32
 #: templates/staff/purchase/purchaseline_add.html:38
@@ -797,7 +809,7 @@ msgid "Email"
 msgstr "ایمیل"
 
 #: templates/account/clients/client_details.html:48
-#: templates/staff/order_detail_for_admin.html:57
+#: templates/staff/order_detail_for_admin.html:69
 #: templates/staff/order_payment_manage.html:58
 #: templates/staff/order_shipped.html:66
 #: templates/staff/order_shipping.html:51
@@ -815,7 +827,7 @@ msgid "Add address"
 msgstr "افزودن آدرس"
 
 #: templates/account/clients/client_details.html:62
-#: templates/staff/order_detail_for_admin.html:61
+#: templates/staff/order_detail_for_admin.html:73
 #: templates/staff/order_payment_manage.html:62
 #: templates/staff/order_shipped.html:70
 #: templates/staff/order_shipping.html:55
@@ -830,7 +842,7 @@ msgstr "جستجو"
 
 #: templates/account/clients/client_list.html:36
 #: templates/staff/collection_management.html:42
-#: templates/staff/crafts/craft_list.html:47 templates/staff/products.html:47
+#: templates/staff/crafts/craft_list.html:47 templates/staff/products.html:48
 msgid "Edit"
 msgstr "اصلاح"
 
@@ -839,12 +851,10 @@ msgid "Client code"
 msgstr "کد مشتری"
 
 #: templates/account/clients/client_list.html:56
-#| msgid "Billing address"
 msgid "Print billing address"
 msgstr "چاپ آدرس خرید"
 
 #: templates/account/clients/client_list.html:62
-#| msgid "Shipping address"
 msgid "Print shipping address"
 msgstr "چاپ آدرس ارسال"
 
@@ -968,7 +978,7 @@ msgstr "قیمت واحد"
 #: templates/staff/collection_management.html:48
 #: templates/staff/crafts/craft_list.html:50
 #: templates/staff/invoice_create.html:139
-#: templates/staff/order_shipping.html:76 templates/staff/products.html:51
+#: templates/staff/order_shipping.html:76 templates/staff/products.html:52
 #: templates/staff/purchase/_purchase_list_block.html:16
 #: templates/staff/purchase/_purchase_list_block.html:17
 #: templates/staff/purchase/purchaseline_add.html:34
@@ -1077,7 +1087,7 @@ msgstr "انتقال به درگاه پرداخت"
 #: templates/staff/crafts/craft_list.html:50
 #: templates/staff/draft_orders.html:33 templates/staff/draft_orders.html:34
 #: templates/staff/draft_orders.html:35 templates/staff/order_shipping.html:76
-#: templates/staff/order_shipping.html:78 templates/staff/products.html:51
+#: templates/staff/order_shipping.html:78 templates/staff/products.html:52
 #: templates/staff/purchase/_purchase_list_block.html:16
 #: templates/staff/purchase/_purchase_list_block.html:17
 #: templates/staff/purchase/_purchase_list_block.html:20
@@ -1329,7 +1339,7 @@ msgstr "مترجم"
 #: templates/staff/_order_table.html:14
 #: templates/staff/collection_management.html:47
 #: templates/staff/invoice_create.html:135
-#: templates/staff/order_shipping.html:73 templates/staff/products.html:56
+#: templates/staff/order_shipping.html:73 templates/staff/products.html:57
 #: templates/staff/purchase/_purchase_list_block.html:14
 #: templates/staff/used_book_prices.html:30
 msgid "Publisher"
@@ -1397,7 +1407,7 @@ msgstr "نام لاتین نویسنده"
 
 #: templates/shop/product_detail.html:118
 #: templates/shop/product_detail.html:124
-#: templates/staff/crafts/craft_list.html:51 templates/staff/products.html:50
+#: templates/staff/crafts/craft_list.html:51 templates/staff/products.html:51
 #: templates/staff/used_book_prices.html:48
 msgid "Stock"
 msgstr "موجودی"
@@ -1519,12 +1529,12 @@ msgid "Category create"
 msgstr "ایجاد دسته‌بندی"
 
 #: templates/staff/category_create.html:24
-#: templates/staff/product_create.html:31
+#: templates/staff/product_create.html:34
 msgid "Cancel"
 msgstr "لغو"
 
 #: templates/staff/category_create.html:26
-#: templates/staff/product_create.html:33
+#: templates/staff/product_create.html:36
 msgid "Save and add another"
 msgstr "ذخیره و اضافه کردن یکی دیگر"
 
@@ -1644,7 +1654,7 @@ msgstr ""
 #: templates/staff/invoice_checkout.html:125
 #: templates/staff/invoice_create.html:110
 #: templates/staff/order_add_client.html:60
-#: templates/staff/order_detail_for_admin.html:82
+#: templates/staff/order_detail_for_admin.html:94
 #: templates/staff/order_payment_manage.html:82
 #: templates/staff/order_shipping.html:64
 #: templates/staff/purchase_create.html:76
@@ -1724,13 +1734,13 @@ msgstr "ذخیره پیش‌نویس"
 #: templates/staff/invoice_create.html:205
 #: templates/staff/order_add_client.html:70
 #: templates/staff/order_detail_for_admin.html:21
-#: templates/staff/orders.html:54 templates/staff/purchase_create.html:151
+#: templates/staff/orders.html:56 templates/staff/purchase_create.html:151
 msgid "Print"
 msgstr "چاپ"
 
 #: templates/staff/invoice_create.html:208
 #: templates/staff/order_add_client.html:73
-#: templates/staff/order_detail_for_admin.html:88
+#: templates/staff/order_detail_for_admin.html:100
 #: templates/staff/order_payment_manage.html:88
 #: templates/staff/purchase_create.html:153
 msgid "PDF"
@@ -1738,7 +1748,7 @@ msgstr ""
 
 #: templates/staff/invoice_create.html:209
 #: templates/staff/order_add_client.html:74
-#: templates/staff/order_detail_for_admin.html:89
+#: templates/staff/order_detail_for_admin.html:101
 #: templates/staff/order_payment_manage.html:89
 msgid "PDF A4"
 msgstr ""
@@ -1754,7 +1764,6 @@ msgid "Add client to the order"
 msgstr "اضافه کردن مشتری به سفارش"
 
 #: templates/staff/order_add_client.html:54
-#| msgid "Create invoice"
 msgid "Back to invoice"
 msgstr "برگشت به فاکتور "
 
@@ -1812,7 +1821,19 @@ msgstr "وضعیت سفارش"
 msgid "Channel"
 msgstr "کانال"
 
-#: templates/staff/order_detail_for_admin.html:74
+#: templates/staff/order_detail_for_admin.html:57
+msgid "Order quantity"
+msgstr "تعداد سفارش"
+
+#: templates/staff/order_detail_for_admin.html:61
+msgid "Is packacge"
+msgstr "بسته‌بندی"
+
+#: templates/staff/order_detail_for_admin.html:65
+msgid "Packacged quantity"
+msgstr "تعداد بسته‌بندی شده"
+
+#: templates/staff/order_detail_for_admin.html:86
 #: templates/staff/order_payment_manage.html:54
 #: templates/staff/order_shipped.html:62
 #: templates/staff/order_shipping.html:47
@@ -1858,9 +1879,9 @@ msgstr "ارسال سفارش"
 msgid "Shipped"
 msgstr "ارسال شده"
 
-#: templates/staff/orders.html:53
-msgid "Ship order"
-msgstr "ارسال سفارش"
+#: templates/staff/orders.html:31
+msgid "Payment"
+msgstr "پرداخت"
 
 #: templates/staff/price_management.html:11
 #: templates/staff/purchase/purchaseline_add.html:11
@@ -1904,38 +1925,7 @@ msgstr "اضافه کردن تنوع قیمت"
 msgid "Product create"
 msgstr "محصول جدید"
 
-#: templates/staff/product_create.html:20
-msgid "Notice "
-msgstr "توجه"
-
-#: templates/staff/product_create.html:22
-msgid "If you add other prices check the field"
-msgstr ""
-"اگر قیمت‌ یا موجودی دیگری غیر از قیمت اصلی تعیین می‌کنید حتماً این گزینه را "
-"تیک بزنید:"
-
-#: templates/staff/product_create.html:23
-msgid "For define used book you should add stock used or price used"
-msgstr ""
-"برای تعریف نسخه دست‌دوم از یک کتاب ابتدا کتاب را بسازید و سپس قیمت یا موجودی"
-" دست‌دوم برای آن تعریف کنید و تیک «دارای قیمت‌های دیگر» را هم بزنید. اگر "
-"کتاب نسخه نو ندارد موجودی و قیمت اصلی را صفر در نظر بگیرید"
-
-#: templates/staff/product_create.html:24
-msgid ""
-"Usually you should not add price 1 to 5 unless some problem happens these "
-"prices are made in purchase invoice"
-msgstr ""
-"معمولاً نباید قیمت‌های ۱ تا ۵ در این صفحه تعریف شوند مگر موارد خاص. این "
-"قیمت‌ها در صفحه فاکتور خرید قابل مدیریت و اضافه شدن به محصول هستند"
-
-#: templates/staff/product_create.html:25
-msgid "All prices and stocks should be zero"
-msgstr ""
-"اگر برای محصول قیمت یا موجودی تعریف نشده است فیلد مورد نظر باید صفر باشد"
-
 #: templates/staff/products.html:25
-#| msgid "Add products"
 msgid "All products"
 msgstr "تمام محصولات"
 
@@ -1944,27 +1934,31 @@ msgid "Could be very slow or it may crash"
 msgstr ""
 
 #: templates/staff/products.html:26
-#| msgid "You can not add product without price"
 msgid "Used products without price"
 msgstr "کالای دست‌دوم بدون قیمت "
 
-#: templates/staff/products.html:52
+#: templates/staff/products.html:27
+#| msgid "All products"
+msgid "All used products"
+msgstr "تمام محصولات دست‌دوم"
+
+#: templates/staff/products.html:53
 msgid "Other prices"
 msgstr "قیمت‌های دیگر"
 
-#: templates/staff/products.html:54
+#: templates/staff/products.html:55
 msgid "Used stock"
 msgstr "موجودی دست‌دوم"
 
-#: templates/staff/products.html:55
+#: templates/staff/products.html:56
 msgid "Store position"
 msgstr "موقعیت در فروشگاه"
 
-#: templates/staff/products.html:68 templates/staff/used_book_prices.html:41
+#: templates/staff/products.html:69 templates/staff/used_book_prices.html:41
 msgid "Not in market"
 msgstr ""
 
-#: templates/staff/products.html:74
+#: templates/staff/products.html:75
 msgid "Bahman"
 msgstr ""
 
@@ -2447,6 +2441,34 @@ msgstr "این لینک پرداخت قبلاً ساخته شده است"
 #: zarinpal/views.py:347
 msgid "Payment link is created"
 msgstr "لینک پرداخت ایجاد شد"
+
+#~ msgid "Notice "
+#~ msgstr "توجه"
+
+#~ msgid "If you add other prices check the field"
+#~ msgstr ""
+#~ "اگر قیمت‌ یا موجودی دیگری غیر از قیمت اصلی تعیین می‌کنید حتماً این گزینه را "
+#~ "تیک بزنید:"
+
+#~ msgid "For define used book you should add stock used or price used"
+#~ msgstr ""
+#~ "برای تعریف نسخه دست‌دوم از یک کتاب ابتدا کتاب را بسازید و سپس قیمت یا موجودی"
+#~ " دست‌دوم برای آن تعریف کنید و تیک «دارای قیمت‌های دیگر» را هم بزنید. اگر "
+#~ "کتاب نسخه نو ندارد موجودی و قیمت اصلی را صفر در نظر بگیرید"
+
+#~ msgid ""
+#~ "Usually you should not add price 1 to 5 unless some problem happens these "
+#~ "prices are made in purchase invoice"
+#~ msgstr ""
+#~ "معمولاً نباید قیمت‌های ۱ تا ۵ در این صفحه تعریف شوند مگر موارد خاص. این "
+#~ "قیمت‌ها در صفحه فاکتور خرید قابل مدیریت و اضافه شدن به محصول هستند"
+
+#~ msgid "All prices and stocks should be zero"
+#~ msgstr ""
+#~ "اگر برای محصول قیمت یا موجودی تعریف نشده است فیلد مورد نظر باید صفر باشد"
+
+#~ msgid "Ship order"
+#~ msgstr "ارسال سفارش"
 
 #~ msgid "Print Address"
 #~ msgstr "چاپ آدرس"

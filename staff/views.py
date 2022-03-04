@@ -24,6 +24,7 @@ from account.models import CustomUser, Vendor, Address, Credit
 from search.views import ProductSearch
 from tools.fa_to_en_num import number_converter
 from tools.gregory_to_hijry import *
+from tools.views import notif_email_to_managers
 
 
 def sales(request):
@@ -147,8 +148,8 @@ def product_create(request, product_id=None):
                 request.POST,
                 files=request.FILES)
         if form.is_valid():
+            new_product = form.save(commit=False)
             # # TODO: this part does not work properly
-            # new_product = form.save(commit=False)
             # new_product.product_type = 'book'
             # if form.price_1 or form.price_2 or form.price_3 or form.price_4 or form.price_5 or form.price_used:
             #     new_product.has_other_prices = True
@@ -157,7 +158,30 @@ def product_create(request, product_id=None):
             # if form.stock_used:
             #     new_product.has_other_prices = True
             # new_product.save()
-            form.save()
+            if not product:
+                isbn = new_product.isbn if new_product.isbn else None
+                if isbn:
+                    if len(isbn) == 13:
+                        isbn_9 = isbn[3:-1]
+                    elif len(isbn) == 10:
+                        isbn_9 = isbn[:-1]
+                    elif len(isbn) == 9:
+                        isbn_9 = isbn
+                    else:
+                        isbn_9 = None
+                try:
+                    products = Product.objects.filter(Q(isbn=isbn) | Q(isbn_9=isbn_9))
+                except:
+                    pass
+                if len(products) > 0:
+                    if isbn_9:
+                        product = Product.objects.get(isbn_9=isbn_9)
+                    else:
+                        product = Product.objects.get(isbn=isbn)
+                    messages.error(request, _('A product with same isbn is available') + ': {} - {}'.format(product.name, product.isbn))
+                    return redirect('staff:product_create')
+            new_product.save()
+
             if product_id:
                 messages.success(request, _('Product updated'))
             else:
@@ -687,7 +711,6 @@ def invoice_checkout(request, order_id, client_id=None):
             order.status = 'approved'
             order.approver = request.user
             order.approved_date = datetime.now()
-
             order.billing_address = client.default_billing_address
             order.shipping_address = client.default_shipping_address
 
@@ -698,6 +721,7 @@ def invoice_checkout(request, order_id, client_id=None):
 
             order.shipping_method = checkout_form.cleaned_data['shipping_method']
             order.shipping_cost = checkout_form.cleaned_data['shipping_cost']
+
             order.save()
             messages.success(request, _('Order approved'))
             # return redirect('staff:order_list', period='all', channel='all')
@@ -1030,6 +1054,12 @@ def invoice_back_to_draft(request, order_id):
     order = Order.objects.get(pk=order_id)
     if order.shipping_status == 'full':
         messages.warning(request, _('This order is shipped'))
+    if order.is_packaged :
+        messages.warning(request, _('This order is completely packaged'))
+        subject = '[Warning] ' + 'A packaged order is changed'
+        message = f"A packaged order send back to draft \nOrder no.: {order_id} \nClient: {order.client.first_name} {order.client.last_name}"
+        recivers = ['rahim.aghareb@gmail.com', 'mahazr77@gmail.com']
+        notif_email_to_managers(subject, message, recivers)
 
     order.approver = None
     order.approved_date = None
@@ -1262,10 +1292,13 @@ def order_shipping(request, order_id):
     if request.method == 'POST':
         shipping_form = OrderShippingForm(data=request.POST, instance=order)
         if shipping_form.is_valid():
-            shipping_form.save()
+            form = shipping_form.save(commit=False)
+            if form.is_packaged:
+                order.packaged_quantity = order.quantity
             # order.status = shipping_form.cleaned_data['shipping_status']
             # order.shipped_code = shipping_form.cleaned_data['shipped_code']
-            # order.save()
+            form.save()
+            order.save()
             form_submit = True
             messages.success(request, 'Shipping status is updated')
             messages.warning(request, 'Update the order list')
