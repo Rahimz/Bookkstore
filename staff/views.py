@@ -1117,6 +1117,7 @@ def sold_products(request, days=365):
     #         'created': 'created',
     #         'stock': 'y',
     #          'variation': 'new main'
+    #          'id': 'id'
     #     }
     # }
     for item in order_lines:
@@ -1136,6 +1137,7 @@ def sold_products(request, days=365):
                 'stock': item.product.stock,
                 'variaton': item.variation,
                 'isbn': item.product.isbn,
+                'id': item.product.id,
                 }
 
 

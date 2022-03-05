@@ -21,6 +21,7 @@
           <th scope="">{% trans 'Product ID' %}</th>
           <th scope="">{% trans 'ISBN' %}</th>
           <th scope="">{% trans 'Name' %}</th>
+          <th scope="">{% trans 'Flow' %}</th>
           <th scope="">{% trans 'Quantity' %}</th>
           <th scope="">{% trans 'Status' %}</th>
           <th scope="">{% trans 'Date' %}</th>
@@ -34,6 +35,7 @@
           <td>{{ line }}</td>
 
           <td>{{ item.isbn }}</td>
+          <td><a href="{% url 'warehouses:product_workflow' item.id %}"><img src="{% static 'img/proccess.png' %}" alt="product flow"></a></td>
           <td>{{ item.name }}</td>
           <td>{{ item.quantity }}</td>
           <td>
