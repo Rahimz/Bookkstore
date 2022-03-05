@@ -17,5 +17,7 @@ urlpatterns = [
     path('used-product-without-price-export/<str:filter>/', views.product_export_excel, name="used_noprice_export_excel"),
     path('used-product-all-export/<str:filter>/', views.product_export_excel, name="used_all_export_excel"),
 
+    path('used-product-before-5/', views.used_product_before_5, name="used_product_before_5"),
+
     path('qrcode/create/<int:order_id>/<int:payment_id>/', views.qrcode_create, name='qrcode_create'),
 ]
