@@ -11,6 +11,7 @@ from datetime import datetime, timedelta
 from django.utils.translation import gettext_lazy as _
 
 from django_countries.fields import Country
+from tools.gregory_to_hijry import hij_strf_date, greg_to_hij_date
 
 from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm, ProductCollectionForm, AdminPriceManagementForm
 from .forms import CraftUpdateForm
@@ -169,17 +170,19 @@ def product_create(request, product_id=None):
                         isbn_9 = isbn
                     else:
                         isbn_9 = None
+                products = None
                 try:
                     products = Product.objects.filter(Q(isbn=isbn) | Q(isbn_9=isbn_9))
                 except:
                     pass
-                if len(products) > 0:
-                    if isbn_9:
-                        product = Product.objects.get(isbn_9=isbn_9)
-                    else:
-                        product = Product.objects.get(isbn=isbn)
-                    messages.error(request, _('A product with same isbn is available') + ': {} - {}'.format(product.name, product.isbn))
-                    return redirect('staff:product_create')
+                if products:
+                    if len(products) > 0:
+                        if isbn_9:
+                            product = Product.objects.get(isbn_9=isbn_9)
+                        else:
+                            product = Product.objects.get(isbn=isbn)
+                        messages.error(request, _('A product with same isbn is available') + ': {} - {}'.format(product.name, product.isbn))
+                        return redirect('staff:product_create')
             new_product.save()
 
             if product_id:
@@ -1101,8 +1104,18 @@ def category_list(request):
 
 
 @staff_member_required
-def sold_products(request, days=365):
-    order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.now() - timedelta(days)).exclude(product__product_type='craft').order_by('-created')
+def sold_products(request, days=None, date=None):
+    fa_date = None
+    if days:
+        order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.now() - timedelta(days)).exclude(product__product_type='craft').order_by('-created')
+    if date:
+        date = datetime.strptime(date, "%d%m%Y").date()
+        fa_date = hij_strf_date(greg_to_hij_date(date), '%-d %B %Y')
+        # print(fa_date)
+        # hij_strf_date(greg_to_hij_date(order.created.date()), '%-d %B %Y')
+        order_lines = OrderLine.objects.all().filter(active=True).filter(created__date=date)
+        print(len(order_lines))
+        # all_payment = Payment.objects.filter(created__date__gte='2022-02-01').aggregate(total_amount=Sum('amount'))
     # order_lines = OrderLine.objects.all().values_list(product.id, flat=True)
     products = dict()
     main_stock = dict()
@@ -1115,6 +1128,7 @@ def sold_products(request, days=365):
     #         'created': 'created',
     #         'stock': 'y',
     #          'variation': 'new main'
+    #          'id': 'id'
     #     }
     # }
     for item in order_lines:
@@ -1134,6 +1148,7 @@ def sold_products(request, days=365):
                 'stock': item.product.stock,
                 'variaton': item.variation,
                 'isbn': item.product.isbn,
+                'id': item.product.id,
                 }
 
 
@@ -1146,6 +1161,8 @@ def sold_products(request, days=365):
          'main_stock': main_stock,
          'added_line': added_line,
          'check_list': check_list,
+         'date': date,
+         'fa_date': fa_date,
          }
     )
 

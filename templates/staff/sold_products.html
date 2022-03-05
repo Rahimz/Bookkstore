@@ -15,11 +15,30 @@
       {% include "staff/sidebar_staff.html" with barName="warehouse" %}
     </div>
     <div class="col-md-10">
-      <h2>{% trans 'Sold products'%}</h2>
+      <h2>{% trans 'Sold products'%} {% if fa_date%}: {{ fa_date }}{% endif %}</h2>
+      <p>
+        {% trans 'Esfand' %}:
+        <a href="{% url 'staff:sold_products_date' date='05032022' %}" class="btn btn-sm btn-outline-secondary">14</a>
+        <a href="{% url 'staff:sold_products_date' date='04032022' %}" class="btn btn-sm btn-outline-secondary">13</a>
+        <a href="{% url 'staff:sold_products_date' date='03032022' %}" class="btn btn-sm btn-outline-secondary">12</a>
+        <a href="{% url 'staff:sold_products_date' date='02032022' %}" class="btn btn-sm btn-outline-secondary">11</a>
+        <a href="{% url 'staff:sold_products_date' date='01032022' %}" class="btn btn-sm btn-outline-secondary">10</a>
+        <a href="{% url 'staff:sold_products_date' date='28022022' %}" class="btn btn-sm btn-outline-secondary">9</a>
+        <a href="{% url 'staff:sold_products_date' date='27022022' %}" class="btn btn-sm btn-outline-secondary">8</a>
+        <a href="{% url 'staff:sold_products_date' date='26022022' %}" class="btn btn-sm btn-outline-secondary">7</a>
+        <a href="{% url 'staff:sold_products_date' date='25022022' %}" class="btn btn-sm btn-outline-secondary">6</a>
+        <a href="{% url 'staff:sold_products_date' date='24022022' %}" class="btn btn-sm btn-outline-secondary">5</a>
+        <a href="{% url 'staff:sold_products_date' date='23022022' %}" class="btn btn-sm btn-outline-secondary">4</a>
+        <a href="{% url 'staff:sold_products_date' date='22022022' %}" class="btn btn-sm btn-outline-secondary">3</a>
+        <a href="{% url 'staff:sold_products_date' date='21022022' %}" class="btn btn-sm btn-outline-secondary">2</a>
+        <a href="{% url 'staff:sold_products_date' date='20022022' %}" class="btn btn-sm btn-outline-secondary">1</a>
+
+      </p>
       <table class="table table-striped">
         <thead>
           <th scope="">{% trans 'Product ID' %}</th>
           <th scope="">{% trans 'ISBN' %}</th>
+          <th scope="">{% trans 'Flow' %}</th>
           <th scope="">{% trans 'Name' %}</th>
           <th scope="">{% trans 'Quantity' %}</th>
           <th scope="">{% trans 'Status' %}</th>
@@ -34,6 +53,7 @@
           <td>{{ line }}</td>
 
           <td>{{ item.isbn }}</td>
+          <td><a href="{% url 'warehouses:product_workflow' item.id %}"><img src="{% static 'img/proccess.png' %}" alt="product flow"></a></td>
           <td>{{ item.name }}</td>
           <td>{{ item.quantity }}</td>
           <td>

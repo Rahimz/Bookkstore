@@ -259,6 +259,10 @@ class Order(models.Model):
             return hij_strf_date(greg_to_hij_date(self.approved_date.date()), '%-d %B %Y')
         else:
             return
+
+    def get_fa_created(self):
+        return hij_strf_date(greg_to_hij_date(self.created.date()), '%-d %B %Y')
+
     # def get_absolute_url(self):
     #     return reverse('shop:product_detail',
     #                    args=[self.id])

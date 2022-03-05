@@ -2,10 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import gettext_lazy as _
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
+from django.db.models import Sum
 
 from .forms import RefundClientForm
 from .models import Refund
-from orders.models import Order
+from orders.models import Order, OrderLine, PurchaseLine
 from account.models import CustomUser, Credit
 from products.models import Product
 
@@ -76,5 +77,29 @@ def refund_list_client(request):
         'staff/refund_list_client.html',
         {
         'refunds':refunds
+        }
+    )
+
+
+@staff_member_required
+def product_workflow(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+
+    product_sales = OrderLine.objects.filter(active=True).filter(product=product).order_by('pk')
+    sales = OrderLine.objects.filter(active=True).filter(product=product).aggregate(quantity=Sum('quantity'))
+
+    product_purchases = PurchaseLine.objects.filter(active=True).filter(product=product).order_by('pk')
+    purchases = PurchaseLine.objects.filter(active=True).filter(product=product).aggregate(quantity=Sum('quantity'))
+
+    # order_0_day = Order.objects.filter(active=True).filter(created__date=(datetime.now().date())).aggregate(total_sales=Sum('payable'), total_quantity=Sum('quantity'))
+    return render(
+        request,
+        'warehouses/product_workflow.html',
+        {
+            'product': product,
+            'product_sales': product_sales,
+            'sales': sales,
+            'product_purchases': product_purchases,
+            'purchases': purchases,
         }
     )
