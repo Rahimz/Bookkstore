@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-04 12:22+0330\n"
+"POT-Creation-Date: 2022-03-05 10:19+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,7 +40,7 @@ msgstr ""
 #: templates/staff/purchase_create.html:25
 #: templates/staff/purchase_create.html:83
 #: templates/staff/purchased_products.html:25
-#: templates/staff/sold_products.html:23
+#: templates/staff/sold_products.html:41
 #: templates/staff/zero_stock_list.html:25
 msgid "Name"
 msgstr ""
@@ -104,8 +104,8 @@ msgstr ""
 msgid "Vendors"
 msgstr ""
 
-#: account/views.py:57 account/views.py:180 staff/views.py:220
-#: staff/views.py:244 staff/views.py:1239 staff/views.py:1265
+#: account/views.py:57 account/views.py:180 staff/views.py:223
+#: staff/views.py:247 staff/views.py:1256 staff/views.py:1282
 msgid "Form is not valid"
 msgstr ""
 
@@ -200,14 +200,14 @@ msgstr ""
 #: orders/forms.py:75 products/models.py:65 products/models.py:415
 #: templates/_base.html:72 templates/_base_files_app.html:42
 #: templates/shop/store_book_search.html:40
-#: templates/staff/sold_products.html:41
+#: templates/staff/sold_products.html:61
 msgid "New"
 msgstr ""
 
 #: orders/forms.py:76 products/models.py:66 products/models.py:416
 #: templates/_base.html:75 templates/_base_files_app.html:45
 #: templates/shop/store_book_search.html:51 templates/staff/products.html:54
-#: templates/staff/sold_products.html:43
+#: templates/staff/sold_products.html:63
 msgid "Used"
 msgstr ""
 
@@ -358,13 +358,13 @@ msgstr ""
 
 #: search/forms.py:34 templates/shop/product_detail.html:89
 #: templates/staff/collection_management.html:43
-#: templates/staff/products.html:49 templates/staff/sold_products.html:22
+#: templates/staff/products.html:49 templates/staff/sold_products.html:40
 #: templates/staff/used_book_prices.html:26
 #: templates/tools/pdf/invoice_pdf_a4.html:43
 msgid "ISBN"
 msgstr ""
 
-#: staff/forms.py:50 staff/views.py:973 templates/cart/detail.html:17
+#: staff/forms.py:50 staff/views.py:976 templates/cart/detail.html:17
 #: templates/staff/_order_table.html:15 templates/staff/draft_orders.html:32
 #: templates/staff/invoice_create.html:71
 #: templates/staff/invoice_create.html:136
@@ -378,11 +378,13 @@ msgstr ""
 #: templates/staff/purchase_create.html:85
 #: templates/staff/purchase_create.html:87
 #: templates/staff/purchased_products.html:26
-#: templates/staff/sold_products.html:24
+#: templates/staff/sold_products.html:43
 #: templates/staff/zero_stock_list.html:26
 #: templates/tools/pdf/invoice_pdf.html:42
 #: templates/tools/pdf/invoice_pdf_a4.html:45
 #: templates/tools/pdf/print_invoice.html:52
+#: templates/warehouses/product_workflow.html:28
+#: templates/warehouses/product_workflow.html:34
 msgid "Quantity"
 msgstr ""
 
@@ -411,128 +413,128 @@ msgstr ""
 msgid "Price used"
 msgstr ""
 
-#: staff/views.py:181
+#: staff/views.py:184
 msgid "A product with same isbn is available"
 msgstr ""
 
-#: staff/views.py:186 staff/views.py:215
+#: staff/views.py:189 staff/views.py:218
 msgid "Product updated"
 msgstr ""
 
-#: staff/views.py:188
+#: staff/views.py:191
 msgid "Product is created"
 msgstr ""
 
-#: staff/views.py:239
+#: staff/views.py:242
 msgid "Category is created!"
 msgstr ""
 
-#: staff/views.py:277
+#: staff/views.py:280
 msgid "Product is created!"
 msgstr ""
 
-#: staff/views.py:292
+#: staff/views.py:295
 msgid "Product created"
 msgstr ""
 
-#: staff/views.py:295
+#: staff/views.py:298
 msgid "Product does not created!"
 msgstr ""
 
-#: staff/views.py:400 staff/views.py:457 staff/views.py:568
+#: staff/views.py:403 staff/views.py:460 staff/views.py:571
 msgid "You could not add product without price"
 msgstr ""
 
-#: staff/views.py:404 staff/views.py:461 staff/views.py:571
+#: staff/views.py:407 staff/views.py:464 staff/views.py:574
 msgid "You are adding zero stock!"
 msgstr ""
 
-#: staff/views.py:450 staff/views.py:508 staff/views.py:627
+#: staff/views.py:453 staff/views.py:511 staff/views.py:630
 msgid "Product is added to invoice"
 msgstr ""
 
-#: staff/views.py:470 staff/views.py:598
+#: staff/views.py:473 staff/views.py:601
 msgid "Order is created"
 msgstr ""
 
-#: staff/views.py:575
+#: staff/views.py:578
 msgid "This product has other prices"
 msgstr ""
 
-#: staff/views.py:726
+#: staff/views.py:729
 msgid "Order approved"
 msgstr ""
 
-#: staff/views.py:760
+#: staff/views.py:763
 msgid "Credit of client added to discount of order"
 msgstr ""
 
-#: staff/views.py:772
+#: staff/views.py:775
 msgid "Order paid with credit"
 msgstr ""
 
-#: staff/views.py:791
+#: staff/views.py:794
 msgid "Client added to order"
 msgstr ""
 
-#: staff/views.py:937
+#: staff/views.py:940
 msgid "You are adding zero stock"
 msgstr ""
 
-#: staff/views.py:973
+#: staff/views.py:976
 msgid "Order line updated"
 msgstr ""
 
-#: staff/views.py:1046
+#: staff/views.py:1049
 msgid "This order is not empty"
 msgstr ""
 
-#: staff/views.py:1049
+#: staff/views.py:1052
 msgid "Draft order removed"
 msgstr ""
 
-#: staff/views.py:1056
+#: staff/views.py:1059
 msgid "This order is shipped"
 msgstr ""
 
-#: staff/views.py:1058
+#: staff/views.py:1061
 msgid "This order is completely packaged"
 msgstr ""
 
-#: staff/views.py:1068
+#: staff/views.py:1071
 msgid "Order status changed to draft"
 msgstr ""
 
-#: staff/views.py:1216 staff/views.py:1243
+#: staff/views.py:1233 staff/views.py:1260
 #: templates/tools/pdf/print_address.html:29
 msgid "Tehran"
 msgstr ""
 
-#: staff/views.py:1234
+#: staff/views.py:1251
 msgid "Vendor is added!"
 msgstr ""
 
-#: staff/views.py:1262
+#: staff/views.py:1279
 msgid "Vendor is updated"
 msgstr ""
 
-#: staff/views.py:1394
+#: staff/views.py:1411
 msgid "This product is in this collection"
 msgstr ""
 
-#: staff/views.py:1400
+#: staff/views.py:1417
 msgid "Product does not found"
 msgstr ""
 
-#: staff/views.py:1410
+#: staff/views.py:1427
 msgid "The product added to collection"
 msgstr ""
 
-#: staff/views.py:1438
+#: staff/views.py:1455
 msgid "This product removed from the collection"
 msgstr ""
 
-#: staff/views.py:1502
+#: staff/views.py:1519
 msgid "New craft is created"
 msgstr ""
 
@@ -595,7 +597,7 @@ msgid "items in cart"
 msgstr ""
 
 #: templates/_base.html:153 templates/_base_files_app.html:123
-#: templates/staff/sales.html:7
+#: templates/staff/sales.html:7 templates/warehouses/product_workflow.html:21
 msgid "Sales"
 msgstr ""
 
@@ -1980,6 +1982,7 @@ msgid "Edit purchase"
 msgstr ""
 
 #: templates/staff/purchase/purchase_list.html:9
+#: templates/warehouses/product_workflow.html:22
 msgid "Purchases"
 msgstr ""
 
@@ -1997,7 +2000,7 @@ msgid "Payment Date"
 msgstr ""
 
 #: templates/staff/purchase/purchase_list.html:33
-#: templates/staff/sold_products.html:25
+#: templates/staff/sold_products.html:44
 msgid "Status"
 msgstr ""
 
@@ -2140,16 +2143,24 @@ msgstr ""
 msgid "List of clients"
 msgstr ""
 
-#: templates/staff/sold_products.html:21
+#: templates/staff/sold_products.html:20
+msgid "Esfand"
+msgstr ""
+
+#: templates/staff/sold_products.html:39
 #: templates/tools/pdf/invoice_pdf_a4.html:41
 msgid "Product ID"
 msgstr ""
 
-#: templates/staff/sold_products.html:26
+#: templates/staff/sold_products.html:42
+msgid "Flow"
+msgstr ""
+
+#: templates/staff/sold_products.html:45
 msgid "Date"
 msgstr ""
 
-#: templates/staff/sold_products.html:27
+#: templates/staff/sold_products.html:46
 msgid "Quantity in stock"
 msgstr ""
 
@@ -2237,6 +2248,17 @@ msgstr ""
 
 #: templates/tools/pdf/print_invoice.html:97
 msgid "* used-book"
+msgstr ""
+
+#: templates/warehouses/product_workflow.html:7
+#: templates/warehouses/product_workflow.html:18
+msgid "Product workflow"
+msgstr ""
+
+#: templates/warehouses/product_workflow.html:28
+#: templates/warehouses/product_workflow.html:34
+#: templates/zarinpal/success.html:16
+msgid "Order No."
 msgstr ""
 
 #: templates/zarinpal/already_paid.html:5
@@ -2348,31 +2370,27 @@ msgstr ""
 msgid "QRcode"
 msgstr ""
 
-#: templates/zarinpal/success.html:16
-msgid "Order No."
-msgstr ""
-
-#: warehouses/views.py:24
+#: warehouses/views.py:25
 msgid "Order is not valid"
 msgstr ""
 
-#: warehouses/views.py:29
+#: warehouses/views.py:30
 msgid "Product is not valid"
 msgstr ""
 
-#: warehouses/views.py:34
+#: warehouses/views.py:35
 msgid "Client is not valid"
 msgstr ""
 
-#: warehouses/views.py:46
+#: warehouses/views.py:47
 msgid "Refund order registered"
 msgstr ""
 
-#: warehouses/views.py:49
+#: warehouses/views.py:50
 msgid "Client credit balance updated"
 msgstr ""
 
-#: warehouses/views.py:57
+#: warehouses/views.py:58
 msgid "Credit added to client balance"
 msgstr ""
 
