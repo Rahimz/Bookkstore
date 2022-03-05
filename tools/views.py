@@ -146,7 +146,7 @@ def order_export_excel(request, criteria):
             order.shipping_method,
             order.shipping_cost,
             order.shipping_status,
-            order.shipping_code if order.shipped_code else '',
+            order.shipped_code if order.shipped_code else '',
             order.total_cost,
             order.total_cost_after_discount,
             order.discount,
