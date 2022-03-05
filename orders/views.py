@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 from math import trunc
 from decimal import Decimal
+from django.contrib.admin.views.decorators import staff_member_required
+
 
 
 from .models import OrderLine, Purchase, PurchaseLine
@@ -66,6 +68,7 @@ def order_create(request):
                   {'cart': cart, 'form': form})
 
 
+@staff_member_required
 def purchase_create(request):
     if request.method == 'POST':
         purchase_form = PurchaseCreateForm(data=request.POST)
@@ -94,6 +97,7 @@ def purchase_create(request):
     )
 
 
+@staff_member_required
 def purchase_list(request):
     purchases = Purchase.objects.all().filter(active=True)
 
@@ -104,6 +108,7 @@ def purchase_list(request):
     )
 
 
+@staff_member_required
 def purchase_details(request, purchase_id, product_id=None, variation='new main'):
     results = None
 
@@ -223,6 +228,7 @@ def purchase_details(request, purchase_id, product_id=None, variation='new main'
     )
 
 
+@staff_member_required
 def purchase_update(request, purchase_id):
     purchase = get_object_or_404(Purchase, pk=purchase_id)
     purchase_form = PurchaseCreateForm(instance=purchase)
@@ -250,6 +256,7 @@ def purchase_update(request, purchase_id):
     )
 
 
+@staff_member_required
 def purchase_checkout(request, purchase_id):
     purchase = get_object_or_404(Purchase, pk=purchase_id)
 
@@ -312,6 +319,7 @@ def purchase_checkout(request, purchase_id):
     )
 
 
+@staff_member_required
 def price_management(request, product_id, purchase_id):
     product = get_object_or_404(Product, pk=product_id)
     purchase = get_object_or_404(Purchase, pk=purchase_id)
@@ -362,7 +370,7 @@ def price_management(request, product_id, purchase_id):
     )
 
 
-
+@staff_member_required
 def price_remove(request,purchase_id, product_id, variation):
     product = Product.objects.get(pk=product_id)
     purchase = Purchase.objects.get(pk=purchase_id)
@@ -399,7 +407,7 @@ def price_remove(request,purchase_id, product_id, variation):
     return redirect('orders:price_management', purchase.id, product.id)
 
 
-
+@staff_member_required
 def purchase_line_add(request, product_id, purchase_id, variation, purchaseline_id=None):
     purchase = get_object_or_404(Purchase, pk=purchase_id)
 
@@ -517,9 +525,50 @@ def purchase_line_add(request, product_id, purchase_id, variation, purchaseline_
     )
 
 
+@staff_member_required
 def purchaseline_remove(request, purchaseline_id):
     purchaseline = get_object_or_404(PurchaseLine, pk=purchaseline_id)
     purchase_id = purchaseline.purchase.id
     purchaseline.delete()
     messages.success(request, _('Purchaseline row removed'))
     return redirect('orders:purchase_details', purchase_id)
+
+@staff_member_required
+def back_to_draft_purchase(request, purchase_id):
+    purchase = Purchase.objects.get(pk=purchase_id)
+    if purchase.status == 'draft':
+        messages.error(request, _('Purchase status is draft'))
+        return redirect('orders:purchase_details', purchase.id)
+
+    for item in purchase.lines.all():
+        product = item.product
+        if item.variation in ('main', 'new main'):
+            product.stock -= item.quantity
+
+        # we have some old row in purchase lines
+        elif item.variation in ('v1', 'new v1'):
+            product.stock_1 -= item.quantity
+
+        elif item.variation == 'new v2':
+            product.stock_2 -= item.quantity
+
+        elif item.variation == 'new v3':
+            product.stock_3 -= item.quantity
+
+        elif item.variation == 'new v3':
+            product.stock_4 -= item.quantity
+
+        elif item.variation == 'new v4':
+            product.stock_5 -= item.quantity
+
+        # we have some old row in purchase lines
+        elif item.variation in ('used', 'used main'):
+            product.stock_used -= item.quantity
+        product.save()
+
+    purchase.approver = None
+    purchase.approved_date = None
+    purchase.status = 'draft'
+    purchase.save()
+    messages.success(request, _('Purchase status changed to draft'))
+    return redirect('orders:purchase_details', purchase.id )

@@ -22,6 +22,11 @@
     <div class="col-md-10">
       <h2>{% trans 'Purchase' %} {{ purchase.id }} - {{ purchase.vendor }}</h2>
       <div class="">
+        {% if purchase.status == 'approved'%}
+        <a href="{% url 'orders:back_to_draft_purchase' purchase.id %}" class="btn btn-sm btn-outline-danger">Back to draft</a>
+        {% endif %}
+      </div>
+      <div class="">
         {% include 'staff/purchase/_purchase_details_block.html' %}
       </div>
       {% if purchase.status == "draft" %}
@@ -142,7 +147,7 @@
           </tbody>
         </table>
         {% endcomment %}
-      </div>      
+      </div>
       <div class="">
         {% if purchase.status == "draft" %}
         <a href="{% url 'orders:purchase_update' purchase.id %}" class="btn btn-outline-secondary ">{% trans 'Edit purchase' %}</a>
