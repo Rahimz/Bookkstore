@@ -13,6 +13,9 @@ urlpatterns = [
     path('purchase/edit/<int:purchase_id>/', views.purchase_update, name='purchase_update'), # for updating main purchase model
 
     path('purchase/<int:purchase_id>/', views.purchase_details, name='purchase_details'),
+
+    path('purchase/back-to-draft<int:purchase_id>/', views.back_to_draft_purchase, name='back_to_draft_purchase'),
+
     # path('purchase/<int:purchase_id>/add/<int:product_id>/', views.purchase_details, name='purchase_add_line'),
     path('purchase/add-line/<int:purchase_id>/<int:product_id>/<str:variation>/', views.purchase_line_add, name='purchaseline_add'),
     path('purchase/add-line/<int:purchase_id>/<int:product_id>/<str:variation>/<int:purchaseline_id>/', views.purchase_line_add, name='purchaseline_update'),

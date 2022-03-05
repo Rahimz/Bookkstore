@@ -1,0 +1,44 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+{% block title %}{% trans 'Used before 5 March' %}{% endblock %}
+
+{% block products-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="products" %}
+    </div>
+    <div class="col-md-8">
+      <h2>{% trans 'Used before 5 March' %}</h2>
+      <table class="table">
+        <thead>
+          <th>isbn</th>
+          <th>order id</th>
+          <th>name</th>
+          <th>stock used</th>
+          <th>quantity</th>
+        </thead>
+        <tbody>
+          {% for item in products %}
+          <tr>
+            <td>{{ item.product.isbn }}</td>
+            <td>{{ item.order.id }}</td>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.product.stock_used }}</td>
+            <td>{{ item.quantity }}</td>
+            <br>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
