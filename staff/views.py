@@ -447,7 +447,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
             product.stock_5 = stock
 
         elif variation == 'used main':
-            product.stock_used += stock
+            product.stock_used = stock
         product.save()
 
         messages.success(request, _('Product is added to invoice'))
@@ -458,7 +458,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
     if (not order_id) and product_id:
         if price == 0:
             messages.error(request, _('You could not add product without price'))
-            return redirect('staff:invoice_create', order_id)
+            return redirect('staff:invoice_create')
 
         if stock <= 0:
             messages.error(request, _('You are adding zero stock!'))
@@ -504,7 +504,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
             product.stock_5 = stock
 
         elif variation == 'used main':
-            product.stock_used += stock
+            product.stock_used = stock
 
         product.save()
 
