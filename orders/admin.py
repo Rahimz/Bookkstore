@@ -33,14 +33,16 @@ class OrderLineAdmin(admin.ModelAdmin):
         'id', 'order', 'product', 'active',
         'price', 'quantity', 'variation',
     ]
-    search_fields = ['order', 'product', 'variation']
+    search_fields = ['order__id', 'product__name', 'variation']
+    list_filter = ['active', ]
 
 
 @admin.register(Purchase)
 class PurchaseAdmin(admin.ModelAdmin):
     list_display = [
-        'pk', 'vendor', 'paper_invoice_number'
+        'pk', 'vendor', 'paper_invoice_number', 'created', 'quantity'
     ]
+    search_fields = ['pk', 'vendor__first_name', 'paper_invoice_number']
     inlines = [PurchaseLineInline]
 
 
@@ -48,6 +50,7 @@ class PurchaseAdmin(admin.ModelAdmin):
 class PurchaseLineAdmin(admin.ModelAdmin):
     list_display = [
         'id', 'purchase', 'product',
-        'price', 'quantity', 'discount', 'discount_percent', 'variation',
+        'price', 'quantity', 'discount', 'discount_percent', 'variation', 
     ]
-    search_fields = ['purchase', 'product', 'variation']
+    search_fields = ['purchase__id', 'product__name', 'variation']
+    list_filter = ['active', ]
