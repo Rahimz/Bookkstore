@@ -1053,6 +1053,7 @@ def remove_draft_order(request, order_id):
 
     return redirect('staff:draft_orders')
 
+@staff_member_required
 def invoice_back_to_draft(request, order_id):
     order = Order.objects.get(pk=order_id)
     if order.shipping_status == 'full':
@@ -1067,6 +1068,7 @@ def invoice_back_to_draft(request, order_id):
     order.approver = None
     order.approved_date = None
     order.status = 'draft'
+    order.shipping_status = ''
     order.save()
     messages.success(request, _('Order status changed to draft'))
     return redirect('staff:invoice_checkout', order.id)
