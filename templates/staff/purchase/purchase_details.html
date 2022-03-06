@@ -23,7 +23,9 @@
       <h2>{% trans 'Purchase' %} {{ purchase.id }} - {{ purchase.vendor }}</h2>
       <div class="">
         {% if purchase.status == 'approved'%}
+        {% if user.is_manager %}
         <a href="{% url 'orders:back_to_draft_purchase' purchase.id %}" class="btn btn-sm btn-outline-danger">Back to draft</a>
+        {% endif %}
         {% endif %}
       </div>
       <div class="">

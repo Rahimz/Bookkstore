@@ -29,4 +29,5 @@ urlpatterns = [
     path('purchase/checkout/<int:purchase_id>/', views.purchase_checkout, name='purchase_checkout'),
 
     path('report/sales-by-days/<int:days>/', report_views.sales_by_days, name='sales_by_days'),
+    path('report/sales-by-date/<str:date>/', report_views.sales_by_days, name='sales_by_date'),
 ]

@@ -315,9 +315,14 @@ class OrderLine(models.Model):
         null=True,
         blank=True
     )
+    cost_after_discount = models.DecimalField(
+        max_digits=settings.DEFAULT_MAX_DIGITS,
+        decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+        default=0,
+    )
 
     class Meta:
-        ordering = ("-product",)
+        ordering = ("product__name",)
 
 
     def __str__(self):
@@ -349,6 +354,8 @@ class OrderLine(models.Model):
     def save(self, *args, **kwargs):
         if not self.created:
             self.created = self.order.created
+
+        self.cost_after_discount = self.get_cost_after_discount()
 
         super(OrderLine, self).save(*args, **kwargs)
 
@@ -557,7 +564,7 @@ class PurchaseLine(models.Model):
     )
 
     class Meta:
-        ordering = ("-pk", "product")
+        ordering = ("product__name",  )
 
 
     def __str__(self):
