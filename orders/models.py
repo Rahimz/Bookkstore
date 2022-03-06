@@ -322,7 +322,7 @@ class OrderLine(models.Model):
     )
 
     class Meta:
-        ordering = ("-product",)
+        ordering = ("product__name",)
 
 
     def __str__(self):
@@ -564,7 +564,7 @@ class PurchaseLine(models.Model):
     )
 
     class Meta:
-        ordering = ("-pk", "product")
+        ordering = ("product__name",  )
 
 
     def __str__(self):
