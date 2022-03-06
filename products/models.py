@@ -102,6 +102,16 @@ class Product(models.Model):
         max_length=500,
         db_index=True
     )
+    collection_name = models.CharField(
+        max_length=300,
+        null=True,
+        blank=True
+    )
+    number_in_collection = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True
+    )
     slug = models.SlugField(
         max_length=550,
         db_index=True,

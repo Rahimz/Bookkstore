@@ -23,7 +23,7 @@
         <a href="{% url 'staff:order_payment_manage' order.id %}" class="btn btn-secondary">{% trans 'Payment receipt'%}</a>
         <a href="{% if order.shipping_status == 'full' %}#{% else %}{% url 'staff:invoice_back_to_draft' order.id %}{% endif %}" class="btn btn-outline-warning mx-3 {% if order.shipping_status == 'full' %}disabled{% endif %}">{% trans 'Back to draft'%}</a>
         {% if user.is_superuser %}
-        <a href="{% url 'staff:invoice_back_to_draft' order.id %}" class="btn btn-outline-warning mx-3 {% if order.shipping_status == 'full' %}disabled{% endif %}">{% trans 'Back to draft everything'%}</a>
+        <a href="{% url 'staff:invoice_back_to_draft' order.id %}" class="btn btn-outline-warning mx-3 ">{% trans 'Back to draft everything'%}</a>
         {% endif %}
       </div>
       <table class="table table-striped">
@@ -100,8 +100,8 @@
       <div class="">
 
         {#<a href="{% url 'staff:order_shipping' order.id %}" class="btn btn-outline-warning me-3">{% trans 'Shipping management' %}</a>#}
-        <a href="{% url 'tools:make_invoice_pdf' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF' %}</a>
-        <a href="{% url 'tools:make_invoice_pdf_a4' order.id %}" target="_blank" class="btn btn-outline-secondary">{% trans 'PDF A4' %}</a>
+        <a href="{% url 'tools:make_invoice_pdf' order.id %}" target="_blank" class="btn btn-outline-secondary">PDF</a>
+        <a href="{% url 'tools:make_invoice_pdf_a4' order.id %}" target="_blank" class="btn btn-outline-secondary">PDF A4</a>
       </div>
     </div>
   </div>
