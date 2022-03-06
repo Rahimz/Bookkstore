@@ -155,7 +155,7 @@
       <a href="{% url 'staff:products' %}" class="btn btn-outline-secondary {% block products-btn %}{% endblock %}">{% trans 'Products' %}</a>
       <a href="{% url 'client_list' %}" class="btn btn-outline-secondary {% block clients-btn %}{% endblock %}">{% trans 'Clients' %}</a>
       {% if user.is_manager %}
-      <a href="{% url 'orders:sales_by_days' 365 %}" class="btn btn-outline-secondary {% block reports-btn %}{% endblock %}">{% trans 'Reports' %}</a>
+      <a href="{% url 'orders:sales_by_days' days=365 %}" class="btn btn-outline-secondary {% block reports-btn %}{% endblock %}">{% trans 'Reports' %}</a>
       {% endif %}
 
       {% block staff_tab %}{% endblock %}
