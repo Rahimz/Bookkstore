@@ -10,8 +10,10 @@ class ProductCreateForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = [
-            'name', 'category', 'isbn', 'author', 'translator', 'illustrator', 'latin_name',
-            'author_latin_name', 'image', 'image_alt', 'description', 'age_range', 'product_type', 'weight',
+            'name', 'isbn', 'collection_name', 'number_in_collection', 'category', 'author', 'translator',
+            'illustrator', 'latin_name', 'author_latin_name',
+            # 'image', 'image_alt',
+            'description', 'age_range', 'product_type', 'weight',
             'size', 'cover_type', 'page_number', 'publisher', 'publisher_2', 'publish_year',
             'edition',
             # 'price', 'stock',
@@ -21,6 +23,17 @@ class ProductCreateForm(forms.ModelForm):
             'store_positon', 'admin_note',
             'available', 'available_in_store', 'available_online',
         ]
+        labels = {
+            'name':_('Name'), 'isbn': _('ISBN'), 'collection_name': _('Collection name'), 'number_in_collection': _('Number in collection'),
+            'category': _('Category'), 'author': _('Author'), 'translator': _('Translator'),
+            'illustrator': _('Illustrator'), 'latin_name': _('Latin name'), 'author_latin_name': _('Author latin name'),
+
+            'description': _('Description'), 'age_range': _('Age range'), 'product_type': _('Product type'), 'weight': _('Weight'),
+            'size': _('Size'), 'cover_type': _('Cover type'), 'page_number': _('Page number'), 'publisher': _('Publisher'), 'publisher_2': _('Publisher 2'),
+            'publish_year': _('Publish year'), 'edition': _('Edition'),
+
+            'store_positon': _('Store position'), 'admin_note': _('Admin note'),
+        }
 
 class CategoryCreateForm(forms.ModelForm):
 
