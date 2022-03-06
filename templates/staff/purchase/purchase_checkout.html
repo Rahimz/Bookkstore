@@ -32,4 +32,13 @@
 
     </div> <!-- end of col-md-10 -->
   </div>
-  {% endblock %}
+{% endblock %}
+{% block script %}
+<script>
+document.addEventListener("wheel", function(event){
+    if(document.activeElement.type === "number"){
+        document.activeElement.blur();
+    }
+});
+</script>
+{% endblock %}
