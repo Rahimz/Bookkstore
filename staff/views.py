@@ -165,6 +165,8 @@ def product_create(request, product_id=None):
                 if isbn:
                     if len(isbn) == 13:
                         isbn_9 = isbn[3:-1]
+                    elif len(isbn) == 12:
+                        isbn_9 = isbn[3:]
                     elif len(isbn) == 10:
                         isbn_9 = isbn[:-1]
                     elif len(isbn) == 9:
