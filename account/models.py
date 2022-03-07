@@ -163,6 +163,7 @@ class Vendor(CustomUser):
     class Meta:
         verbose_name = _('Vendor')
         verbose_name_plural = _('Vendors')
+        ordering = ('first_name',)
 
     def save(self, *args, **kwargs):
         if not self.overal_discount:
