@@ -210,7 +210,7 @@ def draft_order_export_excel(request):
     return response
 
 
-def email_to_managers(paymaent_id):
+def email_to_admin(paymaent_id):
     """
     Function to send email to admin when a payment is done.
     """
