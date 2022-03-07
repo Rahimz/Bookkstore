@@ -1,0 +1,91 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Products stock and price management' %}{% endblock %}
+
+{% block products-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="products" %}
+    </div>
+    <div class="col-md-10">
+      <h2 class="my-4">{% trans 'Products stock and price management' %}</h2>
+      <h3>{% trans 'Product' %}: {{ product.name}}</h3>
+      <table class="table table-striped w-50">
+        <tr>
+          <td>{% trans 'Product ID.' %}</td>
+          <td>{{ product.id }}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'ISBN' %}</td>
+          <td>{{ product.isbn }}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'Publisher' %}</td>
+        <td>{{ product.publisher }}</td>
+      </tr>
+      <tr>
+        <td>{% trans 'Page number' %}</td>
+        <td>{{ product.page_namber }}</td>
+      </tr>
+      <tr>
+        <td>{% trans 'Main price' %}</td>
+        {% if product.price == 0 %}
+        {% if product.about == '*' %}
+        <td><span class="text-warning">{% trans 'Not in market'%}</span></td>
+        {% endif %}
+        {% else %}
+        <td>{{ product.price }}</td>
+        {% endif %}
+      </tr>
+      <tr>
+        <td>{% trans 'Main stock' %}</td>
+        <td>{{ product.stock }}</td>
+      </tr>
+      <tr>
+        <td>{% trans 'Price used' %}</td>
+        <td>{{ product.price_used }}</td>
+      </tr>
+      <tr>
+        <td>{% trans 'Stock used' %}</td>
+        <td>{{ product.stock_used }}</td>
+      </tr>
+      </table>
+
+      <h3 class=" mt-5">{% trans 'Price and stock management' %}</h3>
+      <div class="w-50 ">
+        <form class="" action="." method="post">
+          {{ price_form | crispy }}
+          {% csrf_token %}
+          <input class="btn btn-outline-secondary my-3" type="submit" name=""value="{% trans 'Submit' %}">
+        </form>
+      </div>
+
+
+
+    </div>
+
+
+  </div>
+
+</div>
+{% endblock %}
+{% block script %}
+<script>
+document.addEventListener("wheel", function(event){
+    if(document.activeElement.type === "number"){
+        document.activeElement.blur();
+    }
+});
+</script>
+{% endblock %}

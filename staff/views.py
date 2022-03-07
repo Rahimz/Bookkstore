@@ -14,12 +14,12 @@ from django_countries.fields import Country
 from tools.gregory_to_hijry import hij_strf_date, greg_to_hij_date
 
 from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm, ProductCollectionForm, AdminPriceManagementForm
-from .forms import CraftUpdateForm
+from .forms import CraftUpdateForm, AdminPriceStockManagementForm
 from orders.forms import OrderAdminCheckoutForm, OrderPaymentManageForm
 from search.forms import ClientSearchForm, BookIsbnSearchForm, SearchForm
 from account.forms import VendorAddForm, AddressAddForm, VendorAddressAddForm
 from products.models import Product, Category
-from orders.models import Order, OrderLine, PurchaseLine
+from orders.models import Order, OrderLine, PurchaseLine, Purchase
 from products.models import Craft
 from account.models import CustomUser, Vendor, Address, Credit
 from search.views import ProductSearch
@@ -1482,6 +1482,80 @@ def used_book_prices(request, product_id):
     return render(
         request,
         'staff/used_book_prices.html',
+        {
+            'product': product,
+            'price_form': price_form,
+        }
+    )
+
+
+@staff_member_required
+def product_stock_price_edit(request, product_id):
+    product = Product.objects.get(pk=product_id)
+    stock = product.stock
+    if request.method == 'POST':
+        price_form = AdminPriceStockManagementForm(data=request.POST, instance=product)
+        if price_form.is_valid():
+            #  we want to check wether the newly entered stock more than DB stock or not
+            # if it is more we make a purchase for editing tne DB
+            new_price_stock = price_form.save(commit=False)
+
+            if new_price_stock.stock > stock:
+                messages.warning(request, _('A purchase added to manage the DB'))
+
+                # grab the vendor
+                try:
+                    vendor = Vendor.objects.get(first_name='Stock-admin')
+                except:
+                    vendor = Vendor.objects.create(
+                        first_name = 'Stock-admin',
+                        username = 'Stock-admin',
+                        email = 'stock.admin@ketabedamavand.com'
+                    )
+                    vendor.save()
+
+                # Making a new purchase
+                purchase = Purchase.objects.create(
+                    vendor = vendor,
+                    registrar=request.user,
+                    approver=request.user,
+                    approved_date=datetime.now(),
+                    payment_date=datetime.now().date(),
+                    paper_invoice_number='stock-balance',
+                    status='approved',
+                    discount_percent=100,
+
+                )
+                purchase.save()
+                #  Add a purchaseline for newly added stock
+                purchaseline = PurchaseLine.objects.create(
+                    purchase = purchase,
+                    product=product,
+                    price=product.price,
+                    quantity=new_price_stock.stock-stock,
+                    variation='new main',
+                    active=True
+                )
+                purchaseline.save()
+                purchase.save()
+
+            # check if the used price or stock is changed check has other prices
+            if new_price_stock.price_used or new_price_stock.stock_used:
+                product.has_other_prices=True
+                product.save()
+            if new_price_stock.price_used==0 and new_price_stock.stock_used==0:
+                product.has_other_prices=False
+                product.save()
+
+            new_price_stock.save()
+            messages.success(request, _('Stock and price updated'))
+
+            # return redirect('staff:products')
+    else:
+        price_form = AdminPriceStockManagementForm(instance=product)
+    return render(
+        request,
+        'staff/product_stock_price_edit.html',
         {
             'product': product,
             'price_form': price_form,
