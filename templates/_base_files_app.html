@@ -126,7 +126,7 @@
       <a href="{% url 'client_list' %}" class="btn btn-outline-secondary {% block clients-btn %}{% endblock %}">{% trans 'Clients' %}</a>
       <span class="text-danger">{% trans 'The datat of products is synced with bookstore data' %}</span>
       {% block staff_tab %}{% endblock %}
-      {% ifrequest.user.is_superuser %}
+      {% if request.user.is_superuser %}
       <a href="{% url 'admin:index' %}" class="btn btn-dark btn-outline-secondary ">{% trans 'Admin' %}</a>
       <a href="{% url 'rosetta-old-home-redirect' %}" class="btn btn-dark btn-outline-secondary ">Rosetta</a>
       <a href="{% url 'files:list_of_files' %}" class="btn btn-dark btn-outline-secondary ">Files</a>
