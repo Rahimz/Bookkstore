@@ -51,7 +51,7 @@
             <td>{% if pay.paid %}&#10004{% else %}&#10008{% endif %}</td>
             <td>{% if pay.paid %}{{ pay.ref_id }}{% endif %}</td>
             <td><a href="{% url 'zarinpal:payment_link_request' pay.id %}" {% if pay.paid %}disable{% endif %}>link</a></td>
-            {% ifrequest.user.is_superuser %}
+            {% if request.user.is_superuser %}
             {% if pay.url  %}
             <td><a href="{% url 'tools:qrcode_create' order_id=pay.order.id payment_id=pay.id %}" class="btn btn-outline-secondary mx-3">{% trans 'QRcode'%}</a></td>
             {% endif %}
