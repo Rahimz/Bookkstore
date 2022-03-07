@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-07 10:12+0330\n"
+"POT-Creation-Date: 2022-03-07 14:59+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,8 +105,8 @@ msgstr ""
 msgid "Vendors"
 msgstr ""
 
-#: account/views.py:57 account/views.py:180 staff/views.py:224
-#: staff/views.py:248 staff/views.py:1259 staff/views.py:1285
+#: account/views.py:57 account/views.py:180 staff/views.py:226
+#: staff/views.py:250 staff/views.py:1261 staff/views.py:1287
 msgid "Form is not valid"
 msgstr ""
 
@@ -476,7 +476,7 @@ msgstr ""
 msgid "Admin note"
 msgstr ""
 
-#: staff/forms.py:63 staff/views.py:977 templates/cart/detail.html:17
+#: staff/forms.py:63 staff/views.py:979 templates/cart/detail.html:17
 #: templates/staff/_order_table.html:15 templates/staff/draft_orders.html:32
 #: templates/staff/invoice_create.html:71
 #: templates/staff/invoice_create.html:136
@@ -560,140 +560,140 @@ msgid ""
 "Just for editing the databse for books that is in store but not in database"
 msgstr ""
 
-#: staff/views.py:185
+#: staff/views.py:187
 msgid "A product with same isbn is available"
 msgstr ""
 
-#: staff/views.py:190 staff/views.py:219
+#: staff/views.py:192 staff/views.py:221
 msgid "Product updated"
 msgstr ""
 
-#: staff/views.py:192
+#: staff/views.py:194
 msgid "Product is created"
 msgstr ""
 
-#: staff/views.py:243
+#: staff/views.py:245
 msgid "Category is created!"
 msgstr ""
 
-#: staff/views.py:281
+#: staff/views.py:283
 msgid "Product is created!"
 msgstr ""
 
-#: staff/views.py:296
+#: staff/views.py:298
 msgid "Product created"
 msgstr ""
 
-#: staff/views.py:299
+#: staff/views.py:301
 msgid "Product does not created!"
 msgstr ""
 
-#: staff/views.py:404 staff/views.py:461 staff/views.py:572
+#: staff/views.py:406 staff/views.py:463 staff/views.py:574
 msgid "You could not add product without price"
 msgstr ""
 
-#: staff/views.py:408 staff/views.py:465 staff/views.py:575
+#: staff/views.py:410 staff/views.py:467 staff/views.py:577
 msgid "You are adding zero stock!"
 msgstr ""
 
-#: staff/views.py:454 staff/views.py:512 staff/views.py:631
+#: staff/views.py:456 staff/views.py:514 staff/views.py:633
 msgid "Product is added to invoice"
 msgstr ""
 
-#: staff/views.py:474 staff/views.py:602
+#: staff/views.py:476 staff/views.py:604
 msgid "Order is created"
 msgstr ""
 
-#: staff/views.py:579
+#: staff/views.py:581
 msgid "This product has other prices"
 msgstr ""
 
-#: staff/views.py:730
+#: staff/views.py:732
 msgid "Order approved"
 msgstr ""
 
-#: staff/views.py:764
+#: staff/views.py:766
 msgid "Credit of client added to discount of order"
 msgstr ""
 
-#: staff/views.py:776
+#: staff/views.py:778
 msgid "Order paid with credit"
 msgstr ""
 
-#: staff/views.py:795
+#: staff/views.py:797
 msgid "Client added to order"
 msgstr ""
 
-#: staff/views.py:941
+#: staff/views.py:943
 msgid "You are adding zero stock"
 msgstr ""
 
-#: staff/views.py:977
+#: staff/views.py:979
 msgid "Order line updated"
 msgstr ""
 
-#: staff/views.py:1050
+#: staff/views.py:1052
 msgid "This order is not empty"
 msgstr ""
 
-#: staff/views.py:1053
+#: staff/views.py:1055
 msgid "Draft order removed"
 msgstr ""
 
-#: staff/views.py:1061
+#: staff/views.py:1063
 msgid "This order is shipped"
 msgstr ""
 
-#: staff/views.py:1063
+#: staff/views.py:1065
 msgid "This order is completely packaged"
 msgstr ""
 
-#: staff/views.py:1074
+#: staff/views.py:1076
 msgid "Order status changed to draft"
 msgstr ""
 
-#: staff/views.py:1236 staff/views.py:1263
+#: staff/views.py:1238 staff/views.py:1265
 #: templates/tools/pdf/print_address.html:29
 msgid "Tehran"
 msgstr ""
 
-#: staff/views.py:1254
+#: staff/views.py:1256
 msgid "Vendor is added!"
 msgstr ""
 
-#: staff/views.py:1282
+#: staff/views.py:1284
 msgid "Vendor is updated"
 msgstr ""
 
-#: staff/views.py:1414
+#: staff/views.py:1416
 msgid "This product is in this collection"
 msgstr ""
 
-#: staff/views.py:1420
+#: staff/views.py:1422
 msgid "Product does not found"
 msgstr ""
 
-#: staff/views.py:1430
+#: staff/views.py:1432
 msgid "The product added to collection"
 msgstr ""
 
-#: staff/views.py:1458
+#: staff/views.py:1460
 msgid "This product removed from the collection"
 msgstr ""
 
-#: staff/views.py:1507
+#: staff/views.py:1509
 msgid "You could not enter a price less than the main price "
 msgstr ""
 
-#: staff/views.py:1512
+#: staff/views.py:1514
 msgid "A purchase added to manage the DB"
 msgstr ""
 
-#: staff/views.py:1561
+#: staff/views.py:1563
 msgid "Stock and price updated"
 msgstr ""
 
-#: staff/views.py:1605
+#: staff/views.py:1607
 msgid "New craft is created"
 msgstr ""
 
