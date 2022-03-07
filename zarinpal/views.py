@@ -13,7 +13,7 @@ from orders.models import Order
 from config.settings.secrets import *
 from .forms import PaymentForm
 from .models import Payment
-from tools.views import email_to_managers
+from tools.views import email_to_admin
 
 
 MERCHANT = merchant
@@ -119,7 +119,7 @@ def form_verify(request):
                 payment.save()
 
                 # send the result to admins
-                email_to_managers(payment.id)
+                email_to_admin(payment.id)
 
                 return render(request, 'zarinpal/form_success.html',
                               {'message': _('Transaction success.\nRefID: ') +
