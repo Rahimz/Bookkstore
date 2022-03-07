@@ -18,7 +18,7 @@
     <div class="col-md-2">
       {% include "staff/sidebar_staff.html" with barName="products" %}
     </div>
-    <div class="col-md-10">
+    <div class="col-md-6">
       <h2 class="my-4">{% trans 'Products stock and price management' %}</h2>
       <h3>{% trans 'Product' %}: {{ product.name}}</h3>
       <table class="table table-striped w-50">
@@ -63,7 +63,7 @@
       </table>
 
       <h3 class=" mt-5">{% trans 'Price and stock management' %}</h3>
-      <div class="w-50 ">
+      <div class=" ">
         <form class="" action="." method="post">
           {{ price_form | crispy }}
           {% csrf_token %}
@@ -71,10 +71,21 @@
         </form>
       </div>
 
-
-
     </div>
 
+    <div class="col-md-4">
+      <p>{% trans 'Notice' %}</p>
+      <ul>
+        <li>{% trans 'If you increase the main price it change the main price of the product and does not change the or add any price rows' %}</li>
+        <li>{% trans 'You could not decrease the main price' %}</li>
+        <li>{% trans 'If you change the main stock a new purchase with 100 percent discount will created with the name of Stock-admin' %}</li>
+        <li>{% trans 'If you add main stock the datanse will change' %}</li>
+        <li>{% trans 'If you decrease the stock just the databse decreases' %}</li>
+        <li>{% trans 'If you decrease the stock just the databse decreases' %}</li>
+        <li>{% trans 'If you increase or decrease the used stock and price it just change the databse' %}</li>
+        <li>{% trans 'Change the used price is as same as Bahman key' %}</li>
+      </ul>
+    </div>
 
   </div>
 

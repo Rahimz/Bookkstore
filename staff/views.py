@@ -26,6 +26,7 @@ from search.views import ProductSearch
 from tools.fa_to_en_num import number_converter
 from tools.gregory_to_hijry import *
 from tools.views import notif_email_to_managers
+from products.price_management import get_price_index
 
 
 def sales(request):
@@ -1493,12 +1494,19 @@ def used_book_prices(request, product_id):
 def product_stock_price_edit(request, product_id):
     product = Product.objects.get(pk=product_id)
     stock = product.stock
+    price = product.price
     if request.method == 'POST':
         price_form = AdminPriceStockManagementForm(data=request.POST, instance=product)
         if price_form.is_valid():
             #  we want to check wether the newly entered stock more than DB stock or not
             # if it is more we make a purchase for editing tne DB
             new_price_stock = price_form.save(commit=False)
+
+            # check the price is the biggest price of product
+            if new_price_stock.price < price:
+                messages.error(request, _('You could not enter a price less than the main price '))
+                return redirect('staff:product_stock_price_edit', product.id)
+
 
             if new_price_stock.stock > stock:
                 messages.warning(request, _('A purchase added to manage the DB'))
@@ -1544,8 +1552,10 @@ def product_stock_price_edit(request, product_id):
                 product.has_other_prices=True
                 product.save()
             if new_price_stock.price_used==0 and new_price_stock.stock_used==0:
-                product.has_other_prices=False
-                product.save()
+                if product.stock_1==0 and product.stock_2==0 and product.stock_3==0 and product.stock_4==0 and product.stock_5==0:
+                    if product.price_1==0 and product.price_2==0 and product.price_3==0 and product.price_4==0 and product.price_5==0:
+                        product.has_other_prices=False
+                        product.save()
 
             new_price_stock.save()
             messages.success(request, _('Stock and price updated'))
