@@ -433,58 +433,64 @@ def used_product_before_5(request):
     point = datetime.datetime.strptime('2022 3 5 16 11 26', "%Y %m %d %H %M %S")
     products = OrderLine.objects.filter(active=True).filter(created__lte=point).filter(variation__contains='used')
     print(len(products))
-    # wb = openpyxl.Workbook()
-    # sheet = wb.active
-    #
-    # headers = [
-    #     '#',
-    #     'Product ID.',
-    #     'Name',
-    #     'isbn',
-    #     'Publisher',
-    #     'Main price',
-    #     'Main stock',
-    #     'Price used',
-    #     'Stock used',
-    # ]
-    # # writing header
-    # for i in range(len(headers)):
-    #     c = sheet.cell(row = 1, column = i + 1 )
-    #     c.value = headers[i]
-    #     # c.style.fill.fill_type = Fill
-    #     # c.style.fill.start_color.index = Color.BLUE
-    #
-    # # making body
-    # for count , product in enumerate(products):
-    #     title_list = [
-    #         count,
-    #         product.id,
-    #         str(product.product.name),
-    #         product.product.isbn,
-    #         product.product.publisher,
-    #         product.product.price,
-    #         product.product.stock,
-    #         product.product.price_used,
-    #         product.product.stock_used,
-    #     ]
-    # # writing body
-    # for i in range(len(headers)):
-    #     c = sheet.cell(row = count + 2 , column = i + 1)
-    #     c.value = title_list[i]
-    #
-    # filename = 'media/excel/used-before-5-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
-    # wb.save(filename)
-    # excel = open(filename, 'rb')
-    # response = FileResponse(excel)
-    #
+
+    wb = openpyxl.Workbook()
+    sheet = wb.active
+
+    headers = [
+        '#',
+        'Product ID.',
+        'Name',
+        'isbn',
+        'Publisher',
+        'Main price',
+        'Main stock',
+        'Price used',
+        'Stock used',
+        'OrderLine quantity',
+    ]
+    # writing header
+    for i in range(len(headers)):
+        c = sheet.cell(row = 1, column = i + 1 )
+        c.value = headers[i]
+        # c.style.fill.fill_type = Fill
+        # c.style.fill.start_color.index = Color.BLUE
+
+
+    # making body
+    for count , item in enumerate(products):
+        title_list = [
+            count,
+            item.product.id,
+            str(item.product.name),
+            item.product.isbn,
+            item.product.publisher,
+            item.product.price,
+            item.product.stock,
+            item.product.price_used,
+            item.product.stock_used,
+            item.quantity
+        ]
+        print (item.product.id, item.product.name)
+        # writing body
+        for i in range(len(headers)):
+            c = sheet.cell(row = count + 2 , column = i + 1)
+            c.value = title_list[i]
+
+    filename = 'media/excel/used-before-5-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
+    wb.save(filename)
+    excel = open(filename, 'rb')
+    response = FileResponse(excel)
+    return response
+
     # return redirect('staff:products')
-    return render (
-        request,
-        'staff/_used_before_5.html',
-        {
-            'products': products,
-        }
-    )
+    # return render (
+    #     request,
+    #     'staff/_used_before_5.html',
+    #     {
+    #         'products': products,
+    #     }
+    # )
 
 def qrcode_create(request, order_id, payment_id):
     order = get_object_or_404(Order, pk=order_id)

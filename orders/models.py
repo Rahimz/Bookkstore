@@ -459,7 +459,7 @@ class Purchase(models.Model):
     )
 
     class Meta:
-        ordering = ("-payment_date", "approved_date", "-pk",)
+        ordering = ("-created", "-payment_date", "approved_date", "-pk",)
 
     def save(self, *args, **kwargs):
         if not self.token:

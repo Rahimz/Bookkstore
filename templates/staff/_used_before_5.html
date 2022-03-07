@@ -17,6 +17,15 @@
     </div>
     <div class="col-md-8">
       <h2>{% trans 'Used before 5 March' %}</h2>
+        {% for item in products %}
+      {% if item.product.isbn %}{{ item.product.isbn }}{% else %}--{% endif %},
+      {{ item.order.id }},
+      {{ item.product.name }},
+      {{ item.product.stock_used }},
+      {{ item.quantity }}
+      <br>
+      {% endfor %}
+
       <table class="table">
         <thead>
           <th>isbn</th>
@@ -33,7 +42,7 @@
             <td>{{ item.product.name }}</td>
             <td>{{ item.product.stock_used }}</td>
             <td>{{ item.quantity }}</td>
-            <br>
+
           </tr>
           {% endfor %}
         </tbody>
