@@ -13,7 +13,7 @@
   <br>
   <p><a href="{% url 'staff:craft_list' %}">{% trans 'List of crafts' %}</a></p>
   <p><a href="{% url 'staff:craft_create' %}">{% trans 'Create craft product' %}</a></p>
-  {% if user.is_superuser %}
+  {% ifrequest.user.is_superuser %}
   <br>
   <p><a href="{% url 'tools:used_product_before_5' %}">{% trans 'used product sold befor 5 march' %}</a></p>
   {% endif %}
