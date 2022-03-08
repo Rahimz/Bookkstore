@@ -14,19 +14,19 @@
 <body>
   <div class="d-flex justify-content-between">
     <p class="">
-    {% trans 'Invoice no.' %}: {{ order.id }} {% if order.status == "draft" %}<span class="fs-6">- {% trans 'Pre-Invoice'%}</span>{% endif %}<br />
-    {#{{ order.created|date:"M d, Y" }}#}
-    {{ fa_date  }}
-    <br><br>
-    {% if order.client.username == "guest" %}
+      {% trans 'Invoice no.' %}: {{ order.id }} {% if order.status == "draft" %}<span class="fs-6">- {% trans 'Pre-Invoice'%}</span>{% endif %}<br />
+      {#{{ order.created|date:"M d, Y" }}#}
+      {{ fa_date  }}
+      <br><br>
+      {% if order.client.username == "guest" %}
       {% trans 'Client' %}: {% trans 'Guest' %}
-    {% else %}
+      {% else %}
       {% if order.client %}
       {% trans 'Client' %}: {{ order.client.first_name }} {{ order.client.last_name }}
-    <br>{% trans 'Phone' %}: {{ order.client.phone }}
-    {% endif %}
-    {% endif %}
-  </p>
+      <br>{% trans 'Phone' %}: {{ order.client.phone }}
+      {% endif %}
+      {% endif %}
+    </p>
     <div class="">
       <img src="{% static 'img/logo_bw.png' %}" alt="{% trans 'Ketab Damavand' %}" class="rounded" width="90px;" height="auto">
     </div>
@@ -66,6 +66,9 @@
       {% endfor %}
 
     </tbody>
+  </table>
+  <table dir="rtl" class="table-bordered">
+
     <tfoot>
       <tr class="total">
         <td colspan="5">{% trans 'Total'%} {% trans 'Rial' %}</td>
@@ -73,7 +76,7 @@
       </tr>
       <tr class=discount>
         <td colspan="5">{% trans 'Discount'%}</td>
-        <td class="num">{{ order.discount | intcomma:False }} </td>
+        <td class="num">{{ order.get_total_discounts_with_order_discount | intcomma:False }} </td>
       </tr>
       {% if order.shipping_cost %}
       <tr class=discount>

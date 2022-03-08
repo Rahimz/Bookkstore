@@ -2,7 +2,7 @@
   width: 8cm;
   height: auto;
   /* min-height: 3cm; */
-  margin: .3cm;
+  margin: 0.3cm;
   /* padding: 0.5cm; */
 }
 
@@ -17,10 +17,11 @@ body {
   line-height: 1.5;
   font-size: 12px;
   width: 7cm;
+  padding: .3cm;
 }
 
 table {
-  width: 7cm;
+  width: 6.5cm;
   border-spacing: 0;
   border-collapse: collapse;
   margin: 5px 0;
