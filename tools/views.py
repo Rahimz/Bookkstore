@@ -429,6 +429,7 @@ def product_export_excel(request, filter='all'):
 
     return response
 
+
 def used_product_before_5(request):
     point = datetime.datetime.strptime('2022 3 5 16 11 26', "%Y %m %d %H %M %S")
     products = OrderLine.objects.filter(active=True).filter(created__lte=point).filter(variation__contains='used')
@@ -492,6 +493,7 @@ def used_product_before_5(request):
     #     }
     # )
 
+
 def qrcode_create(request, order_id, payment_id):
     order = get_object_or_404(Order, pk=order_id)
     payment = get_object_or_404(Payment, pk=payment_id)
@@ -519,3 +521,41 @@ def qrcode_create(request, order_id, payment_id):
             # 'svg': img
         }
     )
+
+
+@staff_member_required
+def export_publisher(request):
+    # TODO: we handle all order export with one function but we should add parameter to
+    # handle differnt kind of report
+    products = Product.objects.filter(available=True).exclude(product_type='craft').exclude(publisher='').order_by('publisher').distinct('publisher')
+
+    wb = openpyxl.Workbook()
+    sheet = wb.active
+
+    headers = [
+        '#',
+        'Publisher',
+    ]
+
+    for i in range(len(headers)):
+        c = sheet.cell(row = 1, column = i + 1 )
+        c.value = headers[i]
+
+
+    for count , product in enumerate(products):
+
+        title_list = [
+            count,
+            product.publisher,
+        ]
+        for i in range(len(headers)):
+            c = sheet.cell(row = count + 2 , column = i + 1)
+            c.value = title_list[i]
+
+
+    filename = 'media/excel/publishers-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
+    wb.save(filename)
+    excel = open(filename, 'rb')
+    response = FileResponse(excel)
+
+    return response
