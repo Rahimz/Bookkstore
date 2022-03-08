@@ -34,6 +34,9 @@ def sales_by_days(request, days=365, date=None):
     orders_craft_date = None
     orderline_all_date = None
 
+    orders_paid_date = None
+    orders_unpaid_date = None
+
     year = '2022'
     month = '03'
     num_days = calendar.monthrange(2022, 3)[1]
