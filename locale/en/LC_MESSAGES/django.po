@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-07 14:59+0330\n"
+"POT-Creation-Date: 2022-03-08 10:47+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -169,9 +169,9 @@ msgstr ""
 #: orders/forms.py:35 templates/staff/_order_table.html:56
 #: templates/staff/invoice_checkout.html:76
 #: templates/staff/order_shipping.html:123
-#: templates/tools/pdf/invoice_pdf.html:71
+#: templates/tools/pdf/invoice_pdf.html:84
 #: templates/tools/pdf/invoice_pdf_a4.html:76
-#: templates/tools/pdf/print_invoice.html:81
+#: templates/tools/pdf/print_invoice.html:84
 msgid "Shipping cost"
 msgstr ""
 
@@ -209,6 +209,8 @@ msgstr ""
 #: templates/_base.html:75 templates/_base_files_app.html:45
 #: templates/shop/store_book_search.html:51 templates/staff/products.html:54
 #: templates/staff/sold_products.html:64
+#: templates/tools/pdf/invoice_pdf.html:100
+#: templates/tools/pdf/print_invoice.html:100
 msgid "Used"
 msgstr ""
 
@@ -216,11 +218,12 @@ msgstr ""
 msgid "Purchase price"
 msgstr ""
 
-#: orders/models.py:22
+#: orders/models.py:22 templates/orders/reports/sales_by_days.html:54
 msgid "Draft"
 msgstr ""
 
-#: orders/models.py:23 templates/staff/order_detail_for_admin.html:56
+#: orders/models.py:23 templates/orders/reports/sales_by_days.html:77
+#: templates/staff/order_detail_for_admin.html:56
 #: templates/staff/order_list_by_country.html:35
 #: templates/staff/order_payment_manage.html:50
 #: templates/tools/pdf/invoice_pdf_a4.html:34
@@ -228,7 +231,7 @@ msgstr ""
 msgid "Paid"
 msgstr ""
 
-#: orders/models.py:24
+#: orders/models.py:24 templates/orders/reports/sales_by_days.html:52
 msgid "Approved"
 msgstr ""
 
@@ -332,12 +335,13 @@ msgstr ""
 msgid "Purchase status changed to draft"
 msgstr ""
 
-#: products/models.py:77 templates/shop/store_book_search.html:40
+#: products/models.py:77 templates/orders/reports/sales_by_days.html:147
+#: templates/shop/store_book_search.html:40
 #: templates/shop/store_book_search.html:51
 msgid "Book"
 msgstr ""
 
-#: products/models.py:78
+#: products/models.py:78 templates/orders/reports/sales_by_days.html:149
 msgid "Craft"
 msgstr ""
 
@@ -352,8 +356,8 @@ msgstr ""
 #: templates/staff/order_payment_manage.html:34
 #: templates/staff/order_shipped.html:50 templates/staff/order_shipping.html:35
 #: templates/staff/orders.html:25 templates/staff/purchase_create.html:24
-#: templates/tools/pdf/invoice_pdf.html:17
-#: templates/tools/pdf/invoice_pdf.html:19
+#: templates/tools/pdf/invoice_pdf.html:22
+#: templates/tools/pdf/invoice_pdf.html:25
 #: templates/tools/pdf/invoice_pdf_a4.html:17
 #: templates/tools/pdf/invoice_pdf_a4.html:19
 #: templates/tools/pdf/print_invoice.html:22
@@ -477,6 +481,15 @@ msgid "Admin note"
 msgstr ""
 
 #: staff/forms.py:63 staff/views.py:979 templates/cart/detail.html:17
+#: templates/orders/reports/sales_by_days.html:53
+#: templates/orders/reports/sales_by_days.html:55
+#: templates/orders/reports/sales_by_days.html:57
+#: templates/orders/reports/sales_by_days.html:78
+#: templates/orders/reports/sales_by_days.html:80
+#: templates/orders/reports/sales_by_days.html:82
+#: templates/orders/reports/sales_by_days.html:146
+#: templates/orders/reports/sales_by_days.html:148
+#: templates/orders/reports/sales_by_days.html:150
 #: templates/staff/_order_table.html:15 templates/staff/draft_orders.html:32
 #: templates/staff/invoice_create.html:71
 #: templates/staff/invoice_create.html:136
@@ -492,7 +505,7 @@ msgstr ""
 #: templates/staff/purchased_products.html:26
 #: templates/staff/sold_products.html:44
 #: templates/staff/zero_stock_list.html:26
-#: templates/tools/pdf/invoice_pdf.html:42
+#: templates/tools/pdf/invoice_pdf.html:52
 #: templates/tools/pdf/invoice_pdf_a4.html:45
 #: templates/tools/pdf/print_invoice.html:52
 #: templates/warehouses/product_workflow.html:28
@@ -708,6 +721,7 @@ msgstr ""
 #: templates/_temp_base.html:11 templates/_temp_base.html:12
 #: templates/_temp_base.html:35 templates/_temp_base.html:42
 #: templates/registration/password_reset_email.html:15
+#: templates/tools/pdf/invoice_pdf.html:31
 #: templates/tools/pdf/print_address.html:26
 #: templates/tools/pdf/print_invoice.html:31
 msgid "Ketab Damavand"
@@ -756,7 +770,7 @@ msgid "items in cart"
 msgstr ""
 
 #: templates/_base.html:153 templates/_base_files_app.html:123
-#: templates/orders/reports/sales_by_days.html:45 templates/staff/sales.html:7
+#: templates/orders/reports/sales_by_days.html:47 templates/staff/sales.html:7
 #: templates/warehouses/product_workflow.html:21
 msgid "Sales"
 msgstr ""
@@ -823,7 +837,6 @@ msgstr ""
 #: templates/_base_payment.html:112 templates/_base_payment.html:147
 #: templates/_base_popup.html:80 templates/_temp_base.html:65
 #: templates/tools/emails/registration_email.html:21
-#: templates/tools/pdf/invoice_pdf.html:7
 #: templates/tools/pdf/invoice_pdf_a4.html:7
 #: templates/tools/pdf/print_address.html:25
 #: templates/tools/pdf/print_address.html:55
@@ -832,22 +845,25 @@ msgstr ""
 
 #: templates/_base.html:192 templates/_base_files_app.html:159
 #: templates/_base_payment.html:90 templates/_temp_base.html:67
+#: templates/tools/pdf/invoice_pdf.html:102
 #: templates/tools/pdf/print_address.html:30
-#: templates/tools/pdf/print_invoice.html:99
+#: templates/tools/pdf/print_invoice.html:102
 msgid "16 Azar St."
 msgstr ""
 
 #: templates/_base.html:192 templates/_base_files_app.html:159
 #: templates/_base_payment.html:90 templates/_temp_base.html:67
+#: templates/tools/pdf/invoice_pdf.html:102
 #: templates/tools/pdf/print_address.html:30
-#: templates/tools/pdf/print_invoice.html:99
+#: templates/tools/pdf/print_invoice.html:102
 msgid "Edward Brown St."
 msgstr ""
 
 #: templates/_base.html:192 templates/_base_files_app.html:159
 #: templates/_base_payment.html:90 templates/_temp_base.html:67
+#: templates/tools/pdf/invoice_pdf.html:102
 #: templates/tools/pdf/print_address.html:30
-#: templates/tools/pdf/print_invoice.html:99
+#: templates/tools/pdf/print_invoice.html:102
 msgid "No.7"
 msgstr ""
 
@@ -857,7 +873,7 @@ msgstr ""
 #: templates/account/clients/client_details.html:40
 #: templates/account/clients/client_list.html:38
 #: templates/staff/purchase_create.html:25
-#: templates/tools/pdf/invoice_pdf.html:20
+#: templates/tools/pdf/invoice_pdf.html:26
 #: templates/tools/pdf/invoice_pdf_a4.html:20
 #: templates/tools/pdf/print_address.html:39
 #: templates/tools/pdf/print_address.html:67
@@ -1107,7 +1123,7 @@ msgstr ""
 #: templates/staff/product_stock_price_edit.html:23
 #: templates/staff/purchase/purchaseline_add.html:33
 #: templates/staff/used_book_prices.html:23
-#: templates/tools/pdf/invoice_pdf.html:40
+#: templates/tools/pdf/invoice_pdf.html:50
 #: templates/tools/pdf/invoice_pdf_a4.html:42
 #: templates/tools/pdf/print_invoice.html:50
 msgid "Product"
@@ -1143,7 +1159,7 @@ msgstr ""
 #: templates/staff/purchase/purchaseline_add.html:34
 #: templates/staff/purchase_create.html:88
 #: templates/staff/used_book_prices.html:38
-#: templates/tools/pdf/invoice_pdf.html:41
+#: templates/tools/pdf/invoice_pdf.html:51
 #: templates/tools/pdf/invoice_pdf_a4.html:44
 #: templates/tools/pdf/print_invoice.html:51
 msgid "Price"
@@ -1175,12 +1191,12 @@ msgid ""
 msgstr ""
 
 #: templates/cart/detail.html:72 templates/orders/create.html:46
-#: templates/staff/draft_orders.html:33 templates/tools/pdf/invoice_pdf.html:44
-#: templates/tools/pdf/invoice_pdf.html:62
+#: templates/staff/draft_orders.html:33 templates/tools/pdf/invoice_pdf.html:54
+#: templates/tools/pdf/invoice_pdf.html:75
 #: templates/tools/pdf/invoice_pdf_a4.html:47
 #: templates/tools/pdf/invoice_pdf_a4.html:67
 #: templates/tools/pdf/print_invoice.html:54
-#: templates/tools/pdf/print_invoice.html:72
+#: templates/tools/pdf/print_invoice.html:75
 msgid "Total"
 msgstr ""
 
@@ -1234,12 +1250,28 @@ msgstr ""
 msgid "Esfand"
 msgstr ""
 
-#: templates/orders/reports/sales_by_days.html:76
-#: templates/orders/reports/sales_by_days.html:83
-#: templates/orders/reports/sales_by_days.html:88
-#: templates/orders/reports/sales_by_days.html:125
+#: templates/orders/reports/sales_by_days.html:56
+#: templates/orders/reports/sales_by_days.html:81
+#: templates/orders/reports/sales_by_days.html:145
+msgid "All in day"
+msgstr ""
+
+#: templates/orders/reports/sales_by_days.html:79
+msgid "Un-Paid"
+msgstr ""
+
+#: templates/orders/reports/sales_by_days.html:104
+msgid "All sales"
+msgstr ""
+
+#: templates/orders/reports/sales_by_days.html:105
+#: templates/orders/reports/sales_by_days.html:112
+#: templates/orders/reports/sales_by_days.html:117
+#: templates/orders/reports/sales_by_days.html:127
 #: templates/orders/reports/sales_by_days.html:132
-#: templates/orders/reports/sales_by_days.html:137
+#: templates/orders/reports/sales_by_days.html:170
+#: templates/orders/reports/sales_by_days.html:177
+#: templates/orders/reports/sales_by_days.html:182
 #: templates/shop/product_card.html:18 templates/shop/product_detail.html:33
 #: templates/shop/product_detail.html:123
 #: templates/shop/store_book_search.html:45
@@ -1253,17 +1285,57 @@ msgstr ""
 #: templates/staff/purchase/_purchase_list_block.html:16
 #: templates/staff/purchase/_purchase_list_block.html:17
 #: templates/staff/purchase/_purchase_list_block.html:20
-#: templates/tools/pdf/invoice_pdf.html:44
-#: templates/tools/pdf/invoice_pdf.html:62
+#: templates/tools/pdf/invoice_pdf.html:54
+#: templates/tools/pdf/invoice_pdf.html:75
 #: templates/tools/pdf/invoice_pdf_a4.html:47
 #: templates/tools/pdf/invoice_pdf_a4.html:67
 #: templates/tools/pdf/print_invoice.html:54
-#: templates/tools/pdf/print_invoice.html:72
+#: templates/tools/pdf/print_invoice.html:75
 msgid "Rial"
 msgstr ""
 
-#: templates/orders/reports/sales_by_days.html:95
+#: templates/orders/reports/sales_by_days.html:111
+msgid "Approved sales"
+msgstr ""
+
+#: templates/orders/reports/sales_by_days.html:116
+msgid "Draft sales"
+msgstr ""
+
+#: templates/orders/reports/sales_by_days.html:126
+msgid "Paid sales"
+msgstr ""
+
+#: templates/orders/reports/sales_by_days.html:131
+msgid "Un-Paid sales"
+msgstr ""
+
+#: templates/orders/reports/sales_by_days.html:140
 msgid "Sales by product type"
+msgstr ""
+
+#: templates/orders/reports/sales_by_days.html:176
+msgid "Book sales"
+msgstr ""
+
+#: templates/orders/reports/sales_by_days.html:181
+msgid "Craft sales"
+msgstr ""
+
+#: templates/orders/reports/sales_by_days.html:190
+msgid "Payment report Zarinpal"
+msgstr ""
+
+#: templates/orders/reports/sales_by_days.html:194
+msgid "paid"
+msgstr ""
+
+#: templates/orders/reports/sales_by_days.html:200
+msgid "pended"
+msgstr ""
+
+#: templates/orders/reports/sales_by_days.html:206
+msgid "All payment:"
 msgstr ""
 
 #: templates/registration/logged_out.html:12
@@ -1559,12 +1631,12 @@ msgstr ""
 #: templates/staff/purchase/_purchase_list_block.html:19
 #: templates/staff/purchase_create.html:85
 #: templates/staff/purchase_create.html:89
-#: templates/tools/pdf/invoice_pdf.html:43
-#: templates/tools/pdf/invoice_pdf.html:66
+#: templates/tools/pdf/invoice_pdf.html:53
+#: templates/tools/pdf/invoice_pdf.html:79
 #: templates/tools/pdf/invoice_pdf_a4.html:46
 #: templates/tools/pdf/invoice_pdf_a4.html:71
 #: templates/tools/pdf/print_invoice.html:53
-#: templates/tools/pdf/print_invoice.html:76
+#: templates/tools/pdf/print_invoice.html:79
 msgid "Discount"
 msgstr ""
 
@@ -1783,9 +1855,9 @@ msgstr ""
 
 #: templates/staff/invoice_create.html:191
 #: templates/staff/purchase_create.html:139
-#: templates/tools/pdf/invoice_pdf.html:76
+#: templates/tools/pdf/invoice_pdf.html:89
 #: templates/tools/pdf/invoice_pdf_a4.html:81
-#: templates/tools/pdf/print_invoice.html:86
+#: templates/tools/pdf/print_invoice.html:89
 msgid "PAYABLE"
 msgstr ""
 
@@ -1842,7 +1914,6 @@ msgstr ""
 #: templates/staff/order_payment_manage.html:24
 #: templates/staff/order_shipped.html:40 templates/staff/order_shipping.html:25
 #: templates/staff/purchase/_purchase_details_block.html:8
-#: templates/tools/pdf/invoice_pdf.html:24
 #: templates/tools/pdf/invoice_pdf_a4.html:26
 msgid "Registrar"
 msgstr ""
@@ -1851,7 +1922,6 @@ msgstr ""
 #: templates/staff/order_payment_manage.html:28
 #: templates/staff/order_shipped.html:44 templates/staff/order_shipping.html:29
 #: templates/staff/purchase/_purchase_details_block.html:12
-#: templates/tools/pdf/invoice_pdf.html:24
 #: templates/tools/pdf/invoice_pdf_a4.html:26
 msgid "Approver"
 msgstr ""
@@ -2330,13 +2400,18 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: templates/tools/pdf/invoice_pdf.html:9
+#: templates/tools/pdf/invoice_pdf.html:17
 #: templates/tools/pdf/invoice_pdf_a4.html:9
 #: templates/tools/pdf/print_invoice.html:17
 msgid "Invoice no."
 msgstr ""
 
 #: templates/tools/pdf/invoice_pdf.html:17
+#: templates/tools/pdf/print_invoice.html:17
+msgid "Pre-Invoice"
+msgstr ""
+
+#: templates/tools/pdf/invoice_pdf.html:22
 #: templates/tools/pdf/invoice_pdf_a4.html:17
 #: templates/tools/pdf/print_invoice.html:22
 msgid "Guest"
@@ -2356,14 +2431,6 @@ msgstr ""
 
 #: templates/tools/pdf/print_address.html:36
 msgid "Postal code"
-msgstr ""
-
-#: templates/tools/pdf/print_invoice.html:17
-msgid "Pre-Invoice"
-msgstr ""
-
-#: templates/tools/pdf/print_invoice.html:97
-msgid "* used-book"
 msgstr ""
 
 #: templates/warehouses/product_workflow.html:7

@@ -709,8 +709,8 @@ def add_used_book_with_no_isbn(request, file_slug, check='check'):
     not_in_database = []
     number_of_added_object = 0
 
-
-    current_import_session = ImportSession.objects.create(user=request.user,)
+    if check == 'add':
+        current_import_session = ImportSession.objects.create(user=request.user,)
 
     # excel file handle
     file_object = get_object_or_404(FileObject, slug=file_slug)
@@ -1122,8 +1122,8 @@ def add_used_book_with_isbn_2(request, file_slug, check='check'):
     not_in_database = []
     number_of_added_object = 0
 
-
-    current_import_session = ImportSession.objects.create(user=request.user,)
+    if check == 'add':
+        current_import_session = ImportSession.objects.create(user=request.user,)
 
     # excel file handle
     file_object = get_object_or_404(FileObject, slug=file_slug)
@@ -1144,7 +1144,7 @@ def add_used_book_with_isbn_2(request, file_slug, check='check'):
             in_db = False
             not_in_db = False
 
-            row = ws['A'+str(i):'M'+str(i)]
+            row = ws['A'+str(i):'D'+str(i)]
 
             isbn = ws['A' + str(i)].value,
             name = ws['B' + str(i)].value,
@@ -1158,24 +1158,26 @@ def add_used_book_with_isbn_2(request, file_slug, check='check'):
             # if not price[0]:
             #     price = [0,]
 
-            print(isbn[0], type(isbn[0]))
+            # print(isbn[0], type(isbn[0]))
 
-            if len(str(isbn[0])) == 13:
-                isbn_9 = str(isbn[0])[3:-1]
-            elif len(str(isbn[0])) == 10:
-                isbn_9 = str(isbn[0])[:-1]
-            elif len(str(isbn[0])) == 9:
-                isbn_9 = str(isbn[0])
-            else:
-                isbn_9 = None
+            # if len(str(isbn[0])) == 13:
+            #     isbn_9 = str(isbn[0])[3:-1]
+            # elif len(str(isbn[0])) == 12:
+            #     isbn_9 = str(isbn[0])[3:]
+            # elif len(str(isbn[0])) == 10:
+            #     isbn_9 = str(isbn[0])[:-1]
+            # elif len(str(isbn[0])) == 9:
+            #     isbn_9 = str(isbn[0])
+            # else:
+            #     isbn_9 = None
 
             try:
-                # Check with 9 Char ISBN
-                if isbn_9:
-                    database_product = Product.objects.filter(available=True).get(isbn_9=isbn_9)
-                else:
-                    # Check with 13 char ISBN
-                    database_product = Product.objects.filter(available=True).get(isbn=str(isbn[0]))
+                # # Check with 9 Char ISBN
+                # if isbn_9:
+                #     database_product = Product.objects.filter(available=True).get(isbn_9=isbn_9)
+                # else:
+                #     # Check with 13 char ISBN
+                database_product = Product.objects.filter(available=True).get(isbn=str(isbn[0]))
                 isbn_in_database.append(( isbn[0],  stock[0],  database_product.pk, database_product.has_other_prices))
                 in_db = True
                 # print(database_product.pk)
@@ -1188,8 +1190,8 @@ def add_used_book_with_isbn_2(request, file_slug, check='check'):
             if check == 'add':
                 if in_db:
                     database_product.has_other_prices = True
-                    database_product.price_used = price[0]
-                    database_product.stock_used = stock[0]
+                    # database_product.price_used = price[0]
+                    database_product.stock_used += stock[0]
                     database_product.save()
                 if not_in_db:
                     product = Product.objects.create(
@@ -1200,9 +1202,10 @@ def add_used_book_with_isbn_2(request, file_slug, check='check'):
                         price = 0,
                         stock = 0,
                         has_other_prices = True,
-                        price_used = price[0],
+                        price_used = 0,
                         stock_used = stock[0],
                         state = 'new',
+                        product_type='book',
                         available = True,
                         available_in_store = True,
                         available_online = True,
@@ -1215,8 +1218,6 @@ def add_used_book_with_isbn_2(request, file_slug, check='check'):
     if check == 'add':
         current_import_session.quantity = number_of_added_object
         current_import_session.save()
-    # if current_import_session.quantity == 0:
-    #     current_import_session.delete()
     print('isbn_in_database', len(isbn_in_database))
     print('not_in_database', len(not_in_database))
     return render(
@@ -1228,6 +1229,106 @@ def add_used_book_with_isbn_2(request, file_slug, check='check'):
             'row_count': row_count,
             'isbn_in_database': isbn_in_database,
             'not_in_database': not_in_database,
+
+         }
+    )
+
+
+def add_used_book_with_no_isbn_2(request, file_slug, check='check'):
+    name_in_database = []
+    name_not_in_database = []
+    number_of_added_object = 0
+    number_of_duplicated_name = 0
+    products = None
+
+    if check == 'add':
+        current_import_session = ImportSession.objects.create(user=request.user,)
+
+    # excel file handle
+    file_object = get_object_or_404(FileObject, slug=file_slug)
+
+    myfile = File(file_object)
+
+    path = file_object.file.path
+    with open(path, 'rb') as f:
+        # Load excel workbook
+        wb = load_workbook(f)
+        ws = wb.active
+        row_count = ws.max_row
+
+        # a loop for scrape the excel file
+        # read the data in cells
+        # for i in range(2, 3):
+        for i in range(2, row_count):
+            row = ws['A'+str(i):'D'+str(i)]
+
+            name = ws['A' + str(i)].value,
+            publisher = ws['B' + str(i)].value,
+            page_number = ws['C' + str(i)].value,
+            stock = ws['D' + str(i)].value,
+            # isbn = ws['C' + str(i)].value,
+            # price = ws['D' + str(i)].value,
+            # print(price[0], type(price[0]))
+            if not page_number[0]:
+                page_number = [0,]
+            price = [0,]
+
+            # print(price[0], type(price[0]))
+            # we want to check the name of product in databse before add them
+            try:
+                products = Product.objects.filter(name=name[0])
+            except:
+                pass
+            if products:
+                if len(products) == 1:
+                    product = products.first()
+                    name_in_database.append((name[0], product.isbn))
+                else:
+                    number_of_duplicated_name += 1
+                    print('duplicated', product.name)
+            else:
+                name_not_in_database.append(name[0])
+
+            if check == 'add':
+                product = Product.objects.create(
+                    name = name[0],
+                    # isbn = str(isbn[0]),
+                    page_number = page_number[0],
+                    publisher = publisher[0],
+                    price = 0,
+                    stock = 0,
+                    has_other_prices = True,
+                    price_used = price[0],
+                    stock_used = stock[0],
+                    state = 'new',
+                    product_type='book',
+                    available = True,
+                    available_in_store = True,
+                    available_online = True,
+                    import_session=current_import_session,
+                )
+                number_of_added_object += 1
+
+
+
+
+    if check == 'add':
+        current_import_session.quantity = number_of_added_object
+        current_import_session.save()
+
+    print('name_in_database', len(name_in_database),)
+    print('name_not_in_database', len(name_not_in_database),)
+    print('number_of_duplicated_name', number_of_duplicated_name)
+    return render(
+        request,
+        'files/add_used_no_isbn.html',
+        {
+            'file': myfile,
+            'file_object': file_object,
+            'row_count': row_count,
+            'number_of_added_object': number_of_added_object,
+            'name_in_database': name_in_database,
+            'name_not_in_database': name_not_in_database,
 
          }
     )
