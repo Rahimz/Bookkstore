@@ -19,6 +19,7 @@
 <a href="{% url 'files:used_book_update' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check used-book-update</a>
 {% endcomment %}
 <a href="{% url 'files:add_used_book_with_isbn_2' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check used-book-with isbn 2</a>
+<a href="{% url 'files:add_used_book_with_no_isbn_2' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check used book with NO isbn 2</a>
 </p>
 {% endfor %}
 {% endblock %}
