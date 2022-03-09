@@ -76,7 +76,7 @@
       </tr>
       <tr class=discount>
         <td colspan="5">{% trans 'Discount'%}</td>
-        <td class="num">{{ order.get_total_discounts_with_order_discount | intcomma:False }} </td>
+        <td class="num">{{ order.discount | intcomma:False }} </td>
       </tr>
       {% if order.shipping_cost %}
       <tr class=discount>
