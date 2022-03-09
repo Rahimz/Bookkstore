@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-08 10:47+0330\n"
-"PO-Revision-Date: 2022-03-08 10:50+0330\n"
+"PO-Revision-Date: 2022-03-09 09:17+0330\n"
 "Last-Translator: رحیم  <rahim.aghareb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -254,7 +254,7 @@ msgstr "پست"
 
 #: orders/models.py:31
 msgid "Bike Delivery"
-msgstr "ارسال موتوری"
+msgstr "پیک"
 
 #: orders/models.py:32
 msgid "Pickup"
