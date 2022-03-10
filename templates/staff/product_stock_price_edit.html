@@ -20,7 +20,7 @@
     </div>
     <div class="col-md-6">
       <h2 class="my-4">{% trans 'Products stock and price management' %}</h2>
-      <h3>{% trans 'Product' %}: <a href="{% url 'staff:product_update' product.id %}" target="_blank">{{ product.name}}</a></h3>
+      <h3>{% trans 'Product' %}: <a href="{% url 'staff:product_update' product.id %}" target="_blank">{{ product }}</a></h3>
       <table class="table table-striped w-50">
         <tr>
           <td>{% trans 'Product ID.' %}</td>

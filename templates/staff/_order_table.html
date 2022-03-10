@@ -24,7 +24,7 @@
       <th scope="row">{{ forloop.counter }}</th>
       <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="auto" height="40px"></td>
       <td>{{ order_line.product.isbn }}</td>
-      <td>{{ order_line.product.name }}</td>
+      <td>{{ order_line.product }}</td>
       <td>{% if order_line.product.author %}{{ order_line.product.author }}{% endif%}</td>
       <td>{{ order_line.product.publisher }}</td>
       <td>{{ order_line.quantity }}</td>

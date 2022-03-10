@@ -68,7 +68,7 @@
 
               <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new main' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new main' %}{% endif %}"
                 class="btn btn-sm {% if result.product_type == 'craft' %}btn-outline-primary{%else%}btn-outline-success{% endif %} m-1 fs-10 text-right">
-                {{ result.name | truncatechars:30 }} - {{ result.publisher | truncatechars:15 }} - {{ result.size }} - {{ result.cover_type }} - {% trans 'Quantity' %} {{ result.stock}} - <span
+                {{ result | truncatechars:30 }} - {{ result.publisher | truncatechars:15 }} - {{ result.size }} - {{ result.cover_type }} - {% trans 'Quantity' %} {{ result.stock}} - <span
                   class="fw-bolder">{{ result.price | intcomma:False }}</span>
               </a>
               {% if result.has_other_prices %}
@@ -113,13 +113,13 @@
           <h4 class="">{% trans 'This invoice has a book from a collection that can not be sold separately' %}</h4>
           {% if collection_parent_product %}
           {% for product in collection_parent_product %}
-          <p>{{ product.name }} - {{ product.isbn }} {% trans 'include' %} {{ product.collection_set}}</p>
+          <p>{{ product }} - {{ product.isbn }} {% trans 'include' %} {{ product.collection_set}}</p>
           {% endfor %}
           {% endif %}
 
           {% if collection_children_product %}
           {% for product in collection_children_product %}
-          <p>{{ product.name }} - {{ product.isbn }} {% trans 'is in this collection' %} {{ product.collection_parent }}</p>
+          <p>{{ product }} - {{ product.isbn }} {% trans 'is in this collection' %} {{ product.collection_parent }}</p>
           {% endfor %}
           {% endif %}
 
@@ -148,7 +148,7 @@
               <th scope="row">{{ forloop.counter }}</th>
               <td>{{ order_line.product.isbn }}</td>
               <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="auto" height="40px"></td>
-              <td>{{ order_line.product.name }}</td>
+              <td>{{ order_line.product }}</td>
               <td>{% if order_line.poruct.publisher %}{{ order_line.product.publisher }}{% endif %}</td>
               <td></td>
               <td>

@@ -20,7 +20,7 @@
         {% for item in products %}
       {% if item.product.isbn %}{{ item.product.isbn }}{% else %}--{% endif %},
       {{ item.order.id }},
-      {{ item.product.name }},
+      {{ item.product }},
       {{ item.product.stock_used }},
       {{ item.quantity }}
       <br>
@@ -39,7 +39,7 @@
           <tr>
             <td>{{ item.product.isbn }}</td>
             <td>{{ item.order.id }}</td>
-            <td>{{ item.product.name }}</td>
+            <td>{{ item.product }}</td>
             <td>{{ item.product.stock_used }}</td>
             <td>{{ item.quantity }}</td>
 

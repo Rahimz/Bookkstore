@@ -15,7 +15,7 @@
       {% include "staff/sidebar_staff.html" with barName="warehouse" %}
     </div>
     <div class="col-md-10">
-      <h2>{% trans 'Product workflow'%}: {{ product.name }} - {{ product.isbn }}</h2>
+      <h2>{% trans 'Product workflow'%}: {{ product }} - {{ product.isbn }}</h2>
       <table class="table table-striped table-responsive">
         <thead>
           <th scope="">{% trans 'Sales' %}: {{ sales.quantity }}</th>

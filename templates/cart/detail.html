@@ -30,7 +30,7 @@
                 {% else %}{% static 'img/no_image.png' %}{% endif %}" width="100px" height="auto">
         </a>
       </td>
-      <td>{{ product.name }}</td>
+      <td>{{ product }}</td>
       <td>
         <form action="{% url 'cart:cart_add' product.pk %}" method="post">
           {{ item.update_quantity_form.quantity }}

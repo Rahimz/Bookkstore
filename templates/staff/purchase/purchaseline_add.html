@@ -30,7 +30,7 @@
       </script>
 
       {% else %}
-      <h3 class="mt-4">{% trans 'Product' %} : {{ product.name }} - {{ product.isbn }} </h3>
+      <h3 class="mt-4">{% trans 'Product' %} : {{ product }} - {{ product.isbn }} </h3>
       <h4>{% trans 'Price' %}: {{ price | intcomma:False }} - {% trans 'Stock in time' %}: {{ stock }}</h4>
       <form class="" method="post" action=".">
         {% csrf_token %}

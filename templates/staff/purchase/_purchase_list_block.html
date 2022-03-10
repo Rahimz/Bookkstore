@@ -27,9 +27,9 @@
       <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="60px" height="auto"></td>
       <td>{{ purchase_line.product.isbn }}</td>
       {% if purchase.status == 'draft' %}
-      <td><a href="{% url 'orders:purchaseline_update' purchase_id=purchase.id product_id=purchase_line.product.id variation=purchase_line.variation purchaseline_id=purchase_line.id %}">{{ purchase_line.product.name }}</a></td>
+      <td><a href="{% url 'orders:purchaseline_update' purchase_id=purchase.id product_id=purchase_line.product.id variation=purchase_line.variation purchaseline_id=purchase_line.id %}">{{ purchase_line.product }}</a></td>
       {% else %}
-      <td>{{ purchase_line.product.name }}</td>
+      <td>{{ purchase_line.product }}</td>
       {% endif %}
       <td>{{ purchase_line.product.publisher }}</td>
       <td>{{ purchase_line.quantity }}</td>

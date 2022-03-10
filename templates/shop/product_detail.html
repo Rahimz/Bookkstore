@@ -6,7 +6,7 @@
 
 {% load humanize %}
 
-{% block title %}{{ product.name }}{% endblock %}
+{% block title %}{{ product }}{% endblock %}
 
 {% block staff_tab %}<a class="btn text-dark btn-outline-warning" href="{% url 'staff:product_update' product.id %}" >{% trans 'Update product' %}</a>{% endblock %}
 
@@ -27,7 +27,7 @@
       <div class="col-md-3">
         <div class="drop_shadow border rounded-2 p-2">
           <div class="bg-light p-2">
-            <p itemprop="name" class="">{% trans 'Name' %} : {{ product.name }}</p>
+            <p itemprop="name" class="">{% trans 'Name' %} : {{ product }}</p>
             <p itemprop="author" class="">{% trans 'Author' %} : {{ product.author }}</p>
             <p itemprop="translator" class="">{% trans 'Translator' %} : {{ product.translator }}</p>
             <p class="">{% trans 'Price' %} : {{ product.price | intcomma:False}}<span class="small"> ({% trans 'Rial' %})</span></p>

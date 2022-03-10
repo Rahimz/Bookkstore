@@ -39,7 +39,7 @@
         <img src="{% static 'img/logo_bw.png' %}" class=" " width="40px" height="auto" alt="{{ product.name }}">
         <span class="badge bg-success rounded-pill">{% trans 'Book' %} {% trans 'New' %}</span>
         <span class=" p-2">
-          <b>{{ product.name }}</b>
+          <b>{{ product }}</b>
           {% if product.publisher %} - {{ product.publisher }}{% endif %}
           {% if product.page_number %} - {% trans 'Page number' %}: {{ product.page_number }}{% endif %}
           {% if product.price %} - {% trans 'Price' %}: <b>{{ product.price | intcomma:False }}</b> {% trans 'Rial' %}{% endif %}
@@ -50,7 +50,7 @@
         <img src="{% static 'img/logo_bw.png' %}" class=" " width="40px" height="auto" alt="{{ product.name }}">
         <span class="badge bg-warning rounded-pill">{% trans 'Book' %} {% trans 'Used' %}</span>
         <span class=" p-2">
-          <b>{{ product.name }}</b>
+          <b>{{ product }}</b>
         {% if product.publisher %}  - {{ product.publisher }}{% endif %}
         {% if product.page_number %}  - {% trans 'Page number' %}: {{ product.page_number }}{% endif %}
         {% if product.price_used %}  - {% trans 'Price' %}: <b>{{ product.price_used | intcomma:False }}</b> {% trans 'Rial' %}{% endif %}

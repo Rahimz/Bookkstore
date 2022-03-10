@@ -57,7 +57,7 @@
       {% for item in order.lines.all %}
       <tr class="row{% cycle "1" "2" %}">
         <td>{{ forloop.counter }}</td>
-        <td>{% if item.variation == "used main" %}&lowast; {% endif %}{{ item.product.name | truncatechars:28 }}</td>
+        <td>{% if item.variation == "used main" %}&lowast; {% endif %}{{ item.product | truncatechars:28 }}</td>
         <td class="num">{{ item.price | intcomma:False }}</td>
         <td class="text-center">{{ item.quantity }}</td>
         <td class="num">{{ item.discount | intcomma:False }}</td>
