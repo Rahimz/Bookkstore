@@ -359,7 +359,7 @@ def product_export_excel(request, filter='all'):
             title_list = [
                 count,
                 product.id,
-                product.name,
+                str(product),
                 product.isbn,
                 product.publisher,
                 product.price,
@@ -374,7 +374,7 @@ def product_export_excel(request, filter='all'):
             title_list = [
                 count,
                 product.id,
-                product.name,
+                str(product),
                 product.isbn,
                 product.publisher,
                 product.stock,
@@ -464,7 +464,7 @@ def used_product_before_5(request):
         title_list = [
             count,
             item.product.id,
-            str(item.product.name),
+            str(item.product),
             item.product.isbn,
             item.product.publisher,
             item.product.price,
@@ -473,7 +473,7 @@ def used_product_before_5(request):
             item.product.stock_used,
             item.quantity
         ]
-        print (item.product.id, item.product.name)
+        # print (item.product.id, item.product.name)
         # writing body
         for i in range(len(headers)):
             c = sheet.cell(row = count + 2 , column = i + 1)
@@ -599,7 +599,7 @@ def export_excel_sold_products(request, date=None, days=None):
             # messages.warning(request, 'hi')
             # check_list.append(item.product.name)
             added_line[str(item.product.id)] = {
-                'name': item.product.name,
+                'name': str(item.product),
                 'quantity': item.quantity,
                 'created': hij_strf_date(greg_to_hij_date(item.created.date()), '%-d %B %Y'),
                 'stock': item.product.stock,

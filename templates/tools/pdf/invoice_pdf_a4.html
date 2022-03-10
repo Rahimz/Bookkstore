@@ -52,7 +52,7 @@
         <tr class="row{% cycle "1" "2" %}">
           <td>{{ forloop.counter }}</td>
           <td>{{ item.product.id }}</td>
-          <td>{{ item.product.name | truncatechars:50 }}</td>
+          <td>{{ item.product | truncatechars:50 }}</td>
           <td>{% if item.product.isbn %}{{ item.product.isbn }}{% endif %}</td>
           <td class="num">{{ item.price | intcomma:False }}</td>
           <td class="num">{{ item.quantity }}</td>

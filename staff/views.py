@@ -1147,7 +1147,7 @@ def sold_products(request, days=None, date=None):
             # messages.warning(request, 'hi')
             # check_list.append(item.product.name)
             added_line[str(item.product.id)] = {
-                'name': item.product.name,
+                'name': str(item.product),
                 'quantity': item.quantity,
                 'created': hij_strf_date(greg_to_hij_date(item.created.date()), '%-d %B %Y'),
                 'stock': item.product.stock,

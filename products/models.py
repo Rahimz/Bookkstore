@@ -417,7 +417,10 @@ class Product(models.Model):
         super(Product, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.name
+        if self.collection_name:
+            return f"{self.collection_name}, {self.number_in_collection if self.number_in_collection else ''}, {self.name}"
+        else:
+            return self.name
 
 
 class Good(models.Model):

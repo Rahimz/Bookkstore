@@ -14,7 +14,7 @@
       </span>
       {% endif %}
       <div class="card-body m-2 p-2">
-        <h5 class="card-title">{{ product.name | truncatechars:25 }}</h5>
+        <h5 class="card-title">{{ product | truncatechars:25 }}</h5>
         <h6 class="cart-subtitle text-muted">{% if product.stock == 0 %}<span class="unavailable">{% trans 'Out of stock' %}</span>{% else %}{{ product.price | intcomma:False }} {% trans 'Rial' %}{% endif %}</h6>
         {% if product.author %}<p class="p-1">{{ product.author }} {{ product.ahthor | truncatechars:25 }}{% else %} <br /> {% endif %}</p>
 
