@@ -17,6 +17,7 @@ import openpyxl
 from openpyxl.styles import Color, Fill
 import qrcode
 import qrcode.image.svg
+from tools.gregory_to_hijry import hij_strf_date, greg_to_hij_date
 
 from orders.models import Order, OrderLine
 from zarinpal.models import Payment
@@ -554,6 +555,102 @@ def export_publisher(request):
 
 
     filename = 'media/excel/publishers-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
+    wb.save(filename)
+    excel = open(filename, 'rb')
+    response = FileResponse(excel)
+
+    return response
+
+
+@staff_member_required
+def export_excel_sold_products(request, date=None, days=None):
+    fa_date = None
+    if days:
+        order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.datetime.now() - timedelta(days)).exclude(product__product_type='craft').order_by('-created')
+    if date:
+        date = date.replace('-', '')
+        date = datetime.datetime.strptime(date, "%Y%m%d").date()
+        fa_date = hij_strf_date(greg_to_hij_date(date), '%-d %B %Y')
+        order_lines = OrderLine.objects.all().filter(active=True).filter(created__date=date)
+
+    products = dict()
+    main_stock = dict()
+    check_list =[]
+    added_line = {}
+    # added_line = {
+    #     'pk': {
+    #         'quantity': 'x',
+    #         'name': 'str',
+    #         'created': 'created',
+    #         'stock': 'y',
+    #          'variation': 'new main'
+    #          'id': 'id'
+    #     }
+    # }
+
+    for item in order_lines:
+        # key = products.get(item.product.id)
+        # print(item.product.id)
+        # if item.product.name in added_line:
+        if str(item.product.id) in added_line:
+            added_line[str(item.product.id)]['quantity'] += item.quantity
+            pass
+        else:
+            # messages.warning(request, 'hi')
+            # check_list.append(item.product.name)
+            added_line[str(item.product.id)] = {
+                'name': item.product.name,
+                'quantity': item.quantity,
+                'created': hij_strf_date(greg_to_hij_date(item.created.date()), '%-d %B %Y'),
+                'stock': item.product.stock,
+                'variation': item.variation,
+                'isbn': item.product.isbn,
+                'id': item.product.id,
+                }
+
+    # print(added_line)
+    # Create excel file
+    wb = openpyxl.Workbook()
+    sheet = wb.active
+
+    # create headers
+    headers = [
+        fa_date if fa_date else days,
+        'Product ID',
+        'ISBN',
+        'Product',
+        'Sold quantity',
+        'Variation',
+        'Main stock',
+    ]
+    # write headers
+    for i in range(len(headers)):
+        c = sheet.cell(row = 1, column = i + 1 )
+        c.value = headers[i]
+
+    body_list = list(added_line.keys())
+    # print(body_list)
+    # create body
+    for count , key in enumerate(body_list):
+        title_list = [
+            count,
+            added_line[key]['id'],
+            added_line[key]['isbn'],
+            added_line[key]['name'],
+            added_line[key]['quantity'],
+            'Used' if 'used' in added_line[key]['variation'] else 'New',
+            added_line[key]['stock'],
+        ]
+        # write body
+        for i in range(len(headers)):
+            c = sheet.cell(row = count + 2 , column = i + 1)
+            c.value = title_list[i]
+
+    if date:
+        filename = 'media/excel/sold-products-by-{}-{}.xlsx'.format(date, datetime.datetime.now().isoformat(sep='-'))
+    if days:
+        filename = 'media/excel/sold-products-by-{}-{}.xlsx'.format(days, datetime.datetime.now().isoformat(sep='-'))
+
     wb.save(filename)
     excel = open(filename, 'rb')
     response = FileResponse(excel)
