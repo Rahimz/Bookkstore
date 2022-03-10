@@ -21,4 +21,7 @@ urlpatterns = [
     path('used-product-before-5/', views.used_product_before_5, name="used_product_before_5"),
 
     path('qrcode/create/<int:order_id>/<int:payment_id>/', views.qrcode_create, name='qrcode_create'),
+
+    path('export-sold-products/<int:days>/', views.export_excel_sold_products, name="export_excel_sold_products"),
+    path('export-sold-products/date/<str:date>/', views.export_excel_sold_products, name="export_excel_sold_products_date"),
 ]

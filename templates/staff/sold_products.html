@@ -16,6 +16,21 @@
     </div>
     <div class="col-md-10">
       <h2>{% trans 'Sold products'%} {% if fa_date%}: {{ fa_date }}{% endif %}</h2>
+      <!-- Export to excel -->
+      <p class="my-3">
+        {% if date %}
+        <a href="{% url 'tools:export_excel_sold_products_date' date=date %}" class="my-2">
+          <img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">
+          <span>{{ fa_date }}</span>
+        </a>
+        {% else %}
+        <a href="{% url 'tools:export_excel_sold_products' days=days %}" class="my-2">
+          <img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">
+          <span>{% trans 'Last year'%}</span>
+        </a>
+        {% endif %}
+      </p>
+      <!-- Choose date -->
       <p>
         {% trans 'Esfand' %}:
         <a href="{% url 'staff:sold_products_date' date='20032022' %}" class="btn btn-sm btn-outline-secondary">29</a>
@@ -65,26 +80,26 @@
         <tbody>
           {% for line, item  in added_line.items %}
           <tr>
-          <td>{{ line }}</td>
+            <td>{{ line }}</td>
 
-          <td>{{ item.isbn }}</td>
-          <td><a href="{% url 'warehouses:product_workflow' item.id %}"><img src="{% static 'img/proccess.png' %}" alt="product flow"></a></td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.quantity }}</td>
-          <td>
-            {% if 'new' in item.variaton %}
-            <span class="border border-success p-1 rounded">{% trans 'New' %}</span>
-            {% else %}
-            <span class="border border-warning p-1 rounded">{% trans 'Used' %}</span>
-            {% endif %}
-          </td>
-          <td>{{ item.created }}</td>
+            <td>{{ item.isbn }}</td>
+            <td><a href="{% url 'warehouses:product_workflow' item.id %}"><img src="{% static 'img/proccess.png' %}" alt="product flow"></a></td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>
+              {% if 'used' in item.variation %}
+              <span class="border border-warning p-1 rounded">{% trans 'Used' %}</span>
+              {% else %}
+              <span class="border border-success p-1 rounded">{% trans 'New' %}</span>
+              {% endif %}
+            </td>
+            <td>{{ item.created }}</td>
 
-          <td><span class="{% if item.stock <= 0 %}bg-warning text-dark p-2 rounded{% endif %}">{{ item.stock }}</span></td>
-          {% for item in line %}
-          {% endfor %}
-          {%comment %}
-{% endcomment%}
+            <td><span class="{% if item.stock <= 0 %}bg-warning text-dark p-2 rounded{% endif %}">{{ item.stock }}</span></td>
+            {% for item in line %}
+            {% endfor %}
+            {%comment %}
+            {% endcomment%}
 
           </tr>
           {% endfor %}

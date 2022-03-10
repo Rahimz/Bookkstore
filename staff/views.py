@@ -1119,7 +1119,7 @@ def sold_products(request, days=None, date=None):
         # print(fa_date)
         # hij_strf_date(greg_to_hij_date(order.created.date()), '%-d %B %Y')
         order_lines = OrderLine.objects.all().filter(active=True).filter(created__date=date)
-        print(len(order_lines))
+        # print(len(order_lines))
         # all_payment = Payment.objects.filter(created__date__gte='2022-02-01').aggregate(total_amount=Sum('amount'))
     # order_lines = OrderLine.objects.all().values_list(product.id, flat=True)
     products = dict()
@@ -1151,7 +1151,7 @@ def sold_products(request, days=None, date=None):
                 'quantity': item.quantity,
                 'created': hij_strf_date(greg_to_hij_date(item.created.date()), '%-d %B %Y'),
                 'stock': item.product.stock,
-                'variaton': item.variation,
+                'variation': item.variation,
                 'isbn': item.product.isbn,
                 'id': item.product.id,
                 }
@@ -1167,6 +1167,7 @@ def sold_products(request, days=None, date=None):
          'added_line': added_line,
          'check_list': check_list,
          'date': date,
+         'days': days,
          'fa_date': fa_date,
          }
     )
