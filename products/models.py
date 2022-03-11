@@ -422,6 +422,8 @@ class Product(models.Model):
         else:
             return self.name
 
+    def get_other_stock(self):
+        return sum([self.stock_1, self.stock_2, self.stock_3, self.stock_4, self.stock_5])
 
 class Good(models.Model):
     STATE_CHOICES = [

@@ -54,6 +54,7 @@ urlpatterns = [
     path('products/create/', views.product_create, name='product_create'),
     # path('products/update/<int:product_id>/', views.product_update, name='product_update'),
     path('products/update/<int:product_id>/', views.product_create, name='product_update'),
+    path('products/price-show/<int:product_id>/', views.product_price_show, name='product_price_show'),
 
     path('products/collection-management/', views.collection_management, name='collection_management'),
     path('products/collection-management/edit/<int:product_id>/', views.collection_management_edit, name='collection_management_edit'),

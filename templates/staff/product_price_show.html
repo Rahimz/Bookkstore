@@ -1,0 +1,71 @@
+{% extends "_base_popup.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Product price stock show' %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+
+    <div class="col-md-12">
+      <h2>{% trans 'Product srock and prices' %}</h2>
+      <h3>{{ product }} - {{ product.isbn }}</h3>
+
+      <table class="table table-striped">
+        <thead>
+          <th>{% trans 'Variation' %}</th>
+          <th>{% trans 'Price' %}</th>
+          <th>{% trans 'Stock' %}</th>
+        </thead>
+        <tr>
+          <td>{%trans 'Main price' %}</td>
+          <td>{{ product.price }}</td>
+          <td>{{ product.stock }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Price 1' %}</td>
+          <td>{{ product.price_1 }}</td>
+          <td>{{ product.stock_1 }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Price 2' %}</td>
+          <td>{{ product.price_2 }}</td>
+          <td>{{ product.stock_2 }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Price 3' %}</td>
+          <td>{{ product.price_3 }}</td>
+          <td>{{ product.stock_3 }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Price 4' %}</td>
+          <td>{{ product.price_4 }}</td>
+          <td>{{ product.stock_4 }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Price 5' %}</td>
+          <td>{{ product.price_5 }}</td>
+          <td>{{ product.stock_5 }}</td>
+        </tr>
+        <tr>
+          <td>{%trans 'Price used' %}</td>
+          <td>{{ product.price_used }}</td>
+          <td>{{ product.stock_used }}</td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

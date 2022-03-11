@@ -1637,3 +1637,15 @@ def craft_update(request, craft_id=None):
             'update_form': update_form,
         }
     )
+
+
+@staff_member_required
+def product_price_show(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    return render(
+        request,
+        'staff/product_price_show.html',
+        {
+        'product': product,
+        }
+    )
