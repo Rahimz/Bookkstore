@@ -30,6 +30,8 @@
         {{ form | crispy }}
         {% csrf_token %}
         <div class="col-sm-offset-2 col-sm-10">
+          {# <!-- This button prevent form from enter button submit --> #} 
+          <button type="submit" disabled style="display: none" aria-hidden="true"></button>
           <a href="{% url 'staff:products' %}"  name="cancel" class="btn btn-danger">{% trans 'Cancel' %}</a>
           <input type="submit"  class="btn btn-success" value="{% trans 'Submit' %}">
           <button type="submit"  name="another" class="btn btn-danger" value="{% trans 'Submit' %}"">{% trans 'Save and add another' %}</button>
@@ -52,5 +54,11 @@ document.addEventListener("wheel", function(event){
         document.activeElement.blur();
     }
 });
+$(document).on("keydown", ":input:not(textarea)", function(event) {
+    if (event.key == "Enter") {
+        event.preventDefault();
+    }
+});
 </script>
+
 {% endblock %}

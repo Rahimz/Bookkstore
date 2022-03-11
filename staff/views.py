@@ -175,7 +175,10 @@ def product_create(request, product_id=None):
                         isbn_9 = None
                 products = None
                 try:
-                    products = Product.objects.filter(available=True).filter(Q(isbn=isbn) | Q(isbn_9=isbn_9))
+                    if isbn_9:
+                        products = Product.objects.filter(available=True).filter(isbn_9=isbn_9)
+                    else:
+                        products = Product.objects.filter(available=True).filter(isbn=isbn)
                 except:
                     pass
                 if products:
