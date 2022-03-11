@@ -104,6 +104,9 @@ class CustomUser(AbstractUser):
     is_manager = models.BooleanField(
         default = False
     )
+    is_online_manager = models.BooleanField(
+        default = False
+    )
     default_billing_address = models.ForeignKey(
     Address,
     related_name="billing",

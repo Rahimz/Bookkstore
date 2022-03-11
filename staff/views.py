@@ -14,7 +14,7 @@ from django_countries.fields import Country
 from tools.gregory_to_hijry import hij_strf_date, greg_to_hij_date
 
 from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm, ProductCollectionForm, AdminPriceManagementForm
-from .forms import CraftUpdateForm, AdminPriceStockManagementForm
+from .forms import CraftUpdateForm, AdminPriceStockManagementForm, OnlineAdminPriceStockManagementForm
 from orders.forms import OrderAdminCheckoutForm, OrderPaymentManageForm
 from search.forms import ClientSearchForm, BookIsbnSearchForm, SearchForm
 from account.forms import VendorAddForm, AddressAddForm, VendorAddressAddForm
@@ -1502,17 +1502,27 @@ def product_stock_price_edit(request, product_id):
     stock = product.stock
     price = product.price
     if request.method == 'POST':
-        price_form = AdminPriceStockManagementForm(data=request.POST, instance=product)
+        if request.user.is_online_manager:
+            price_form = OnlineAdminPriceStockManagementForm(data=request.POST, instance=product)
+        else:
+            price_form = AdminPriceStockManagementForm(data=request.POST, instance=product)
         if price_form.is_valid():
             #  we want to check wether the newly entered stock more than DB stock or not
             # if it is more we make a purchase for editing tne DB
             new_price_stock = price_form.save(commit=False)
+
+
 
             # check the price is the biggest price of product
             if new_price_stock.price < price:
                 messages.error(request, _('You could not enter a price less than the main price '))
                 return redirect('staff:product_stock_price_edit', product.id)
 
+
+            if request.user.is_online_manager:
+                new_price_stock.save()
+                messages.success(request, _('Price updated'))
+                return redirect('staff:products')
 
             if new_price_stock.stock > stock:
                 messages.warning(request, _('A purchase added to manage the DB'))
@@ -1565,10 +1575,13 @@ def product_stock_price_edit(request, product_id):
 
             new_price_stock.save()
             messages.success(request, _('Stock and price updated'))
+            return redirect('staff:products')
 
-            # return redirect('staff:products')
     else:
-        price_form = AdminPriceStockManagementForm(instance=product)
+        if request.user.is_online_manager:
+            price_form = OnlineAdminPriceStockManagementForm(instance=product)
+        else:
+            price_form = AdminPriceStockManagementForm(instance=product)
     return render(
         request,
         'staff/product_stock_price_edit.html',
