@@ -1140,6 +1140,11 @@ def sold_products(request, days=None, date=None):
     #     }
     # }
     for item in order_lines:
+        vendors_list = item.product.vendors.all().values_list('first_name', flat=True)
+        # print(vendors_list)
+
+
+        # vendors_list = [item.first_name for item in vendors]
         # key = products.get(item.product.id)
         # print(item.product.id)
         # if item.product.name in added_line:
@@ -1157,6 +1162,8 @@ def sold_products(request, days=None, date=None):
                 'variation': item.variation,
                 'isbn': item.product.isbn,
                 'id': item.product.id,
+                'publisher': item.product.publisher,
+                'vendors': vendors_list,
                 }
 
 
