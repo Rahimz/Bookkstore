@@ -10,6 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.contrib.postgres.search import SearchVector
+from django.db import IntegrityError
 
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ClientAddForm, ClientUpdateForm, AddressAddForm
 from .models import CustomUser, Address
@@ -144,9 +145,17 @@ def client_add(request):
             new_client.password = str(uuid.uuid4())
             new_client.email = "{}@ketabedamavand.com".format(
                 new_client.username)
-
-            new_client.save()
-
+            try:
+                new_client.save()
+            except IntegrityError:
+                messages.error(request, _('The phone number is already used!'))
+                client_form = ClientAddForm(data=request.POST)
+                return render(
+                    request,
+                    'account/clients/client_add.html',
+                    {'client_form': client_form,
+                     }
+                )
 
             messages.success(request, _('Client added!'))
             return redirect('/account/clients/#clientTable')
@@ -159,20 +168,46 @@ def client_add(request):
         request,
         'account/clients/client_add.html',
         {'client_form': client_form,
-         # 'billing_address_form': billing_address_form,
-         # 'shipping_address_form': shipping_address_form,
          }
     )
 
 
 def client_update(request, client_id):
     client = CustomUser.objects.get(pk=client_id)
+    db_client = None
 
     if request.method == "POST":
         client_form = ClientUpdateForm(data=request.POST, instance=client)
 
         if client_form.is_valid():
-            client_form.save()
+            form = client_form.save(commit=False)
+            try:
+                db_client = CustomUser.objects.filter(phone=form.phone)
+                print(db_client)
+            except:
+                pass
+            if db_client:
+                messages.error(request, _('The phone number is already used!'))
+                client_form = ClientUpdateForm(data=request.POST, instance=client)
+                return render(
+                    request,
+                    'account/clients/client_add.html',
+                    {'client_form': client_form,
+                     }
+                )
+
+            try:
+                form.save()
+            except:
+                messages.error(request, _('Form is not valid'))
+                client_form = ClientUpdateForm(data=request.POST, instance=client)
+                return render(
+                    request,
+                    'account/clients/client_add.html',
+                    {'client_form': client_form,
+                     }
+                )
+
 
             messages.success(request, _('Client details updated'))
             return redirect('/account/clients')
