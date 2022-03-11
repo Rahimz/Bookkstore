@@ -70,6 +70,8 @@
           <th scope="">{% trans 'ISBN' %}</th>
           <th scope="">{% trans 'Flow' %}</th>
           <th scope="">{% trans 'Name' %}</th>
+          <th scope="">{% trans 'Publisher' %}</th>
+          <th scope="">{% trans 'Vendors' %}</th>
           <th scope="">{% trans 'Quantity' %}</th>
           <th scope="">{% trans 'Status' %}</th>
           <th scope="">{% trans 'Date' %}</th>
@@ -85,10 +87,16 @@
             <td>{{ item.isbn }}</td>
             <td><a href="{% url 'warehouses:product_workflow' item.id %}"><img src="{% static 'img/proccess.png' %}" alt="product flow"></a></td>
             <td>{{ item.name }}</td>
+            <td>{{ item.publisher }}</td>
+            <td>
+              {% for v in item.vendors %}
+              {{ v }}
+              {% endfor %}
+            </td>
             <td>{{ item.quantity }}</td>
             <td>
               {% if 'used' in item.variation %}
-              <span class="border border-warning p-1 rounded">{% trans 'Used' %}</span>
+              <span class="border border-warning p-1 rounded m-1">{% trans 'Used' %}</span>
               {% else %}
               <span class="border border-success p-1 rounded">{% trans 'New' %}</span>
               {% endif %}

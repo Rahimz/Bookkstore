@@ -140,6 +140,27 @@ class AdminPriceStockManagementForm(forms.ModelForm):
         }
 
 
+class OnlineAdminPriceStockManagementForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = [
+            'price',
+            # 'stock', 'price_used', 'stock_used',
+            ]
+        labels ={
+            'price': _('Main price'),
+            # 'stock': _('Main stock'),
+            # 'price_used': _('Used price'),
+            # 'stock_used': _('Used stock'),
+        }
+        help_texts ={
+            'price': _('Only the biggest price'),
+            # 'stock': _('If it\'s bigger than the stock a purchase will create for it'),
+            # 'price_used': _('As same as Bahman key'),
+            # 'stock_used': _('Just for editing the databse for books that is in store but not in database'),
+        }
+
+
 class CraftUpdateForm(forms.ModelForm):
     # def __init__(self, *args, **kwargs):
     #     super().__init__(*args, **kwargs)

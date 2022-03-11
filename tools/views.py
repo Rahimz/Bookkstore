@@ -606,6 +606,8 @@ def export_excel_sold_products(request, date=None, days=None):
                 'variation': item.variation,
                 'isbn': item.product.isbn,
                 'id': item.product.id,
+                'publisher': item.product.publisher,
+                'vendors': ','.join(item.product.vendors.all().values_list('first_name', flat=True)),
                 }
 
     # print(added_line)
@@ -622,6 +624,8 @@ def export_excel_sold_products(request, date=None, days=None):
         'Sold quantity',
         'Variation',
         'Main stock',
+        'Publisher',
+        'Vendors',
     ]
     # write headers
     for i in range(len(headers)):
@@ -640,6 +644,8 @@ def export_excel_sold_products(request, date=None, days=None):
             added_line[key]['quantity'],
             'Used' if 'used' in added_line[key]['variation'] else 'New',
             added_line[key]['stock'],
+            added_line[key]['publisher'],
+            added_line[key]['vendors'],
         ]
         # write body
         for i in range(len(headers)):
