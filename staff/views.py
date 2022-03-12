@@ -1121,7 +1121,7 @@ def sold_products(request, days=None, date=None):
         fa_date = hij_strf_date(greg_to_hij_date(date), '%-d %B %Y')
         # print(fa_date)
         # hij_strf_date(greg_to_hij_date(order.created.date()), '%-d %B %Y')
-        order_lines = OrderLine.objects.all().filter(active=True).filter(created__date=date)
+        order_lines = OrderLine.objects.all().filter(active=True).filter(created__date=date).exclude(product__product_type='craft').order_by('-created')
         # print(len(order_lines))
         # all_payment = Payment.objects.filter(created__date__gte='2022-02-01').aggregate(total_amount=Sum('amount'))
     # order_lines = OrderLine.objects.all().values_list(product.id, flat=True)
