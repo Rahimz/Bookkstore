@@ -566,7 +566,7 @@ def export_publisher(request):
 def export_excel_sold_products(request, date=None, days=None):
     fa_date = None
     if days:
-        order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.datetime.now() - timedelta(days)).exclude(product__product_type='craft').order_by('-created')
+        order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.datetime.now() - datetime.timedelta(days)).exclude(product__product_type='craft').order_by('-created')
     if date:
         date = date.replace('-', '')
         date = datetime.datetime.strptime(date, "%Y%m%d").date()
