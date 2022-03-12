@@ -571,7 +571,7 @@ def export_excel_sold_products(request, date=None, days=None):
         date = date.replace('-', '')
         date = datetime.datetime.strptime(date, "%Y%m%d").date()
         fa_date = hij_strf_date(greg_to_hij_date(date), '%-d %B %Y')
-        order_lines = OrderLine.objects.all().filter(active=True).filter(created__date=date)
+        order_lines = OrderLine.objects.all().filter(active=True).filter(created__date=date).exclude(product__product_type='craft').order_by('-created')
 
     products = dict()
     main_stock = dict()
