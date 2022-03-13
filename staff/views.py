@@ -77,12 +77,28 @@ def orders(request, period=None, channel=None):
                 ),).filter(search=query)
     else:
         search_form = OrderSearchForm()
+
+
+    # pagination
+    paginator = Paginator(orders, 20) # 20 order in each page
+    page = request.GET.get('page')
+    try:
+        orders = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer deliver the first page
+        orders = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range deliver last page of results
+        orders = paginator.page(paginator.num_pages)
+
+
     return render(
         request,
         'staff/orders.html',
         {
             'orders': orders,
             'search_form': search_form,
+            'page': page,
         }
     )
 
