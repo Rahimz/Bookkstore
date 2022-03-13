@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-13 11:07+0330\n"
+"POT-Creation-Date: 2022-03-13 18:21+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -88,8 +88,8 @@ msgid "Billing"
 msgstr ""
 
 #: account/models.py:16 templates/staff/full_shipped_list.html:40
-#: templates/staff/full_shipped_list.html:59 templates/staff/orders.html:35
-#: templates/staff/orders.html:55
+#: templates/staff/full_shipped_list.html:59 templates/staff/orders.html:45
+#: templates/staff/orders.html:65
 msgid "Shipping"
 msgstr ""
 
@@ -107,8 +107,8 @@ msgid "Vendors"
 msgstr ""
 
 #: account/views.py:58 account/views.py:202 account/views.py:215
-#: staff/views.py:231 staff/views.py:255 staff/views.py:1274
-#: staff/views.py:1300
+#: staff/views.py:261 staff/views.py:285 staff/views.py:1304
+#: staff/views.py:1330
 msgid "Form is not valid"
 msgstr ""
 
@@ -165,7 +165,7 @@ msgstr ""
 #: templates/staff/order_detail_for_admin.html:81
 #: templates/staff/order_payment_manage.html:66
 #: templates/staff/order_shipped.html:74 templates/staff/order_shipping.html:59
-#: templates/staff/orders.html:32
+#: templates/staff/orders.html:42
 msgid "Shipping method"
 msgstr ""
 
@@ -181,7 +181,7 @@ msgstr ""
 
 #: orders/forms.py:36 staff/forms.py:86
 #: templates/staff/order_detail_for_admin.html:85
-#: templates/staff/order_payment_manage.html:70 templates/staff/orders.html:33
+#: templates/staff/order_payment_manage.html:70 templates/staff/orders.html:43
 msgid "Shipping time"
 msgstr ""
 
@@ -268,7 +268,7 @@ msgid "Pickup"
 msgstr ""
 
 #: orders/models.py:36 templates/staff/full_shipped_list.html:59
-#: templates/staff/orders.html:55
+#: templates/staff/orders.html:65
 msgid "Semi shipped"
 msgstr ""
 
@@ -365,7 +365,7 @@ msgstr ""
 #: templates/staff/order_list_by_country.html:30
 #: templates/staff/order_payment_manage.html:34
 #: templates/staff/order_shipped.html:50 templates/staff/order_shipping.html:35
-#: templates/staff/orders.html:25 templates/staff/purchase_create.html:24
+#: templates/staff/orders.html:35 templates/staff/purchase_create.html:24
 #: templates/tools/pdf/invoice_pdf.html:22
 #: templates/tools/pdf/invoice_pdf.html:25
 #: templates/tools/pdf/invoice_pdf_a4.html:17
@@ -386,6 +386,14 @@ msgstr ""
 #: templates/staff/used_book_prices.html:26
 #: templates/tools/pdf/invoice_pdf_a4.html:43
 msgid "ISBN"
+msgstr ""
+
+#: search/forms.py:45
+msgid "Order search"
+msgstr ""
+
+#: search/forms.py:46
+msgid "Client, order or order notes"
 msgstr ""
 
 #: staff/forms.py:27
@@ -441,7 +449,7 @@ msgstr ""
 #: templates/staff/draft_orders.html:36
 #: templates/staff/full_shipped_list.html:34
 #: templates/staff/invoice_create.html:142
-#: templates/staff/order_list_by_country.html:32 templates/staff/orders.html:28
+#: templates/staff/order_list_by_country.html:32 templates/staff/orders.html:38
 msgid "Weight"
 msgstr ""
 
@@ -493,7 +501,7 @@ msgstr ""
 msgid "Admin note"
 msgstr ""
 
-#: staff/forms.py:63 staff/views.py:984 templates/cart/detail.html:17
+#: staff/forms.py:63 staff/views.py:1014 templates/cart/detail.html:17
 #: templates/orders/reports/sales_by_days.html:65
 #: templates/orders/reports/sales_by_days.html:67
 #: templates/orders/reports/sales_by_days.html:69
@@ -509,7 +517,7 @@ msgstr ""
 #: templates/staff/invoice_create.html:136
 #: templates/staff/invoice_create.html:138
 #: templates/staff/order_list_by_country.html:31
-#: templates/staff/order_shipping.html:74 templates/staff/orders.html:27
+#: templates/staff/order_shipping.html:74 templates/staff/orders.html:37
 #: templates/staff/purchase/_purchase_list_block.html:15
 #: templates/staff/purchase/purchase_details.html:52
 #: templates/staff/purchase/purchase_list.html:31
@@ -535,7 +543,7 @@ msgstr ""
 msgid "Shipping status"
 msgstr ""
 
-#: staff/forms.py:87 templates/staff/orders.html:34
+#: staff/forms.py:87 templates/staff/orders.html:44
 msgid "Is packaged"
 msgstr ""
 
@@ -590,148 +598,148 @@ msgid ""
 "Just for editing the databse for books that is in store but not in database"
 msgstr ""
 
-#: staff/views.py:192
+#: staff/views.py:222
 msgid "A product with same isbn is available"
 msgstr ""
 
-#: staff/views.py:197 staff/views.py:226
+#: staff/views.py:227 staff/views.py:256
 msgid "Product updated"
 msgstr ""
 
-#: staff/views.py:199
+#: staff/views.py:229
 msgid "Product is created"
 msgstr ""
 
-#: staff/views.py:250
+#: staff/views.py:280
 msgid "Category is created!"
 msgstr ""
 
-#: staff/views.py:288
+#: staff/views.py:318
 msgid "Product is created!"
 msgstr ""
 
-#: staff/views.py:303
+#: staff/views.py:333
 msgid "Product created"
 msgstr ""
 
-#: staff/views.py:306
+#: staff/views.py:336
 msgid "Product does not created!"
 msgstr ""
 
-#: staff/views.py:411 staff/views.py:468 staff/views.py:579
+#: staff/views.py:441 staff/views.py:498 staff/views.py:609
 msgid "You could not add product without price"
 msgstr ""
 
-#: staff/views.py:415 staff/views.py:472 staff/views.py:582
+#: staff/views.py:445 staff/views.py:502 staff/views.py:612
 msgid "You are adding zero stock!"
 msgstr ""
 
-#: staff/views.py:461 staff/views.py:519 staff/views.py:638
+#: staff/views.py:491 staff/views.py:549 staff/views.py:668
 msgid "Product is added to invoice"
 msgstr ""
 
-#: staff/views.py:481 staff/views.py:609
+#: staff/views.py:511 staff/views.py:639
 msgid "Order is created"
 msgstr ""
 
-#: staff/views.py:586
+#: staff/views.py:616
 msgid "This product has other prices"
 msgstr ""
 
-#: staff/views.py:737
+#: staff/views.py:767
 msgid "Order approved"
 msgstr ""
 
-#: staff/views.py:771
+#: staff/views.py:801
 msgid "Credit of client added to discount of order"
 msgstr ""
 
-#: staff/views.py:783
+#: staff/views.py:813
 msgid "Order paid with credit"
 msgstr ""
 
-#: staff/views.py:802
+#: staff/views.py:832
 msgid "Client added to order"
 msgstr ""
 
-#: staff/views.py:948
+#: staff/views.py:978
 msgid "You are adding zero stock"
 msgstr ""
 
-#: staff/views.py:984
+#: staff/views.py:1014
 msgid "Order line updated"
 msgstr ""
 
-#: staff/views.py:1057
+#: staff/views.py:1087
 msgid "This order is not empty"
 msgstr ""
 
-#: staff/views.py:1060
+#: staff/views.py:1090
 msgid "Draft order removed"
 msgstr ""
 
-#: staff/views.py:1068
+#: staff/views.py:1098
 msgid "This order is shipped"
 msgstr ""
 
-#: staff/views.py:1070
+#: staff/views.py:1100
 msgid "This order is completely packaged"
 msgstr ""
 
-#: staff/views.py:1081
+#: staff/views.py:1111
 msgid "Order status changed to draft"
 msgstr ""
 
-#: staff/views.py:1251 staff/views.py:1278
+#: staff/views.py:1281 staff/views.py:1308
 #: templates/tools/pdf/print_address.html:29
 msgid "Tehran"
 msgstr ""
 
-#: staff/views.py:1269
+#: staff/views.py:1299
 msgid "Vendor is added!"
 msgstr ""
 
-#: staff/views.py:1297
+#: staff/views.py:1327
 msgid "Vendor is updated"
 msgstr ""
 
-#: staff/views.py:1431
+#: staff/views.py:1461
 msgid "This product is in this collection"
 msgstr ""
 
-#: staff/views.py:1437
+#: staff/views.py:1467
 msgid "Product does not found"
 msgstr ""
 
-#: staff/views.py:1447
+#: staff/views.py:1477
 msgid "The product added to collection"
 msgstr ""
 
-#: staff/views.py:1475
+#: staff/views.py:1505
 msgid "This product removed from the collection"
 msgstr ""
 
-#: staff/views.py:1529
+#: staff/views.py:1559
 msgid "You could not enter a price less than the main price "
 msgstr ""
 
-#: staff/views.py:1535
+#: staff/views.py:1565
 msgid "Price updated"
 msgstr ""
 
-#: staff/views.py:1539
+#: staff/views.py:1569
 msgid "A purchase added to manage the DB"
 msgstr ""
 
-#: staff/views.py:1588
+#: staff/views.py:1618
 msgid "Stock and price updated"
 msgstr ""
 
-#: staff/views.py:1635
+#: staff/views.py:1665
 msgid "New craft is created"
 msgstr ""
 
-#: staff/views.py:1671 tools/views.py:104
+#: staff/views.py:1701 tools/views.py:104
 msgid "Date is not valid"
 msgstr ""
 
@@ -801,7 +809,7 @@ msgid "Sales"
 msgstr ""
 
 #: templates/_base.html:154 templates/_base_files_app.html:124
-#: templates/staff/order_list_by_country.html:7 templates/staff/orders.html:7
+#: templates/staff/order_list_by_country.html:7 templates/staff/orders.html:9
 msgid "Orders"
 msgstr ""
 
@@ -997,7 +1005,7 @@ msgstr ""
 #: templates/account/clients/client_list.html:39
 #: templates/staff/draft_orders.html:31
 #: templates/staff/order_detail_for_admin.html:44
-#: templates/staff/order_payment_manage.html:38 templates/staff/orders.html:26
+#: templates/staff/order_payment_manage.html:38 templates/staff/orders.html:36
 msgid "Social name"
 msgstr ""
 
@@ -1037,6 +1045,7 @@ msgstr ""
 #: templates/account/clients/client_list.html:27 templates/home.html:19
 #: templates/search/search.html:9 templates/search/search.html:45
 #: templates/shop/category_list.html:20 templates/shop/product_list.html:20
+#: templates/staff/orders.html:26
 msgid "Search"
 msgstr ""
 
@@ -1784,17 +1793,17 @@ msgstr ""
 
 #: templates/staff/full_shipped_list.html:30
 #: templates/staff/invoice_create.html:41
-#: templates/staff/order_add_client.html:60 templates/staff/orders.html:24
+#: templates/staff/order_add_client.html:60 templates/staff/orders.html:34
 #: templates/staff/purchase/purchase_list.html:26
 msgid "Number"
 msgstr ""
 
 #: templates/staff/full_shipped_list.html:36
-#: templates/staff/order_list_by_country.html:34 templates/staff/orders.html:30
+#: templates/staff/order_list_by_country.html:34 templates/staff/orders.html:40
 msgid "Approved date"
 msgstr ""
 
-#: templates/staff/full_shipped_list.html:37 templates/staff/orders.html:31
+#: templates/staff/full_shipped_list.html:37 templates/staff/orders.html:41
 msgid "Payment"
 msgstr ""
 
@@ -1924,7 +1933,7 @@ msgstr ""
 #: templates/staff/invoice_create.html:205
 #: templates/staff/order_add_client.html:70
 #: templates/staff/order_detail_for_admin.html:21
-#: templates/staff/orders.html:56 templates/staff/purchase_create.html:151
+#: templates/staff/orders.html:66 templates/staff/purchase_create.html:151
 msgid "Print"
 msgstr ""
 
@@ -1990,7 +1999,7 @@ msgstr ""
 #: templates/staff/order_list_by_country.html:33
 #: templates/staff/order_payment_manage.html:46
 #: templates/staff/order_shipped.html:58 templates/staff/order_shipping.html:43
-#: templates/staff/orders.html:29
+#: templates/staff/orders.html:39
 msgid "Channel"
 msgstr ""
 
@@ -2012,7 +2021,7 @@ msgstr ""
 msgid "Note"
 msgstr ""
 
-#: templates/staff/order_list_by_country.html:18 templates/staff/orders.html:18
+#: templates/staff/order_list_by_country.html:18 templates/staff/orders.html:20
 msgid "List of orders"
 msgstr ""
 
