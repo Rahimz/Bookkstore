@@ -18,7 +18,11 @@
     </div>
     <div class="col-md-10">
       <h2>{% trans 'List of full shipped orders' %}</h2>
+      {% if date %}
+      <a href="{% url 'tools:order_export_excel_date' criteria='full' date=date %}" class="my-2"><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto"></a>
+      {% else %}
       <a href="{% url 'tools:order_export_excel' criteria='full' %}" class="my-2"><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto"></a>
+      {% endif %}
       <table class="table table-striped table-responsive">
         <thead>
           <tr>

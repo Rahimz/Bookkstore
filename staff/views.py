@@ -1663,16 +1663,31 @@ def product_price_show(request, product_id):
 
 
 @staff_member_required
-def full_shipped_list(request):
-    orders = Order.objects.filter(active=True).filter(full_shipped_date__isnull=False).filter(shipping_method='bike_delivery')
+def full_shipped_list(request, date=None):
+    if date:
+        try:
+            date = datetime.strptime(date, "%Y%m%d").date()
+        except ValueError:
+            messages.error(request, _('Date is not valid'))
+            return redirect('staff:full_shipped_list')
+        fa_date = hij_strf_date(greg_to_hij_date(date), '%-d %B %Y')
+        orders = Order.objects.filter(active=True).filter(full_shipped_date__date=date).filter(full_shipped_date__isnull=False).filter(shipping_method='bike_delivery')
+    else:
+        orders = Order.objects.filter(active=True).filter(full_shipped_date__isnull=False).filter(shipping_method='bike_delivery')
     # sum of shipping cost and shipping cost with 15% discount
-    shipping_cost_sum = Order.objects.filter(active=True).filter(full_shipped_date__isnull=False).filter(shipping_method='bike_delivery').aggregate(total=Sum('shipping_cost'), total_discount=Sum('shipping_cost') * Decimal(0.85))
-    shipping_cost_sum['total_discount'] = round(shipping_cost_sum['total_discount'])
+    shipping_cost_sum = {}
+    if orders:
+        shipping_cost_sum = orders.aggregate(total=Sum('shipping_cost'), total_discount=Sum('shipping_cost') * Decimal(0.85))
+        shipping_cost_sum['total_discount'] = round(shipping_cost_sum['total_discount'])
+    else:
+        shipping_cost_sum['total'] = 0
+        shipping_cost_sum['total_discount'] = 0
     return render (
         request,
         'staff/full_shipped_list.html',
         {
             'orders': orders,
+            'date': date,
             'shipping_cost_sum': shipping_cost_sum,
         }
     )
