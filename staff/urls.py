@@ -11,6 +11,9 @@ urlpatterns = [
     # path('sales/', views.sales, name='sales_list'),
     path('orders/<int:pk>/', views.order_detail_for_admin, name='order_detail_for_admin'),
     path('orders/shipping/<int:order_id>/', views.order_shipping, name='order_shipped'),
+
+    path('orders/full-shipped-list/', views.full_shipped_list, name='full_shipped_list'),
+    path('orders/full-shipped-list/<str:date>/', views.full_shipped_list, name='full_shipped_list_date'),
     # path('orders/sipping/<int:order_id>/', views.order_shipping, name='order_shipping'),
     path('orders/drafts/', views.draft_orders, name='draft_orders'),
     path('orders/remove-draft/<int:order_id>/', views.remove_draft_order, name='remove_draft_order'),

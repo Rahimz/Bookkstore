@@ -1,0 +1,92 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% block title %}{% trans 'Full shipped orders' %}{% endblock %}
+
+{% block orders-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2">
+      {% include "staff/sidebar_staff.html" with barName="orders" %}
+    </div>
+    <div class="col-md-10">
+      <h2>{% trans 'List of full shipped orders' %}</h2>
+      {% if date %}
+      <a href="{% url 'tools:order_export_excel_date' criteria='full' date=date %}" class="my-2"><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto"></a>
+      {% else %}
+      <a href="{% url 'tools:order_export_excel' criteria='full' %}" class="my-2"><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto"></a>
+      {% endif %}
+      <table class="table table-striped table-responsive">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">{% trans 'Number' %}</th>
+            <th scope="col">{% trans 'Client' %}</th>
+
+            <th scope="col">{% trans 'Quantity' %}</th>
+            <th scope="col">{% trans 'Weight' %}</th>
+
+            <th scope="col">{% trans 'Approved date' %}</th>
+            <th scope="col">{% trans 'Payment' %}</th>
+            <th scope="col">{% trans 'Shipping method' %}</th>
+
+            <th scope="col">{% trans 'Shipping' %}</th>
+            <th scope="col">{% trans 'Shipped date' %}</th>
+            <th scope="col">{% trans 'Shipping cost' %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+          <tr>
+            <th scope="row">{{ forloop.counter}}</th>
+            <td><a href="{% url 'staff:order_detail_for_admin' order.pk %}">{{ order.pk }}</a></td>
+            <td>{{ order.client }}</td>
+
+            <td>{{ order.get_total_quantity }}</td>
+            {# <!-- TODO: we have some problem to grab the order weight -->#}
+            <td>{{ order.get_total_weight }}</td>
+
+            <td>{% if order.approved_date %}{{ order.get_fa_approved }}{% endif %}</td>
+            <td>{% if order.paid %}&#10004{% else %}&#10008{% endif %}</td>
+            <td>{{ order.get_shipping_method_display }}</td>
+            <td>{% if order.shipping_status == "full" %}&#10004 {% if order.shipped_code %}- {{ order.shipped_code }}{% endif %}{% else %}<a href="{% url 'staff:order_shipped' order.id %}" onclick="return popitup('/staff/orders/shipping/{{ order.id }}')" class="btn btn-outline-secondary">{% if order.shipping_status == "semi" %}{% trans 'Semi shipped' %}{% else %}{% trans 'Shipping' %}{% endif %}</a>{% endif %}</td>
+            <td>{% if order.full_shipped_date %}{{ order.get_fa_shipped }}{% endif %}</td>
+            <td>{{ order.shipping_cost | intcomma:False }}</td>
+
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="10">{% trans 'Sum'%}</td>
+            <td>{{ shipping_cost_sum.total | intcomma:False }}</td>
+          </tr>
+          <tr>
+            <td colspan="10">{% trans 'Sum with discount'%}</td>
+            <td>{{ shipping_cost_sum.total_discount | intcomma:False }}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script language="javascript" type="text/javascript">
+  function popitup(url) {
+    newwindow = window.open(url, '{{title}}', 'height=350,width=150');
+    if (window.focus) {
+      newwindow.focus()
+    }
+    return false;
+  }
+</script>
+{% endblock %}

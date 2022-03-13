@@ -6,11 +6,13 @@ from django.template.loader import render_to_string
 from django.contrib.admin.views.decorators import staff_member_required
 from io import BytesIO
 from django.db.models import Q
-import datetime
+from datetime import datetime, timedelta
 from django.core.mail import EmailMessage, mail_admins, mail_managers, get_connection
 import random
 from django.core.files.base import ContentFile
 from django.core.files import File
+from django.contrib import messages
+
 
 import weasyprint
 import openpyxl
@@ -90,10 +92,24 @@ def make_invoice_pdf_a4(request, order_id=None):
     return response
 
 
-def order_export_excel(request, criteria):
+def order_export_excel(request, criteria, date=None):
     # TODO: we handle all order export with one function but we should add parameter to
     # handle differnt kind of report
-    orders = Order.objects.filter(status=criteria).filter(active=True)
+    orders = None
+    filename = None
+    if date:
+        try:
+            date = datetime.strptime(date, "%Y%m%d").date()
+        except ValueError:
+            messages.error(request, _('Date is not valid'))
+            return redirect('staff:full_shipped_list')
+        fa_date = hij_strf_date(greg_to_hij_date(date), '%-d %B %Y')
+        orders = Order.objects.filter(active=True).filter(full_shipped_date__date=date).filter(full_shipped_date__isnull=False).filter(shipping_method='bike_delivery')
+    else:
+        if criteria in ('draft', 'approved' ):
+            orders = Order.objects.filter(status=criteria).filter(active=True)
+        elif criteria == 'full':
+            orders = Order.objects.filter(active=True).filter(full_shipped_date__isnull=False).filter(shipping_method='bike_delivery')
 
     wb = openpyxl.Workbook()
     sheet = wb.active
@@ -162,8 +178,11 @@ def order_export_excel(request, criteria):
             c = sheet.cell(row = count + 2 , column = i + 1)
             c.value = title_list[i]
 
+    if criteria in ('draft', 'approved' ):
+        filename = 'media/excel/approved-orders-{}.xlsx'.format(datetime.now().isoformat(sep='-'))
+    elif criteria == 'full':
+        filename = 'media/excel/full-shipped-orders-{}.xlsx'.format(datetime.now().isoformat(sep='-'))
 
-    filename = 'media/excel/approved-orders-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
     wb.save(filename)
     excel = open(filename, 'rb')
     response = FileResponse(excel)
@@ -202,7 +221,7 @@ def draft_order_export_excel(request):
             c.value = title_list[i]
 
 
-    filename = 'media/excel/draft-orders-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
+    filename = 'media/excel/draft-orders-{}.xlsx'.format(datetime.now().isoformat(sep='-'))
     wb.save(filename)
     excel = open(filename, 'rb')
     response = FileResponse(excel)
@@ -418,11 +437,11 @@ def product_export_excel(request, filter='all'):
             c.value = title_list[i]
 
     if filter=='used-noprice':
-        filename = 'media/excel/used-noprice-products-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
+        filename = 'media/excel/used-noprice-products-{}.xlsx'.format(datetime.now().isoformat(sep='-'))
     elif filter == 'used-all':
-        filename = 'media/excel/used-all-products-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
+        filename = 'media/excel/used-all-products-{}.xlsx'.format(datetime.now().isoformat(sep='-'))
     else:
-        filename = 'media/excel/available-products-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
+        filename = 'media/excel/available-products-{}.xlsx'.format(datetime.now().isoformat(sep='-'))
     wb.save(filename)
     excel = open(filename, 'rb')
     response = FileResponse(excel)
@@ -432,7 +451,7 @@ def product_export_excel(request, filter='all'):
 
 
 def used_product_before_5(request):
-    point = datetime.datetime.strptime('2022 3 5 16 11 26', "%Y %m %d %H %M %S")
+    point = datetime.strptime('2022 3 5 16 11 26', "%Y %m %d %H %M %S")
     products = OrderLine.objects.filter(active=True).filter(created__lte=point).filter(variation__contains='used')
     print(len(products))
 
@@ -479,7 +498,7 @@ def used_product_before_5(request):
             c = sheet.cell(row = count + 2 , column = i + 1)
             c.value = title_list[i]
 
-    filename = 'media/excel/used-before-5-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
+    filename = 'media/excel/used-before-5-{}.xlsx'.format(datetime.now().isoformat(sep='-'))
     wb.save(filename)
     excel = open(filename, 'rb')
     response = FileResponse(excel)
@@ -554,7 +573,7 @@ def export_publisher(request):
             c.value = title_list[i]
 
 
-    filename = 'media/excel/publishers-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
+    filename = 'media/excel/publishers-{}.xlsx'.format(datetime.now().isoformat(sep='-'))
     wb.save(filename)
     excel = open(filename, 'rb')
     response = FileResponse(excel)
@@ -566,10 +585,10 @@ def export_publisher(request):
 def export_excel_sold_products(request, date=None, days=None):
     fa_date = None
     if days:
-        order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.datetime.now() - datetime.timedelta(days)).exclude(product__product_type='craft').order_by('-created')
+        order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.now() - timedelta(days)).exclude(product__product_type='craft').order_by('-created')
     if date:
         date = date.replace('-', '')
-        date = datetime.datetime.strptime(date, "%Y%m%d").date()
+        date = datetime.strptime(date, "%Y%m%d").date()
         fa_date = hij_strf_date(greg_to_hij_date(date), '%-d %B %Y')
         order_lines = OrderLine.objects.all().filter(active=True).filter(created__date=date).exclude(product__product_type='craft').order_by('-created')
 
@@ -653,9 +672,9 @@ def export_excel_sold_products(request, date=None, days=None):
             c.value = title_list[i]
 
     if date:
-        filename = 'media/excel/sold-products-by-{}-{}.xlsx'.format(date, datetime.datetime.now().isoformat(sep='-'))
+        filename = 'media/excel/sold-products-by-{}-{}.xlsx'.format(date, datetime.now().isoformat(sep='-'))
     if days:
-        filename = 'media/excel/sold-products-by-{}-{}.xlsx'.format(days, datetime.datetime.now().isoformat(sep='-'))
+        filename = 'media/excel/sold-products-by-{}-{}.xlsx'.format(days, datetime.now().isoformat(sep='-'))
 
     wb.save(filename)
     excel = open(filename, 'rb')

@@ -16,11 +16,11 @@ class PurchaseLineInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     list_display = [
         'id', 'client', 'user',
-        'paid', 'active',
+        'paid', 'active', 'shipping_status'
     ]
-    list_filter = ['paid', 'active', 'status', 'approved_date',  ]
+    list_filter = ['active', 'paid', 'status', 'shipping_status', 'approved_date',  ]
     # list_editable = ['paid', ]
-    search_fields = ['client', 'pk', 'user']
+    search_fields = ['client__first_name', 'client__last_name', 'pk', 'user__first_name', 'user__last_name']
     inlines = [OrderLineInline]
 
     class Meta:
@@ -40,9 +40,10 @@ class OrderLineAdmin(admin.ModelAdmin):
 @admin.register(Purchase)
 class PurchaseAdmin(admin.ModelAdmin):
     list_display = [
-        'pk', 'vendor', 'paper_invoice_number', 'created', 'quantity'
+        'pk', 'vendor', 'paper_invoice_number', 'created', 'quantity', 'active'
     ]
     search_fields = ['pk', 'vendor__first_name', 'paper_invoice_number']
+    list_filter = ['active', 'vendor']
     inlines = [PurchaseLineInline]
 
 
@@ -50,7 +51,7 @@ class PurchaseAdmin(admin.ModelAdmin):
 class PurchaseLineAdmin(admin.ModelAdmin):
     list_display = [
         'id', 'purchase', 'product',
-        'price', 'quantity', 'discount', 'discount_percent', 'variation', 
+        'price', 'quantity', 'discount', 'discount_percent', 'variation',
     ]
     search_fields = ['purchase__id', 'product__name', 'variation']
     list_filter = ['active', ]

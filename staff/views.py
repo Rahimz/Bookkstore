@@ -9,6 +9,8 @@ from django.db.models import Q, Count
 import uuid
 from datetime import datetime, timedelta
 from django.utils.translation import gettext_lazy as _
+from django.db.models import Sum
+from decimal import Decimal
 
 from django_countries.fields import Country
 from tools.gregory_to_hijry import hij_strf_date, greg_to_hij_date
@@ -1330,6 +1332,8 @@ def order_shipping(request, order_id):
                 order.packaged_quantity = order.quantity
             # order.status = shipping_form.cleaned_data['shipping_status']
             # order.shipped_code = shipping_form.cleaned_data['shipped_code']
+            if form.shipping_status == 'full':
+                order.full_shipped_date = datetime.now()
             form.save()
             order.save()
             form_submit = True
@@ -1654,5 +1658,36 @@ def product_price_show(request, product_id):
         'staff/product_price_show.html',
         {
         'product': product,
+        }
+    )
+
+
+@staff_member_required
+def full_shipped_list(request, date=None):
+    if date:
+        try:
+            date = datetime.strptime(date, "%Y%m%d").date()
+        except ValueError:
+            messages.error(request, _('Date is not valid'))
+            return redirect('staff:full_shipped_list')
+        fa_date = hij_strf_date(greg_to_hij_date(date), '%-d %B %Y')
+        orders = Order.objects.filter(active=True).filter(full_shipped_date__date=date).filter(full_shipped_date__isnull=False).filter(shipping_method='bike_delivery')
+    else:
+        orders = Order.objects.filter(active=True).filter(full_shipped_date__isnull=False).filter(shipping_method='bike_delivery')
+    # sum of shipping cost and shipping cost with 15% discount
+    shipping_cost_sum = {}
+    if orders:
+        shipping_cost_sum = orders.aggregate(total=Sum('shipping_cost'), total_discount=Sum('shipping_cost') * Decimal(0.85))
+        shipping_cost_sum['total_discount'] = round(shipping_cost_sum['total_discount'])
+    else:
+        shipping_cost_sum['total'] = 0
+        shipping_cost_sum['total_discount'] = 0
+    return render (
+        request,
+        'staff/full_shipped_list.html',
+        {
+            'orders': orders,
+            'date': date,
+            'shipping_cost_sum': shipping_cost_sum,
         }
     )

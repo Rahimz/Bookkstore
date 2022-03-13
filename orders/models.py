@@ -147,6 +147,10 @@ class Order(models.Model):
         blank=True,
         null=True
     )
+    full_shipped_date = models.DateTimeField(
+        blank=True,
+        null=True
+    )
     is_packaged = models.BooleanField(
         default = False
     )
@@ -260,6 +264,12 @@ class Order(models.Model):
         else:
             return
 
+    def get_fa_shipped(self):
+        if self.full_shipped_date:
+            return hij_strf_date(greg_to_hij_date(self.full_shipped_date.date()), '%-d %B %Y')
+        else:
+            return
+
     def get_fa_created(self):
         return hij_strf_date(greg_to_hij_date(self.created.date()), '%-d %B %Y')
 
@@ -320,6 +330,7 @@ class OrderLine(models.Model):
         decimal_places=settings.DEFAULT_DECIMAL_PLACES,
         default=0,
     )
+    history = HistoricalRecords()
 
     class Meta:
         ordering = ("product__name",)
@@ -457,6 +468,7 @@ class Purchase(models.Model):
     active = models.BooleanField(
         default= True
     )
+    history = HistoricalRecords()
 
     class Meta:
         ordering = ("-created", "-payment_date", "approved_date", "-pk",)
@@ -562,6 +574,7 @@ class PurchaseLine(models.Model):
     active = models.BooleanField(
         default= True
     )
+    history = HistoricalRecords()
 
     class Meta:
         ordering = ("product__name",  )

@@ -45,7 +45,10 @@
   <p><a href="{% url 'staff:order_list' period='365' channel='mix' %}">{% trans 'Last year' %}</a></p>
   <br>
   <p><a href="{% url 'staff:order_list' period='365' channel='cashier' %}">{% trans 'Cashier orders' %}</a></p>
-
+  <br>
+  {% if request.user.is_superuser or request.user.is_manager %}
+  <p><a href="{% url 'staff:full_shipped_list' %}">{% trans 'Full shipped list' %}</a></p>
+  {% endif %}
 </div>
 {% endif %}
 
