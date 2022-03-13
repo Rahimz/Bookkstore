@@ -33,3 +33,15 @@ class BookIsbnSearchForm(forms.Form):
         label='ISBN',
         widget=forms.TextInput(attrs={'placeholder': _('ISBN'), 'autofocus': 'autofocus'})
     )
+
+
+
+class OrderSearchForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['order_query'].required = False
+
+    order_query = forms.CharField(
+        label=_('Order search'),
+        widget=forms.TextInput(attrs={'placeholder': _('Client, order or order notes')})
+    )
