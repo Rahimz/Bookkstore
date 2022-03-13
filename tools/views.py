@@ -90,10 +90,18 @@ def make_invoice_pdf_a4(request, order_id=None):
     return response
 
 
-def order_export_excel(request, criteria):
+def order_export_excel(request, criteria, date=None):
     # TODO: we handle all order export with one function but we should add parameter to
     # handle differnt kind of report
-    orders = Order.objects.filter(status=criteria).filter(active=True)
+    orders = None
+    filename = None
+    if date:
+        pass
+    else:
+        if criteria in ('draft', 'approved' ):
+            orders = Order.objects.filter(status=criteria).filter(active=True)
+        elif criteria == 'full':
+            orders = Order.objects.filter(active=True).filter(full_shipped_date__isnull=False).filter(shipping_method='bike_delivery')
 
     wb = openpyxl.Workbook()
     sheet = wb.active
@@ -162,8 +170,11 @@ def order_export_excel(request, criteria):
             c = sheet.cell(row = count + 2 , column = i + 1)
             c.value = title_list[i]
 
+    if criteria in ('draft', 'approved' ):
+        filename = 'media/excel/approved-orders-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
+    elif criteria == 'full':
+        filename = 'media/excel/full-shipped-orders-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
 
-    filename = 'media/excel/approved-orders-{}.xlsx'.format(datetime.datetime.now().isoformat(sep='-'))
     wb.save(filename)
     excel = open(filename, 'rb')
     response = FileResponse(excel)

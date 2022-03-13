@@ -16,9 +16,9 @@ class PurchaseLineInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     list_display = [
         'id', 'client', 'user',
-        'paid', 'active',
+        'paid', 'active', 'shipping_status'
     ]
-    list_filter = ['paid', 'active', 'status', 'approved_date',  ]
+    list_filter = ['active', 'paid', 'status', 'shipping_status', 'approved_date',  ]
     # list_editable = ['paid', ]
     search_fields = ['client__first_name', 'client__last_name', 'pk', 'user__first_name', 'user__last_name']
     inlines = [OrderLineInline]

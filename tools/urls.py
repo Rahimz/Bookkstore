@@ -11,6 +11,8 @@ urlpatterns = [
     path('print/address/<int:client_id>/<str:kind>/', views.print_address, name="print_address"),
 
     path('order-export/<str:criteria>/', views.order_export_excel, name="order_export_excel"),
+    path('order-export/<str:criteria>/<str:date>/', views.order_export_excel, name="order_export_excel_date"),
+
     path('draft-order-export/', views.draft_order_export_excel, name="draft_order_export_excel"),
     path('publishers-export/', views.export_publisher, name="export_publisher"),
 
