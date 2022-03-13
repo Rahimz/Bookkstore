@@ -4,6 +4,8 @@
 
 {% load static %}
 
+{% load crispy_forms_tags %}
+
 {% block title %}{% trans 'Orders' %}{% endblock %}
 
 {% block orders-btn %}btn-secondary text-dark{% endblock %}
@@ -17,6 +19,14 @@
     <div class="col-md-10">
       <h2>{% trans 'List of orders' %}</h2>
       <a href="{% url 'tools:order_export_excel' criteria='approved' %}" class="my-2"><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto"></a>
+      <div class="">
+        <form class="my-3" action="." method="post">
+          {{ search_form | crispy }}
+          {% csrf_token %}
+          <input type="submit" name="" class="btn btn-outline-secondary my-2" value="{% trans 'Search' %}">
+        </form>
+
+      </div>
       <table class="table table-striped table-responsive">
         <thead>
           <tr>

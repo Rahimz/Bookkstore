@@ -18,7 +18,7 @@ from tools.gregory_to_hijry import hij_strf_date, greg_to_hij_date
 from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm, ProductCollectionForm, AdminPriceManagementForm
 from .forms import CraftUpdateForm, AdminPriceStockManagementForm, OnlineAdminPriceStockManagementForm
 from orders.forms import OrderAdminCheckoutForm, OrderPaymentManageForm
-from search.forms import ClientSearchForm, BookIsbnSearchForm, SearchForm
+from search.forms import ClientSearchForm, BookIsbnSearchForm, SearchForm, OrderSearchForm
 from account.forms import VendorAddForm, AddressAddForm, VendorAddressAddForm
 from products.models import Product, Category
 from orders.models import Order, OrderLine, PurchaseLine, Purchase
@@ -66,10 +66,24 @@ def orders(request, period=None, channel=None):
         orders = Order.objects.filter(
             Q(status='approved') | Q(paid=True)).filter(active=True)
 
+    if request.method == 'POST':
+        search_form = OrderSearchForm(request.POST)
+        if search_form.is_valid():
+            query = search_form.cleaned_data['order_query']
+            orders = orders.annotate(
+                search=SearchVector(
+                    'client__first_name', 'client__last_name', 'client__phone',
+                    'pk', 'channel', 'shipping_time'
+                ),).filter(search=query)
+    else:
+        search_form = OrderSearchForm()
     return render(
         request,
         'staff/orders.html',
-        {'orders': orders}
+        {
+            'orders': orders,
+            'search_form': search_form,
+        }
     )
 
 
