@@ -371,7 +371,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
     # order_line.save()
 
     if order_id:
-        order = Order.objects.get(pk=order_id)
+        order = get_object_or_404(Order, pk=order_id)
         product_ids = [(item.product.pk, item.variation)
                        for item in order.lines.all()]
 
@@ -697,7 +697,7 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
 
 @staff_member_required
 def invoice_checkout(request, order_id, client_id=None):
-    order = Order.objects.get(pk=order_id)
+    order = get_object_or_404(Order, pk=order_id)
     checkout_form = OrderAdminCheckoutForm(instance=order)
     client_search_form = ClientSearchForm()
 
@@ -781,7 +781,7 @@ def invoice_checkout(request, order_id, client_id=None):
 
 
 def invoice_checkout_credit(request, order_id, client_id):
-    order = Order.objects.get(pk=order_id)
+    order = get_object_or_404(Order, pk=order_id)
     client = CustomUser.objects.get(pk=client_id)
     order.client = client
     balance = client.credit.balance
@@ -816,7 +816,7 @@ def invoice_checkout_credit(request, order_id, client_id):
 
 
 def invoice_create_add_client(request, order_id, client_id=None):
-    order = Order.objects.get(pk=order_id)
+    order = get_object_or_404(Order, pk=order_id)
 
     # search and add client
     client_search_form = ClientSearchForm()
@@ -865,7 +865,7 @@ def invoice_create_add_client(request, order_id, client_id=None):
 @staff_member_required
 def orderline_update(request, order_id, orderline_id):
     update_form = InvoiceAddForm(initial={'quantity': "0"})
-    order = Order.objects.get(pk=order_id)
+    order = get_object_or_404(Order, pk=order_id)
     if request.method == 'POST':
         update_form = InvoiceAddForm(data=request.POST)
         if update_form.is_valid():
@@ -1093,7 +1093,7 @@ def remove_draft_order(request, order_id):
 
 @staff_member_required
 def invoice_back_to_draft(request, order_id):
-    order = Order.objects.get(pk=order_id)
+    order = get_object_or_404(Order, pk=order_id)
     if order.shipping_status == 'full':
         messages.warning(request, _('This order is shipped'))
     if order.is_packaged :
@@ -1113,7 +1113,7 @@ def invoice_back_to_draft(request, order_id):
 
 
 def order_payment_manage(request, order_id):
-    order = Order.objects.get(pk=order_id)
+    order = get_object_or_404(Order, pk=order_id)
     if request.method == 'POST':
         payment_form = OrderPaymentManageForm(request.POST, files=request.FILES, instance=order)
         if payment_form.is_valid():
