@@ -39,6 +39,7 @@ class Order(models.Model):
     CHANNEL_CHOICES = [
         ('cashier', _('Cashier')),
         ('instagram', 'Instagram'),
+        ('insta_damavand', 'Insta-Damavand'),
         ('telegram', 'Telegram'),
         ('twitter', 'Twitter'),
         ('Website', _('Website')),

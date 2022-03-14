@@ -50,7 +50,7 @@
         </tr>
         <tr>
           <td>{%trans 'Channel' %}</td>
-          <td>{{ order.channel }}</td>
+          <td>{{ order.get_channel_display }}</td>
         </tr>
         <tr>
           <td>{%trans 'Paid' %}</td>
@@ -79,7 +79,7 @@
         </tr>
         <tr>
           <td>{%trans 'Shipping method' %}</td>
-          <td>{{ order.shipping_method }}</td>
+          <td>{{ order.get_shipping_method_display }}</td>
         </tr>
         <tr>
           <td>{%trans 'Shipping time' %}</td>
