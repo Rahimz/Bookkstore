@@ -1086,7 +1086,10 @@ def remove_draft_order(request, order_id):
     if len(order.lines.all())>0:
         messages.error(request, _('This order is not empty'))
     else:
-        order.delete()
+        # order.delete()
+        order.active = False
+        order.customer_note =  f"removed by {request.user}"
+        order.save()
         messages.success(request, _('Draft order removed'))
 
     return redirect('staff:draft_orders')
