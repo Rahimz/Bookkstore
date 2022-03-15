@@ -12,6 +12,7 @@ import random
 from django.core.files.base import ContentFile
 from django.core.files import File
 from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 
 
 import weasyprint
@@ -98,6 +99,7 @@ def order_export_excel(request, criteria, date=None):
     orders = None
     filename = None
     if date:
+        date = datetime.strptime(date, "%Y%m%d").date()
         try:
             date = datetime.strptime(date, "%Y%m%d").date()
         except ValueError:
