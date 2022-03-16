@@ -94,11 +94,11 @@
               {% endfor %}
             </td>
             <td>{{ item.quantity }}</td>
-            <td>
+            <td class="small">
               {% if 'used' in item.variation %}
-              <span class="border border-warning p-1 rounded m-1">{% trans 'Used' %}</span>
+              <p class="border border-warning rounded mt-1 small">{% trans 'Used' %}</p>
               {% else %}
-              <span class="border border-success p-1 rounded">{% trans 'New' %}</span>
+              <span class="border border-success p-1 mt-1 rounded">{% trans 'New' %}</span>
               {% endif %}
             </td>
             <td>{{ item.created }}</td>
