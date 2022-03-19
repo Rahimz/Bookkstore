@@ -139,30 +139,34 @@ def add_price(price, stock, variation, product_id):
         elif new_var == 'v1':
             product.price_1 = price
             product.stock_1 = stock
+            product.has_other_prices = True
         elif new_var == 'v2':
             product.price_2 = price
             product.stock_2 = stock
-            # print('in add price',product.price_2, product.stock_2)
+            product.has_other_prices = True
         elif new_var == 'v3':
             product.price_3 = price
             product.stock_3 = stock
+            product.has_other_prices = True
         elif new_var == 'v4':
             product.price_4 = price
             product.stock_4 = stock
+            product.has_other_prices = True
         elif new_var == 'v5':
             product.price_5 = price
             product.stock_5 = stock
+            product.has_other_prices = True
 
 
 
     elif variation == 'used':
         if new_var == 'main':
             product.price_used = price
+            product.has_other_prices = True
             # product.stock_used = stock
 
 
 
-    product.has_other_prices = True
     product.save()
     # print('in add price',product.price_2, product.stock_2)
 

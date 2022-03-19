@@ -175,6 +175,7 @@ def client_add(request):
 def client_update(request, client_id):
     client = CustomUser.objects.get(pk=client_id)
     db_client = None
+    db_client_phone = None
 
     if request.method == "POST":
         client_form = ClientUpdateForm(data=request.POST, instance=client)
@@ -183,10 +184,10 @@ def client_update(request, client_id):
             form = client_form.save(commit=False)
             try:
                 db_client = CustomUser.objects.filter(phone=form.phone)
-                print(db_client)
+                db_client_phone = db_client.phone
             except:
                 pass
-            if db_client:
+            if db_client_phone == form.phone:
                 messages.error(request, _('The phone number is already used!'))
                 client_form = ClientUpdateForm(data=request.POST, instance=client)
                 return render(

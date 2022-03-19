@@ -52,7 +52,11 @@
         </tr>
         <tr>
           <td>
-            <p class="fw-bold">{% trans 'Ketabe Damavand' %}</p>
+            {% if kind == 'billing' %}
+            <p class="fw-bold">{{ client.default_billing_address }}</p>
+            {% else %}
+            <p class="fw-bold">{{ client.default_shipping_address }}</p>
+            {% endif %}
             <p>{% trans 'Address' %} :
               {% if kind == 'billing' %}
               <span class="text-center">{{ client.default_billing_address.get_full_address |linebreaksbr }}</span>

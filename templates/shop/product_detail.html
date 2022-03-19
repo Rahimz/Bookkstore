@@ -8,7 +8,7 @@
 
 {% block title %}{{ product }}{% endblock %}
 
-{% block staff_tab %}<a class="btn text-dark btn-outline-warning" href="{% url 'staff:product_update' product.id %}" >{% trans 'Update product' %}</a>{% endblock %}
+{% block staff_tab %}<a class="btn btn-sm text-dark btn-outline-warning" href="{% url 'staff:product_update' product.id %}" >{% trans 'Update product' %}</a>{% endblock %}
 
 {% block content %}
 <div class="container-fluid overflow-hidden">

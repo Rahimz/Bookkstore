@@ -142,6 +142,8 @@ def products(request):
             products_object = ProductSearch(
                 object=Product, query=search_query).exclude(product_type='craft').order_by('name', 'publisher')
 
+            search_form = SearchForm()
+
     # pagination
     paginator = Paginator(products_object, 50)  # 50 posts in each page
     page = request.GET.get('page')
@@ -863,6 +865,15 @@ def invoice_create_add_client(request, order_id, client_id=None):
 
 
 @staff_member_required
+def remove_client_from_order(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+    order.client = None
+    order.save()
+    messages.success(request, _('Client removed from order'))
+    return redirect('staff:invoice_checkout', order.id)
+
+
+@staff_member_required
 def orderline_update(request, order_id, orderline_id):
     update_form = InvoiceAddForm(initial={'quantity': "0"})
     order = get_object_or_404(Order, pk=order_id)
@@ -1110,6 +1121,7 @@ def invoice_back_to_draft(request, order_id):
     order.approved_date = None
     order.status = 'draft'
     order.shipping_status = ''
+    order.is_packaged = False
     order.save()
     messages.success(request, _('Order status changed to draft'))
     return redirect('staff:invoice_checkout', order.id)
