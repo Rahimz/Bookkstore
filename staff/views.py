@@ -1110,6 +1110,7 @@ def invoice_back_to_draft(request, order_id):
     order.approved_date = None
     order.status = 'draft'
     order.shipping_status = ''
+    order.is_packaged = False
     order.save()
     messages.success(request, _('Order status changed to draft'))
     return redirect('staff:invoice_checkout', order.id)
