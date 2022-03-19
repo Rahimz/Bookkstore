@@ -9,6 +9,10 @@ body {
   font-family: iransans, helevicta, sans-serif;
 }
 
+.navbar {
+  padding: 0;
+}
+
 .main-color {
   color: #78C2C3;
 }

@@ -32,7 +32,14 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">{% trans 'Number' %}</th>
-            <th scope="col">{% trans 'Client' %}</th>
+            <th scope="col">{% trans 'Client' %}
+              <a href="{% url 'staff:order_list_filter' period=period channel=channel filter='-client__last_name' %}" style="text-decoration: none;">
+                <img src="{% static 'img/arrow-up.svg' %}" width="20px" height="auto" alt="arrow-up">
+              </a>
+              <a href="{% url 'staff:order_list_filter' period=period channel=channel filter='client__last_name' %}" >
+                <img src="{% static 'img/arrow-down.svg' %}" width="20px" height="auto" alt="arrow-up">
+              </a>
+            </th>
             <th scope="col">{% trans 'Social name' %}</th>
             <th scope="col">{% trans 'Quantity' %}</th>
             <th scope="col">{% trans 'Weight' %}</th>
@@ -42,7 +49,15 @@
             <th scope="col">{% trans 'Shipping method' %}</th>
             <th scope="col">{% trans 'Shipping time' %}</th>
             <th scope="col">{% trans 'Is packaged' %}</th>
-            <th scope="col">{% trans 'Shipping' %}</th>
+            <th scope="col">
+              {% trans 'Shipping' %}
+              <a href="{% url 'staff:order_list_filter' period=period channel=channel filter='-shipping_status' %}" style="text-decoration: none;">
+                <img src="{% static 'img/arrow-up.svg' %}" width="20px" height="auto" alt="arrow-up">
+              </a>
+              <a href="{% url 'staff:order_list_filter' period=period channel=channel filter='shipping_status' %}" >
+                <img src="{% static 'img/arrow-down.svg' %}" width="20px" height="auto" alt="arrow-up">
+              </a>
+            </th>
           </tr>
         </thead>
         <tbody>
