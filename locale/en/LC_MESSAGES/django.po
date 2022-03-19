@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-13 18:21+0330\n"
+"POT-Creation-Date: 2022-03-19 17:46+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,13 +30,13 @@ msgstr ""
 msgid "Passwords don't match."
 msgstr ""
 
-#: account/forms.py:64 staff/forms.py:27
+#: account/forms.py:65 staff/forms.py:27
 #: templates/account/clients/client_list.html:37
-#: templates/shop/product_detail.html:30 templates/staff/_order_table.html:12
+#: templates/shop/product_detail.html:30 templates/staff/_order_table.html:13
 #: templates/staff/collection_management.html:44
 #: templates/staff/crafts/craft_list.html:49
 #: templates/staff/invoice_create.html:134
-#: templates/staff/order_shipping.html:71 templates/staff/products.html:50
+#: templates/staff/order_shipping.html:71 templates/staff/products.html:52
 #: templates/staff/purchase/_purchase_list_block.html:13
 #: templates/staff/purchase_create.html:25
 #: templates/staff/purchase_create.html:83
@@ -46,40 +46,41 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: account/forms.py:65 templates/staff/purchase/_purchase_list_block.html:58
+#: account/forms.py:66 templates/staff/purchase/_purchase_list_block.html:58
 #: templates/staff/vendor_list.html:26
 msgid "Overal discount"
 msgstr ""
 
-#: account/forms.py:66 templates/_base.html:191
+#: account/forms.py:67 templates/_base.html:191
 #: templates/_base_files_app.html:158 templates/_base_payment.html:89
 #: templates/_temp_base.html:66
 #: templates/account/clients/client_add_address.html:20
 #: templates/account/clients/client_add_address.html:37
+#: templates/account/clients/client_list.html:42
 #: templates/tools/pdf/invoice_pdf_a4.html:21
 #: templates/tools/pdf/invoice_pdf_a4.html:22
 #: templates/tools/pdf/print_address.html:28
-#: templates/tools/pdf/print_address.html:56
+#: templates/tools/pdf/print_address.html:60
 msgid "Address"
 msgstr ""
 
-#: account/forms.py:67
+#: account/forms.py:68
 msgid "Contact person"
 msgstr ""
 
-#: account/forms.py:68
+#: account/forms.py:69
 msgid "Other phone"
 msgstr ""
 
-#: account/forms.py:71
+#: account/forms.py:72
 msgid "Percent"
 msgstr ""
 
-#: account/forms.py:83 templates/tools/pdf/print_address.html:51
+#: account/forms.py:85 templates/tools/pdf/print_address.html:51
 msgid "Reciever"
 msgstr ""
 
-#: account/forms.py:84
+#: account/forms.py:86
 msgid "Reciever phone"
 msgstr ""
 
@@ -88,15 +89,15 @@ msgid "Billing"
 msgstr ""
 
 #: account/models.py:16 templates/staff/full_shipped_list.html:40
-#: templates/staff/full_shipped_list.html:59 templates/staff/orders.html:45
-#: templates/staff/orders.html:65
+#: templates/staff/full_shipped_list.html:59 templates/staff/orders.html:54
+#: templates/staff/orders.html:81
 msgid "Shipping"
 msgstr ""
 
 #: account/models.py:167 orders/forms.py:56
 #: templates/shop/product_detail.html:128
 #: templates/staff/purchase/_purchase_details_block.html:17
-#: templates/staff/purchase/purchase_list.html:27
+#: templates/staff/purchase/purchase_list.html:28
 #: templates/staff/purchased_products.html:27
 #: templates/staff/vendor_list.html:25 templates/staff/zero_stock_list.html:27
 msgid "Vendor"
@@ -106,9 +107,9 @@ msgstr ""
 msgid "Vendors"
 msgstr ""
 
-#: account/views.py:58 account/views.py:202 account/views.py:215
-#: staff/views.py:261 staff/views.py:285 staff/views.py:1304
-#: staff/views.py:1330
+#: account/views.py:58 account/views.py:205 account/views.py:218
+#: staff/views.py:270 staff/views.py:294 staff/views.py:1359
+#: staff/views.py:1385
 msgid "Form is not valid"
 msgstr ""
 
@@ -120,20 +121,24 @@ msgstr ""
 msgid "Error updating your user details"
 msgstr ""
 
-#: account/views.py:151 account/views.py:164 account/views.py:190
+#: account/views.py:152 account/views.py:165 account/views.py:193
 msgid "The phone number is already used!"
 msgstr ""
 
-#: account/views.py:160
+#: account/views.py:161
 msgid "Client added!"
 msgstr ""
 
-#: account/views.py:212
+#: account/views.py:215
 msgid "Client details updated"
 msgstr ""
 
-#: account/views.py:262
+#: account/views.py:268
 msgid "Address added to client details"
+msgstr ""
+
+#: account/views.py:315
+msgid "Credit updated"
 msgstr ""
 
 #: cart/views.py:27
@@ -165,13 +170,13 @@ msgstr ""
 #: templates/staff/order_detail_for_admin.html:81
 #: templates/staff/order_payment_manage.html:66
 #: templates/staff/order_shipped.html:74 templates/staff/order_shipping.html:59
-#: templates/staff/orders.html:42
+#: templates/staff/orders.html:50
 msgid "Shipping method"
 msgstr ""
 
-#: orders/forms.py:35 templates/staff/_order_table.html:56
+#: orders/forms.py:35 templates/staff/_order_table.html:63
 #: templates/staff/full_shipped_list.html:42
-#: templates/staff/invoice_checkout.html:76
+#: templates/staff/invoice_checkout.html:90
 #: templates/staff/order_shipping.html:123
 #: templates/tools/pdf/invoice_pdf.html:84
 #: templates/tools/pdf/invoice_pdf_a4.html:76
@@ -181,7 +186,7 @@ msgstr ""
 
 #: orders/forms.py:36 staff/forms.py:86
 #: templates/staff/order_detail_for_admin.html:85
-#: templates/staff/order_payment_manage.html:70 templates/staff/orders.html:43
+#: templates/staff/order_payment_manage.html:70 templates/staff/orders.html:51
 msgid "Shipping time"
 msgstr ""
 
@@ -190,7 +195,7 @@ msgid "Payment deadline"
 msgstr ""
 
 #: orders/forms.py:58 templates/staff/purchase/_purchase_details_block.html:21
-#: templates/staff/purchase/purchase_list.html:28
+#: templates/staff/purchase/purchase_list.html:29
 msgid "Paper invoice number"
 msgstr ""
 
@@ -213,7 +218,7 @@ msgstr ""
 
 #: orders/forms.py:76 products/models.py:66 products/models.py:431
 #: templates/_base.html:75 templates/_base_files_app.html:45
-#: templates/shop/store_book_search.html:51 templates/staff/products.html:55
+#: templates/shop/store_book_search.html:51 templates/staff/products.html:57
 #: templates/staff/sold_products.html:99
 #: templates/tools/pdf/invoice_pdf.html:100
 #: templates/tools/pdf/print_invoice.html:100
@@ -268,7 +273,7 @@ msgid "Pickup"
 msgstr ""
 
 #: orders/models.py:36 templates/staff/full_shipped_list.html:59
-#: templates/staff/orders.html:65
+#: templates/staff/orders.html:81
 msgid "Semi shipped"
 msgstr ""
 
@@ -280,11 +285,11 @@ msgstr ""
 msgid "Cashier"
 msgstr ""
 
-#: orders/models.py:44
+#: orders/models.py:45
 msgid "Website"
 msgstr ""
 
-#: orders/models.py:45
+#: orders/models.py:46
 msgid "Other"
 msgstr ""
 
@@ -358,14 +363,15 @@ msgstr ""
 msgid "Name, author, translator, publisher or isbn"
 msgstr ""
 
-#: search/forms.py:21 templates/staff/draft_orders.html:30
+#: search/forms.py:21 templates/staff/draft_orders.html:31
 #: templates/staff/full_shipped_list.html:31
+#: templates/staff/invoice_checkout.html:49
 #: templates/staff/invoice_create.html:25
 #: templates/staff/order_detail_for_admin.html:40
 #: templates/staff/order_list_by_country.html:30
 #: templates/staff/order_payment_manage.html:34
 #: templates/staff/order_shipped.html:50 templates/staff/order_shipping.html:35
-#: templates/staff/orders.html:35 templates/staff/purchase_create.html:24
+#: templates/staff/orders.html:36 templates/staff/purchase_create.html:24
 #: templates/tools/pdf/invoice_pdf.html:22
 #: templates/tools/pdf/invoice_pdf.html:25
 #: templates/tools/pdf/invoice_pdf_a4.html:17
@@ -382,7 +388,7 @@ msgstr ""
 #: search/forms.py:34 staff/forms.py:27 templates/shop/product_detail.html:89
 #: templates/staff/collection_management.html:43
 #: templates/staff/product_stock_price_edit.html:30
-#: templates/staff/products.html:49 templates/staff/sold_products.html:70
+#: templates/staff/products.html:51 templates/staff/sold_products.html:70
 #: templates/staff/used_book_prices.html:26
 #: templates/tools/pdf/invoice_pdf_a4.html:43
 msgid "ISBN"
@@ -409,7 +415,7 @@ msgid "Category"
 msgstr ""
 
 #: staff/forms.py:28 templates/shop/product_detail.html:31
-#: templates/staff/_order_table.html:13
+#: templates/staff/_order_table.html:14
 #: templates/staff/collection_management.html:45
 #: templates/staff/order_shipping.html:72
 #: templates/staff/purchase_create.html:84
@@ -446,10 +452,10 @@ msgid "Product type"
 msgstr ""
 
 #: staff/forms.py:31 templates/shop/product_detail.html:103
-#: templates/staff/draft_orders.html:36
+#: templates/staff/draft_orders.html:37
 #: templates/staff/full_shipped_list.html:34
 #: templates/staff/invoice_create.html:142
-#: templates/staff/order_list_by_country.html:32 templates/staff/orders.html:38
+#: templates/staff/order_list_by_country.html:32 templates/staff/orders.html:46
 msgid "Weight"
 msgstr ""
 
@@ -469,12 +475,12 @@ msgid "Page number"
 msgstr ""
 
 #: staff/forms.py:32 templates/shop/product_detail.html:34
-#: templates/shop/product_detail.html:35 templates/staff/_order_table.html:14
+#: templates/shop/product_detail.html:35 templates/staff/_order_table.html:15
 #: templates/staff/collection_management.html:47
 #: templates/staff/invoice_create.html:135
 #: templates/staff/order_shipping.html:73
 #: templates/staff/product_stock_price_edit.html:34
-#: templates/staff/products.html:58
+#: templates/staff/products.html:60
 #: templates/staff/purchase/_purchase_list_block.html:14
 #: templates/staff/sold_products.html:73
 #: templates/staff/used_book_prices.html:30
@@ -501,7 +507,7 @@ msgstr ""
 msgid "Admin note"
 msgstr ""
 
-#: staff/forms.py:63 staff/views.py:1014 templates/cart/detail.html:17
+#: staff/forms.py:63 staff/views.py:1065 templates/cart/detail.html:17
 #: templates/orders/reports/sales_by_days.html:65
 #: templates/orders/reports/sales_by_days.html:67
 #: templates/orders/reports/sales_by_days.html:69
@@ -511,16 +517,16 @@ msgstr ""
 #: templates/orders/reports/sales_by_days.html:158
 #: templates/orders/reports/sales_by_days.html:160
 #: templates/orders/reports/sales_by_days.html:162
-#: templates/staff/_order_table.html:15 templates/staff/draft_orders.html:32
+#: templates/staff/_order_table.html:16 templates/staff/draft_orders.html:33
 #: templates/staff/full_shipped_list.html:33
 #: templates/staff/invoice_create.html:71
 #: templates/staff/invoice_create.html:136
 #: templates/staff/invoice_create.html:138
 #: templates/staff/order_list_by_country.html:31
-#: templates/staff/order_shipping.html:74 templates/staff/orders.html:37
+#: templates/staff/order_shipping.html:74 templates/staff/orders.html:45
 #: templates/staff/purchase/_purchase_list_block.html:15
 #: templates/staff/purchase/purchase_details.html:52
-#: templates/staff/purchase/purchase_list.html:31
+#: templates/staff/purchase/purchase_list.html:32
 #: templates/staff/purchase_create.html:55
 #: templates/staff/purchase_create.html:85
 #: templates/staff/purchase_create.html:87
@@ -543,7 +549,7 @@ msgstr ""
 msgid "Shipping status"
 msgstr ""
 
-#: staff/forms.py:87 templates/staff/orders.html:44
+#: staff/forms.py:87 templates/staff/orders.html:52
 msgid "Is packaged"
 msgstr ""
 
@@ -577,7 +583,7 @@ msgstr ""
 msgid "Used price"
 msgstr ""
 
-#: staff/forms.py:133 templates/staff/products.html:56
+#: staff/forms.py:133 templates/staff/products.html:58
 msgid "Used stock"
 msgstr ""
 
@@ -598,148 +604,156 @@ msgid ""
 "Just for editing the databse for books that is in store but not in database"
 msgstr ""
 
-#: staff/views.py:222
+#: staff/views.py:231
 msgid "A product with same isbn is available"
 msgstr ""
 
-#: staff/views.py:227 staff/views.py:256
+#: staff/views.py:236 staff/views.py:265
 msgid "Product updated"
 msgstr ""
 
-#: staff/views.py:229
+#: staff/views.py:238
 msgid "Product is created"
 msgstr ""
 
-#: staff/views.py:280
+#: staff/views.py:289
 msgid "Category is created!"
 msgstr ""
 
-#: staff/views.py:318
+#: staff/views.py:327
 msgid "Product is created!"
 msgstr ""
 
-#: staff/views.py:333
+#: staff/views.py:342
 msgid "Product created"
 msgstr ""
 
-#: staff/views.py:336
+#: staff/views.py:345
 msgid "Product does not created!"
 msgstr ""
 
-#: staff/views.py:441 staff/views.py:498 staff/views.py:609
+#: staff/views.py:450 staff/views.py:507 staff/views.py:618
 msgid "You could not add product without price"
 msgstr ""
 
-#: staff/views.py:445 staff/views.py:502 staff/views.py:612
+#: staff/views.py:454 staff/views.py:511 staff/views.py:621
 msgid "You are adding zero stock!"
 msgstr ""
 
-#: staff/views.py:491 staff/views.py:549 staff/views.py:668
+#: staff/views.py:500 staff/views.py:558 staff/views.py:677
 msgid "Product is added to invoice"
 msgstr ""
 
-#: staff/views.py:511 staff/views.py:639
+#: staff/views.py:520 staff/views.py:648
 msgid "Order is created"
 msgstr ""
 
-#: staff/views.py:616
+#: staff/views.py:625
 msgid "This product has other prices"
 msgstr ""
 
-#: staff/views.py:767
+#: staff/views.py:776
 msgid "Order approved"
 msgstr ""
 
-#: staff/views.py:801
+#: staff/views.py:812
 msgid "Credit of client added to discount of order"
 msgstr ""
 
-#: staff/views.py:813
+#: staff/views.py:825
 msgid "Order paid with credit"
 msgstr ""
 
-#: staff/views.py:832
+#: staff/views.py:842 staff/views.py:908
+msgid "Credit remove from order and added to client credit"
+msgstr ""
+
+#: staff/views.py:860
 msgid "Client added to order"
 msgstr ""
 
-#: staff/views.py:978
+#: staff/views.py:912
+msgid "Client removed from order"
+msgstr ""
+
+#: staff/views.py:1029
 msgid "You are adding zero stock"
 msgstr ""
 
-#: staff/views.py:1014
+#: staff/views.py:1065
 msgid "Order line updated"
 msgstr ""
 
-#: staff/views.py:1087
+#: staff/views.py:1138
 msgid "This order is not empty"
 msgstr ""
 
-#: staff/views.py:1090
+#: staff/views.py:1144
 msgid "Draft order removed"
 msgstr ""
 
-#: staff/views.py:1098
+#: staff/views.py:1152
 msgid "This order is shipped"
 msgstr ""
 
-#: staff/views.py:1100
+#: staff/views.py:1154
 msgid "This order is completely packaged"
 msgstr ""
 
-#: staff/views.py:1111
+#: staff/views.py:1166
 msgid "Order status changed to draft"
 msgstr ""
 
-#: staff/views.py:1281 staff/views.py:1308
+#: staff/views.py:1336 staff/views.py:1363
 #: templates/tools/pdf/print_address.html:29
 msgid "Tehran"
 msgstr ""
 
-#: staff/views.py:1299
+#: staff/views.py:1354
 msgid "Vendor is added!"
 msgstr ""
 
-#: staff/views.py:1327
+#: staff/views.py:1382
 msgid "Vendor is updated"
 msgstr ""
 
-#: staff/views.py:1461
+#: staff/views.py:1516
 msgid "This product is in this collection"
 msgstr ""
 
-#: staff/views.py:1467
+#: staff/views.py:1522
 msgid "Product does not found"
 msgstr ""
 
-#: staff/views.py:1477
+#: staff/views.py:1532
 msgid "The product added to collection"
 msgstr ""
 
-#: staff/views.py:1505
+#: staff/views.py:1560
 msgid "This product removed from the collection"
 msgstr ""
 
-#: staff/views.py:1559
+#: staff/views.py:1614
 msgid "You could not enter a price less than the main price "
 msgstr ""
 
-#: staff/views.py:1565
+#: staff/views.py:1620
 msgid "Price updated"
 msgstr ""
 
-#: staff/views.py:1569
+#: staff/views.py:1624
 msgid "A purchase added to manage the DB"
 msgstr ""
 
-#: staff/views.py:1618
+#: staff/views.py:1673
 msgid "Stock and price updated"
 msgstr ""
 
-#: staff/views.py:1665
+#: staff/views.py:1720
 msgid "New craft is created"
 msgstr ""
 
-#: staff/views.py:1701 tools/views.py:104
+#: staff/views.py:1756 tools/views.py:106
 msgid "Date is not valid"
 msgstr ""
 
@@ -754,6 +768,7 @@ msgstr ""
 #: templates/_temp_base.html:11 templates/_temp_base.html:12
 #: templates/_temp_base.html:35 templates/_temp_base.html:42
 #: templates/registration/password_reset_email.html:15
+#: templates/shop/store_book_search.html:18
 #: templates/tools/pdf/invoice_pdf.html:31
 #: templates/tools/pdf/print_address.html:26
 #: templates/tools/pdf/print_invoice.html:31
@@ -872,7 +887,6 @@ msgstr ""
 #: templates/tools/emails/registration_email.html:21
 #: templates/tools/pdf/invoice_pdf_a4.html:7
 #: templates/tools/pdf/print_address.html:25
-#: templates/tools/pdf/print_address.html:55
 msgid "Ketabe Damavand"
 msgstr ""
 
@@ -909,7 +923,7 @@ msgstr ""
 #: templates/tools/pdf/invoice_pdf.html:26
 #: templates/tools/pdf/invoice_pdf_a4.html:20
 #: templates/tools/pdf/print_address.html:39
-#: templates/tools/pdf/print_address.html:67
+#: templates/tools/pdf/print_address.html:71
 #: templates/tools/pdf/print_invoice.html:26
 msgid "Phone"
 msgstr ""
@@ -942,21 +956,22 @@ msgstr ""
 #: templates/account/clients/client_add.html:20
 #: templates/staff/invoice_checkout.html:41
 #: templates/staff/order_add_client.html:40
-#: templates/staff/sidebar_staff.html:28 templates/staff/sidebar_staff.html:82
+#: templates/staff/sidebar_staff.html:26 templates/staff/sidebar_staff.html:69
 msgid "Add client"
 msgstr ""
 
 #: templates/account/clients/client_add.html:25
 #: templates/account/clients/client_add_address.html:41
 #: templates/account/clients/client_update.html:25
+#: templates/account/clients/credit_update.html:52
 #: templates/shop/store_book_search.html:24
 #: templates/staff/category_create.html:25
 #: templates/staff/category_create.html:26
 #: templates/staff/collection_management.html:32
 #: templates/staff/crafts/craft_update.html:30
-#: templates/staff/invoice_checkout.html:101
+#: templates/staff/invoice_checkout.html:115
 #: templates/staff/invoice_create.html:57
-#: templates/staff/invoice_create.html:203
+#: templates/staff/invoice_create.html:201
 #: templates/staff/order_add_client.html:68
 #: templates/staff/order_create.html:23
 #: templates/staff/order_payment_manage.html:79
@@ -965,7 +980,7 @@ msgstr ""
 #: templates/staff/product_create.html:37
 #: templates/staff/product_create.html:38
 #: templates/staff/product_stock_price_edit.html:70
-#: templates/staff/products.html:39
+#: templates/staff/products.html:40
 #: templates/staff/purchase/purchase_create.html:26
 #: templates/staff/purchase/purchase_details.html:39
 #: templates/staff/purchase/purchaseline_add.html:38
@@ -1003,9 +1018,9 @@ msgstr ""
 
 #: templates/account/clients/client_details.html:32
 #: templates/account/clients/client_list.html:39
-#: templates/staff/draft_orders.html:31
+#: templates/staff/draft_orders.html:32
 #: templates/staff/order_detail_for_admin.html:44
-#: templates/staff/order_payment_manage.html:38 templates/staff/orders.html:36
+#: templates/staff/order_payment_manage.html:38 templates/staff/orders.html:44
 msgid "Social name"
 msgstr ""
 
@@ -1045,13 +1060,13 @@ msgstr ""
 #: templates/account/clients/client_list.html:27 templates/home.html:19
 #: templates/search/search.html:9 templates/search/search.html:45
 #: templates/shop/category_list.html:20 templates/shop/product_list.html:20
-#: templates/staff/orders.html:26
+#: templates/shop/store_book_search.html:18 templates/staff/orders.html:26
 msgid "Search"
 msgstr ""
 
 #: templates/account/clients/client_list.html:36
 #: templates/staff/collection_management.html:42
-#: templates/staff/crafts/craft_list.html:47 templates/staff/products.html:48
+#: templates/staff/crafts/craft_list.html:47 templates/staff/products.html:50
 msgid "Edit"
 msgstr ""
 
@@ -1059,12 +1074,65 @@ msgstr ""
 msgid "Client code"
 msgstr ""
 
-#: templates/account/clients/client_list.html:56
+#: templates/account/clients/client_list.html:44
+#: templates/staff/_order_table.html:56
+#: templates/staff/invoice_checkout.html:79
+msgid "Credit"
+msgstr ""
+
+#: templates/account/clients/client_list.html:60
 msgid "Print billing address"
 msgstr ""
 
-#: templates/account/clients/client_list.html:62
+#: templates/account/clients/client_list.html:66
 msgid "Print shipping address"
+msgstr ""
+
+#: templates/account/clients/credit_update.html:11
+msgid "Manage credit"
+msgstr ""
+
+#: templates/account/clients/credit_update.html:22
+msgid "Manage credit for"
+msgstr ""
+
+#: templates/account/clients/credit_update.html:26
+msgid "Current credit"
+msgstr ""
+
+#: templates/account/clients/credit_update.html:27
+#: templates/orders/reports/sales_by_days.html:117
+#: templates/orders/reports/sales_by_days.html:124
+#: templates/orders/reports/sales_by_days.html:129
+#: templates/orders/reports/sales_by_days.html:139
+#: templates/orders/reports/sales_by_days.html:144
+#: templates/orders/reports/sales_by_days.html:182
+#: templates/orders/reports/sales_by_days.html:189
+#: templates/orders/reports/sales_by_days.html:194
+#: templates/shop/product_card.html:18 templates/shop/product_detail.html:33
+#: templates/shop/product_detail.html:123
+#: templates/shop/store_book_search.html:45
+#: templates/shop/store_book_search.html:56
+#: templates/staff/_order_table.html:17 templates/staff/_order_table.html:19
+#: templates/staff/collection_management.html:48
+#: templates/staff/crafts/craft_list.html:50
+#: templates/staff/draft_orders.html:34 templates/staff/draft_orders.html:35
+#: templates/staff/draft_orders.html:36 templates/staff/order_shipping.html:76
+#: templates/staff/order_shipping.html:78
+#: templates/staff/purchase/_purchase_list_block.html:16
+#: templates/staff/purchase/_purchase_list_block.html:17
+#: templates/staff/purchase/_purchase_list_block.html:20
+#: templates/tools/pdf/invoice_pdf.html:54
+#: templates/tools/pdf/invoice_pdf.html:75
+#: templates/tools/pdf/invoice_pdf_a4.html:47
+#: templates/tools/pdf/invoice_pdf_a4.html:67
+#: templates/tools/pdf/print_invoice.html:54
+#: templates/tools/pdf/print_invoice.html:75
+msgid "Rial"
+msgstr ""
+
+#: templates/account/clients/credit_update.html:31
+msgid "History of blanace changes"
 msgstr ""
 
 #: templates/account/dashboard.html:7 templates/account/dashboard.html:12
@@ -1112,7 +1180,7 @@ msgstr ""
 msgid "You can edit your account using the following form:"
 msgstr ""
 
-#: templates/account/edit.html:21 templates/staff/invoice_checkout.html:100
+#: templates/account/edit.html:21 templates/staff/invoice_checkout.html:114
 msgid "Save changes"
 msgstr ""
 
@@ -1144,7 +1212,7 @@ msgstr ""
 msgid "Your shopping cart"
 msgstr ""
 
-#: templates/cart/detail.html:15 templates/staff/_order_table.html:10
+#: templates/cart/detail.html:15 templates/staff/_order_table.html:11
 #: templates/staff/invoice_create.html:133
 #: templates/staff/order_shipping.html:69
 #: templates/staff/purchase/_purchase_list_block.html:11
@@ -1165,7 +1233,9 @@ msgstr ""
 
 #: templates/cart/detail.html:18 templates/cart/detail.html:44
 #: templates/staff/collection_management_edit.html:32
-#: templates/staff/draft_orders.html:57 templates/staff/invoice_create.html:136
+#: templates/staff/draft_orders.html:58
+#: templates/staff/invoice_checkout.html:49
+#: templates/staff/invoice_create.html:136
 #: templates/staff/price_management.html:33
 #: templates/staff/price_management.html:42
 #: templates/staff/price_management.html:51
@@ -1183,12 +1253,12 @@ msgstr ""
 #: templates/shop/product_detail.html:123
 #: templates/shop/store_book_search.html:45
 #: templates/shop/store_book_search.html:56
-#: templates/staff/_order_table.html:16
+#: templates/staff/_order_table.html:17
 #: templates/staff/collection_management.html:48
 #: templates/staff/crafts/craft_list.html:50
 #: templates/staff/invoice_create.html:139
 #: templates/staff/order_shipping.html:76
-#: templates/staff/product_price_show.html:24 templates/staff/products.html:52
+#: templates/staff/product_price_show.html:24 templates/staff/products.html:54
 #: templates/staff/purchase/_purchase_list_block.html:16
 #: templates/staff/purchase/_purchase_list_block.html:17
 #: templates/staff/purchase/purchaseline_add.html:34
@@ -1226,7 +1296,7 @@ msgid ""
 msgstr ""
 
 #: templates/cart/detail.html:72 templates/orders/create.html:46
-#: templates/staff/draft_orders.html:33 templates/tools/pdf/invoice_pdf.html:54
+#: templates/staff/draft_orders.html:34 templates/tools/pdf/invoice_pdf.html:54
 #: templates/tools/pdf/invoice_pdf.html:75
 #: templates/tools/pdf/invoice_pdf_a4.html:47
 #: templates/tools/pdf/invoice_pdf_a4.html:67
@@ -1297,36 +1367,6 @@ msgstr ""
 
 #: templates/orders/reports/sales_by_days.html:116
 msgid "All sales"
-msgstr ""
-
-#: templates/orders/reports/sales_by_days.html:117
-#: templates/orders/reports/sales_by_days.html:124
-#: templates/orders/reports/sales_by_days.html:129
-#: templates/orders/reports/sales_by_days.html:139
-#: templates/orders/reports/sales_by_days.html:144
-#: templates/orders/reports/sales_by_days.html:182
-#: templates/orders/reports/sales_by_days.html:189
-#: templates/orders/reports/sales_by_days.html:194
-#: templates/shop/product_card.html:18 templates/shop/product_detail.html:33
-#: templates/shop/product_detail.html:123
-#: templates/shop/store_book_search.html:45
-#: templates/shop/store_book_search.html:56
-#: templates/staff/_order_table.html:16 templates/staff/_order_table.html:18
-#: templates/staff/collection_management.html:48
-#: templates/staff/crafts/craft_list.html:50
-#: templates/staff/draft_orders.html:33 templates/staff/draft_orders.html:34
-#: templates/staff/draft_orders.html:35 templates/staff/order_shipping.html:76
-#: templates/staff/order_shipping.html:78
-#: templates/staff/purchase/_purchase_list_block.html:16
-#: templates/staff/purchase/_purchase_list_block.html:17
-#: templates/staff/purchase/_purchase_list_block.html:20
-#: templates/tools/pdf/invoice_pdf.html:54
-#: templates/tools/pdf/invoice_pdf.html:75
-#: templates/tools/pdf/invoice_pdf_a4.html:47
-#: templates/tools/pdf/invoice_pdf_a4.html:67
-#: templates/tools/pdf/print_invoice.html:54
-#: templates/tools/pdf/print_invoice.html:75
-msgid "Rial"
 msgstr ""
 
 #: templates/orders/reports/sales_by_days.html:123
@@ -1598,12 +1638,12 @@ msgstr ""
 #: templates/shop/product_detail.html:118
 #: templates/shop/product_detail.html:124
 #: templates/staff/crafts/craft_list.html:51
-#: templates/staff/product_price_show.html:25 templates/staff/products.html:51
+#: templates/staff/product_price_show.html:25 templates/staff/products.html:53
 #: templates/staff/used_book_prices.html:48
 msgid "Stock"
 msgstr ""
 
-#: templates/shop/product_detail.html:119 templates/staff/sidebar_staff.html:70
+#: templates/shop/product_detail.html:119 templates/staff/sidebar_staff.html:60
 msgid "Zero stock"
 msgstr ""
 
@@ -1637,11 +1677,6 @@ msgstr ""
 msgid "Store book search"
 msgstr ""
 
-#: templates/shop/store_book_search.html:18
-#: templates/staff/sidebar_staff.html:8
-msgid "Search in used books"
-msgstr ""
-
 #: templates/shop/store_book_search.html:19
 msgid "For product without price please ask our staff"
 msgstr ""
@@ -1650,16 +1685,16 @@ msgstr ""
 msgid "Available books"
 msgstr ""
 
-#: templates/staff/_order_table.html:11 templates/staff/invoice_create.html:132
+#: templates/staff/_order_table.html:12 templates/staff/invoice_create.html:132
 #: templates/staff/order_shipping.html:70
 #: templates/staff/purchase/_purchase_list_block.html:12
 #: templates/staff/purchase_create.html:81
 msgid "isbn"
 msgstr ""
 
-#: templates/staff/_order_table.html:17 templates/staff/_order_table.html:49
-#: templates/staff/draft_orders.html:34
-#: templates/staff/invoice_checkout.html:69
+#: templates/staff/_order_table.html:18 templates/staff/_order_table.html:50
+#: templates/staff/draft_orders.html:35
+#: templates/staff/invoice_checkout.html:72
 #: templates/staff/invoice_create.html:136
 #: templates/staff/invoice_create.html:140
 #: templates/staff/order_shipping.html:77
@@ -1676,26 +1711,26 @@ msgstr ""
 msgid "Discount"
 msgstr ""
 
-#: templates/staff/_order_table.html:18 templates/staff/invoice_create.html:141
+#: templates/staff/_order_table.html:19 templates/staff/invoice_create.html:141
 #: templates/staff/order_shipping.html:78
 #: templates/staff/purchase/_purchase_list_block.html:20
 #: templates/staff/purchase_create.html:90
 msgid "Cost"
 msgstr ""
 
-#: templates/staff/_order_table.html:41
+#: templates/staff/_order_table.html:42
 #: templates/staff/full_shipped_list.html:68
-#: templates/staff/invoice_checkout.html:62
+#: templates/staff/invoice_checkout.html:65
 #: templates/staff/order_shipping.html:109
 #: templates/staff/purchase/_purchase_list_block.html:48
 msgid "Sum"
 msgstr ""
 
-#: templates/staff/_order_table.html:62 templates/staff/draft_orders.html:35
-#: templates/staff/invoice_checkout.html:82
+#: templates/staff/_order_table.html:69 templates/staff/draft_orders.html:36
+#: templates/staff/invoice_checkout.html:96
 #: templates/staff/order_shipping.html:129
 #: templates/staff/purchase/_purchase_list_block.html:70
-#: templates/staff/purchase/purchase_list.html:32
+#: templates/staff/purchase/purchase_list.html:33
 msgid "Payable"
 msgstr ""
 
@@ -1725,7 +1760,7 @@ msgid "Collection management"
 msgstr ""
 
 #: templates/staff/collection_management.html:22
-#: templates/staff/products.html:22 templates/staff/sidebar_staff.html:5
+#: templates/staff/products.html:22 templates/staff/sidebar_staff.html:4
 msgid "List of products"
 msgstr ""
 
@@ -1756,7 +1791,7 @@ msgstr ""
 
 #: templates/staff/crafts/craft_list.html:22
 #: templates/staff/crafts/craft_update.html:22
-#: templates/staff/sidebar_staff.html:14
+#: templates/staff/sidebar_staff.html:13
 msgid "List of crafts"
 msgstr ""
 
@@ -1771,15 +1806,15 @@ msgstr ""
 msgid "Invoice create"
 msgstr ""
 
-#: templates/staff/draft_orders.html:23 templates/staff/sidebar_staff.html:27
+#: templates/staff/draft_orders.html:23 templates/staff/sidebar_staff.html:25
 msgid "List of draft orders"
 msgstr ""
 
-#: templates/staff/draft_orders.html:29
+#: templates/staff/draft_orders.html:30
 msgid "Order ID"
 msgstr ""
 
-#: templates/staff/draft_orders.html:49
+#: templates/staff/draft_orders.html:50
 msgid "Not registered"
 msgstr ""
 
@@ -1793,17 +1828,17 @@ msgstr ""
 
 #: templates/staff/full_shipped_list.html:30
 #: templates/staff/invoice_create.html:41
-#: templates/staff/order_add_client.html:60 templates/staff/orders.html:34
-#: templates/staff/purchase/purchase_list.html:26
+#: templates/staff/order_add_client.html:60 templates/staff/orders.html:35
+#: templates/staff/purchase/purchase_list.html:27
 msgid "Number"
 msgstr ""
 
 #: templates/staff/full_shipped_list.html:36
-#: templates/staff/order_list_by_country.html:34 templates/staff/orders.html:40
+#: templates/staff/order_list_by_country.html:34 templates/staff/orders.html:48
 msgid "Approved date"
 msgstr ""
 
-#: templates/staff/full_shipped_list.html:37 templates/staff/orders.html:41
+#: templates/staff/full_shipped_list.html:37 templates/staff/orders.html:49
 msgid "Payment"
 msgstr ""
 
@@ -1826,39 +1861,43 @@ msgstr ""
 msgid "Client name"
 msgstr ""
 
-#: templates/staff/invoice_checkout.html:49
+#: templates/staff/invoice_checkout.html:52
 msgid "Client credit"
 msgstr ""
 
-#: templates/staff/invoice_checkout.html:50
+#: templates/staff/invoice_checkout.html:53
 msgid "Pay with client credit"
 msgstr ""
 
-#: templates/staff/invoice_checkout.html:58
+#: templates/staff/invoice_checkout.html:61
 msgid "Invoice informations"
 msgstr ""
 
-#: templates/staff/invoice_checkout.html:104
+#: templates/staff/invoice_checkout.html:80
+msgid "Remove credit"
+msgstr ""
+
+#: templates/staff/invoice_checkout.html:118
 msgid "Save the changes before making payment link"
 msgstr ""
 
-#: templates/staff/invoice_checkout.html:106
-#: templates/staff/invoice_checkout.html:108
+#: templates/staff/invoice_checkout.html:120
+#: templates/staff/invoice_checkout.html:122
+#: templates/staff/invoice_create.html:211
 #: templates/staff/invoice_create.html:213
-#: templates/staff/invoice_create.html:215
 #: templates/staff/order_detail_for_admin.html:22
 msgid "Payment link"
 msgstr ""
 
-#: templates/staff/invoice_checkout.html:109
-#: templates/staff/invoice_create.html:216
+#: templates/staff/invoice_checkout.html:123
+#: templates/staff/invoice_create.html:214
 msgid ""
 "For making payment link, you should first add a book to invoice and add a "
 "client"
 msgstr ""
 
-#: templates/staff/invoice_checkout.html:125
-#: templates/staff/invoice_create.html:110
+#: templates/staff/invoice_checkout.html:139
+#: templates/staff/invoice_create.html:109
 #: templates/staff/order_add_client.html:60
 #: templates/staff/order_detail_for_admin.html:97
 #: templates/staff/order_payment_manage.html:82
@@ -1888,16 +1927,16 @@ msgstr ""
 msgid "Add products"
 msgstr ""
 
-#: templates/staff/invoice_create.html:113
+#: templates/staff/invoice_create.html:112
 msgid ""
 "This invoice has a book from a collection that can not be sold separately"
 msgstr ""
 
-#: templates/staff/invoice_create.html:116
+#: templates/staff/invoice_create.html:115
 msgid "include"
 msgstr ""
 
-#: templates/staff/invoice_create.html:122
+#: templates/staff/invoice_create.html:121
 msgid "is in this collection"
 msgstr ""
 
@@ -1924,20 +1963,20 @@ msgstr ""
 msgid "PAYABLE"
 msgstr ""
 
-#: templates/staff/invoice_create.html:201
+#: templates/staff/invoice_create.html:199
 #: templates/staff/order_add_client.html:66
 #: templates/staff/purchase_create.html:149
 msgid "Save draft"
 msgstr ""
 
-#: templates/staff/invoice_create.html:205
+#: templates/staff/invoice_create.html:203
 #: templates/staff/order_add_client.html:70
 #: templates/staff/order_detail_for_admin.html:21
-#: templates/staff/orders.html:66 templates/staff/purchase_create.html:151
+#: templates/staff/orders.html:82 templates/staff/purchase_create.html:151
 msgid "Print"
 msgstr ""
 
-#: templates/staff/invoice_create.html:211
+#: templates/staff/invoice_create.html:209
 #: templates/staff/order_add_client.html:76
 #: templates/staff/purchase_create.html:155
 msgid "Clear"
@@ -1999,7 +2038,7 @@ msgstr ""
 #: templates/staff/order_list_by_country.html:33
 #: templates/staff/order_payment_manage.html:46
 #: templates/staff/order_shipped.html:58 templates/staff/order_shipping.html:43
-#: templates/staff/orders.html:39
+#: templates/staff/orders.html:47
 msgid "Channel"
 msgstr ""
 
@@ -2054,7 +2093,7 @@ msgstr ""
 msgid "Shipped"
 msgstr ""
 
-#: templates/staff/price_management.html:11 templates/staff/products.html:59
+#: templates/staff/price_management.html:11 templates/staff/products.html:61
 #: templates/staff/purchase/purchaseline_add.html:11
 msgid "Price management"
 msgstr ""
@@ -2133,7 +2172,7 @@ msgid "Product ID."
 msgstr ""
 
 #: templates/staff/product_stock_price_edit.html:45
-#: templates/staff/products.html:71 templates/staff/used_book_prices.html:41
+#: templates/staff/products.html:73 templates/staff/used_book_prices.html:41
 msgid "Not in market"
 msgstr ""
 
@@ -2181,31 +2220,31 @@ msgstr ""
 msgid "All products"
 msgstr ""
 
-#: templates/staff/products.html:25
+#: templates/staff/products.html:26
 msgid "Could be very slow or it may crash"
 msgstr ""
 
-#: templates/staff/products.html:26
+#: templates/staff/products.html:27
 msgid "Used products without price"
 msgstr ""
 
-#: templates/staff/products.html:27
+#: templates/staff/products.html:28
 msgid "All used products"
 msgstr ""
 
-#: templates/staff/products.html:53
+#: templates/staff/products.html:55
 msgid "Other stock"
 msgstr ""
 
-#: templates/staff/products.html:54
+#: templates/staff/products.html:56
 msgid "Other prices"
 msgstr ""
 
-#: templates/staff/products.html:78
+#: templates/staff/products.html:80
 msgid "Bahman"
 msgstr ""
 
-#: templates/staff/products.html:79
+#: templates/staff/products.html:81
 msgid "Mahsa"
 msgstr ""
 
@@ -2264,19 +2303,19 @@ msgid "Purchases"
 msgstr ""
 
 #: templates/staff/purchase/purchase_list.html:20
-#: templates/staff/sidebar_staff.html:59
+#: templates/staff/sidebar_staff.html:51
 msgid "List of purchases"
 msgstr ""
 
-#: templates/staff/purchase/purchase_list.html:29
+#: templates/staff/purchase/purchase_list.html:30
 msgid "Craeted date"
 msgstr ""
 
-#: templates/staff/purchase/purchase_list.html:30
+#: templates/staff/purchase/purchase_list.html:31
 msgid "Payment Date"
 msgstr ""
 
-#: templates/staff/purchase/purchase_list.html:33
+#: templates/staff/purchase/purchase_list.html:34
 #: templates/staff/sold_products.html:76
 msgid "Status"
 msgstr ""
@@ -2298,12 +2337,12 @@ msgid "Create purchase"
 msgstr ""
 
 #: templates/staff/purchased_products.html:9
-#: templates/staff/sidebar_staff.html:69
+#: templates/staff/sidebar_staff.html:59
 msgid "Purchased products"
 msgstr ""
 
 #: templates/staff/purchased_products.html:21
-#: templates/staff/sidebar_staff.html:68 templates/staff/sold_products.html:7
+#: templates/staff/sidebar_staff.html:58 templates/staff/sold_products.html:7
 #: templates/staff/sold_products.html:18
 msgid "Sold products"
 msgstr ""
@@ -2318,117 +2357,117 @@ msgstr ""
 msgid "Refund list"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:4
+#: templates/staff/sidebar_staff.html:3
 msgid "Create product"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:6
+#: templates/staff/sidebar_staff.html:5
 msgid "Collection managment"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:9
+#: templates/staff/sidebar_staff.html:7
+msgid "Search in used books"
+msgstr ""
+
+#: templates/staff/sidebar_staff.html:8
 msgid "Search in new books"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:11
+#: templates/staff/sidebar_staff.html:10
 msgid "Create a new category"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:12
+#: templates/staff/sidebar_staff.html:11
 msgid "List of categories"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:15
+#: templates/staff/sidebar_staff.html:14
 msgid "Create craft product"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:18
+#: templates/staff/sidebar_staff.html:17
 msgid "Export publishers"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:19
+#: templates/staff/sidebar_staff.html:18
 msgid "used product sold befor 5 march"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:26
+#: templates/staff/sidebar_staff.html:24
 msgid "New invoice"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:29
+#: templates/staff/sidebar_staff.html:27
 msgid "Create a payment link"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:30 templates/zarinpal/payment_list.html:7
+#: templates/staff/sidebar_staff.html:28 templates/zarinpal/payment_list.html:7
 #: templates/zarinpal/payment_list.html:26
 msgid "Payment list"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:31
+#: templates/staff/sidebar_staff.html:29
 msgid "Cashier sales"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:32
+#: templates/staff/sidebar_staff.html:30
 msgid "Sales by country"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:39
+#: templates/staff/sidebar_staff.html:34
 msgid "All approved orders"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:41
+#: templates/staff/sidebar_staff.html:36
 msgid "Collectable orders"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:42
+#: templates/staff/sidebar_staff.html:37
 msgid "Last day"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:43
+#: templates/staff/sidebar_staff.html:38
 msgid "Last week"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:44
+#: templates/staff/sidebar_staff.html:39
 msgid "Last month"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:45 templates/staff/sold_products.html:29
+#: templates/staff/sidebar_staff.html:40 templates/staff/sold_products.html:29
 msgid "Last year"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:47
+#: templates/staff/sidebar_staff.html:42
 msgid "Cashier orders"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:50
+#: templates/staff/sidebar_staff.html:45
 msgid "Full shipped list"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:57
+#: templates/staff/sidebar_staff.html:50
 msgid "New purchase invoice"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:61
+#: templates/staff/sidebar_staff.html:53
 msgid "Add vendor"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:62 templates/staff/vendor_list.html:8
+#: templates/staff/sidebar_staff.html:54 templates/staff/vendor_list.html:8
 #: templates/staff/vendor_list.html:19
 msgid "Vendor list"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:71
-msgid "Warehouse Managment"
-msgstr ""
-
-#: templates/staff/sidebar_staff.html:73
+#: templates/staff/sidebar_staff.html:63
 msgid "Refund a product"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:74
+#: templates/staff/sidebar_staff.html:64
 msgid "List of refunds"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:81
+#: templates/staff/sidebar_staff.html:68
 msgid "List of clients"
 msgstr ""
 
