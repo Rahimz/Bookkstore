@@ -791,15 +791,16 @@ def invoice_checkout(request, order_id, client_id=None):
 
 def invoice_checkout_credit(request, order_id, client_id):
     order = get_object_or_404(Order, pk=order_id)
-    client = CustomUser.objects.get(pk=client_id)
+    client = get_object_or_404(CustomUser, pk=client_id)
     order.client = client
     balance = client.credit.balance
 
     if order.payable >= balance:
-        order.discount = balance
+        # order.discount += balance
 
         if order.payable == balance:
             order.paid = True
+
         order.pay_by_credit = True
         order.credit = balance
 
@@ -807,21 +808,39 @@ def invoice_checkout_credit(request, order_id, client_id):
 
         client.credit.balance = 0
         client.credit.save()
-        messages(request, _('Credit of client added to discount of order'))
+
+        messages.success(request, _('Credit of client added to discount of order'))
         return redirect('staff:invoice_checkout_client', order_id=order.id, client_id=client.id)
 
     elif order.payable < balance:
         client.credit.balance = client.credit.balance - order.payable
-        order.discount = order.payable
+        # order.discount = order.payable
         order.paid = True
         order.pay_by_credit = True
-        order.credit = balance
+        order.credit = order.payable
+
 
         order.save()
         client.credit.save()
-        messages(request, _('Order paid with credit'))
+        messages.success(request, _('Order paid with credit'))
 
         return redirect('staff:invoice_checkout_client', order_id=order.id, client_id=client.id)
+
+
+
+def invoice_remove_credit(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+    client = order.client
+
+    client.credit.balance += order.credit
+
+    order.paid = False
+    order.pay_by_credit = False
+    order.credit = 0
+    order.save()
+    client.credit.save()
+    messages.success(request, _('Credit remove from order and added to client credit'))
+    return redirect('staff:invoice_checkout_client', order_id=order.id, client_id=client.id)
 
 
 def invoice_create_add_client(request, order_id, client_id=None):
@@ -874,6 +893,20 @@ def invoice_create_add_client(request, order_id, client_id=None):
 @staff_member_required
 def remove_client_from_order(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
+
+    if order.credit:
+        # remove credit from order
+        client = order.client
+
+        client.credit.balance += order.credit
+
+        order.paid = False
+        order.pay_by_credit = False
+        order.credit = 0
+        order.save()
+        client.credit.save()
+        messages.success(request, _('Credit remove from order and added to client credit'))
+    
     order.client = None
     order.save()
     messages.success(request, _('Client removed from order'))

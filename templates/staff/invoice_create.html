@@ -68,8 +68,7 @@
 
               <a href="{% if order %}{% url 'staff:invoice_add_book_v' order_id=order.id book_id=result.id variation='new main' %}{% else %}{% url 'staff:invoice_new_add_book_v' book_id=result.id variation='new main' %}{% endif %}"
                 class="btn btn-sm {% if result.product_type == 'craft' %}btn-outline-primary{%else%}btn-outline-success{% endif %} m-1 fs-10 text-right">
-                {{ result | truncatechars:30 }} - {{ result.publisher | truncatechars:15 }} - {{ result.size }} - {{ result.cover_type }} - {% trans 'Quantity' %} {{ result.stock}} - <span
-                  class="fw-bolder">{{ result.price | intcomma:False }}</span>
+                {{ result | truncatechars:30 }} - {{ result.publisher | truncatechars:15 }} - {{ result.size }} - {{ result.cover_type }} - {% trans 'Quantity' %} {{ result.stock}} - <span class="fw-bolder">{{ result.price | intcomma:False }}</span>
               </a>
               {% if result.has_other_prices %}
               {% if result.stock_1 %}
@@ -125,77 +124,76 @@
 
         </div>
         {% endif %}
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">{% trans 'isbn' %}</th>
-              <th scope="col">{% trans 'Image' %}</th>
-              <th scope="col">{% trans 'Name' %}</th>
-              <th scope="col">{% trans 'Publisher' %}</th>
-              <th scope="col" colspan="2">{% trans 'Update' %} <span class="fw-lighter">({% trans 'Remove' %} - {% trans 'Quantity' %} - {% trans 'Discount' %})</span></th>
-              <th scope="col">{% trans 'State' %}</th>
-              <th scope="col">{% trans 'Quantity' %}</th>
-              <th scope="col">{% trans 'Price' %}</th>
-              <th scope="col">{% trans 'Discount' %}</th>
-              <th scope="col">{% trans 'Cost' %}</th>
-              <th scope="col">{% trans 'Weight' %}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for order_line in order.lines.all %}
-            <tr>
-              <th scope="row">{{ forloop.counter }}</th>
-              <td>{{ order_line.product.isbn }}</td>
-              <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="auto" height="40px"></td>
-              <td>{{ order_line.product }}</td>
-              <td>{% if order_line.poruct.publisher %}{{ order_line.product.publisher }}{% endif %}</td>
-              <td></td>
-              <td>
-                <form action="{% url 'staff:orderline_update' order_id=order.id orderline_id=order_line.id %}" method="post">
-                  {{ update_form.remove }}
-                  {{ update_form.quantity }}
-                  {{ update_form.discount }}
-                  {% csrf_token %}
-                  <input type="submit" id="{{ order_line.id }}" name="{{ order_line.id }}" value="{% trans 'Update' %}">
-                  <label for="{{ order_line.id }}"></label>
-                </form>
-              </td>
-              <td>{{ order_line.variation }}</td>
-              <td>{{ order_line.quantity }}</td>
-              <td>{{ order_line.price | intcomma:False }}</td>
-              <td>{{ order_line.get_discount | intcomma:False }}</td>
-              <td>{{ order_line.get_cost_after_discount | intcomma:False }}</td>
-              <td>{{ order_line.get_weight }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-          <tfoot>
-            <tr>
-              <th scope="row"></th>
-              <td colspan="7">{% trans 'SUM' %}</td>
-              <td>{{ order.get_total_quantity }}</td>
-              <td>{{ order.get_total_cost | intcomma:False }}</td>
-              <td class="text-danger">{{ order.get_total_discount }}</td>
-              <td>{{ order.get_cost_after_discount | intcomma:False }}</td>
-              <td>{{ order.get_total_weight | intcomma:False }}</td>
-            </tr>
-            <tr>
-              <th scope="row"></th>
-              <td colspan="10">{% trans 'DISCOUNT' %}</td>
-              <td class="text-danger">{{ order.discount | intcomma:False }}</td>
-              <td></td>
-            </tr>
-            <tr>
-              <th scope="row"></th>
-              <td colspan="10" class="fw-bolder">{% trans 'PAYABLE' %}</td>
-              <td class="fw-bolder">{{ order.get_payable | intcomma:False }}</td>
-            </tr>
-          </tfoot>
-        </table>
-
-
-
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">{% trans 'isbn' %}</th>
+                <th scope="col">{% trans 'Image' %}</th>
+                <th scope="col">{% trans 'Name' %}</th>
+                <th scope="col">{% trans 'Publisher' %}</th>
+                <th scope="col" colspan="2">{% trans 'Update' %} <span class="fw-lighter">({% trans 'Remove' %} - {% trans 'Quantity' %} - {% trans 'Discount' %})</span></th>
+                <th scope="col">{% trans 'State' %}</th>
+                <th scope="col">{% trans 'Quantity' %}</th>
+                <th scope="col">{% trans 'Price' %}</th>
+                <th scope="col">{% trans 'Discount' %}</th>
+                <th scope="col">{% trans 'Cost' %}</th>
+                <th scope="col">{% trans 'Weight' %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order_line in order.lines.all %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ order_line.product.isbn }}</td>
+                <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="auto" height="40px"></td>
+                <td>{{ order_line.product }}</td>
+                <td>{% if order_line.poruct.publisher %}{{ order_line.product.publisher }}{% endif %}</td>
+                <td></td>
+                <td>
+                  <form action="{% url 'staff:orderline_update' order_id=order.id orderline_id=order_line.id %}" method="post">
+                    {{ update_form.remove }}
+                    {{ update_form.quantity }}
+                    {{ update_form.discount }}
+                    {% csrf_token %}
+                    <input type="submit" id="{{ order_line.id }}" name="{{ order_line.id }}" value="{% trans 'Update' %}">
+                    <label for="{{ order_line.id }}"></label>
+                  </form>
+                </td>
+                <td>{{ order_line.variation }}</td>
+                <td>{{ order_line.quantity }}</td>
+                <td>{{ order_line.price | intcomma:False }}</td>
+                <td>{{ order_line.get_discount | intcomma:False }}</td>
+                <td>{{ order_line.get_cost_after_discount | intcomma:False }}</td>
+                <td>{{ order_line.get_weight }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+            <tfoot>
+              <tr>
+                <th scope="row"></th>
+                <td colspan="7">{% trans 'SUM' %}</td>
+                <td>{{ order.get_total_quantity }}</td>
+                <td>{{ order.get_total_cost | intcomma:False }}</td>
+                <td class="text-danger">{{ order.get_total_discount }}</td>
+                <td>{{ order.get_cost_after_discount | intcomma:False }}</td>
+                <td>{{ order.get_total_weight | intcomma:False }}</td>
+              </tr>
+              <tr>
+                <th scope="row"></th>
+                <td colspan="10">{% trans 'DISCOUNT' %}</td>
+                <td class="text-danger">{{ order.discount | intcomma:False }}</td>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row"></th>
+                <td colspan="10" class="fw-bolder">{% trans 'PAYABLE' %}</td>
+                <td class="fw-bolder">{{ order.get_payable | intcomma:False }}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div> 
       </div>
       <div class="my-5">
         <a href="{% url 'staff:draft_orders' %}" class="btn btn-outline-secondary">{% trans 'Save draft' %}</a>
@@ -236,10 +234,10 @@
   }
 </script>
 <script>
-document.addEventListener("wheel", function(event){
-    if(document.activeElement.type === "number"){
-        document.activeElement.blur();
+  document.addEventListener("wheel", function(event) {
+    if (document.activeElement.type === "number") {
+      document.activeElement.blur();
     }
-});
+  });
 </script>
 {% endblock %}

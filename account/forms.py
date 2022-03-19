@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
-from .models import CustomUser, Vendor, Address
+from .models import CustomUser, Vendor, Address, Credit
 
 
 
@@ -52,9 +52,10 @@ class ClientUpdateForm(forms.ModelForm):
 	class Meta:
 		model = CustomUser
 		fields = (
-			'username', 'first_name', 'last_name', 'phone','phone_2', 'email', 
+			'username', 'first_name', 'last_name', 'phone','phone_2', 'email',
 			'social_media_name'
 		)
+
 
 class VendorAddForm(forms.ModelForm):
 	class Meta:
@@ -70,6 +71,7 @@ class VendorAddForm(forms.ModelForm):
 		widgets = {
         	'overal_discount': forms.TextInput(attrs={'placeholder': _('Percent')})
         }
+
 
 class AddressAddForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
@@ -100,3 +102,10 @@ class VendorAddressAddForm(forms.ModelForm):
         #     'name': _('Reciever'),
 		# 	'phone': _('Reciever phone'),
         # }
+
+
+class CreditUpdateForm(forms.ModelForm):
+
+	class Meta:
+		model = Credit
+		fields = ['balance']

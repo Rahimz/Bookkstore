@@ -3,6 +3,7 @@
 {% load static %}
 
 {% load humanize %}
+<div class="table-responsive">
 <table class="table table-striped">
   <thead>
     <tr>
@@ -48,8 +49,14 @@
       <th scope="row"></th>
       <td colspan="8">{% trans 'Discount' %}</td>
       <td class="text-danger">{{ order.discount | intcomma:False }}</td>
-
     </tr>
+    {% if order.credit %}
+    <tr>
+      <th scope="row"></th>
+      <td colspan="8">{% trans 'Credit' %}</td>
+      <td class="text-danger">{{ order.credit | intcomma:False }}</td>
+    </tr>
+    {% endif %}
     <tr>
       {% if order.shipping_cost %}
       <th scope="row"></th>
@@ -65,3 +72,4 @@
   </tfoot>
   </tbody>
 </table>
+</div>

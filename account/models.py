@@ -181,6 +181,7 @@ class Credit(models.Model):
     user = models.OneToOneField(
         CustomUser,
         on_delete=models.CASCADE,
+        related_name='credit'
     )
     balance = models.DecimalField(
         max_digits=10,

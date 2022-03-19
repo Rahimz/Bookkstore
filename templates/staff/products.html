@@ -15,75 +15,78 @@
 {% block content %}
 <div class="container-fluid overflow-hidden">
   <div class="row">
-      <div class="col-md-1">
-        {% include "staff/sidebar_staff.html" with barName="products" %}
-      </div>
-      <div class="col-md-11">
-    <h2>{% trans 'List of products' %}</h2>
-    <div class="my-3">
-      {% if request.user.is_superuser or request.user.is_manager %}
-      <p><a href="{% url 'tools:product_export_excel' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'All products' %} <span class="text-danger">{% trans 'Could be very slow or it may crash' %}</span></a></p>
-      <p><a href="{% url 'tools:used_noprice_export_excel' filter='used-noprice' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'Used products without price' %}</a></p>
-      <p><a href="{% url 'tools:used_all_export_excel' filter='used-all' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'All used products' %}</a></p>
-      {% endif %}
+    <div class="col-md-1">
+      {% include "staff/sidebar_staff.html" with barName="products" %}
     </div>
-    <form class="" action="." method="post">
-      <div class="row">
-
-      <div class="col-md-9">
-        {{ search_form | crispy }}
-        {% csrf_token %}
+    <div class="col-md-11">
+      <h2>{% trans 'List of products' %}</h2>
+      <div class="my-3">
+        {% if request.user.is_superuser or request.user.is_manager %}
+        <p><a href="{% url 'tools:product_export_excel' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'All products' %} <span
+              class="text-danger">{% trans 'Could be very slow or it may crash' %}</span></a></p>
+        <p><a href="{% url 'tools:used_noprice_export_excel' filter='used-noprice' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'Used products without price' %}</a></p>
+        <p><a href="{% url 'tools:used_all_export_excel' filter='used-all' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'All used products' %}</a></p>
+        {% endif %}
       </div>
+      <form class="" action="." method="post">
+        <div class="row">
 
-      <div class="col-md-3">
-        <input class="btn btn-outline-secondary form-control" type="submit" name="book" value="{% trans 'Submit' %}">
+          <div class="col-md-9">
+            {{ search_form | crispy }}
+            {% csrf_token %}
+          </div>
+
+          <div class="col-md-3">
+            <input class="btn btn-outline-secondary form-control" type="submit" name="book" value="{% trans 'Submit' %}">
+          </div>
+        </div>
+
+      </form>
+      <div class="table-responsive">
+        <table class="table table-striped table-responsive">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">{% trans 'Edit' %}</th>
+              <th scope="col">{% trans 'ISBN' %}</th>
+              <th scope="col">{% trans 'Name' %}</th>
+              <th scope="col">{% trans 'Stock' %}</th>
+              <th scope="col">{% trans 'Price' %}<span class="small"></span></th>
+              <th scope="col">{% trans 'Other stock' %}</th>
+              <th scope="col">{% trans 'Other prices' %}</th>
+              <th scope="col">{% trans 'Used' %}</th>
+              <th scope="col">{% trans 'Used stock' %}</th>
+              {#<th scope="col">{% trans 'Store position' %}</th>#}
+              <th scope="col">{% trans 'Publisher' %}</th>
+              <th scope="col">{% trans 'Price management' %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for product in products %}
+            <tr>
+              <th scope="row">{{ product.pk }}</th>
+              <td><a href="{% url 'staff:product_update' product.id %}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+              <th scope="row">{{ product.isbn }}</th>
+              <td><a href="{% url 'shop:product_detail' product.pk %}">{{ product }}</a></td>
+              <td>{{ product.stock }}</td>
+              {#<!-- we add this if statement to show ther is not any new version of this book -->#}
+              <td>{% if product.about == '*' %}{% trans 'Not in market' %}{% else %}{{ product.price | intcomma:False }}{% endif %}</td>
+              <td><a href="{% url 'staff:product_price_show' product.id %}" onclick="return popitup('/staff/products/price-show/{{ product.id }}/')" class="btn btn-sm btn-outline-secondary">{{ product.get_other_stock }}</a></td>
+              <td>{% if product.has_other_prices %}&#10004{% endif %}</td>
+              <td>{{ product.price_used | intcomma:False }}</td>
+              <td>{{ product.stock_used  }}</td>
+              {#<td>{{ product.store_positon }}</td>#}
+              <td>{% if product.publisher %}{{ product.publisher }}{% endif %}</td>
+              <td>{% if request.user.is_staff %}<a href="{% url 'staff:used_book_prices' product.id %}" class="btn btn-sm p-1 btn-danger">{% trans 'Bahman' %}</a>{% endif %}</td>
+              <td>{% if request.user.is_manager or request.user.is_online_manager %}<a href="{% url 'staff:product_stock_price_edit' product.id %}" class="btn btn-sm p-1 btn-info">{% trans 'Mahsa' %}</a>{% endif %}</td>
+
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
       </div>
-    </div>
-
-    </form>
-    <table class="table table-striped table-responsive">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">{% trans 'Edit' %}</th>
-          <th scope="col">{% trans 'ISBN' %}</th>
-          <th scope="col">{% trans 'Name' %}</th>
-          <th scope="col">{% trans 'Stock' %}</th>
-          <th scope="col">{% trans 'Price' %}<span class="small"></span></th>
-          <th scope="col">{% trans 'Other stock' %}</th>
-          <th scope="col">{% trans 'Other prices' %}</th>
-          <th scope="col">{% trans 'Used' %}</th>
-          <th scope="col">{% trans 'Used stock' %}</th>
-          {#<th scope="col">{% trans 'Store position' %}</th>#}
-          <th scope="col">{% trans 'Publisher' %}</th>
-          <th scope="col">{% trans 'Price management' %}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for product in products %}
-        <tr>
-          <th scope="row">{{ product.pk }}</th>
-          <td><a href="{% url 'staff:product_update' product.id %}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-          <th scope="row">{{ product.isbn }}</th>
-          <td><a href="{% url 'shop:product_detail' product.pk %}">{{ product }}</a></td>
-          <td>{{ product.stock }}</td>
-          {#<!-- we add this if statement to show ther is not any new version of this book -->#}
-          <td>{% if product.about == '*' %}{% trans 'Not in market' %}{% else %}{{ product.price | intcomma:False }}{% endif %}</td>
-          <td><a href="{% url 'staff:product_price_show' product.id %}" onclick="return popitup('/staff/products/price-show/{{ product.id }}/')" class="btn btn-sm btn-outline-secondary">{{ product.get_other_stock }}</a></td>
-          <td>{% if product.has_other_prices %}&#10004{% endif %}</td>
-          <td>{{ product.price_used | intcomma:False }}</td>
-          <td>{{ product.stock_used  }}</td>
-          {#<td>{{ product.store_positon }}</td>#}
-          <td>{% if product.publisher %}{{ product.publisher }}{% endif %}</td>
-          <td>{% if request.user.is_staff %}<a href="{% url 'staff:used_book_prices' product.id %}" class="btn btn-sm p-1 btn-danger">{% trans 'Bahman' %}</a>{% endif %}</td>
-          <td>{% if request.user.is_manager or request.user.is_online_manager %}<a href="{% url 'staff:product_stock_price_edit' product.id %}" class="btn btn-sm p-1 btn-info">{% trans 'Mahsa' %}</a>{% endif %}</td>
-
-        </tr>
-        {% endfor %}
-
-      </tbody>
-    </table>
-    {% include "shop/pagination.html" with page=products %}
+      {% include "shop/pagination.html" with page=products %}
     </div>
 
 

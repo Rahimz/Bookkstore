@@ -22,44 +22,45 @@
       <div>
         <h2 class="my-4">{% trans 'List of draft orders' %}</h2>
         <a href="{% url 'tools:order_export_excel' criteria='draft' %}" class="my-2"><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto"></a>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">{% trans 'Order ID' %}</th>
-              <th scope="col">{% trans 'Client' %}</th>
-              <th scope="col">{% trans 'Social name' %}</th>
-              <th scope="col">{% trans 'Quantity' %}</th>
-              <th scope="col">{% trans 'Total' %}<span class="small"> ({% trans 'Rial' %})</span></th>
-              <th scope="col">{% trans 'Discount' %}<span class="small"> ({% trans 'Rial' %})</span></th>
-              <th scope="col">{% trans 'Payable' %}<span class="small"> ({% trans 'Rial' %})</span></th>
-              <th scope="col">{% trans 'Weight' %}</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for order in draft_orders %}
-            <tr>
-              <th scope="row">{{ forloop.counter }}</th>
-              <td><a href="{% url 'staff:invoice_create' order.id %}">{{ order.id }}</a></td>
-              <td><a href="{% url 'staff:invoice_create' order.id %}">
-                {% if order.client %}
-                {{ order.client }}
-                {% else %}
-                {% trans 'Not registered' %}
-                {% endif %}</a></td>
-              <td>{% if order.client.social_media_name %}{{ order.client.social_media_name }}{% endif %}</td>
-              <td>{{ order.get_total_quantity }}</td>
-              <td>{{ order.get_total_cost | intcomma:False }}</td>
-              <td>{{ order.get_total_discounts_with_order_discount | intcomma:False }}</td>
-              <td>{{ order.get_payable | intcomma:False }}</td>
-              <td>{{ order.get_total_weight }}</td>
-              <td>{% if order.get_total_quantity == 0 %}<a href="{% url 'staff:remove_draft_order' order.id %}" class="btn btn-sm btn-outline-danger">{% trans 'Remove' %}</a>{% endif %}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">{% trans 'Order ID' %}</th>
+                <th scope="col">{% trans 'Client' %}</th>
+                <th scope="col">{% trans 'Social name' %}</th>
+                <th scope="col">{% trans 'Quantity' %}</th>
+                <th scope="col">{% trans 'Total' %}<span class="small"> ({% trans 'Rial' %})</span></th>
+                <th scope="col">{% trans 'Discount' %}<span class="small"> ({% trans 'Rial' %})</span></th>
+                <th scope="col">{% trans 'Payable' %}<span class="small"> ({% trans 'Rial' %})</span></th>
+                <th scope="col">{% trans 'Weight' %}</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in draft_orders %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td><a href="{% url 'staff:invoice_create' order.id %}">{{ order.id }}</a></td>
+                <td><a href="{% url 'staff:invoice_create' order.id %}">
+                    {% if order.client %}
+                    {{ order.client }}
+                    {% else %}
+                    {% trans 'Not registered' %}
+                    {% endif %}</a></td>
+                <td>{% if order.client.social_media_name %}{{ order.client.social_media_name }}{% endif %}</td>
+                <td>{{ order.get_total_quantity }}</td>
+                <td>{{ order.get_total_cost | intcomma:False }}</td>
+                <td>{{ order.get_total_discounts_with_order_discount | intcomma:False }}</td>
+                <td>{{ order.get_payable | intcomma:False }}</td>
+                <td>{{ order.get_total_weight }}</td>
+                <td>{% if order.get_total_quantity == 0 %}<a href="{% url 'staff:remove_draft_order' order.id %}" class="btn btn-sm btn-outline-danger">{% trans 'Remove' %}</a>{% endif %}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
 
     </div>
