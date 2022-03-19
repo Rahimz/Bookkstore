@@ -1,87 +1,73 @@
 {% load i18n %}
 {% if barName == "products" %}
-<div class="sidebar drop_shadow border border-1 rounded-2">
-  <p><a href="{% url 'staff:product_create'%}">{% trans 'Create product' %}</a></p>
-  <p><a href="{% url 'staff:products'%}">{% trans 'List of products' %}</a></p>
-  <p><a href="{% url 'staff:collection_management' %}">{% trans 'Collection managment' %}</a></p>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:product_create'%}">{% trans 'Create product' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:products'%}">{% trans 'List of products' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:collection_management' %}">{% trans 'Collection managment' %}</a>
   <br>
-  <p><a href="{% url 'shop:store_book_search' state='used' %}">{% trans 'Search in used books' %}</a></p>
-  <p><a href="{% url 'shop:store_book_search' state="new" %}">{% trans 'Search in new books' %}</a></p>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'shop:store_book_search' state='used' %}">{% trans 'Search in used books' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'shop:store_book_search' state="new" %}">{% trans 'Search in new books' %}</a>
   <br>
-  <p><a href="{% url 'staff:category_create'%}">{% trans 'Create a new category' %}</a></p>
-  <p><a href="{% url 'staff:categories' %}">{% trans 'List of categories' %}</a></p>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:category_create'%}">{% trans 'Create a new category' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:categories' %}">{% trans 'List of categories' %}</a>
   <br>
-  <p><a href="{% url 'staff:craft_list' %}">{% trans 'List of crafts' %}</a></p>
-  <p><a href="{% url 'staff:craft_create' %}">{% trans 'Create craft product' %}</a></p>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:craft_list' %}">{% trans 'List of crafts' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:craft_create' %}">{% trans 'Create craft product' %}</a>
   {% if request.user.is_superuser %}
   <br>
-  <p><a href="{% url 'tools:export_publisher' %}">{% trans 'Export publishers' %}</a></p>
-  <p><a href="{% url 'tools:used_product_before_5' %}">{% trans 'used product sold befor 5 march' %}</a></p>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'tools:export_publisher' %}">{% trans 'Export publishers' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'tools:used_product_before_5' %}">{% trans 'used product sold befor 5 march' %}</a>
   {% endif %}
-</div>
+
 {% endif %}
 
 {% if barName == "sales" %}
-<div class="sidebar drop_shadow border border-1 rounded-2">
-  <p><a href="{% url 'staff:invoice_create' %}" accesskey="a" data-bs-toggle="tooltip" data-bs-placement="left" title="alt + shift + a">{% trans 'New invoice' %}</a></p>
-  <p><a href="{% url 'staff:draft_orders' %}">{% trans 'List of draft orders' %}</a></p>
-  <p><a href="{% url 'client_add' %}/#addClient" onclick="return popitup('/account/client_add/#addClient')" class="">{% trans 'Add client' %}</a></p>
-  <p><a href="{% url 'zarinpal:payment_create' %}">{% trans 'Create a payment link' %}</a></p>
-  <p><a href="{% url 'zarinpal:payment_list' %}">{% trans 'Payment list' %}</a></p>
-  <p><a href="{% url 'staff:order_list' period='365' channel='cashier' %}">{% trans 'Cashier sales' %}</a></p>
-  <p><a href="{% url 'staff:order_list_by_country' %}">{% trans 'Sales by country' %}</a></p>
-
-</div>
+<a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:invoice_create' %}" accesskey="a" data-bs-toggle="tooltip" data-bs-placement="left" title="alt + shift + a">{% trans 'New invoice' %}</a>
+<a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:draft_orders' %}">{% trans 'List of draft orders' %}</a>
+<a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'client_add' %}/#addClient" onclick="return popitup('/account/client_add/#addClient')" class="">{% trans 'Add client' %}</a>
+<a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'zarinpal:payment_create' %}">{% trans 'Create a payment link' %}</a>
+<a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'zarinpal:payment_list' %}">{% trans 'Payment list' %}</a>
+<a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='365' channel='cashier' %}">{% trans 'Cashier sales' %}</a>
+<a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list_by_country' %}">{% trans 'Sales by country' %}</a>
 {% endif %}
 
 {% if barName == "orders" %}
-<div class="sidebar drop_shadow border border-1 rounded-2">
-  <p><a href="{% url 'staff:order_list' period='all' channel='all' %}">{% trans 'All approved orders' %}</a></p>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='all' channel='all' %}">{% trans 'All approved orders' %}</a>
   <br>
-  <p><a href="{% url 'staff:order_list' period='all' channel='mix' %}">{% trans 'Collectable orders' %}</a></p>
-  <p><a href="{% url 'staff:order_list' period='1' channel='mix' %}">{% trans 'Last day' %}</a></p>
-  <p><a href="{% url 'staff:order_list' period='7' channel='mix' %}">{% trans 'Last week' %}</a></p>
-  <p><a href="{% url 'staff:order_list' period='30' channel='mix' %}">{% trans 'Last month' %}</a></p>
-  <p><a href="{% url 'staff:order_list' period='365' channel='mix' %}">{% trans 'Last year' %}</a></p>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='all' channel='mix' %}">{% trans 'Collectable orders' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='1' channel='mix' %}">{% trans 'Last day' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='7' channel='mix' %}">{% trans 'Last week' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='30' channel='mix' %}">{% trans 'Last month' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='365' channel='mix' %}">{% trans 'Last year' %}</a>
   <br>
-  <p><a href="{% url 'staff:order_list' period='365' channel='cashier' %}">{% trans 'Cashier orders' %}</a></p>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='365' channel='cashier' %}">{% trans 'Cashier orders' %}</a>
   <br>
   {% if request.user.is_superuser or request.user.is_manager %}
-  <p><a href="{% url 'staff:full_shipped_list' %}">{% trans 'Full shipped list' %}</a></p>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:full_shipped_list' %}">{% trans 'Full shipped list' %}</a>
   {% endif %}
-</div>
 {% endif %}
 
 {% if barName == "purchase" %}
-<div class="sidebar drop_shadow border border-1 rounded-2">
-  <p><a href="{% url 'orders:purchase_create' %}">{% trans 'New purchase invoice' %}</a></p>
-  {#<p><a href="{% url 'staff:purchase_create' %}">{% trans 'New purchase invoice' %}</a></p>#}
-  <p><a href="{% url 'orders:purchase_list' %}">{% trans 'List of purchases' %}</a></p>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'orders:purchase_create' %}">{% trans 'New purchase invoice' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'orders:purchase_list' %}">{% trans 'List of purchases' %}</a>
   <br>
-  <p><a href="{% url 'staff:vendor_add' %}">{% trans 'Add vendor' %}</a></p>
-  <p><a href="{% url 'staff:vendor_list' %}">{% trans 'Vendor list' %}</a></p>
-</div>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:vendor_add' %}">{% trans 'Add vendor' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:vendor_list' %}">{% trans 'Vendor list' %}</a>
 {% endif %}
 
 {% if barName == "warehouse" %}
-<div class="sidebar drop_shadow border border-1 rounded-2">
-  <p><a href="{% url 'staff:sold_products' days=1 %}">{% trans 'Sold products' %}</a></p>
-  <p><a href="{% url 'staff:purchased_products' %}">{% trans 'Purchased products' %}</a></p>
-  <p><a href="{% url 'staff:zero_stock_list' %}">{% trans 'Zero stock' %}</a></p>
-  <p><a href="" >{% trans 'Warehouse Managment' %}</a></p>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:sold_products' days=1 %}">{% trans 'Sold products' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:purchased_products' %}">{% trans 'Purchased products' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:zero_stock_list' %}">{% trans 'Zero stock' %}</a>
+  {#<a class="btn btn-sm btn-outline-secondary d-block m-1" href="">{% trans 'Warehouse Managment' %}</a>#}
 
-  <p><a href="{% url 'staff:refund_from_client' %}" >{% trans 'Refund a product' %}</a></p>
-  <p><a href="{% url 'staff:refund_list_client' %}" >{% trans 'List of refunds' %}</a></p>
-
-</div>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:refund_from_client' %}">{% trans 'Refund a product' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:refund_list_client' %}">{% trans 'List of refunds' %}</a>
 {% endif %}
 
 {% if barName == "clients" %}
-<div class="sidebar drop_shadow border border-1 rounded-2">
-  <p><a href="{% url 'client_list' %}">{% trans 'List of clients' %}</a></p>
-  <p><a href="{% url 'client_add' %}" accesskey="c" data-bs-toggle="tooltip" data-bs-placement="left" title="alt + shift + c">{% trans 'Add client' %}</a></p>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'client_list' %}">{% trans 'List of clients' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'client_add' %}" accesskey="c" data-bs-toggle="tooltip" data-bs-placement="left" title="alt + shift + c">{% trans 'Add client' %}</a>
 
-</div>
 {% endif %}
 
 

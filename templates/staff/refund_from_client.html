@@ -13,10 +13,10 @@
 {% block content %}
 <div class="container-fluid overflow-hidden">
   <div class="row">
-      <div class="col-md-2">
+      <div class="col-md-1">
         {% include "staff/sidebar_staff.html" with barName="warehouse" %}
       </div>
-      <div class="col-md-10">
+      <div class="col-md-11">
     <h2>{% trans 'Refund product'%}</h2>
     <form class="" action="." method="post">
       {{ refund_form | crispy }}
