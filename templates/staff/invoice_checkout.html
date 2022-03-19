@@ -23,13 +23,15 @@
         <h2 class="my-4">{% trans 'Checkout' %}: {{ order.id }}</h2>
         <div class="main">
           <div class="client">
-
+          {% if not order.credit %}
             <form class="w-50" action="" method="post">
               {{ client_search_form | crispy }}
               <input class="btn btn-outline-secondary my-4" type="submit" name="client" value="{% trans 'Search client' %}">
               {% csrf_token %}
             </form>
-
+            {% else %}
+            <p class="text-danger">{% trans 'You should remove credit then you can change the client' %}</p>
+            {% endif %}
             {% if clients %}
             {% for client in clients %}
             <a href="{% url 'staff:invoice_checkout_client' order_id=order.id client_id=client.id %}" class="btn btn-outline-success m-1">{{ client.first_name }} {{ client.last_name }}- {{ client.phone }}</a>

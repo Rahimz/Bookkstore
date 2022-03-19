@@ -30,7 +30,15 @@
           </tr>
           <tr>
             <td>{% trans 'Social name' %}</td>
-            <td>{{ client.social_media_name }}</td>
+            <td>{% if client.social_media_name %}{{ client.social_media_name }}{% endif %}</td>
+          </tr>
+          <tr>
+            <td>{% trans 'Credit' %}</td>
+            {% if client.credit %}
+            <td>{{ client.credit.balance }}</td>
+            {% else %}
+            <td>0</td>
+            {% endif %}
           </tr>
           <tr>
             <td>{% trans 'Username' %}</td>
