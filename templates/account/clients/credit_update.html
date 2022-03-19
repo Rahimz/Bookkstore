@@ -24,7 +24,7 @@
       <table class="table">
         <tr class="lead">
           <td>{% trans 'Current credit' %}</td>
-          <td>{{ credit.balance | intcomma:False }}</td>
+          <td>{{ credit.balance | intcomma:False }} {% trans 'Rial' %}</td>
         </tr>
         {% if request.user.is_superuser %}
         <tr>

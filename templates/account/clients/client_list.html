@@ -66,9 +66,9 @@
                 <a href="{% url 'tools:print_address' client_id=client.id kind='shipping' %}" class="btn btn-sm btn-outline-secondary">{% trans 'Print shipping address' %}</a>
                 {% endif %}
               </td>
-              {% if request.user.is_superuser %}
+              {% if request.user.is_superuser or request.user.is_manager %}
               <td>
-                <a href="{% url 'credit_update' client.id %}" class="btn btn-sm btn-outline-secondary"><i class="fa fa-pencil" aria-hidden="true"></i></a>                
+                <a href="{% url 'credit_update' client.id %}" class="btn btn-sm btn-outline-secondary"><i class="fa fa-pencil" aria-hidden="true"></i></a>
               </td>
               {% endif %}
             </tr>

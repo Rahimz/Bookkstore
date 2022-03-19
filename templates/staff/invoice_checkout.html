@@ -47,7 +47,9 @@
               <h3 class="mb-4">{% trans 'Client name' %}</h3>
               <span class=" text-light bg-success rounded p-2 col-md-4"><b>{{ client.first_name }} {{ client.last_name }}- {{ client.phone }}</span>
               <a href="{% url 'staff:remove_client_from_order' order.id %}"  class="btn btn-sm text-light bg-danger rounded p-2">{% trans 'Remove' %} {% trans 'Client' %}</a>
-              {% if credit %}<span class=" text-success  p-2 col-md-4">{% trans 'Client credit' %}: {{ credit.balance | intcomma:False }}</span>
+              {#<!-- if client has credit and order does not usr it  --> #}
+              {% if credit and not order.credit %}
+              <span class=" text-success  p-2 col-md-4">{% trans 'Client credit' %}: {{ credit.balance | intcomma:False }}</span>
               <a href="{% url 'staff:invoice_checkout_client_credit' order_id=order.id client_id=client.id%}" class="btn btn-outline-success m-4">{% trans 'Pay with client credit' %}</a>
               {% endif %}
               <br>
@@ -69,8 +71,19 @@
                   <th scope="row"></th>
                   <td colspan="9">{% trans 'Discount' %}</td>
                   <td class="text-danger">{{ order.discount | intcomma:False }}</td>
-
                 </tr>
+                {% if order.credit %}
+                <tr>
+                  <th scope="row"></th>
+                  <td colspan="9">
+                    {% trans 'Credit' %}
+                    <a href="{% url 'staff:invoice_remove_credit' order.id %}" class="btn btn-sm btn-outline-danger mx-5">{% trans 'Remove credit' %}</a>
+                  </td>
+                  <td class="text-danger">
+                    {{ order.credit | intcomma:False }}
+                  </td>
+                </tr>
+                {% endif %}
                 <tr>
                   {% if order.shipping_cost %}
                   <th scope="row"></th>

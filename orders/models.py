@@ -245,7 +245,7 @@ class Order(models.Model):
         return sum(item.get_cost_after_discount() for item in self.lines.all())
 
     def get_payable(self):
-        return self.get_cost_after_discount() - self.discount + self.shipping_cost
+        return self.get_cost_after_discount() - self.discount + self.shipping_cost - self.credit
 
     def get_total_weight(self):
         return sum(item.get_weight() for item in self.lines.all())
