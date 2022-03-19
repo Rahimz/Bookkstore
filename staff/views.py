@@ -142,6 +142,8 @@ def products(request):
             products_object = ProductSearch(
                 object=Product, query=search_query).exclude(product_type='craft').order_by('name', 'publisher')
 
+            search_form = SearchForm()
+
     # pagination
     paginator = Paginator(products_object, 50)  # 50 posts in each page
     page = request.GET.get('page')
