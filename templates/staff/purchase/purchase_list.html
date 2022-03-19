@@ -19,37 +19,39 @@
     <div class="col-md-11">
       <h2>{% trans 'List of purchases' %}</h2>
       <div class="">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">{% trans 'Number' %}</th>
-              <th scope="col">{% trans 'Vendor' %}</th>
-              <th scope="col">{% trans 'Paper invoice number' %}</th>
-              <th scope="col">{% trans 'Craeted date' %}</th>
-              <th scope="col">{% trans 'Payment Date' %}</th>
-              <th scope="col">{% trans 'Quantity' %}</th>
-              <th scope="col">{% trans 'Payable' %}</th>
-              <th scope="col">{% trans 'Status' %}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for purchase in purchases %}
-            <tr>
-              <th scope="row">{{ forloop.counter }}</th>
-              <td>{{ purchase.id }}</td>
-              <td><a href="{% url 'orders:purchase_details' purchase_id=purchase.id  %}">{{ purchase.vendor }}</a></td>
-              <td>{% if purchase.paper_invoice_number %}{{ purchase.paper_invoice_number }}{% endif %}</td>
-              <td>{{ purchase.get_fa_created }}</td>
-              <td>{{ purchase.get_fa_payment }}</td>
-              <td>{{ purchase.quantity }}</td>
-              <td>{{ purchase.payable }}</td>
-              <td><span class="badge {% if purchase.status == 'draft' %}bg-warning{% else %}bg-success {% endif %}">{{ purchase.status }} </span></td>
-            </tr>
-            {% endfor %}
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">{% trans 'Number' %}</th>
+                <th scope="col">{% trans 'Vendor' %}</th>
+                <th scope="col">{% trans 'Paper invoice number' %}</th>
+                <th scope="col">{% trans 'Craeted date' %}</th>
+                <th scope="col">{% trans 'Payment Date' %}</th>
+                <th scope="col">{% trans 'Quantity' %}</th>
+                <th scope="col">{% trans 'Payable' %}</th>
+                <th scope="col">{% trans 'Status' %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for purchase in purchases %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ purchase.id }}</td>
+                <td><a href="{% url 'orders:purchase_details' purchase_id=purchase.id  %}">{{ purchase.vendor }}</a></td>
+                <td>{% if purchase.paper_invoice_number %}{{ purchase.paper_invoice_number }}{% endif %}</td>
+                <td>{{ purchase.get_fa_created }}</td>
+                <td>{{ purchase.get_fa_payment }}</td>
+                <td>{{ purchase.quantity }}</td>
+                <td>{{ purchase.payable }}</td>
+                <td><span class="badge {% if purchase.status == 'draft' %}bg-warning{% else %}bg-success {% endif %}">{{ purchase.status }} </span></td>
+              </tr>
+              {% endfor %}
 
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
