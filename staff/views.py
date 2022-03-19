@@ -40,7 +40,7 @@ def sales(request):
 
 
 @staff_member_required
-def orders(request, period=None, channel=None):
+def orders(request, period=None, channel=None, filter=None):
     # list of all approved or paid orders
     if channel == 'all' and period == 'all':
         orders = Order.objects.filter(
@@ -78,6 +78,10 @@ def orders(request, period=None, channel=None):
     else:
         search_form = OrderSearchForm()
 
+    # filter
+    if filter:
+        orders = orders.order_by(filter)
+
 
     # pagination
     paginator = Paginator(orders, 20) # 20 order in each page
@@ -92,6 +96,7 @@ def orders(request, period=None, channel=None):
         orders = paginator.page(paginator.num_pages)
 
 
+
     return render(
         request,
         'staff/orders.html',
@@ -99,6 +104,8 @@ def orders(request, period=None, channel=None):
             'orders': orders,
             'search_form': search_form,
             'page': page,
+            'period': period,
+            'channel': channel,
         }
     )
 
