@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.forms import PasswordResetForm
@@ -12,8 +12,8 @@ from django.utils.html import strip_tags
 from django.contrib.postgres.search import SearchVector
 from django.db import IntegrityError
 
-from .forms import LoginForm, UserRegistrationForm, UserEditForm, ClientAddForm, ClientUpdateForm, AddressAddForm
-from .models import CustomUser, Address
+from .forms import LoginForm, UserRegistrationForm, UserEditForm, ClientAddForm, ClientUpdateForm, AddressAddForm, CreditUpdateForm
+from .models import CustomUser, Address, Credit
 from search.forms import CLientSearchStaffForm
 from tools.fa_to_en_num import number_converter
 
@@ -125,6 +125,7 @@ def client_list(request):
     )
 
 
+@staff_member_required
 def client_add(request):
     form = ClientAddForm()
     # billing_address_form = AddressAddForm()
@@ -172,6 +173,7 @@ def client_add(request):
     )
 
 
+@staff_member_required
 def client_update(request, client_id):
     client = CustomUser.objects.get(pk=client_id)
     db_client = None
@@ -227,6 +229,7 @@ def client_update(request, client_id):
     )
 
 
+@staff_member_required
 def client_details(request, client_id):
     client = CustomUser.objects.get(pk=client_id)
     return render(
@@ -237,6 +240,8 @@ def client_details(request, client_id):
         }
     )
 
+
+@staff_member_required
 def client_add_address(request, client_id, kind, address_id=None):
     client = CustomUser.objects.get(pk=client_id)
     if address_id:
@@ -274,5 +279,49 @@ def client_add_address(request, client_id, kind, address_id=None):
             'address_form': address_form,
             'kind': kind,
             'client': client,
+        }
+    )
+
+
+@staff_member_required
+def credit_update(request, client_id):
+    client = get_object_or_404(CustomUser, pk=client_id)
+
+    try:
+        credit = Credit.objects.get(user=client)
+    except:
+        credit = None
+    if credit:
+        credit_form = CreditUpdateForm(instance=credit)
+        credit_records = credit.history.all()
+    else:
+        credit_form = CreditUpdateForm()
+        credit_records = None
+
+    if request.method == 'POST':
+        credit_form = CreditUpdateForm(request.POST)
+        if credit_form.is_valid():
+            new_balance = credit_form.save(commit=False)
+            if not credit:
+                new_credit = Credit.objects.create(
+                    user=client,
+                    balance= new_balance.balance
+                )
+            else:
+                credit.user = client
+                credit.balance = new_balance.balance
+                credit.save()
+            # credit_form.save()
+            messages.success(request, _('Credit updated'))
+            return redirect('client_list')
+
+    return render(
+        request,
+        'account/clients/credit_update.html',
+        {
+            'client': client,
+            'credit': credit,
+            'credit_form': credit_form,
+            'credit_records': credit_records,
         }
     )

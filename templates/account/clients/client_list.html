@@ -28,45 +28,56 @@
           </div>
         </div>
       </form>
-
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">{% trans 'Edit' %}</th>
-            <th scope="col">{% trans 'Name' %}</th>
-            <th scope="col">{% trans 'Phone' %}</th>
-            <th scope="col">{% trans 'Social name' %}</th>
-            <th scope="col">{% trans 'Client code' %}</th>
-            <th scope="col">{% trans 'Username' %}</th>
-          </tr>
-        </thead>
-        <tbody id="clientTable">
-          {% for client in clients %}
-          <tr>
-            <th scope="row">{{ forloop.counter }}</th>
-            <td><a href="{% url 'client_update' client.id %}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-            <td><a href="{% url 'client_details' client.id %}">{{ client }}</a></td>
-            <td>{{ client.phone }}</td>
-            <td>{% if client.social_media_name %}{{ client.social_media_name }}{% endif %}</td>
-            <td>{{ client.id }}</td>
-            <td>{{ client.username }}</td>
-            <td>
-              {%if client.default_billing_address %}
-              <a href="{% url 'tools:print_address' client_id=client.id kind='billing' %}" class="btn btn-sm btn-outline-secondary">{% trans 'Print billing address' %}</a>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">{% trans 'Edit' %}</th>
+              <th scope="col">{% trans 'Name' %}</th>
+              <th scope="col">{% trans 'Phone' %}</th>
+              <th scope="col">{% trans 'Social name' %}</th>
+              <th scope="col">{% trans 'Client code' %}</th>
+              <th scope="col">{% trans 'Username' %}</th>
+              <th scope="col" colspan="2">{% trans 'Address' %}</th>
+              {% if request.user.is_superuser %}
+              <th scope="col">{% trans 'Credit' %}</th>
               {% endif %}
-            </td>
+            </tr>
+          </thead>
+          <tbody id="clientTable">
+            {% for client in clients %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td><a href="{% url 'client_update' client.id %}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+              <td><a href="{% url 'client_details' client.id %}">{{ client }}</a></td>
+              <td>{{ client.phone }}</td>
+              <td>{% if client.social_media_name %}{{ client.social_media_name }}{% endif %}</td>
+              <td>{{ client.id }}</td>
+              <td>{{ client.username }}</td>
+              <td>
+                {%if client.default_billing_address %}
+                <a href="{% url 'tools:print_address' client_id=client.id kind='billing' %}" class="btn btn-sm btn-outline-secondary">{% trans 'Print billing address' %}</a>
+                {% endif %}
+              </td>
 
-            <td>
-              {%if client.default_shipping_address %}
-              <a href="{% url 'tools:print_address' client_id=client.id kind='shipping' %}" class="btn btn-sm btn-outline-secondary">{% trans 'Print shipping address' %}</a>
+              <td>
+                {%if client.default_shipping_address %}
+                <a href="{% url 'tools:print_address' client_id=client.id kind='shipping' %}" class="btn btn-sm btn-outline-secondary">{% trans 'Print shipping address' %}</a>
+                {% endif %}
+              </td>
+              {% if request.user.is_superuser %}
+              <td>
+                <a href="{% url 'credit_update' client.id %}" class="btn btn-sm btn-outline-secondary">{% trans 'Credit update' %}</a>                
+              </td>
               {% endif %}
-            </td>
-          </tr>
-          {% endfor %}
+            </tr>
+            {% endfor %}
 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
+
       {% include "shop/pagination.html" with page=clients %}
     </div>
 

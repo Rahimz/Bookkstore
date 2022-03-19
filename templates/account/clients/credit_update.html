@@ -1,0 +1,62 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% load humanize %}
+
+{% block title %}{% trans 'Manage credit' %}{% endblock %}
+
+{% block clients-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-2 col-lg-1">
+      {% include "staff/sidebar_staff.html" with barName="clients" %}
+    </div>
+    <div class="col-md-5 col-sm-12">
+      <h2 id="addClient">{% trans 'Manage credit for' %}: {{ client.get_full_name}}</h2>
+      {% if credit %}
+      <table class="table">
+        <tr class="lead">
+          <td>{% trans 'Current credit' %}</td>
+          <td>{{ credit.balance | intcomma:False }}</td>
+        </tr>
+        {% if request.user.is_superuser %}
+        <tr>
+          <td colspan="3">{% trans 'History of blanace changes' %}</td>
+        </tr>
+        {% for item in credit_records %}
+        <tr>
+          <td></td>
+          <td>
+            {{ item.balance | intcomma:False }}
+          </td>
+          <td>
+            {{ item.history_date.date }}
+          </td>
+        </tr>
+
+        {% endfor %}
+        {% endif %}
+      </table>
+      {% endif %}
+      <form class="" action="" method="post">
+        {{ credit_form | crispy }}
+
+        {% csrf_token %}
+        <input type="submit" name="" value="{% trans 'Submit' %}" class="btn btn-outline-secondary my-1">
+
+      </form>
+
+    </div>
+
+
+  </div>
+
+</div>
+{% endblock %}
