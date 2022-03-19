@@ -68,7 +68,7 @@
               </td>
               {% if request.user.is_superuser %}
               <td>
-                <a href="{% url 'credit_update' client.id %}" class="btn btn-sm btn-outline-secondary">{% trans 'Credit update' %}</a>                
+                <a href="{% url 'credit_update' client.id %}" class="btn btn-sm btn-outline-secondary"><i class="fa fa-pencil" aria-hidden="true"></i></a>                
               </td>
               {% endif %}
             </tr>
