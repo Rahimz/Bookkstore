@@ -865,6 +865,15 @@ def invoice_create_add_client(request, order_id, client_id=None):
 
 
 @staff_member_required
+def remove_client_from_order(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+    order.client = None
+    order.save()
+    messages.success(request, _('Client removed from order'))
+    return redirect('staff:invoice_checkout', order.id)
+
+
+@staff_member_required
 def orderline_update(request, order_id, orderline_id):
     update_form = InvoiceAddForm(initial={'quantity': "0"})
     order = get_object_or_404(Order, pk=order_id)
