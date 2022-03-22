@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-19 17:46+0330\n"
-"PO-Revision-Date: 2022-03-19 17:49+0330\n"
+"POT-Creation-Date: 2022-03-22 15:22+0430\n"
+"PO-Revision-Date: 2022-03-22 15:23+0430\n"
 "Last-Translator: رحیم  <rahim.aghareb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -42,7 +42,7 @@ msgstr "پسوردها یکسان نیستند"
 #: templates/staff/purchase_create.html:25
 #: templates/staff/purchase_create.html:83
 #: templates/staff/purchased_products.html:25
-#: templates/staff/sold_products.html:72
+#: templates/staff/sold_products.html:106
 #: templates/staff/zero_stock_list.html:25
 msgid "Name"
 msgstr "نام"
@@ -104,7 +104,7 @@ msgstr "ارسال"
 msgid "Vendor"
 msgstr "تامین‌کننده"
 
-#: account/models.py:168 templates/staff/sold_products.html:74
+#: account/models.py:168 templates/staff/sold_products.html:108
 msgid "Vendors"
 msgstr "تامین‌کنندگان"
 
@@ -139,7 +139,6 @@ msgid "Address added to client details"
 msgstr "آدرس به اطلاعات حساب مشتری اضافه شد"
 
 #: account/views.py:315
-#| msgid "Product updated"
 msgid "Credit updated"
 msgstr "اعتبار به‌روزرسانی شد"
 
@@ -178,7 +177,7 @@ msgstr "روش ارسال"
 
 #: orders/forms.py:35 templates/staff/_order_table.html:63
 #: templates/staff/full_shipped_list.html:42
-#: templates/staff/invoice_checkout.html:90
+#: templates/staff/invoice_checkout.html:92
 #: templates/staff/order_shipping.html:123
 #: templates/tools/pdf/invoice_pdf.html:84
 #: templates/tools/pdf/invoice_pdf_a4.html:76
@@ -212,7 +211,7 @@ msgstr "درصد تخفیف کلی"
 #: orders/forms.py:75 products/models.py:65 products/models.py:430
 #: templates/_base.html:72 templates/_base_files_app.html:42
 #: templates/shop/store_book_search.html:40
-#: templates/staff/sold_products.html:101
+#: templates/staff/sold_products.html:135
 #: templates/warehouses/product_workflow.html:28
 #: templates/warehouses/product_workflow.html:34
 msgid "New"
@@ -221,7 +220,7 @@ msgstr "نو"
 #: orders/forms.py:76 products/models.py:66 products/models.py:431
 #: templates/_base.html:75 templates/_base_files_app.html:45
 #: templates/shop/store_book_search.html:51 templates/staff/products.html:57
-#: templates/staff/sold_products.html:99
+#: templates/staff/sold_products.html:133
 #: templates/tools/pdf/invoice_pdf.html:100
 #: templates/tools/pdf/print_invoice.html:100
 #: templates/warehouses/product_workflow.html:28
@@ -233,11 +232,11 @@ msgstr "دست دوم"
 msgid "Purchase price"
 msgstr "قیمت خرید "
 
-#: orders/models.py:22 templates/orders/reports/sales_by_days.html:66
+#: orders/models.py:22 templates/orders/reports/sales_by_days.html:99
 msgid "Draft"
 msgstr "پیش‌نویس"
 
-#: orders/models.py:23 templates/orders/reports/sales_by_days.html:89
+#: orders/models.py:23 templates/orders/reports/sales_by_days.html:122
 #: templates/staff/order_detail_for_admin.html:56
 #: templates/staff/order_list_by_country.html:35
 #: templates/staff/order_payment_manage.html:50
@@ -246,7 +245,7 @@ msgstr "پیش‌نویس"
 msgid "Paid"
 msgstr "پرداخت شده"
 
-#: orders/models.py:24 templates/orders/reports/sales_by_days.html:64
+#: orders/models.py:24 templates/orders/reports/sales_by_days.html:97
 msgid "Approved"
 msgstr "تأیید شده"
 
@@ -351,13 +350,13 @@ msgstr "وضعیت خرید  پیش‌نویس است"
 msgid "Purchase status changed to draft"
 msgstr "وضعیت خرید به پیش‌نویس بازگشت"
 
-#: products/models.py:77 templates/orders/reports/sales_by_days.html:159
+#: products/models.py:77 templates/orders/reports/sales_by_days.html:192
 #: templates/shop/store_book_search.html:40
 #: templates/shop/store_book_search.html:51
 msgid "Book"
 msgstr "کتاب"
 
-#: products/models.py:78 templates/orders/reports/sales_by_days.html:161
+#: products/models.py:78 templates/orders/reports/sales_by_days.html:194
 msgid "Craft"
 msgstr "صنایع دستی"
 
@@ -367,7 +366,7 @@ msgstr "نام، نویسنده، مترجم، ناشر یا شابک"
 
 #: search/forms.py:21 templates/staff/draft_orders.html:31
 #: templates/staff/full_shipped_list.html:31
-#: templates/staff/invoice_checkout.html:49
+#: templates/staff/invoice_checkout.html:51
 #: templates/staff/invoice_create.html:25
 #: templates/staff/order_detail_for_admin.html:40
 #: templates/staff/order_list_by_country.html:30
@@ -391,7 +390,7 @@ msgstr "نام یا شماره تلفن"
 #: search/forms.py:34 staff/forms.py:27 templates/shop/product_detail.html:89
 #: templates/staff/collection_management.html:43
 #: templates/staff/product_stock_price_edit.html:30
-#: templates/staff/products.html:51 templates/staff/sold_products.html:70
+#: templates/staff/products.html:51 templates/staff/sold_products.html:104
 #: templates/staff/used_book_prices.html:26
 #: templates/tools/pdf/invoice_pdf_a4.html:43
 msgid "ISBN"
@@ -486,7 +485,7 @@ msgstr "تعداد صفحه"
 #: templates/staff/product_stock_price_edit.html:34
 #: templates/staff/products.html:60
 #: templates/staff/purchase/_purchase_list_block.html:14
-#: templates/staff/sold_products.html:73
+#: templates/staff/sold_products.html:107
 #: templates/staff/used_book_prices.html:30
 msgid "Publisher"
 msgstr "ناشر"
@@ -512,15 +511,15 @@ msgid "Admin note"
 msgstr "یادداشت مدیر"
 
 #: staff/forms.py:63 staff/views.py:1065 templates/cart/detail.html:17
-#: templates/orders/reports/sales_by_days.html:65
-#: templates/orders/reports/sales_by_days.html:67
-#: templates/orders/reports/sales_by_days.html:69
-#: templates/orders/reports/sales_by_days.html:90
-#: templates/orders/reports/sales_by_days.html:92
-#: templates/orders/reports/sales_by_days.html:94
-#: templates/orders/reports/sales_by_days.html:158
-#: templates/orders/reports/sales_by_days.html:160
-#: templates/orders/reports/sales_by_days.html:162
+#: templates/orders/reports/sales_by_days.html:98
+#: templates/orders/reports/sales_by_days.html:100
+#: templates/orders/reports/sales_by_days.html:102
+#: templates/orders/reports/sales_by_days.html:123
+#: templates/orders/reports/sales_by_days.html:125
+#: templates/orders/reports/sales_by_days.html:127
+#: templates/orders/reports/sales_by_days.html:191
+#: templates/orders/reports/sales_by_days.html:193
+#: templates/orders/reports/sales_by_days.html:195
 #: templates/staff/_order_table.html:16 templates/staff/draft_orders.html:33
 #: templates/staff/full_shipped_list.html:33
 #: templates/staff/invoice_create.html:71
@@ -535,7 +534,7 @@ msgstr "یادداشت مدیر"
 #: templates/staff/purchase_create.html:85
 #: templates/staff/purchase_create.html:87
 #: templates/staff/purchased_products.html:26
-#: templates/staff/sold_products.html:75
+#: templates/staff/sold_products.html:109
 #: templates/staff/zero_stock_list.html:26
 #: templates/tools/pdf/invoice_pdf.html:52
 #: templates/tools/pdf/invoice_pdf_a4.html:45
@@ -669,7 +668,6 @@ msgid "Order paid with credit"
 msgstr "سفارش با اعتبار مشتری پرداخت شد"
 
 #: staff/views.py:842 staff/views.py:908
-#| msgid "Credit added to client balance"
 msgid "Credit remove from order and added to client credit"
 msgstr "اعتبار از سفارش حذف شد و به حساب مشتری اضافه شد"
 
@@ -678,7 +676,6 @@ msgid "Client added to order"
 msgstr "مشتری به سفارش اضافه شد"
 
 #: staff/views.py:912
-#| msgid "Client added to order"
 msgid "Client removed from order"
 msgstr "مشتری از سفارش حذف شد"
 
@@ -825,7 +822,7 @@ msgid "items in cart"
 msgstr "موارد موجود در سبدخرید"
 
 #: templates/_base.html:153 templates/_base_files_app.html:123
-#: templates/orders/reports/sales_by_days.html:59 templates/staff/sales.html:7
+#: templates/orders/reports/sales_by_days.html:92 templates/staff/sales.html:7
 #: templates/warehouses/product_workflow.html:21
 msgid "Sales"
 msgstr "فروش‌ها"
@@ -924,7 +921,7 @@ msgstr "شماره ۷"
 #: templates/_base.html:196 templates/_base_files_app.html:162
 #: templates/_base_payment.html:93 templates/_temp_base.html:70
 #: templates/account/clients/client_add_address.html:33
-#: templates/account/clients/client_details.html:40
+#: templates/account/clients/client_details.html:48
 #: templates/account/clients/client_list.html:38
 #: templates/staff/purchase_create.html:25
 #: templates/tools/pdf/invoice_pdf.html:26
@@ -961,7 +958,7 @@ msgstr "اطلاعات دیتابیس با اطلاعات فروشگاه هما�
 
 #: templates/account/clients/client_add.html:9
 #: templates/account/clients/client_add.html:20
-#: templates/staff/invoice_checkout.html:41
+#: templates/staff/invoice_checkout.html:43
 #: templates/staff/order_add_client.html:40
 #: templates/staff/sidebar_staff.html:26 templates/staff/sidebar_staff.html:69
 msgid "Add client"
@@ -976,7 +973,7 @@ msgstr "اضافه کردن مشتری"
 #: templates/staff/category_create.html:26
 #: templates/staff/collection_management.html:32
 #: templates/staff/crafts/craft_update.html:30
-#: templates/staff/invoice_checkout.html:115
+#: templates/staff/invoice_checkout.html:117
 #: templates/staff/invoice_create.html:57
 #: templates/staff/invoice_create.html:201
 #: templates/staff/order_add_client.html:68
@@ -1032,15 +1029,22 @@ msgid "Social name"
 msgstr "نام رسانه‌ای"
 
 #: templates/account/clients/client_details.html:36
+#: templates/account/clients/client_list.html:44
+#: templates/staff/_order_table.html:56
+#: templates/staff/invoice_checkout.html:81
+msgid "Credit"
+msgstr "اعتبار"
+
+#: templates/account/clients/client_details.html:44
 #: templates/account/clients/client_list.html:41
 msgid "Username"
 msgstr "نام کاربری"
 
-#: templates/account/clients/client_details.html:44
+#: templates/account/clients/client_details.html:52
 msgid "Email"
 msgstr "ایمیل"
 
-#: templates/account/clients/client_details.html:48
+#: templates/account/clients/client_details.html:56
 #: templates/staff/order_detail_for_admin.html:72
 #: templates/staff/order_payment_manage.html:58
 #: templates/staff/order_shipped.html:66
@@ -1048,17 +1052,17 @@ msgstr "ایمیل"
 msgid "Billing address"
 msgstr "آدرس خرید"
 
-#: templates/account/clients/client_details.html:55
-#: templates/account/clients/client_details.html:69
+#: templates/account/clients/client_details.html:63
+#: templates/account/clients/client_details.html:77
 msgid "Edit address"
 msgstr "اصلاح آدرس"
 
-#: templates/account/clients/client_details.html:57
-#: templates/account/clients/client_details.html:71
+#: templates/account/clients/client_details.html:65
+#: templates/account/clients/client_details.html:79
 msgid "Add address"
 msgstr "افزودن آدرس"
 
-#: templates/account/clients/client_details.html:62
+#: templates/account/clients/client_details.html:70
 #: templates/staff/order_detail_for_admin.html:76
 #: templates/staff/order_payment_manage.html:62
 #: templates/staff/order_shipped.html:70
@@ -1083,13 +1087,6 @@ msgstr "اصلاح"
 msgid "Client code"
 msgstr "کد مشتری"
 
-#: templates/account/clients/client_list.html:44
-#: templates/staff/_order_table.html:56
-#: templates/staff/invoice_checkout.html:79
-#| msgid "Client credit"
-msgid "Credit"
-msgstr "اعتبار"
-
 #: templates/account/clients/client_list.html:60
 msgid "Print billing address"
 msgstr "چاپ آدرس خرید"
@@ -1099,7 +1096,6 @@ msgid "Print shipping address"
 msgstr "چاپ آدرس ارسال"
 
 #: templates/account/clients/credit_update.html:11
-#| msgid "Client credit"
 msgid "Manage credit"
 msgstr "مدیریت اعتبار "
 
@@ -1108,19 +1104,18 @@ msgid "Manage credit for"
 msgstr "مدیریت اعتبار برای"
 
 #: templates/account/clients/credit_update.html:26
-#| msgid "Client credit"
 msgid "Current credit"
 msgstr "اعتبار فعلی"
 
 #: templates/account/clients/credit_update.html:27
-#: templates/orders/reports/sales_by_days.html:117
-#: templates/orders/reports/sales_by_days.html:124
-#: templates/orders/reports/sales_by_days.html:129
-#: templates/orders/reports/sales_by_days.html:139
-#: templates/orders/reports/sales_by_days.html:144
-#: templates/orders/reports/sales_by_days.html:182
-#: templates/orders/reports/sales_by_days.html:189
-#: templates/orders/reports/sales_by_days.html:194
+#: templates/orders/reports/sales_by_days.html:150
+#: templates/orders/reports/sales_by_days.html:157
+#: templates/orders/reports/sales_by_days.html:162
+#: templates/orders/reports/sales_by_days.html:172
+#: templates/orders/reports/sales_by_days.html:177
+#: templates/orders/reports/sales_by_days.html:215
+#: templates/orders/reports/sales_by_days.html:222
+#: templates/orders/reports/sales_by_days.html:227
 #: templates/shop/product_card.html:18 templates/shop/product_detail.html:33
 #: templates/shop/product_detail.html:123
 #: templates/shop/store_book_search.html:45
@@ -1192,7 +1187,7 @@ msgstr "اصلاح حساب کاربری"
 msgid "You can edit your account using the following form:"
 msgstr "از طریق فرم زیر حساب کاربری خود را ویرایش کنید:"
 
-#: templates/account/edit.html:21 templates/staff/invoice_checkout.html:114
+#: templates/account/edit.html:21 templates/staff/invoice_checkout.html:116
 msgid "Save changes"
 msgstr "ذخیره تغییرات"
 
@@ -1246,7 +1241,7 @@ msgstr "محصول"
 #: templates/cart/detail.html:18 templates/cart/detail.html:44
 #: templates/staff/collection_management_edit.html:32
 #: templates/staff/draft_orders.html:58
-#: templates/staff/invoice_checkout.html:49
+#: templates/staff/invoice_checkout.html:51
 #: templates/staff/invoice_create.html:136
 #: templates/staff/price_management.html:33
 #: templates/staff/price_management.html:42
@@ -1368,65 +1363,70 @@ msgid "Into payment port"
 msgstr "انتقال به درگاه پرداخت"
 
 #: templates/orders/reports/sales_by_days.html:25
-#: templates/staff/sold_products.html:35
+#: templates/staff/sold_products.html:69
 msgid "Esfand"
 msgstr "اسفند"
 
-#: templates/orders/reports/sales_by_days.html:68
-#: templates/orders/reports/sales_by_days.html:93
-#: templates/orders/reports/sales_by_days.html:157
+#: templates/orders/reports/sales_by_days.html:57
+#: templates/staff/sold_products.html:35
+msgid "Farvardin"
+msgstr "فروردین"
+
+#: templates/orders/reports/sales_by_days.html:101
+#: templates/orders/reports/sales_by_days.html:126
+#: templates/orders/reports/sales_by_days.html:190
 msgid "All in day"
 msgstr "کل در روز"
 
-#: templates/orders/reports/sales_by_days.html:91
+#: templates/orders/reports/sales_by_days.html:124
 msgid "Un-Paid"
 msgstr "پرداخت نشده"
 
-#: templates/orders/reports/sales_by_days.html:116
+#: templates/orders/reports/sales_by_days.html:149
 msgid "All sales"
 msgstr "کل فروش‌ها"
 
-#: templates/orders/reports/sales_by_days.html:123
+#: templates/orders/reports/sales_by_days.html:156
 msgid "Approved sales"
 msgstr "سفارش تایید شده"
 
-#: templates/orders/reports/sales_by_days.html:128
+#: templates/orders/reports/sales_by_days.html:161
 msgid "Draft sales"
 msgstr "سفارش پیش‌نویس"
 
-#: templates/orders/reports/sales_by_days.html:138
+#: templates/orders/reports/sales_by_days.html:171
 msgid "Paid sales"
 msgstr "فروش‌های پرداخت شده"
 
-#: templates/orders/reports/sales_by_days.html:143
+#: templates/orders/reports/sales_by_days.html:176
 msgid "Un-Paid sales"
 msgstr "فروش‌های پرداخت نشده"
 
-#: templates/orders/reports/sales_by_days.html:152
+#: templates/orders/reports/sales_by_days.html:185
 msgid "Sales by product type"
 msgstr "فروش بر اساس نوع محصول"
 
-#: templates/orders/reports/sales_by_days.html:188
+#: templates/orders/reports/sales_by_days.html:221
 msgid "Book sales"
 msgstr "فروش  کتاب"
 
-#: templates/orders/reports/sales_by_days.html:193
+#: templates/orders/reports/sales_by_days.html:226
 msgid "Craft sales"
 msgstr "فروش صنایع دستی"
 
-#: templates/orders/reports/sales_by_days.html:202
+#: templates/orders/reports/sales_by_days.html:235
 msgid "Payment report Zarinpal"
 msgstr "گزارش پرداخت زرین پال"
 
-#: templates/orders/reports/sales_by_days.html:206
+#: templates/orders/reports/sales_by_days.html:239
 msgid "paid"
 msgstr "پرداخت شده"
 
-#: templates/orders/reports/sales_by_days.html:212
+#: templates/orders/reports/sales_by_days.html:245
 msgid "pended"
 msgstr "پرداخت نشده"
 
-#: templates/orders/reports/sales_by_days.html:218
+#: templates/orders/reports/sales_by_days.html:251
 msgid "All payment:"
 msgstr "تمام پرداخت‌ها "
 
@@ -1723,7 +1723,7 @@ msgstr "شابک"
 
 #: templates/staff/_order_table.html:18 templates/staff/_order_table.html:50
 #: templates/staff/draft_orders.html:35
-#: templates/staff/invoice_checkout.html:72
+#: templates/staff/invoice_checkout.html:74
 #: templates/staff/invoice_create.html:136
 #: templates/staff/invoice_create.html:140
 #: templates/staff/order_shipping.html:77
@@ -1750,14 +1750,14 @@ msgstr "هزینه"
 
 #: templates/staff/_order_table.html:42
 #: templates/staff/full_shipped_list.html:68
-#: templates/staff/invoice_checkout.html:65
+#: templates/staff/invoice_checkout.html:67
 #: templates/staff/order_shipping.html:109
 #: templates/staff/purchase/_purchase_list_block.html:48
 msgid "Sum"
 msgstr "جمع"
 
 #: templates/staff/_order_table.html:69 templates/staff/draft_orders.html:36
-#: templates/staff/invoice_checkout.html:96
+#: templates/staff/invoice_checkout.html:98
 #: templates/staff/order_shipping.html:129
 #: templates/staff/purchase/_purchase_list_block.html:70
 #: templates/staff/purchase/purchase_list.html:33
@@ -1887,42 +1887,45 @@ msgstr "جمع با تخفیف"
 msgid "Search client"
 msgstr "جستجو مشتری"
 
-#: templates/staff/invoice_checkout.html:47
+#: templates/staff/invoice_checkout.html:33
+msgid "You should remove credit then you can change the client"
+msgstr ""
+
+#: templates/staff/invoice_checkout.html:49
 #: templates/staff/order_add_client.html:46
 #: templates/zarinpal/payment_list.html:32
 msgid "Client name"
 msgstr "نام مشتری"
 
-#: templates/staff/invoice_checkout.html:52
+#: templates/staff/invoice_checkout.html:54
 msgid "Client credit"
 msgstr "اعتبار مشتری"
 
-#: templates/staff/invoice_checkout.html:53
+#: templates/staff/invoice_checkout.html:55
 msgid "Pay with client credit"
 msgstr "پرداخت با اعتبار مشتری"
 
-#: templates/staff/invoice_checkout.html:61
+#: templates/staff/invoice_checkout.html:63
 msgid "Invoice informations"
 msgstr "اطلاعات فاکتور"
 
-#: templates/staff/invoice_checkout.html:80
-#| msgid "Remove"
+#: templates/staff/invoice_checkout.html:82
 msgid "Remove credit"
 msgstr "حذف اعتبار"
 
-#: templates/staff/invoice_checkout.html:118
+#: templates/staff/invoice_checkout.html:120
 msgid "Save the changes before making payment link"
 msgstr "قبل از ساخت لینک پرداخت تغییرات را ذخیره کنید"
 
-#: templates/staff/invoice_checkout.html:120
 #: templates/staff/invoice_checkout.html:122
+#: templates/staff/invoice_checkout.html:124
 #: templates/staff/invoice_create.html:211
 #: templates/staff/invoice_create.html:213
 #: templates/staff/order_detail_for_admin.html:22
 msgid "Payment link"
 msgstr "لینک پرداخت"
 
-#: templates/staff/invoice_checkout.html:123
+#: templates/staff/invoice_checkout.html:125
 #: templates/staff/invoice_create.html:214
 msgid ""
 "For making payment link, you should first add a book to invoice and add a "
@@ -1931,7 +1934,7 @@ msgstr ""
 "برای ساخت لینک پرداخت باید ابتدا یک محصول به فاکتور اضافه کنید و در ضمن "
 "مشتری فاکتور را هم مشخص کنید "
 
-#: templates/staff/invoice_checkout.html:139
+#: templates/staff/invoice_checkout.html:141
 #: templates/staff/invoice_create.html:109
 #: templates/staff/order_add_client.html:60
 #: templates/staff/order_detail_for_admin.html:97
@@ -2370,7 +2373,7 @@ msgid "Payment Date"
 msgstr "تاریخ پرداخت‌"
 
 #: templates/staff/purchase/purchase_list.html:34
-#: templates/staff/sold_products.html:76
+#: templates/staff/sold_products.html:110
 msgid "Status"
 msgstr "وضعیت"
 
@@ -2526,20 +2529,20 @@ msgstr "لیست مرجوعی‌ها "
 msgid "List of clients"
 msgstr "لیست مشتریان"
 
-#: templates/staff/sold_products.html:69
+#: templates/staff/sold_products.html:103
 #: templates/tools/pdf/invoice_pdf_a4.html:41
 msgid "Product ID"
 msgstr "کد محصول"
 
-#: templates/staff/sold_products.html:71
+#: templates/staff/sold_products.html:105
 msgid "Flow"
 msgstr "گردش"
 
-#: templates/staff/sold_products.html:77
+#: templates/staff/sold_products.html:111
 msgid "Date"
 msgstr "تاریخ"
 
-#: templates/staff/sold_products.html:78
+#: templates/staff/sold_products.html:112
 msgid "Quantity in stock"
 msgstr "تعداد در انبار"
 
