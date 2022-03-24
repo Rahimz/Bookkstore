@@ -25,6 +25,9 @@ urlpatterns = [
     path('sales/countries/', views.order_list_by_country, name='order_list_by_country'),
     path('sales/countries/<str:country_code>/', views.order_list_by_country, name='order_list_by_country'),
 
+    path('sales/vendor/', views.sales_by_vendor, name='sales_by_vendor'),
+    path('sales/vendor/<int:vendor_id>/', views.sales_by_vendor, name='sales_by_vendor'),
+
 
     path('invoice/create/', views.invoice_create, name='invoice_create'),
     path('invoice/create/<int:order_id>/', views.invoice_create, name='invoice_create'),

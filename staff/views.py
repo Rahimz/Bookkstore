@@ -906,7 +906,7 @@ def remove_client_from_order(request, order_id):
         order.save()
         client.credit.save()
         messages.success(request, _('Credit remove from order and added to client credit'))
-    
+
     order.client = None
     order.save()
     messages.success(request, _('Client removed from order'))
@@ -1774,5 +1774,74 @@ def full_shipped_list(request, date=None):
             'orders': orders,
             'date': date,
             'shipping_cost_sum': shipping_cost_sum,
+        }
+    )
+
+
+@staff_member_required
+def sales_by_vendor(request, vendor_id=None):
+    vendor = None
+    orderlines = None
+    more_vendor = False
+    # purchaselines = None
+    results = {}
+    # results_p = {}
+    product_counts = 0
+    # product_counts_p = 0
+    vendors = Vendor.objects.all()
+    if vendor_id:
+        vendor = get_object_or_404(Vendor, pk=vendor_id)
+        orderlines = OrderLine.objects.filter(product__vendors=vendor)
+        orderlines_list = orderlines.values_list('product__id', flat=True)
+        # purchaselines = PurchaseLine.objects.filter(purchase__vendor=vendor)
+
+    # if purchaselines:
+    #     product_counts_p = purchaselines.aggregate(total=Sum('quantity'))
+    #     for line in purchaselines.iterator():
+    #         if line.product.pk not in results_p:
+    #             results_p[line.product.pk] = {
+    #                 'name': line.product.name,
+    #                 'quantity': line.quantity,
+    #                 'price': [line.price],
+    #                 'cost': line.get_cost_after_discount()
+    #             }
+    #         else:
+    #             results_p[line.product.pk]['quantity'] += line.quantity
+    #             results_p[line.product.pk]['cost'] += line.get_cost_after_discount()
+    #             if line.price not in results_p[line.product.pk]['price']:
+    #                 results_p[line.product.pk]['price'].append(line.price)
+    if orderlines:
+        product_counts = orderlines.aggregate(total=Sum('quantity'))
+        for line in orderlines.iterator():
+            if line.product.vendors.count()> 1:
+                more_vendor = True
+            if line.product.pk not in results:
+                results[line.product.pk] = {
+                    'name': line.product.name,
+                    'quantity': line.quantity,
+                    'price': [line.price],
+                    'cost': line.get_cost_after_discount(),
+                    'vendors': line.product.vendors.all()
+                    # 'more_vendor': more_vendor
+                }
+            else:
+                results[line.product.pk]['quantity'] += line.quantity
+                results[line.product.pk]['cost'] += line.get_cost_after_discount()
+                if line.price not in results[line.product.pk]['price']:
+                    results[line.product.pk]['price'].append(line.price)
+            results[line.product.pk]['more_vendor'] = more_vendor
+    return render(
+        request,
+        'staff/sales_by_vendor.html',
+        {
+            'products': products,
+            'vendor': vendor,
+            'vendors': vendors,
+            'orderlines': orderlines,
+            'results': results,
+            'product_counts': product_counts,
+            # 'purchaselines': purchaselines,
+            # 'results_p': results_p,
+            # 'product_counts_p': product_counts_p,
         }
     )
