@@ -1,0 +1,102 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% block title %}{% trans 'Sales by vendor' %}{% endblock %}
+
+{% block slaes-btn %}btn btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-1">
+      {% include "staff/sidebar_staff.html" with barName="sales" %}
+    </div>
+    <div class="col-md-11">
+      <h2>{% trans 'Sales by vendor' %} {% if vendor %}: {{ vendor }}{% endif %}</h2>
+      {% if not vendor %}
+      <ul>
+        {% for vendor in vendors %}
+        <li><a href="{% url 'staff:sales_by_vendor' vendor.id %}">{{ vendor }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {#<a href="{% url 'tools:order_export_excel' criteria='approved' %}" class="my-2"><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto"></a>#}
+      {% if vendor %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">{% trans 'Product ID.' %}</th>
+            <th scope="col">{% trans 'Product name' %}</th>
+            <th scope="col">{% trans 'Prices' %}</th>
+            <th scope="col">{% trans 'Vendors' %}</th>
+            <th scope="col">{{ product_counts.total }}</th>
+            {#<th scope="col">{{ product_counts_p.total }}</th>#}
+            <th scope="col">{% trans 'Sale with discount' %}</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {% for id, product in results.items %}
+          <tr>
+            <th scope="row">{{ forloop.counter}}</th>
+            <td>{{ id }}</td>
+            <td>{{ product.name }}</td>
+            <td>
+              {%for price in product.price %}
+                {{ price | intcomma:False }} ,
+              {% endfor%}
+            </td>
+            <td>
+              {% for vendor in product.vendors %}
+                {{ vendor }} ,
+              {% endfor %}
+            </td>
+            <td>{{ product.quantity }}</td>
+            <td>{{ product.cost | intcomma:False }}</td>
+
+          </tr>
+          {% endfor %}
+
+          {% comment %}
+          {% for id, product in results_p.items %}
+          <tr>
+            <th scope="row">{{ forloop.counter}}</th>
+            <td>{{ id }}</td>
+            <td>{{ product.name }}</td>
+            <td>
+              {%for price in product.price %}
+              {{ price | intcomma:False }} ,
+              {% endfor%}
+            </td>
+
+            <td>{{ product.quantity }}</td>
+            <td>{{ product.cost | intcomma:False }}</td>
+
+          </tr>
+          {% endfor %}
+          {% endcomment %}
+        </tbody>
+      </table>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script language="javascript" type="text/javascript">
+  function popitup(url) {
+    newwindow = window.open(url, '{{title}}', 'height=350,width=150');
+    if (window.focus) {
+      newwindow.focus()
+    }
+    return false;
+  }
+</script>
+{% endblock %}

@@ -48,6 +48,7 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">{% trans 'Edit' %}</th>
+              <th scope="col"></th>
               <th scope="col">{% trans 'ISBN' %}</th>
               <th scope="col">{% trans 'Name' %}</th>
               <th scope="col">{% trans 'Stock' %}</th>
@@ -66,6 +67,7 @@
             <tr>
               <th scope="row">{{ product.pk }}</th>
               <td><a href="{% url 'staff:product_update' product.id %}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+              <td><a href="{% url 'warehouses:product_workflow' product.id %}"><img src="{% static 'img/proccess.png' %}" width="16px" height="auto" alt="product flow"></a></td>
               <th scope="row">{{ product.isbn }}</th>
               <td><a href="{% url 'shop:product_detail' product.pk %}">{{ product }}</a></td>
               <td>{{ product.stock }}</td>

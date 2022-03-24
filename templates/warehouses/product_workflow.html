@@ -31,7 +31,7 @@
             </td>
             <td>
               {% for item in product_purchases %}
-              {% trans 'Order No.' %}: <a href="{% url 'orders:purchase_details' item.purchase.id %}" class="mx-2">{{ item.purchase.id }}</a> - {% trans 'Quantity' %}: {{ item.quantity }} - {{ item.purchase.get_fa_created }} - {% if 'used' in item.variation %}{% trans 'Used' %}{% else %}{% trans 'New' %}{% endif %}
+              {% trans 'Order No.' %}: <a href="{% url 'orders:purchase_details' item.purchase.id %}" class="mx-2">{{ item.purchase.id }}</a> - {% trans 'Vendor' %}: {{ item.purchase.vendor }} - {% trans 'Quantity' %}: {{ item.quantity }} - {{ item.purchase.get_fa_created }} - {% if 'used' in item.variation %}{% trans 'Used' %}{% else %}{% trans 'New' %}{% endif %}
               <br>
               {% endfor %}
             </td>

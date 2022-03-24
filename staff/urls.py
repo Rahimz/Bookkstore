@@ -25,6 +25,9 @@ urlpatterns = [
     path('sales/countries/', views.order_list_by_country, name='order_list_by_country'),
     path('sales/countries/<str:country_code>/', views.order_list_by_country, name='order_list_by_country'),
 
+    path('sales/vendor/', views.sales_by_vendor, name='sales_by_vendor'),
+    path('sales/vendor/<int:vendor_id>/', views.sales_by_vendor, name='sales_by_vendor'),
+
 
     path('invoice/create/', views.invoice_create, name='invoice_create'),
     path('invoice/create/<int:order_id>/', views.invoice_create, name='invoice_create'),
@@ -65,6 +68,8 @@ urlpatterns = [
     path('products/collection-management/', views.collection_management, name='collection_management'),
     path('products/collection-management/edit/<int:product_id>/', views.collection_management_edit, name='collection_management_edit'),
     path('products/collection-management/edit/<int:product_id>/<str:product_isbn>/', views.collection_management_remove, name='collection_management_remove'),
+
+    path('products/reports/', views.product_reports, name='product_reports'),
 
     path('categories/', views.category_list, name='categories'),
     path('category/create/', views.category_create, name='category_create'),
