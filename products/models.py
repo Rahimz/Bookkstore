@@ -246,7 +246,7 @@ class Product(models.Model):
         blank=True
     )
     publish_year = models.IntegerField(
-        default=1400,
+        # default=1400,
         validators=[MinValueValidator(1233), MaxValueValidator(1400)],
         null=True,
         blank=True
