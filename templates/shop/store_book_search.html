@@ -27,14 +27,14 @@
       </ul>
       {% endif %}
 
-      <div class="input-group mb-3">
+      <div class="input-group mb-3 align-items-center">
         {% for field in search_form.visible_fields %}
         <!-- <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2"> -->
         <span class="form-control">
           {{ field | as_crispy_field }}
         </span>
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary " type="button">{% trans 'Search'%}</button>
+          <button class="btn btn-outline-secondary" type="submit">{% trans 'Search'%}</button>
         </div>
         {% endfor %}
       </div>
@@ -47,33 +47,38 @@
 
 
 <div class="row mx-2">
-  {% if all_products%}
-  <h4>{% trans 'Available books' %}</h4>
+  {% if new_products or used_products %}
   {% endif %}
-  {% for product in all_products %}
+  <h4>{% trans 'Available books' %} <span>: {{ all_quantity }}</span></h4>
   <div class="">
-    {% if product.stock or product.stock_1 %}
+    {% for product in new_products %}
     <p class="">
       <span class="badge bg-success rounded-pill">{% trans 'Book' %} {% trans 'New' %}</span>
       <span class=" p-2">
         <b>{{ product }}</b>
         {% if product.publisher %} - {% trans 'Publisher' %}: {{ product.publisher }}{% endif %}
         {% if product.page_number %} - {{ product.page_number }} {% trans 'Page' %}{% endif %}
-        {% if product.price %} - <b>{{ product.price | intcomma:False }}</b> {% trans 'Rial' %}{% endif %}
+        {% if product.stock %} - <b>{{ product.price | intcomma:False }}</b> {% trans 'Rial' %}{% endif %}
+        {% if product.stock_1 %} - <b>{{ product.price_1 | intcomma:False }}</b> {% trans 'Rial' %}{% endif %}
+        {% if product.stock_2 %} - <b>{{ product.price_2 | intcomma:False }}</b> {% trans 'Rial' %}{% endif %}
+        {% if product.stock_3 %} - <b>{{ product.price_3 | intcomma:False }}</b> {% trans 'Rial' %}{% endif %}
+        {% if product.stock_4 %} - <b>{{ product.price_4 | intcomma:False }}</b> {% trans 'Rial' %}{% endif %}
+        {% if product.stock_5 %} - <b>{{ product.price_5 | intcomma:False }}</b> {% trans 'Rial' %}{% endif %}
       </span>
     </p>
-    {% else %}
+    {% endfor %}
+    {% for product in used_products %}
     <p class="">
       <span class="badge bg-warning rounded-pill">{% trans 'Book' %} {% trans 'Used' %}</span>
       <span class=" p-2">
         <b>{{ product }}</b>
         {% if product.publisher %} - {% trans 'Publisher' %}: {{ product.publisher }}{% endif %}
         {% if product.page_number %} - {{ product.page_number }} {% trans 'Page' %}{% endif %}
-        {% if product.price_used %} - <b>{{ product.price_used | intcomma:False }}</b> {% trans 'Rial' %}{% endif %}
+        {% if product.stock_used %} {% if product.price_used != 0  %}- <b>{{ product.price_used | intcomma:False }}</b> {% trans 'Rial' %}{% endif %}{% endif %}
       </span>
     </p>
-    {% endif %}
     {% endfor %}
+
 
   </div>
 

@@ -112,7 +112,10 @@ def store_book_search(request, state):
         pass
 
     all_products = None
+    new_products = None
+    used_products = None
     products = None
+    all_quantity = 0
     if request.method == 'POST':
         search_form = SearchForm(data=request.POST)
         if search_form.is_valid():
@@ -120,8 +123,12 @@ def store_book_search(request, state):
             if search_query == ' ':
                 return redirect('shop:store_book_search', 'used')
 
-            all_products = ProductSearch(
-                object=Product, query=search_query).order_by('name', 'publisher')
+            # all_products = ProductSearch(object=Product, query=search_query).order_by('name', 'publisher')
+            new_products = ProductSearch(object=Product, query=search_query).filter(
+                Q(stock__gte=1) | Q(stock_1__gte=1) | Q(stock_2__gte=1) | Q(stock_3__gte=1) | Q(stock_4__gte=1) | Q(stock_5__gte=1)).exclude(product_type='craft').order_by('name', 'publisher')
+            used_products = ProductSearch(object=Product, query=search_query).filter(stock_used__gte=1).exclude(product_type='craft').order_by('name', 'publisher')
+            all_quantity = new_products.count() + used_products.count()
+            search_form = SearchForm()
 
     else:
         search_form = SearchForm()
@@ -131,9 +138,12 @@ def store_book_search(request, state):
         'shop/store_book_search.html',
         {
             'products': products,
-            'all_products': all_products,
+            # 'all_products': all_products,
             'state': state,
             'search_form': search_form,
             'note': note,
+            'new_products': new_products,
+            'used_products': used_products,
+            'all_quantity': all_quantity,
         }
     )
