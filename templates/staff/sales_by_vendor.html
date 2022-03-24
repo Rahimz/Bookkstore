@@ -21,7 +21,7 @@
       {% if not vendor %}
       <ul>
         {% for vendor in vendors %}
-        <li><a href="{% url 'staff:sales_by_vendor' vendor.id %}">{{ vendor }}</a></li>
+        <li><a href="{% url 'staff:sales_by_vendor' vendor_id=vendor.id date='20220220-20220320' %}">{{ vendor }}</a></li>
         {% endfor %}
       </ul>
       {% endif %}
@@ -36,8 +36,8 @@
             <th scope="col">{% trans 'Prices' %}</th>
             <th scope="col">{% trans 'Vendors' %}</th>
             <th scope="col">{{ product_counts.total }}</th>
-            {#<th scope="col">{{ product_counts_p.total }}</th>#}
-            <th scope="col">{% trans 'Sale with discount' %}</th>
+            {#<th scope="col">{{ product_counts_p.total | intcomma:False }}</th>#}
+            <th scope="col">{{ total_cost | intcomma:False }}</th>
 
           </tr>
         </thead>

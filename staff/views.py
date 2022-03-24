@@ -1800,7 +1800,7 @@ def full_shipped_list(request, date=None):
 
 
 @staff_member_required
-def sales_by_vendor(request, vendor_id=None):
+def sales_by_vendor(request, vendor_id=None, date='20220220-20220320'):
     vendor = None
     orderlines = None
     more_vendor = False
@@ -1809,11 +1809,17 @@ def sales_by_vendor(request, vendor_id=None):
     # results_p = {}
     product_counts = 0
     # product_counts_p = 0
+    total_cost = 0
     vendors = Vendor.objects.all()
     if vendor_id:
         vendor = get_object_or_404(Vendor, pk=vendor_id)
-        orderlines = OrderLine.objects.filter(product__vendors=vendor)
-        orderlines_list = orderlines.values_list('product__id', flat=True)
+        dates = list(date.split('-'))
+
+        start_date = datetime.strptime(dates[0], "%Y%m%d").date()
+        end_date = datetime.strptime(dates[1], "%Y%m%d").date()
+        orderlines = OrderLine.objects.filter(product__vendors=vendor).filter(created__date__gte=start_date, created__date__lte=end_date)
+
+        # orderlines_list = orderlines.values_list('product__id', flat=True)
         # purchaselines = PurchaseLine.objects.filter(purchase__vendor=vendor)
 
     # if purchaselines:
@@ -1833,6 +1839,7 @@ def sales_by_vendor(request, vendor_id=None):
     #                 results_p[line.product.pk]['price'].append(line.price)
     if orderlines:
         product_counts = orderlines.aggregate(total=Sum('quantity'))
+
         for line in orderlines.iterator():
             if line.product.vendors.count() > 1:
                 more_vendor = True
@@ -1850,6 +1857,7 @@ def sales_by_vendor(request, vendor_id=None):
                 results[line.product.pk]['cost'] += line.get_cost_after_discount()
                 if line.price not in results[line.product.pk]['price']:
                     results[line.product.pk]['price'].append(line.price)
+            total_cost += line.get_cost_after_discount()
             results[line.product.pk]['more_vendor'] = more_vendor
     return render(
         request,
@@ -1861,6 +1869,7 @@ def sales_by_vendor(request, vendor_id=None):
             'orderlines': orderlines,
             'results': results,
             'product_counts': product_counts,
+            'total_cost': total_cost,
             # 'purchaselines': purchaselines,
             # 'results_p': results_p,
             # 'product_counts_p': product_counts_p,
@@ -1913,7 +1922,7 @@ def product_reports(request):
             'new_products_quantity': new_products_quantity,
             'used_products_counts': used_products_counts,
             'used_products_quantity': used_products_quantity,
-            'all_quantity': all_quantity,            
+            'all_quantity': all_quantity,
             'all_stock': new_products_quantity + used_products_quantity['total'],
             'crafts_counts': crafts_counts,
             'crafts_counts_quantity': crafts_counts_quantity,
