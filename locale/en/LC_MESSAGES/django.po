@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-22 15:22+0430\n"
+"POT-Creation-Date: 2022-03-24 13:34+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,7 +53,7 @@ msgstr ""
 
 #: account/forms.py:67 templates/_base.html:191
 #: templates/_base_files_app.html:158 templates/_base_payment.html:89
-#: templates/_temp_base.html:66
+#: templates/_temp_base.html:58
 #: templates/account/clients/client_add_address.html:20
 #: templates/account/clients/client_add_address.html:37
 #: templates/account/clients/client_list.html:42
@@ -103,7 +103,8 @@ msgstr ""
 msgid "Vendor"
 msgstr ""
 
-#: account/models.py:168 templates/staff/sold_products.html:108
+#: account/models.py:168 templates/staff/sales_by_vendor.html:37
+#: templates/staff/sold_products.html:108
 msgid "Vendors"
 msgstr ""
 
@@ -209,7 +210,7 @@ msgstr ""
 
 #: orders/forms.py:75 products/models.py:65 products/models.py:430
 #: templates/_base.html:72 templates/_base_files_app.html:42
-#: templates/shop/store_book_search.html:40
+#: templates/shop/store_book_search.html:56
 #: templates/staff/sold_products.html:135
 #: templates/warehouses/product_workflow.html:28
 #: templates/warehouses/product_workflow.html:34
@@ -218,7 +219,7 @@ msgstr ""
 
 #: orders/forms.py:76 products/models.py:66 products/models.py:431
 #: templates/_base.html:75 templates/_base_files_app.html:45
-#: templates/shop/store_book_search.html:51 templates/staff/products.html:57
+#: templates/shop/store_book_search.html:72 templates/staff/products.html:57
 #: templates/staff/sold_products.html:133
 #: templates/tools/pdf/invoice_pdf.html:100
 #: templates/tools/pdf/print_invoice.html:100
@@ -231,11 +232,11 @@ msgstr ""
 msgid "Purchase price"
 msgstr ""
 
-#: orders/models.py:22 templates/orders/reports/sales_by_days.html:99
+#: orders/models.py:22 templates/orders/reports/sales_by_days.html:100
 msgid "Draft"
 msgstr ""
 
-#: orders/models.py:23 templates/orders/reports/sales_by_days.html:122
+#: orders/models.py:23 templates/orders/reports/sales_by_days.html:123
 #: templates/staff/order_detail_for_admin.html:56
 #: templates/staff/order_list_by_country.html:35
 #: templates/staff/order_payment_manage.html:50
@@ -244,7 +245,7 @@ msgstr ""
 msgid "Paid"
 msgstr ""
 
-#: orders/models.py:24 templates/orders/reports/sales_by_days.html:97
+#: orders/models.py:24 templates/orders/reports/sales_by_days.html:98
 msgid "Approved"
 msgstr ""
 
@@ -349,13 +350,13 @@ msgstr ""
 msgid "Purchase status changed to draft"
 msgstr ""
 
-#: products/models.py:77 templates/orders/reports/sales_by_days.html:192
-#: templates/shop/store_book_search.html:40
-#: templates/shop/store_book_search.html:51
+#: products/models.py:77 templates/orders/reports/sales_by_days.html:193
+#: templates/shop/store_book_search.html:56
+#: templates/shop/store_book_search.html:72
 msgid "Book"
 msgstr ""
 
-#: products/models.py:78 templates/orders/reports/sales_by_days.html:194
+#: products/models.py:78 templates/orders/reports/sales_by_days.html:195
 msgid "Craft"
 msgstr ""
 
@@ -467,15 +468,16 @@ msgstr ""
 msgid "Cover type"
 msgstr ""
 
-#: staff/forms.py:32 templates/shop/store_book_search.html:44
-#: templates/shop/store_book_search.html:55
-#: templates/staff/product_stock_price_edit.html:38
+#: staff/forms.py:32 templates/staff/product_stock_price_edit.html:38
 #: templates/staff/used_book_prices.html:34
 msgid "Page number"
 msgstr ""
 
 #: staff/forms.py:32 templates/shop/product_detail.html:34
-#: templates/shop/product_detail.html:35 templates/staff/_order_table.html:15
+#: templates/shop/product_detail.html:35
+#: templates/shop/store_book_search.html:59
+#: templates/shop/store_book_search.html:75
+#: templates/staff/_order_table.html:15
 #: templates/staff/collection_management.html:47
 #: templates/staff/invoice_create.html:135
 #: templates/staff/order_shipping.html:73
@@ -508,15 +510,15 @@ msgid "Admin note"
 msgstr ""
 
 #: staff/forms.py:63 staff/views.py:1065 templates/cart/detail.html:17
-#: templates/orders/reports/sales_by_days.html:98
-#: templates/orders/reports/sales_by_days.html:100
-#: templates/orders/reports/sales_by_days.html:102
-#: templates/orders/reports/sales_by_days.html:123
-#: templates/orders/reports/sales_by_days.html:125
-#: templates/orders/reports/sales_by_days.html:127
-#: templates/orders/reports/sales_by_days.html:191
-#: templates/orders/reports/sales_by_days.html:193
-#: templates/orders/reports/sales_by_days.html:195
+#: templates/orders/reports/sales_by_days.html:99
+#: templates/orders/reports/sales_by_days.html:101
+#: templates/orders/reports/sales_by_days.html:103
+#: templates/orders/reports/sales_by_days.html:124
+#: templates/orders/reports/sales_by_days.html:126
+#: templates/orders/reports/sales_by_days.html:128
+#: templates/orders/reports/sales_by_days.html:192
+#: templates/orders/reports/sales_by_days.html:194
+#: templates/orders/reports/sales_by_days.html:196
 #: templates/staff/_order_table.html:16 templates/staff/draft_orders.html:33
 #: templates/staff/full_shipped_list.html:33
 #: templates/staff/invoice_create.html:71
@@ -818,7 +820,7 @@ msgid "items in cart"
 msgstr ""
 
 #: templates/_base.html:153 templates/_base_files_app.html:123
-#: templates/orders/reports/sales_by_days.html:92 templates/staff/sales.html:7
+#: templates/orders/reports/sales_by_days.html:93 templates/staff/sales.html:7
 #: templates/warehouses/product_workflow.html:21
 msgid "Sales"
 msgstr ""
@@ -883,7 +885,7 @@ msgstr ""
 #: templates/_base_files_app.html:157 templates/_base_files_app.html:181
 #: templates/_base_files_app.html:216 templates/_base_payment.html:88
 #: templates/_base_payment.html:112 templates/_base_payment.html:147
-#: templates/_base_popup.html:80 templates/_temp_base.html:65
+#: templates/_base_popup.html:80 templates/_temp_base.html:57
 #: templates/tools/emails/registration_email.html:21
 #: templates/tools/pdf/invoice_pdf_a4.html:7
 #: templates/tools/pdf/print_address.html:25
@@ -891,7 +893,7 @@ msgid "Ketabe Damavand"
 msgstr ""
 
 #: templates/_base.html:192 templates/_base_files_app.html:159
-#: templates/_base_payment.html:90 templates/_temp_base.html:67
+#: templates/_base_payment.html:90 templates/_temp_base.html:59
 #: templates/tools/pdf/invoice_pdf.html:102
 #: templates/tools/pdf/print_address.html:30
 #: templates/tools/pdf/print_invoice.html:102
@@ -899,7 +901,7 @@ msgid "16 Azar St."
 msgstr ""
 
 #: templates/_base.html:192 templates/_base_files_app.html:159
-#: templates/_base_payment.html:90 templates/_temp_base.html:67
+#: templates/_base_payment.html:90 templates/_temp_base.html:59
 #: templates/tools/pdf/invoice_pdf.html:102
 #: templates/tools/pdf/print_address.html:30
 #: templates/tools/pdf/print_invoice.html:102
@@ -907,7 +909,7 @@ msgid "Edward Brown St."
 msgstr ""
 
 #: templates/_base.html:192 templates/_base_files_app.html:159
-#: templates/_base_payment.html:90 templates/_temp_base.html:67
+#: templates/_base_payment.html:90 templates/_temp_base.html:59
 #: templates/tools/pdf/invoice_pdf.html:102
 #: templates/tools/pdf/print_address.html:30
 #: templates/tools/pdf/print_invoice.html:102
@@ -915,7 +917,7 @@ msgid "No.7"
 msgstr ""
 
 #: templates/_base.html:196 templates/_base_files_app.html:162
-#: templates/_base_payment.html:93 templates/_temp_base.html:70
+#: templates/_base_payment.html:93 templates/_temp_base.html:62
 #: templates/account/clients/client_add_address.html:33
 #: templates/account/clients/client_details.html:48
 #: templates/account/clients/client_list.html:38
@@ -929,7 +931,7 @@ msgid "Phone"
 msgstr ""
 
 #: templates/_base.html:197 templates/_base_files_app.html:163
-#: templates/_base_payment.html:94 templates/_temp_base.html:70
+#: templates/_base_payment.html:94 templates/_temp_base.html:62
 msgid "Bookstore"
 msgstr ""
 
@@ -956,7 +958,7 @@ msgstr ""
 #: templates/account/clients/client_add.html:20
 #: templates/staff/invoice_checkout.html:43
 #: templates/staff/order_add_client.html:40
-#: templates/staff/sidebar_staff.html:26 templates/staff/sidebar_staff.html:69
+#: templates/staff/sidebar_staff.html:26 templates/staff/sidebar_staff.html:72
 msgid "Add client"
 msgstr ""
 
@@ -964,7 +966,6 @@ msgstr ""
 #: templates/account/clients/client_add_address.html:41
 #: templates/account/clients/client_update.html:25
 #: templates/account/clients/credit_update.html:52
-#: templates/shop/store_book_search.html:24
 #: templates/staff/category_create.html:25
 #: templates/staff/category_create.html:26
 #: templates/staff/collection_management.html:32
@@ -1067,7 +1068,8 @@ msgstr ""
 #: templates/account/clients/client_list.html:27 templates/home.html:19
 #: templates/search/search.html:9 templates/search/search.html:45
 #: templates/shop/category_list.html:20 templates/shop/product_list.html:20
-#: templates/shop/store_book_search.html:18 templates/staff/orders.html:26
+#: templates/shop/store_book_search.html:18
+#: templates/shop/store_book_search.html:37 templates/staff/orders.html:26
 msgid "Search"
 msgstr ""
 
@@ -1102,18 +1104,23 @@ msgid "Current credit"
 msgstr ""
 
 #: templates/account/clients/credit_update.html:27
-#: templates/orders/reports/sales_by_days.html:150
-#: templates/orders/reports/sales_by_days.html:157
-#: templates/orders/reports/sales_by_days.html:162
-#: templates/orders/reports/sales_by_days.html:172
-#: templates/orders/reports/sales_by_days.html:177
-#: templates/orders/reports/sales_by_days.html:215
-#: templates/orders/reports/sales_by_days.html:222
-#: templates/orders/reports/sales_by_days.html:227
+#: templates/orders/reports/sales_by_days.html:151
+#: templates/orders/reports/sales_by_days.html:158
+#: templates/orders/reports/sales_by_days.html:163
+#: templates/orders/reports/sales_by_days.html:173
+#: templates/orders/reports/sales_by_days.html:178
+#: templates/orders/reports/sales_by_days.html:216
+#: templates/orders/reports/sales_by_days.html:223
+#: templates/orders/reports/sales_by_days.html:228
 #: templates/shop/product_card.html:18 templates/shop/product_detail.html:33
 #: templates/shop/product_detail.html:123
-#: templates/shop/store_book_search.html:45
-#: templates/shop/store_book_search.html:56
+#: templates/shop/store_book_search.html:61
+#: templates/shop/store_book_search.html:62
+#: templates/shop/store_book_search.html:63
+#: templates/shop/store_book_search.html:64
+#: templates/shop/store_book_search.html:65
+#: templates/shop/store_book_search.html:66
+#: templates/shop/store_book_search.html:77
 #: templates/staff/_order_table.html:17 templates/staff/_order_table.html:19
 #: templates/staff/collection_management.html:48
 #: templates/staff/crafts/craft_list.html:50
@@ -1251,10 +1258,7 @@ msgid "Unit price"
 msgstr ""
 
 #: templates/cart/detail.html:20 templates/shop/product_detail.html:33
-#: templates/shop/product_detail.html:123
-#: templates/shop/store_book_search.html:45
-#: templates/shop/store_book_search.html:56
-#: templates/staff/_order_table.html:17
+#: templates/shop/product_detail.html:123 templates/staff/_order_table.html:17
 #: templates/staff/collection_management.html:48
 #: templates/staff/crafts/craft_list.html:50
 #: templates/staff/invoice_create.html:139
@@ -1352,70 +1356,70 @@ msgid "Into payment port"
 msgstr ""
 
 #: templates/orders/reports/sales_by_days.html:25
-#: templates/staff/sold_products.html:69
-msgid "Esfand"
-msgstr ""
-
-#: templates/orders/reports/sales_by_days.html:57
 #: templates/staff/sold_products.html:35
 msgid "Farvardin"
 msgstr ""
 
-#: templates/orders/reports/sales_by_days.html:101
-#: templates/orders/reports/sales_by_days.html:126
-#: templates/orders/reports/sales_by_days.html:190
+#: templates/orders/reports/sales_by_days.html:59
+#: templates/staff/sold_products.html:69
+msgid "Esfand"
+msgstr ""
+
+#: templates/orders/reports/sales_by_days.html:102
+#: templates/orders/reports/sales_by_days.html:127
+#: templates/orders/reports/sales_by_days.html:191
 msgid "All in day"
 msgstr ""
 
-#: templates/orders/reports/sales_by_days.html:124
+#: templates/orders/reports/sales_by_days.html:125
 msgid "Un-Paid"
 msgstr ""
 
-#: templates/orders/reports/sales_by_days.html:149
+#: templates/orders/reports/sales_by_days.html:150
 msgid "All sales"
 msgstr ""
 
-#: templates/orders/reports/sales_by_days.html:156
+#: templates/orders/reports/sales_by_days.html:157
 msgid "Approved sales"
 msgstr ""
 
-#: templates/orders/reports/sales_by_days.html:161
+#: templates/orders/reports/sales_by_days.html:162
 msgid "Draft sales"
 msgstr ""
 
-#: templates/orders/reports/sales_by_days.html:171
+#: templates/orders/reports/sales_by_days.html:172
 msgid "Paid sales"
 msgstr ""
 
-#: templates/orders/reports/sales_by_days.html:176
+#: templates/orders/reports/sales_by_days.html:177
 msgid "Un-Paid sales"
 msgstr ""
 
-#: templates/orders/reports/sales_by_days.html:185
+#: templates/orders/reports/sales_by_days.html:186
 msgid "Sales by product type"
 msgstr ""
 
-#: templates/orders/reports/sales_by_days.html:221
+#: templates/orders/reports/sales_by_days.html:222
 msgid "Book sales"
 msgstr ""
 
-#: templates/orders/reports/sales_by_days.html:226
+#: templates/orders/reports/sales_by_days.html:227
 msgid "Craft sales"
 msgstr ""
 
-#: templates/orders/reports/sales_by_days.html:235
+#: templates/orders/reports/sales_by_days.html:236
 msgid "Payment report Zarinpal"
 msgstr ""
 
-#: templates/orders/reports/sales_by_days.html:239
+#: templates/orders/reports/sales_by_days.html:240
 msgid "paid"
 msgstr ""
 
-#: templates/orders/reports/sales_by_days.html:245
+#: templates/orders/reports/sales_by_days.html:246
 msgid "pended"
 msgstr ""
 
-#: templates/orders/reports/sales_by_days.html:251
+#: templates/orders/reports/sales_by_days.html:252
 msgid "All payment:"
 msgstr ""
 
@@ -1592,7 +1596,8 @@ msgstr ""
 msgid "Previous"
 msgstr ""
 
-#: templates/shop/pagination.html:9
+#: templates/shop/pagination.html:9 templates/shop/store_book_search.html:60
+#: templates/shop/store_book_search.html:76
 msgid "Page"
 msgstr ""
 
@@ -1649,7 +1654,7 @@ msgstr ""
 msgid "Stock"
 msgstr ""
 
-#: templates/shop/product_detail.html:119 templates/staff/sidebar_staff.html:60
+#: templates/shop/product_detail.html:119 templates/staff/sidebar_staff.html:63
 msgid "Zero stock"
 msgstr ""
 
@@ -1687,7 +1692,7 @@ msgstr ""
 msgid "For product without price please ask our staff"
 msgstr ""
 
-#: templates/shop/store_book_search.html:32
+#: templates/shop/store_book_search.html:52
 msgid "Available books"
 msgstr ""
 
@@ -2178,6 +2183,7 @@ msgid "Products stock and price management"
 msgstr ""
 
 #: templates/staff/product_stock_price_edit.html:26
+#: templates/staff/sales_by_vendor.html:34
 msgid "Product ID."
 msgstr ""
 
@@ -2313,7 +2319,7 @@ msgid "Purchases"
 msgstr ""
 
 #: templates/staff/purchase/purchase_list.html:20
-#: templates/staff/sidebar_staff.html:51
+#: templates/staff/sidebar_staff.html:54
 msgid "List of purchases"
 msgstr ""
 
@@ -2347,12 +2353,12 @@ msgid "Create purchase"
 msgstr ""
 
 #: templates/staff/purchased_products.html:9
-#: templates/staff/sidebar_staff.html:59
+#: templates/staff/sidebar_staff.html:62
 msgid "Purchased products"
 msgstr ""
 
 #: templates/staff/purchased_products.html:21
-#: templates/staff/sidebar_staff.html:58 templates/staff/sold_products.html:7
+#: templates/staff/sidebar_staff.html:61 templates/staff/sold_products.html:7
 #: templates/staff/sold_products.html:18
 msgid "Sold products"
 msgstr ""
@@ -2365,6 +2371,24 @@ msgstr ""
 #: templates/staff/refund_list_client.html:9
 #: templates/staff/refund_list_client.html:20
 msgid "Refund list"
+msgstr ""
+
+#: templates/staff/sales_by_vendor.html:9
+#: templates/staff/sales_by_vendor.html:20
+#: templates/staff/sidebar_staff.html:32
+msgid "Sales by vendor"
+msgstr ""
+
+#: templates/staff/sales_by_vendor.html:35
+msgid "Product name"
+msgstr ""
+
+#: templates/staff/sales_by_vendor.html:36
+msgid "Prices"
+msgstr ""
+
+#: templates/staff/sales_by_vendor.html:40
+msgid "Sale with discount"
 msgstr ""
 
 #: templates/staff/sidebar_staff.html:3
@@ -2424,60 +2448,60 @@ msgstr ""
 msgid "Sales by country"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:34
+#: templates/staff/sidebar_staff.html:37
 msgid "All approved orders"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:36
+#: templates/staff/sidebar_staff.html:39
 msgid "Collectable orders"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:37
+#: templates/staff/sidebar_staff.html:40
 msgid "Last day"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:38
+#: templates/staff/sidebar_staff.html:41
 msgid "Last week"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:39
+#: templates/staff/sidebar_staff.html:42
 msgid "Last month"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:40 templates/staff/sold_products.html:29
+#: templates/staff/sidebar_staff.html:43 templates/staff/sold_products.html:29
 msgid "Last year"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:42
+#: templates/staff/sidebar_staff.html:45
 msgid "Cashier orders"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:45
+#: templates/staff/sidebar_staff.html:48
 msgid "Full shipped list"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:50
+#: templates/staff/sidebar_staff.html:53
 msgid "New purchase invoice"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:53
+#: templates/staff/sidebar_staff.html:56
 msgid "Add vendor"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:54 templates/staff/vendor_list.html:8
+#: templates/staff/sidebar_staff.html:57 templates/staff/vendor_list.html:8
 #: templates/staff/vendor_list.html:19
 msgid "Vendor list"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:63
+#: templates/staff/sidebar_staff.html:66
 msgid "Refund a product"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:64
+#: templates/staff/sidebar_staff.html:67
 msgid "List of refunds"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:68
+#: templates/staff/sidebar_staff.html:71
 msgid "List of clients"
 msgstr ""
 
