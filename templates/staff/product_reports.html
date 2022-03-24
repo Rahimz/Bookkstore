@@ -1,0 +1,71 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Products report' %}{% endblock %}
+
+{% block products-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-1">
+      {% include "staff/sidebar_staff.html" with barName="products" %}
+    </div>
+    <div class="col-md-11">
+      <h2>{% trans 'Products report' %}</h2>
+      <div class="my-3">
+        {% if request.user.is_superuser or request.user.is_manager %}
+        <p><a href="{% url 'tools:product_export_excel' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'All products' %} <span
+              class="text-danger">{% trans 'Could be very slow or it may crash' %}</span></a></p>
+        <p><a href="{% url 'tools:used_noprice_export_excel' filter='used-noprice' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'Used products without price' %}</a></p>
+        <p><a href="{% url 'tools:used_all_export_excel' filter='used-all' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'All used products' %}</a></p>
+        {% endif %}
+      </div>
+      <div class="">
+        <table class="table">
+          <tr>
+            <td>{% trans 'Description' %}</td>
+            <td>{% trans 'Row counts' %}</td>
+            <td>{% trans 'Stock total' %}</td>
+          </tr>
+
+          <tr>
+            <td>{% trans 'New books' %}</td>
+            <td>{{ new_products_counts }}</td>
+            <td>{{ new_products_quantity }}</td>
+          </tr>
+          <tr>
+            <td>{% trans 'Used books' %}</td>
+            <td>{{ used_products_counts }}</td>
+            <td>{{ used_products_quantity.total }}</td>
+          </tr>
+          <tr>
+            <td>{% trans 'All books' %}</td>
+            <td>{{ all_quantity }}</td>
+            <td>{{ all_stock }}</td>
+          </tr>
+          <tr>
+            <td>{% trans 'Crafts' %}</td>
+            <td>{{ crafts_counts }}</td>
+            <td>{{ crafts_counts_quantity.total }}</td>
+          </tr>
+
+        </table>
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>
+{% endblock %}
+{% block script %}
+{% endblock %}

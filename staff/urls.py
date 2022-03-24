@@ -69,6 +69,8 @@ urlpatterns = [
     path('products/collection-management/edit/<int:product_id>/', views.collection_management_edit, name='collection_management_edit'),
     path('products/collection-management/edit/<int:product_id>/<str:product_isbn>/', views.collection_management_remove, name='collection_management_remove'),
 
+    path('products/reports/', views.product_reports, name='product_reports'),
+
     path('categories/', views.category_list, name='categories'),
     path('category/create/', views.category_create, name='category_create'),
 

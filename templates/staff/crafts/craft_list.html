@@ -44,6 +44,7 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">{% trans 'Edit' %}</th>
+          <th scope="col"></th>
           <th scope="col">{% trans '‌Barcode number' %}</th>
           <th scope="col">{% trans 'Name' %}</th>
           <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
@@ -56,6 +57,7 @@
         <tr>
           <th scope="row">{{ product.pk }}</th>
           <td><a href="{% url 'staff:craft_update' product.id %}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+          <td><a href="{% url 'warehouses:product_workflow' product.id %}"><img src="{% static 'img/proccess.png' %}" width="16px" height="auto" alt="product flow"></a></td>
           <td>{{ product.barcode_number }}</td>
           <td>{{ product.name }}</td>
           <td>{{ product.price | intcomma:False }}</td>

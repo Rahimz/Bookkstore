@@ -82,9 +82,8 @@ def orders(request, period=None, channel=None, filter=None):
     if filter:
         orders = orders.order_by(filter)
 
-
     # pagination
-    paginator = Paginator(orders, 20) # 20 order in each page
+    paginator = Paginator(orders, 20)  # 20 order in each page
     page = request.GET.get('page')
     try:
         orders = paginator.page(page)
@@ -94,8 +93,6 @@ def orders(request, period=None, channel=None, filter=None):
     except EmptyPage:
         # If page is out of range deliver last page of results
         orders = paginator.page(paginator.num_pages)
-
-
 
     return render(
         request,
@@ -138,7 +135,8 @@ def warehouse(request):
 
 @staff_member_required
 def products(request):
-    products_object = Product.objects.all().filter(available=True).exclude(product_type='craft')
+    products_object = Product.objects.all().filter(
+        available=True).exclude(product_type='craft')
 
     search_form = SearchForm()
     if request.method == 'POST':
@@ -217,9 +215,11 @@ def product_create(request, product_id=None):
                 products = None
                 try:
                     if isbn_9:
-                        products = Product.objects.filter(available=True).filter(isbn_9=isbn_9)
+                        products = Product.objects.filter(
+                            available=True).filter(isbn_9=isbn_9)
                     else:
-                        products = Product.objects.filter(available=True).filter(isbn=isbn)
+                        products = Product.objects.filter(
+                            available=True).filter(isbn=isbn)
                 except:
                     pass
                 if products:
@@ -228,7 +228,8 @@ def product_create(request, product_id=None):
                             product = Product.objects.get(isbn_9=isbn_9)
                         else:
                             product = Product.objects.get(isbn=isbn)
-                        messages.error(request, _('A product with same isbn is available') + ': {} - {}'.format(product.name, product.isbn))
+                        messages.error(request, _(
+                            'A product with same isbn is available') + ': {} - {}'.format(product.name, product.isbn))
                         return redirect('staff:product_create')
             new_product.save()
 
@@ -251,6 +252,7 @@ def product_create(request, product_id=None):
         'staff/product_create.html',
         {'form': form}
     )
+
 
 @staff_member_required
 def product_update(request, product_id):
@@ -447,7 +449,8 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
 
         # Check the stock of product
         if price == 0:
-            messages.error(request, _('You could not add product without price'))
+            messages.error(request, _(
+                'You could not add product without price'))
             return redirect('staff:invoice_create', order_id)
 
         if stock <= 0:
@@ -504,7 +507,8 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
     # When we add a product for first time and we dont have an order
     if (not order_id) and product_id:
         if price == 0:
-            messages.error(request, _('You could not add product without price'))
+            messages.error(request, _(
+                'You could not add product without price'))
             return redirect('staff:invoice_create')
 
         if stock <= 0:
@@ -615,7 +619,8 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
                 stock = variation_dict[variation_list[0]
                                        ][variation_list[1]]['stock']
                 if price == 0:
-                    messages.error(request, _('You could not add product without price'))
+                    messages.error(request, _(
+                        'You could not add product without price'))
                     return redirect('staff:invoice_create', order_id)
                 if stock <= 0:
                     messages.error(request, _('You are adding zero stock!'))
@@ -685,8 +690,10 @@ def invoice_create(request, order_id=None, book_id=None, variation='new main'):
         parent_ids = [ids[0] for ids in collection_ids if ids[1]]
         children_ids = [ids[0] for ids in collection_ids if ids[2]]
 
-        collection_parent_product = Product.objects.all().filter(available=True).filter(pk__in=parent_ids)
-        collection_children_product = Product.objects.all().filter(available=True).filter(pk__in=children_ids)
+        collection_parent_product = Product.objects.all().filter(
+            available=True).filter(pk__in=parent_ids)
+        collection_children_product = Product.objects.all().filter(
+            available=True).filter(pk__in=children_ids)
 
     return render(
         request,
@@ -741,7 +748,6 @@ def invoice_checkout(request, order_id, client_id=None):
                 search=SearchVector('first_name', 'last_name', 'username', 'phone'),).filter(search__contains=client_query)
             if len(clients) == 0:
                 client_add_notice = True
-
 
         if checkout_form.is_valid():
             if not client:
@@ -809,7 +815,8 @@ def invoice_checkout_credit(request, order_id, client_id):
         client.credit.balance = 0
         client.credit.save()
 
-        messages.success(request, _('Credit of client added to discount of order'))
+        messages.success(request, _(
+            'Credit of client added to discount of order'))
         return redirect('staff:invoice_checkout_client', order_id=order.id, client_id=client.id)
 
     elif order.payable < balance:
@@ -819,13 +826,11 @@ def invoice_checkout_credit(request, order_id, client_id):
         order.pay_by_credit = True
         order.credit = order.payable
 
-
         order.save()
         client.credit.save()
         messages.success(request, _('Order paid with credit'))
 
         return redirect('staff:invoice_checkout_client', order_id=order.id, client_id=client.id)
-
 
 
 def invoice_remove_credit(request, order_id):
@@ -839,7 +844,8 @@ def invoice_remove_credit(request, order_id):
     order.credit = 0
     order.save()
     client.credit.save()
-    messages.success(request, _('Credit remove from order and added to client credit'))
+    messages.success(request, _(
+        'Credit remove from order and added to client credit'))
     return redirect('staff:invoice_checkout_client', order_id=order.id, client_id=client.id)
 
 
@@ -875,8 +881,6 @@ def invoice_create_add_client(request, order_id, client_id=None):
             if len(clients) == 0:
                 client_add_notice = True
 
-
-
     # return redirect('staff:invoice_create', order_id=order.id)
     return render(
         request,
@@ -905,7 +909,8 @@ def remove_client_from_order(request, order_id):
         order.credit = 0
         order.save()
         client.credit.save()
-        messages.success(request, _('Credit remove from order and added to client credit'))
+        messages.success(request, _(
+            'Credit remove from order and added to client credit'))
 
     order.client = None
     order.save()
@@ -1030,9 +1035,11 @@ def orderline_update(request, order_id, orderline_id):
 
                     # Update product stock
                     if product_stock < 0:
-                        product_stock = product_stock + order_line.quantity - update_form.cleaned_data['quantity']
+                        product_stock = product_stock + order_line.quantity - \
+                            update_form.cleaned_data['quantity']
                     else:
-                        product_stock -= update_form.cleaned_data['quantity'] - order_line.quantity
+                        product_stock -= update_form.cleaned_data['quantity'] - \
+                            order_line.quantity
 
                     # if variation == 'main':
                     #     product.stock = product_stock
@@ -1062,16 +1069,17 @@ def orderline_update(request, order_id, orderline_id):
                         product.stock_used += product_stock
 
                     product.save()
-                    messages.success(request, _('Order line updated') + ' ' + _('Quantity') + ' {}'.format(product_stock))
+                    messages.success(request, _(
+                        'Order line updated') + ' ' + _('Quantity') + ' {}'.format(product_stock))
 
                 elif update_form.cleaned_data['quantity'] < order_line.quantity:
                     # Update product stock
-                    product_stock += order_line.quantity - update_form.cleaned_data['quantity']
+                    product_stock += order_line.quantity - \
+                        update_form.cleaned_data['quantity']
                     # if product_stock < 0:
                     #     product_stock += order_line.quantity + update_form.cleaned_data['quantity']
                     # else:
                     #     product_stock += order_line.quantity - update_form.cleaned_data['quantity']
-
 
                     if variation == 'new main':
                         product.stock = product_stock
@@ -1134,23 +1142,24 @@ def draft_orders(request):
 @staff_member_required
 def remove_draft_order(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
-    if len(order.lines.all())>0:
+    if len(order.lines.all()) > 0:
         messages.error(request, _('This order is not empty'))
     else:
         # order.delete()
         order.active = False
-        order.customer_note =  f"removed by {request.user}"
+        order.customer_note = f"removed by {request.user}"
         order.save()
         messages.success(request, _('Draft order removed'))
 
     return redirect('staff:draft_orders')
+
 
 @staff_member_required
 def invoice_back_to_draft(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     if order.shipping_status == 'full':
         messages.warning(request, _('This order is shipped'))
-    if order.is_packaged :
+    if order.is_packaged:
         messages.warning(request, _('This order is completely packaged'))
         subject = '[Warning] ' + 'A packaged order is changed'
         message = f"A packaged order send back to draft \nOrder no.: {order_id} \nClient: {order.client.first_name} {order.client.last_name}"
@@ -1170,7 +1179,8 @@ def invoice_back_to_draft(request, order_id):
 def order_payment_manage(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     if request.method == 'POST':
-        payment_form = OrderPaymentManageForm(request.POST, files=request.FILES, instance=order)
+        payment_form = OrderPaymentManageForm(
+            request.POST, files=request.FILES, instance=order)
         if payment_form.is_valid():
             payment_form.save()
             return redirect('staff:order_detail_for_admin', order.id)
@@ -1185,6 +1195,7 @@ def order_payment_manage(request, order_id):
         'payment_form': payment_form,
         }
     )
+
 
 @staff_member_required
 def category_list(request):
@@ -1202,19 +1213,21 @@ def category_list(request):
 def sold_products(request, days=None, date=None):
     fa_date = None
     if days:
-        order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.now() - timedelta(days)).exclude(product__product_type='craft').order_by('-created')
+        order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.now(
+        ) - timedelta(days)).exclude(product__product_type='craft').order_by('-created')
     if date:
         date = datetime.strptime(date, "%d%m%Y").date()
         fa_date = hij_strf_date(greg_to_hij_date(date), '%-d %B %Y')
         # print(fa_date)
         # hij_strf_date(greg_to_hij_date(order.created.date()), '%-d %B %Y')
-        order_lines = OrderLine.objects.all().filter(active=True).filter(created__date=date).exclude(product__product_type='craft').order_by('-created')
+        order_lines = OrderLine.objects.all().filter(active=True).filter(
+            created__date=date).exclude(product__product_type='craft').order_by('-created')
         # print(len(order_lines))
         # all_payment = Payment.objects.filter(created__date__gte='2022-02-01').aggregate(total_amount=Sum('amount'))
     # order_lines = OrderLine.objects.all().values_list(product.id, flat=True)
     products = dict()
     main_stock = dict()
-    check_list =[]
+    check_list = []
     added_line = {}
     # added_line = {
     #     'pk': {
@@ -1229,7 +1242,6 @@ def sold_products(request, days=None, date=None):
     for item in order_lines:
         vendors_list = item.product.vendors.all().values_list('first_name', flat=True)
         # print(vendors_list)
-
 
         # vendors_list = [item.first_name for item in vendors]
         # key = products.get(item.product.id)
@@ -1253,8 +1265,6 @@ def sold_products(request, days=None, date=None):
                 'vendors': vendors_list,
                 }
 
-
-
     return render(
         request,
         'staff/sold_products.html',
@@ -1273,7 +1283,8 @@ def sold_products(request, days=None, date=None):
 @staff_member_required
 def purchased_products(request):
 
-    purchase_lines = PurchaseLine.objects.all().filter(active=True).order_by('purchase__created')
+    purchase_lines = PurchaseLine.objects.all().filter(
+        active=True).order_by('purchase__created')
 
     # order_lines = OrderLine.objects.all().values_list(product.id, flat=True)
     products = dict()
@@ -1385,7 +1396,8 @@ def vendor_edit(request, vendor_id):
             messages.error(request, _('Form is not valid'))
     else:
         vendor_form = VendorAddForm(instance=vendor)
-        address_form = VendorAddressAddForm(instance=vendor.default_billing_address)
+        address_form = VendorAddressAddForm(
+            instance=vendor.default_billing_address)
     return render(
         request,
         'staff/vendor_add.html',
@@ -1502,7 +1514,8 @@ def collection_management_edit(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     if product.collection_set:
         product_isbn = product.collection_set.split()
-        products = Product.objects.all().filter(available=True).filter(isbn__in=product_isbn).order_by('name')
+        products = Product.objects.all().filter(available=True).filter(
+            isbn__in=product_isbn).order_by('name')
     else:
         products = None
         product_isbn = []
@@ -1562,8 +1575,9 @@ def collection_management_remove(request, product_id, product_isbn):
 
 
 def zero_stock_list(request):
-    products = Product.objects.all().filter(available=True).filter(stock__lte=0).order_by('stock')
-    return render (
+    products = Product.objects.all().filter(
+        available=True).filter(stock__lte=0).order_by('stock')
+    return render(
         request,
         'staff/zero_stock_list.html',
         {
@@ -1576,7 +1590,8 @@ def zero_stock_list(request):
 def used_book_prices(request, product_id):
     product = Product.objects.get(pk=product_id)
     if request.method == 'POST':
-        price_form = AdminPriceManagementForm(data=request.POST, instance=product)
+        price_form = AdminPriceManagementForm(
+            data=request.POST, instance=product)
         if price_form.is_valid():
             price_form.save()
             return redirect('staff:products')
@@ -1599,21 +1614,21 @@ def product_stock_price_edit(request, product_id):
     price = product.price
     if request.method == 'POST':
         if request.user.is_online_manager:
-            price_form = OnlineAdminPriceStockManagementForm(data=request.POST, instance=product)
+            price_form = OnlineAdminPriceStockManagementForm(
+                data=request.POST, instance=product)
         else:
-            price_form = AdminPriceStockManagementForm(data=request.POST, instance=product)
+            price_form = AdminPriceStockManagementForm(
+                data=request.POST, instance=product)
         if price_form.is_valid():
             #  we want to check wether the newly entered stock more than DB stock or not
             # if it is more we make a purchase for editing tne DB
             new_price_stock = price_form.save(commit=False)
 
-
-
             # check the price is the biggest price of product
             if new_price_stock.price < price:
-                messages.error(request, _('You could not enter a price less than the main price '))
+                messages.error(request, _(
+                    'You could not enter a price less than the main price '))
                 return redirect('staff:product_stock_price_edit', product.id)
-
 
             if request.user.is_online_manager:
                 new_price_stock.save()
@@ -1621,22 +1636,23 @@ def product_stock_price_edit(request, product_id):
                 return redirect('staff:products')
 
             if new_price_stock.stock > stock:
-                messages.warning(request, _('A purchase added to manage the DB'))
+                messages.warning(request, _(
+                    'A purchase added to manage the DB'))
 
                 # grab the vendor
                 try:
                     vendor = Vendor.objects.get(first_name='Stock-admin')
                 except:
                     vendor = Vendor.objects.create(
-                        first_name = 'Stock-admin',
-                        username = 'Stock-admin',
-                        email = 'stock.admin@ketabedamavand.com'
+                        first_name='Stock-admin',
+                        username='Stock-admin',
+                        email='stock.admin@ketabedamavand.com'
                     )
                     vendor.save()
 
                 # Making a new purchase
                 purchase = Purchase.objects.create(
-                    vendor = vendor,
+                    vendor=vendor,
                     registrar=request.user,
                     approver=request.user,
                     approved_date=datetime.now(),
@@ -1649,10 +1665,10 @@ def product_stock_price_edit(request, product_id):
                 purchase.save()
                 #  Add a purchaseline for newly added stock
                 purchaseline = PurchaseLine.objects.create(
-                    purchase = purchase,
+                    purchase=purchase,
                     product=product,
                     price=product.price,
-                    quantity=new_price_stock.stock-stock,
+                    quantity=new_price_stock.stock - stock,
                     variation='new main',
                     active=True
                 )
@@ -1661,12 +1677,12 @@ def product_stock_price_edit(request, product_id):
 
             # check if the used price or stock is changed check has other prices
             if new_price_stock.price_used or new_price_stock.stock_used:
-                product.has_other_prices=True
+                product.has_other_prices = True
                 product.save()
-            if new_price_stock.price_used==0 and new_price_stock.stock_used==0:
-                if product.stock_1==0 and product.stock_2==0 and product.stock_3==0 and product.stock_4==0 and product.stock_5==0:
-                    if product.price_1==0 and product.price_2==0 and product.price_3==0 and product.price_4==0 and product.price_5==0:
-                        product.has_other_prices=False
+            if new_price_stock.price_used == 0 and new_price_stock.stock_used == 0:
+                if product.stock_1 == 0 and product.stock_2 == 0 and product.stock_3 == 0 and product.stock_4 == 0 and product.stock_5 == 0:
+                    if product.price_1 == 0 and product.price_2 == 0 and product.price_3 == 0 and product.price_4 == 0 and product.price_5 == 0:
+                        product.has_other_prices = False
                         product.save()
 
             new_price_stock.save()
@@ -1690,7 +1706,8 @@ def product_stock_price_edit(request, product_id):
 
 @staff_member_required
 def craft_list(request):
-    crafts = Product.objects.filter(available=True).filter(product_type='craft').order_by('category', 'name' )
+    crafts = Product.objects.filter(available=True).filter(
+        product_type='craft').order_by('category', 'name')
     return render(
         request,
         'staff/crafts/craft_list.html',
@@ -1756,18 +1773,22 @@ def full_shipped_list(request, date=None):
             messages.error(request, _('Date is not valid'))
             return redirect('staff:full_shipped_list')
         fa_date = hij_strf_date(greg_to_hij_date(date), '%-d %B %Y')
-        orders = Order.objects.filter(active=True).filter(full_shipped_date__date=date).filter(full_shipped_date__isnull=False).filter(shipping_method='bike_delivery')
+        orders = Order.objects.filter(active=True).filter(full_shipped_date__date=date).filter(
+            full_shipped_date__isnull=False).filter(shipping_method='bike_delivery')
     else:
-        orders = Order.objects.filter(active=True).filter(full_shipped_date__isnull=False).filter(shipping_method='bike_delivery')
+        orders = Order.objects.filter(active=True).filter(
+            full_shipped_date__isnull=False).filter(shipping_method='bike_delivery')
     # sum of shipping cost and shipping cost with 15% discount
     shipping_cost_sum = {}
     if orders:
-        shipping_cost_sum = orders.aggregate(total=Sum('shipping_cost'), total_discount=Sum('shipping_cost') * Decimal(0.85))
-        shipping_cost_sum['total_discount'] = round(shipping_cost_sum['total_discount'])
+        shipping_cost_sum = orders.aggregate(total=Sum(
+            'shipping_cost'), total_discount=Sum('shipping_cost') * Decimal(0.85))
+        shipping_cost_sum['total_discount'] = round(
+            shipping_cost_sum['total_discount'])
     else:
         shipping_cost_sum['total'] = 0
         shipping_cost_sum['total_discount'] = 0
-    return render (
+    return render(
         request,
         'staff/full_shipped_list.html',
         {
@@ -1813,7 +1834,7 @@ def sales_by_vendor(request, vendor_id=None):
     if orderlines:
         product_counts = orderlines.aggregate(total=Sum('quantity'))
         for line in orderlines.iterator():
-            if line.product.vendors.count()> 1:
+            if line.product.vendors.count() > 1:
                 more_vendor = True
             if line.product.pk not in results:
                 results[line.product.pk] = {
@@ -1843,5 +1864,58 @@ def sales_by_vendor(request, vendor_id=None):
             # 'purchaselines': purchaselines,
             # 'results_p': results_p,
             # 'product_counts_p': product_counts_p,
+        }
+    )
+
+
+@staff_member_required
+def product_reports(request):
+    products = Product.objects.filter(available=True).exclude(product_type='craft').filter(Q(stock__gte=1) | Q(stock_1__gte=1) | Q(stock_2__gte=1) | Q(stock_3__gte=1) | Q(stock_4__gte=1) | Q(stock_5__gte=1))
+
+    new_products = products.order_by('name', 'publisher')
+
+    new_products_quantity_0 = products.aggregate(total=Sum('stock'))
+    new_products_quantity_1 = products.aggregate(total=Sum('stock_1'))
+    new_products_quantity_2 = products.aggregate(total=Sum('stock_2'))
+    new_products_quantity_3 = products.aggregate(total=Sum('stock_3'))
+    new_products_quantity_4 = products.aggregate(total=Sum('stock_4'))
+    new_products_quantity_5 = products.aggregate(total=Sum('stock_5'))
+    new_products_quantity = sum([
+        new_products_quantity_0['total'],
+        new_products_quantity_1['total'],
+        new_products_quantity_2['total'],
+        new_products_quantity_3['total'],
+        new_products_quantity_4['total'],
+        new_products_quantity_5['total']
+    ])
+
+    used_products = Product.objects.filter(available = True).exclude(product_type = 'craft').filter(
+        stock_used__gte = 1).exclude(product_type = 'craft').order_by('name', 'publisher')
+    used_products_quantity = Product.objects.filter(available = True).exclude(product_type = 'craft').filter(
+        stock_used__gte = 1).exclude(product_type = 'craft').aggregate(total = Sum('stock_used'))
+
+    new_products_counts = new_products.count()
+    used_products_counts = used_products.count()
+    all_quantity = new_products_counts + used_products_counts
+
+
+
+    crafts_counts=Product.objects.filter(available = True).filter(
+        product_type = 'craft').filter(stock__gte = 1).count()
+    crafts_counts_quantity=Product.objects.filter(available = True).filter(
+        product_type = 'craft').filter(stock__gte = 1).aggregate(total = Sum('stock'))
+
+    return render(
+        request,
+        'staff/product_reports.html',
+        {
+            'new_products_counts': new_products_counts,
+            'new_products_quantity': new_products_quantity,
+            'used_products_counts': used_products_counts,
+            'used_products_quantity': used_products_quantity,
+            'all_quantity': all_quantity,            
+            'all_stock': new_products_quantity + used_products_quantity['total'],
+            'crafts_counts': crafts_counts,
+            'crafts_counts_quantity': crafts_counts_quantity,
         }
     )
