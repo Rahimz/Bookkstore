@@ -1,0 +1,106 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Client details' %} {{ client.username }}{% endblock %}
+
+{% block clients-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-1">
+      {% include "staff/sidebar_staff.html" with barName="clients" %}
+    </div>
+    <div class="col-md-11">
+      <h2 id="addClient">{% trans 'Client details' %}</h2>
+      <div class="">
+        <table class="table table-striped">
+          <tr>
+            <td>{% trans 'First name' %}</td>
+            <td>{{ client.first_name }}</td>
+          </tr>
+          <tr>
+            <td>{% trans 'Last name' %}</td>
+            <td>{{ client.last_name }}</td>
+          </tr>
+          <tr>
+            <td>{% trans 'Social name' %}</td>
+            <td>{% if client.social_media_name %}{{ client.social_media_name }}{% endif %}</td>
+          </tr>
+          <tr>
+            <td>{% trans 'Credit' %}</td>
+            {% if client.credit %}
+            <td>{{ client.credit.balance }}</td>
+            {% else %}
+            <td>0</td>
+            {% endif %}
+          </tr>
+          <tr>
+            <td>{% trans 'Username' %}</td>
+            <td>{{ client.username }}</td>
+          </tr>
+          <tr>
+            <td>{% trans 'Phone' %}</td>
+            <td>{{ client.phone }}</td>
+          </tr>
+          <tr>
+            <td>{% trans 'Email' %}</td>
+            <td>{{ client.email }}</td>
+          </tr>       
+        </table>
+
+      </div>
+    </div>
+    <h3> {% trans "Client history" %}</h3>
+    <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">{% trans 'Image' %}</th>
+              <th scope="col">{% trans 'isbn' %}</th>
+              <th scope="col">{% trans 'Name' %}</th>
+              <th scope="col">{% trans 'Author' %}</th>
+              <th scope="col">{% trans 'Publisher' %}</th>
+              <th scope="col"><b>{{ orderlines_sum.total_quantity | intcomma:False }}</b></th>
+              <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
+              <th scope="col">{% trans 'Discount' %}</th>
+              <th scope="col"><b>{{ orderlines_sum.total_cost | intcomma:False }}</b> ({% trans 'Rial' %})</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order_line in orderlines %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="auto" height="40px"></td>
+              <td>{{ order_line.product.isbn }}</td>
+              <td>{{ order_line.product }}</td>
+              <td>{% if order_line.product.author %}{{ order_line.product.author }}{% endif%}</td>
+              <td>{{ order_line.product.publisher }}</td>
+              <td>{{ order_line.quantity }}</td>
+              <td>{{ order_line.get_cost | intcomma:False }}</td>
+              <td>{{ order_line.get_discount | intcomma:False }}</td>
+              <td>{{ order_line.get_cost_after_discount | intcomma:False }}</td>
+            </tr>
+            {% endfor %}
+        
+        
+          <tfoot>
+           
+          </tfoot>
+          </tbody>
+        </table>
+        </div>
+
+
+  </div>
+
+</div>
+{% endblock %}
