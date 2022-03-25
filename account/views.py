@@ -1,3 +1,4 @@
+from functools import total_ordering
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -11,11 +12,13 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.contrib.postgres.search import SearchVector
 from django.db import IntegrityError
+from django.db.models import Sum
 
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ClientAddForm, ClientUpdateForm, AddressAddForm, CreditUpdateForm
 from .models import CustomUser, Address, Credit
 from search.forms import CLientSearchStaffForm
 from tools.fa_to_en_num import number_converter
+from orders.models import Order, OrderLine
 
 
 def dashboard(request):
@@ -323,5 +326,24 @@ def credit_update(request, client_id):
             'credit': credit,
             'credit_form': credit_form,
             'credit_records': credit_records,
+        }
+    )
+
+
+
+@staff_member_required
+def user_history(request, user_id):
+    user = get_object_or_404(CustomUser, pk=user_id)
+    order_counts = Order.objects.filter(client=user).count()
+    orderlines = OrderLine.objects.filter(order__client=user).order_by('product__name')
+    orderlines_sum = orderlines.aggregate(total_cost=Sum('cost_after_discount'), total_quantity=Sum('quantity'))
+    return render (
+        request, 
+        'account/clients/user_history.html',
+        {
+            'order_counts': order_counts,
+            'orderlines': orderlines,
+            'client': user,
+            'orderlines_sum': orderlines_sum,
         }
     )

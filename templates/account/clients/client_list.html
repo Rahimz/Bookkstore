@@ -34,6 +34,7 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">{% trans 'Edit' %}</th>
+              <th scope="col"></th>
               <th scope="col">{% trans 'Name' %}</th>
               <th scope="col">{% trans 'Phone' %}</th>
               <th scope="col">{% trans 'Social name' %}</th>
@@ -50,6 +51,7 @@
             <tr>
               <th scope="row">{{ forloop.counter }}</th>
               <td><a href="{% url 'client_update' client.id %}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+              <td><a href="{% url 'user_history' client.id %}"><img src="{% static 'img/history.svg' %}" width="22px" height="auto"></a></td>
               <td><a href="{% url 'client_details' client.id %}">{{ client }}</a></td>
               <td>{{ client.phone }}</td>
               <td>{% if client.social_media_name %}{{ client.social_media_name }}{% endif %}</td>

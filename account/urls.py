@@ -23,6 +23,7 @@ urlpatterns = [
     path('client/update/<int:client_id>/', views.client_update, name='client_update'),
     path('client/<int:client_id>/', views.client_details, name='client_details'),
     path('client/credit-update/<int:client_id>/', views.credit_update, name='credit_update'),
+    path("user/history/<int:user_id>/", views.user_history, name="user_history"),
 
     path('client/add-address/<int:client_id>/<str:kind>/', views.client_add_address, name='client_add_address'),
     path('client/add-address/<int:client_id>/<str:kind>/<int:address_id>/', views.client_add_address, name='client_update_address'),
