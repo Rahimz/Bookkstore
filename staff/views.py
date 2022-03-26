@@ -40,31 +40,61 @@ def sales(request):
 
 
 @staff_member_required
-def orders(request, period=None, channel=None, filter=None):
-    # list of all approved or paid orders
-    if channel == 'all' and period == 'all':
-        orders = Order.objects.filter(
-            Q(status='approved') | Q(paid=True)).filter(active=True)
+def orders(request, period='all', channel='all', filter=None):
+    orders = Order.objects.filter(active=True).filter(status='approved')
+    channel_list = [item[0] for item in Order.CHANNEL_CHOICES]
 
-    # 'mix' channel means we need the orders that should be collected
-    if channel == 'mix' and period == 'all':
-        # orders = Order.objects.filter(
-        #     Q(status='approved') | Q(paid=True)).exclude(channel='cashier')
-        orders = Order.objects.exclude(
-            channel='cashier').exclude(status='draft').filter(active=True)
+    today_date = datetime.now().date()
+    today = today_date.strftime("%Y%m%d")
 
-    # staff/orders/30/mix
-    elif channel == 'mix' and period not in ('all', 'mix'):
-        orders = Order.objects.filter(
-            Q(status='approved') | Q(paid=True)).exclude(channel='cashier').filter(approved_date__gte=datetime.now() - timedelta(int(period))).filter(active=True)
+    last_1_day_date = today_date - timedelta(1)
+    last_1_day = last_1_day_date.strftime("%Y%m%d")
+    yesterday = f"{last_1_day}-{today}"
 
-    # staff/orders/365/cashier
-    elif channel == 'cashier' and period not in ('all', 'mix'):
-        orders = Order.objects.filter(
-            Q(status='approved') | Q(paid=True)).filter(channel='cashier').filter(approved_date__gte=datetime.now() - timedelta(int(period))).filter(active=True)
-    else:
-        orders = Order.objects.filter(
-            Q(status='approved') | Q(paid=True)).filter(active=True)
+    last_7_day_date = today_date - timedelta(7)
+    last_7_day = last_7_day_date.strftime("%Y%m%d")
+    last_week = f"{last_7_day}-{today}"
+
+    last_30_day_date = today_date - timedelta(30)
+    last_30_day = last_30_day_date.strftime("%Y%m%d")
+    last_month = f"{last_30_day}-{today}"
+
+    if channel == 'collectable':
+        orders = orders.exclude(channel='cashier')
+    elif channel != 'all':
+        orders = orders.filter(channel=channel)
+
+    if period != 'all':
+        # period should be like '20220320-20220322'
+        period_list = list(period.split('-'))
+        start_date = datetime.strptime(period_list[0], "%Y%m%d").date()
+        end_date = datetime.strptime(period_list[1], "%Y%m%d").date()
+        orders = orders.filter(created__date__gte=start_date, created__date__lte=end_date)
+
+    # # list of all approved or paid orders
+    # if channel == 'all' and period == 'all':
+    #     orders = Order.objects.filter(
+    #         Q(status='approved') | Q(paid=True)).filter(active=True)
+
+    # # 'mix' channel means we need the orders that should be collected
+    # if channel == 'mix' and period == 'all':
+    #     # orders = Order.objects.filter(
+    #     #     Q(status='approved') | Q(paid=True)).exclude(channel='cashier')
+    #     orders = Order.objects.exclude(
+    #         channel='cashier').exclude(status='draft').filter(active=True)
+    #
+    # # staff/orders/30/mix
+    # elif channel == 'mix' and period not in ('all', 'mix'):
+    #     orders = Order.objects.filter(
+    #         Q(status='approved') | Q(paid=True)).exclude(channel='cashier').filter(approved_date__gte=datetime.now() - timedelta(int(period))).filter(active=True)
+    #
+    # # staff/orders/365/cashier
+    # elif channel == 'cashier' and period not in ('all', 'mix'):
+    #     orders = Order.objects.filter(
+    #         Q(status='approved') | Q(paid=True)).filter(channel='cashier').filter(approved_date__gte=datetime.now() - timedelta(int(period))).filter(active=True)
+    # else:
+    #     orders = Order.objects.filter(
+    #         Q(status='approved') | Q(paid=True)).filter(active=True)
 
     if request.method == 'POST':
         search_form = OrderSearchForm(request.POST)
@@ -103,6 +133,10 @@ def orders(request, period=None, channel=None, filter=None):
             'page': page,
             'period': period,
             'channel': channel,
+            'yesterday': yesterday,
+            'last_week': last_week,
+            'last_month': last_month,
+            'channel_list': channel_list,
         }
     )
 

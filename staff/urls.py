@@ -19,8 +19,11 @@ urlpatterns = [
     path('orders/remove-draft/<int:order_id>/', views.remove_draft_order, name='remove_draft_order'),
 
     path('orders/create/', views.order_create, name='order_create'),
-    path('orders/<str:period>/<str:channel>/', views.orders, name='order_list'),
-    path('orders/<str:period>/<str:channel>/<str:filter>/', views.orders, name='order_list_filter'),
+    # path('orders/', views.orders, name='order_list'),
+    # path('orders/<str:channel>/', views.orders, name='order_list_by_channel'),
+    # path('orders/<str:channel>/<str:period>/', views.orders, name='order_list_by_channel_period'),
+    path('orders/<str:channel>/<str:period>/', views.orders, name='order_list'),
+    path('orders/<str:channel>/<str:period>/<str:filter>/', views.orders, name='order_list_filter'),
 
     path('sales/countries/', views.order_list_by_country, name='order_list_by_country'),
     path('sales/countries/<str:country_code>/', views.order_list_by_country, name='order_list_by_country'),
