@@ -11,7 +11,7 @@
       <th scope="col">{% trans 'Image' %}</th>
       <th scope="col">{% trans 'isbn' %}</th>
       <th scope="col">{% trans 'Name' %}</th>
-      <th scope="col">{% trans 'Author' %}</th>
+      <th scope="col">{% trans 'Variation' %}</th>
       <th scope="col">{% trans 'Publisher' %}</th>
       <th scope="col">{% trans 'Quantity' %}</th>
       <th scope="col">{% trans 'Price' %}<span class="small"> ({% trans 'Rial' %})</span></th>
@@ -26,7 +26,7 @@
       <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="auto" height="40px"></td>
       <td>{{ order_line.product.isbn }}</td>
       <td>{{ order_line.product }}</td>
-      <td>{% if order_line.product.author %}{{ order_line.product.author }}{% endif%}</td>
+      <td>{% if 'used' in order_line.variation %}{% trans "Used" %}{% else %}{% trans "New" %}{% endif %}</td>
       <td>{{ order_line.product.publisher }}</td>
       <td>{{ order_line.quantity }}</td>
       <td>{{ order_line.get_cost | intcomma:False }}</td>

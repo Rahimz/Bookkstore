@@ -71,31 +71,6 @@ def orders(request, period='all', channel='all', filter=None):
         end_date = datetime.strptime(period_list[1], "%Y%m%d").date()
         orders = orders.filter(created__date__gte=start_date, created__date__lte=end_date)
 
-    # # list of all approved or paid orders
-    # if channel == 'all' and period == 'all':
-    #     orders = Order.objects.filter(
-    #         Q(status='approved') | Q(paid=True)).filter(active=True)
-
-    # # 'mix' channel means we need the orders that should be collected
-    # if channel == 'mix' and period == 'all':
-    #     # orders = Order.objects.filter(
-    #     #     Q(status='approved') | Q(paid=True)).exclude(channel='cashier')
-    #     orders = Order.objects.exclude(
-    #         channel='cashier').exclude(status='draft').filter(active=True)
-    #
-    # # staff/orders/30/mix
-    # elif channel == 'mix' and period not in ('all', 'mix'):
-    #     orders = Order.objects.filter(
-    #         Q(status='approved') | Q(paid=True)).exclude(channel='cashier').filter(approved_date__gte=datetime.now() - timedelta(int(period))).filter(active=True)
-    #
-    # # staff/orders/365/cashier
-    # elif channel == 'cashier' and period not in ('all', 'mix'):
-    #     orders = Order.objects.filter(
-    #         Q(status='approved') | Q(paid=True)).filter(channel='cashier').filter(approved_date__gte=datetime.now() - timedelta(int(period))).filter(active=True)
-    # else:
-    #     orders = Order.objects.filter(
-    #         Q(status='approved') | Q(paid=True)).filter(active=True)
-
     if request.method == 'POST':
         search_form = OrderSearchForm(request.POST)
         if search_form.is_valid():

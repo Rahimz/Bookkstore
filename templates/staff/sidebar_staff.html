@@ -37,14 +37,18 @@
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='all' channel='all' %}">{% trans 'All approved orders' %}</a>
   <br>
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='all' channel='collectable' %}">{% trans 'Collectable orders' %}</a>
+  {% if yesterday %}
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period=yesterday channel='collectable' %}">{% trans 'Last day' %}</a>
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period=last_week channel='collectable' %}">{% trans 'Last week' %}</a>
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period=last_month channel='collectable' %}">{% trans 'Last month' %}</a>
+  {% endif %}
 
   <br>
+  {% if channel_list %}
   {% for channel in channel_list %}
     <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='all' channel=channel %}">{{ channel }}</a>
   {% endfor %}
+  {% endif %}
 
   <br>
   {% if request.user.is_superuser or request.user.is_manager %}
