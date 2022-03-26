@@ -484,7 +484,6 @@ def product_export_excel(request, filter='all'):
 def used_product_before_5(request):
     point = datetime.strptime('2022 3 5 16 11 26', "%Y %m %d %H %M %S")
     products = OrderLine.objects.filter(active=True).filter(created__lte=point).filter(variation__contains='used')
-    print(len(products))
 
     wb = openpyxl.Workbook()
     sheet = wb.active
@@ -500,6 +499,9 @@ def used_product_before_5(request):
         'Price used',
         'Stock used',
         'OrderLine quantity',
+        'date',
+        'History',
+        'Sold quantity',
     ]
     # writing header
     for i in range(len(headers)):
@@ -510,7 +512,17 @@ def used_product_before_5(request):
 
 
     # making body
-    for count , item in enumerate(products):
+    for count , item in enumerate(products.iterator()):
+        item_history = item.product.history.all()
+        # item_history_as = item.product.history.as_of(point)
+        sold_quantity = OrderLine.objects.filter(product__id=item.product.id).filter(variation__contains='used').aggregate(total=Sum('quantity'))['total']
+        # print(type(item_history_as), item_history_as)
+        history_list =[]
+        for line in item_history:
+
+            history = f"{line.stock_used}"
+            history_list.append(history)
+
         title_list = [
             count,
             item.product.id,
@@ -521,7 +533,10 @@ def used_product_before_5(request):
             item.product.stock,
             item.product.price_used,
             item.product.stock_used,
-            item.quantity
+            item.quantity,
+            item.created.date().strftime("%Y%m%d"),
+            ','.join(history_list),
+            sold_quantity
         ]
         # print (item.product.id, item.product.name)
         # writing body
