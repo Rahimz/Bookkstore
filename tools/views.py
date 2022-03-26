@@ -316,7 +316,7 @@ def product_export_excel(request, filter='all'):
     if filter == 'used-noprice':
         products = Product.objects.filter(available=True).exclude(product_type='craft').filter(stock_used__gte=1).filter(price_used=0).order_by('name')
     elif filter == 'used-all':
-        products = Product.objects.filter(available=True).exclude(product_type='craft').filter(stock_used__gte=1).order_by('name')
+        products = Product.objects.filter(available=True).exclude(product_type='craft').filter(Q(stock_used__gte=1) | Q(price_used__gte=1)).order_by('name')
     else:
         # export all product books and crafts
         products = Product.objects.filter(available=True).exclude(product_type='craft').order_by('name')
