@@ -21,7 +21,7 @@
     <div class="col-md-11">
       <h2>{% trans 'List of products' %}</h2>
       <div class="my-3">
-        {% if request.user.is_superuser or request.user.is_manager %}
+        {% if request.user.is_superuser %}
         <p><a href="{% url 'tools:product_export_excel' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'All products' %} <span
               class="text-danger">{% trans 'Could be very slow or it may crash' %}</span></a></p>
         <p><a href="{% url 'tools:used_noprice_export_excel' filter='used-noprice' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'Used products without price' %}</a></p>

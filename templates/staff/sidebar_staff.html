@@ -26,7 +26,7 @@
 <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'client_add' %}/#addClient" onclick="return popitup('/account/client_add/#addClient')" class="">{% trans 'Add client' %}</a>
 <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'zarinpal:payment_create' %}">{% trans 'Create a payment link' %}</a>
 <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'zarinpal:payment_list' %}">{% trans 'Payment list' %}</a>
-<a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='365' channel='cashier' %}">{% trans 'Cashier sales' %}</a>
+<a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='all' channel='cashier' %}">{% trans 'Cashier sales' %}</a>
 <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list_by_country' %}">{% trans 'Sales by country' %}</a>
 {% if request.user.is_superuser %}
 <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:sales_by_vendor' %}">{% trans 'Sales by vendor' %}</a>
@@ -36,13 +36,20 @@
 {% if barName == "orders" %}
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='all' channel='all' %}">{% trans 'All approved orders' %}</a>
   <br>
-  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='all' channel='mix' %}">{% trans 'Collectable orders' %}</a>
-  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='1' channel='mix' %}">{% trans 'Last day' %}</a>
-  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='7' channel='mix' %}">{% trans 'Last week' %}</a>
-  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='30' channel='mix' %}">{% trans 'Last month' %}</a>
-  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='365' channel='mix' %}">{% trans 'Last year' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='all' channel='collectable' %}">{% trans 'Collectable orders' %}</a>
+  {% if yesterday %}
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period=yesterday channel='collectable' %}">{% trans 'Last day' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period=last_week channel='collectable' %}">{% trans 'Last week' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period=last_month channel='collectable' %}">{% trans 'Last month' %}</a>
+  {% endif %}
+
   <br>
-  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='365' channel='cashier' %}">{% trans 'Cashier orders' %}</a>
+  {% if channel_list %}
+  {% for channel in channel_list %}
+    <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:order_list' period='all' channel=channel %}">{{ channel }}</a>
+  {% endfor %}
+  {% endif %}
+
   <br>
   {% if request.user.is_superuser or request.user.is_manager %}
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:full_shipped_list' %}">{% trans 'Full shipped list' %}</a>

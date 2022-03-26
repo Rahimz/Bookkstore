@@ -13,6 +13,7 @@ from django.core.files.base import ContentFile
 from django.core.files import File
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
+from django.db.models import Sum
 
 
 import weasyprint
@@ -109,7 +110,9 @@ def order_export_excel(request, criteria, date=None):
         orders = Order.objects.filter(active=True).filter(full_shipped_date__date=date).filter(full_shipped_date__isnull=False).filter(shipping_method='bike_delivery')
     else:
         if criteria in ('draft', 'approved' ):
-            orders = Order.objects.filter(status=criteria).filter(active=True)
+            # we use orders list in session to export only nedded orders
+            orders = Order.objects.filter(id__in=request.session['orders'])
+            print(orders.count())
         elif criteria == 'full':
             orders = Order.objects.filter(active=True).filter(full_shipped_date__isnull=False).filter(shipping_method='bike_delivery')
 
@@ -130,13 +133,17 @@ def order_export_excel(request, criteria, date=None):
         'Shipping address',
         'Shipping method',
         'Shipping cost',
+        'Shipping time note',
         'Shipping status',
         'Shipped code',
+        'Full shipped date',
+        'Is packaged',
         'Total cost',
         'Total cost after discount',
         'Order discount',
         'Payable',
         'Is paid',
+        'Paid by credit',
         'Customer notes',
         'Quantity',
         'Weight',
@@ -147,7 +154,7 @@ def order_export_excel(request, criteria, date=None):
         c = sheet.cell(row = 1, column = i + 1 )
         c.value = headers[i]
 
-
+    # writing body
     for count , order in enumerate(orders):
         order.save()
         title_list = [
@@ -164,13 +171,17 @@ def order_export_excel(request, criteria, date=None):
             order.shipping_address.get_full_address() if order.shipping_address else '',
             order.shipping_method,
             order.shipping_cost,
+            order.shipping_time,
             order.shipping_status,
             order.shipped_code if order.shipped_code else '',
+            hij_strf_date(greg_to_hij_date(order.full_shipped_date.date()), '%-d %B %Y') if order.full_shipped_date else '',
+            order.is_packaged,
             order.total_cost,
             order.total_cost_after_discount,
             order.discount,
             order.payable,
             order.paid,
+            order.pay_by_credit,
             order.customer_note,
             order.quantity,
             order.weight,
@@ -186,10 +197,11 @@ def order_export_excel(request, criteria, date=None):
         filename = 'media/excel/full-shipped-orders-{}.xlsx'.format(datetime.now().isoformat(sep='-'))
 
     wb.save(filename)
+
+    request.session['orders'] = None
+
     excel = open(filename, 'rb')
     response = FileResponse(excel)
-
-
     return response
 
 
@@ -297,12 +309,17 @@ def notif_email_to_managers(subject, message, recivers):
 
 def product_export_excel(request, filter='all'):
 
+    # check the ordelines for sold product
+    orderline_id_list = OrderLine.objects.filter(active=True).exclude(product__product_type='craft').values_list('product__id', flat=True)
+
+    # if statement to export two kind of excel file with one code block
     if filter == 'used-noprice':
-        products = Product.objects.filter(available=True).filter(stock_used__gte=1).filter(price_used=0).order_by('name')
+        products = Product.objects.filter(available=True).exclude(product_type='craft').filter(stock_used__gte=1).filter(price_used=0).order_by('name')
     elif filter == 'used-all':
-        products = Product.objects.filter(available=True).filter(stock_used__gte=1).order_by('name')
+        products = Product.objects.filter(available=True).exclude(product_type='craft').filter(stock_used__gte=1).order_by('name')
     else:
-        products = Product.objects.filter(available=True).order_by('name')
+        # export all product books and crafts
+        products = Product.objects.filter(available=True).exclude(product_type='craft').order_by('name')
 
     wb = openpyxl.Workbook()
     sheet = wb.active
@@ -320,6 +337,8 @@ def product_export_excel(request, filter='all'):
             'Not in market',
             'Page number',
             'Weight',
+            'Sold in order No.',
+            'Sold quantity',
         ]
     else:
         headers = [
@@ -374,9 +393,17 @@ def product_export_excel(request, filter='all'):
 
 
     # writing body
-    for count , product in enumerate(products):
+    for count , product in enumerate(products.iterator()):
         # product.save()
         if filter in ('used-noprice', 'used-all'):
+            # check wether the product is sold or not
+            sold_order_list = ''
+            sold_quantity = 0
+            if product.id in orderline_id_list:
+                sold_order_list = OrderLine.objects.filter(product__id=product.id).values_list('order__id', flat=True)
+                sold_order_list = ','.join([str(item) for item in sold_order_list])
+                sold_quantity = OrderLine.objects.filter(product__id=product.id).aggregate(total=Sum('quantity'))['total']
+
             title_list = [
                 count,
                 product.id,
@@ -390,6 +417,8 @@ def product_export_excel(request, filter='all'):
                 True if product.about=='*' else False,
                 product.page_number,
                 product.weight,
+                sold_order_list,
+                sold_quantity,
             ]
         else:
             title_list = [
@@ -455,7 +484,6 @@ def product_export_excel(request, filter='all'):
 def used_product_before_5(request):
     point = datetime.strptime('2022 3 5 16 11 26', "%Y %m %d %H %M %S")
     products = OrderLine.objects.filter(active=True).filter(created__lte=point).filter(variation__contains='used')
-    print(len(products))
 
     wb = openpyxl.Workbook()
     sheet = wb.active
@@ -471,6 +499,9 @@ def used_product_before_5(request):
         'Price used',
         'Stock used',
         'OrderLine quantity',
+        'date',
+        'History',
+        'Sold quantity',
     ]
     # writing header
     for i in range(len(headers)):
@@ -481,7 +512,17 @@ def used_product_before_5(request):
 
 
     # making body
-    for count , item in enumerate(products):
+    for count , item in enumerate(products.iterator()):
+        item_history = item.product.history.all()
+        # item_history_as = item.product.history.as_of(point)
+        sold_quantity = OrderLine.objects.filter(product__id=item.product.id).filter(variation__contains='used').aggregate(total=Sum('quantity'))['total']
+        # print(type(item_history_as), item_history_as)
+        history_list =[]
+        for line in item_history:
+
+            history = f"{line.stock_used}"
+            history_list.append(history)
+
         title_list = [
             count,
             item.product.id,
@@ -492,7 +533,10 @@ def used_product_before_5(request):
             item.product.stock,
             item.product.price_used,
             item.product.stock_used,
-            item.quantity
+            item.quantity,
+            item.created.date().strftime("%Y%m%d"),
+            ','.join(history_list),
+            sold_quantity
         ]
         # print (item.product.id, item.product.name)
         # writing body

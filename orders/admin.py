@@ -16,11 +16,11 @@ class PurchaseLineInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     list_display = [
         'id', 'client', 'user',
-        'paid', 'active', 'shipping_status'
+        'paid', 'active', 'shipping_status', 'channel'
     ]
-    list_filter = ['active', 'paid', 'status', 'shipping_status', 'approved_date',  ]
+    list_filter = ['active', 'paid', 'status', 'shipping_status', 'approved_date', 'channel' ]
     # list_editable = ['paid', ]
-    search_fields = ['client__first_name', 'client__last_name', 'pk', 'user__first_name', 'user__last_name']
+    search_fields = ['client__first_name', 'client__last_name', 'pk', 'user__first_name', 'user__last_name', 'channel']
     inlines = [OrderLineInline]
 
     class Meta:
