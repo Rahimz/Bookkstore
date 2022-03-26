@@ -112,6 +112,9 @@ def orders(request, period='all', channel='all', filter=None):
     if filter:
         orders = orders.order_by(filter)
 
+    # order statics
+    orders_statics = orders.aggregate(cost=Sum('payable'), quantity=Sum('quantity'))
+
     # pagination
     paginator = Paginator(orders, 20)  # 20 order in each page
     page = request.GET.get('page')
@@ -137,6 +140,7 @@ def orders(request, period='all', channel='all', filter=None):
             'last_week': last_week,
             'last_month': last_month,
             'channel_list': channel_list,
+            'orders_statics': orders_statics,
         }
     )
 
