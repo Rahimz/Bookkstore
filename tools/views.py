@@ -110,7 +110,9 @@ def order_export_excel(request, criteria, date=None):
         orders = Order.objects.filter(active=True).filter(full_shipped_date__date=date).filter(full_shipped_date__isnull=False).filter(shipping_method='bike_delivery')
     else:
         if criteria in ('draft', 'approved' ):
-            orders = Order.objects.filter(status=criteria).filter(active=True)
+            # we use orders list in session to export only nedded orders
+            orders = Order.objects.filter(id__in=request.session['orders'])
+            print(orders.count())
         elif criteria == 'full':
             orders = Order.objects.filter(active=True).filter(full_shipped_date__isnull=False).filter(shipping_method='bike_delivery')
 
@@ -131,13 +133,17 @@ def order_export_excel(request, criteria, date=None):
         'Shipping address',
         'Shipping method',
         'Shipping cost',
+        'Shipping time note',
         'Shipping status',
         'Shipped code',
+        'Full shipped date',
+        'Is packaged',
         'Total cost',
         'Total cost after discount',
         'Order discount',
         'Payable',
         'Is paid',
+        'Paid by credit',
         'Customer notes',
         'Quantity',
         'Weight',
@@ -148,7 +154,7 @@ def order_export_excel(request, criteria, date=None):
         c = sheet.cell(row = 1, column = i + 1 )
         c.value = headers[i]
 
-
+    # writing body
     for count , order in enumerate(orders):
         order.save()
         title_list = [
@@ -165,13 +171,17 @@ def order_export_excel(request, criteria, date=None):
             order.shipping_address.get_full_address() if order.shipping_address else '',
             order.shipping_method,
             order.shipping_cost,
+            order.shipping_time,
             order.shipping_status,
             order.shipped_code if order.shipped_code else '',
+            hij_strf_date(greg_to_hij_date(order.full_shipped_date.date()), '%-d %B %Y') if order.full_shipped_date else '',
+            order.is_packaged,
             order.total_cost,
             order.total_cost_after_discount,
             order.discount,
             order.payable,
             order.paid,
+            order.pay_by_credit,
             order.customer_note,
             order.quantity,
             order.weight,
@@ -187,10 +197,11 @@ def order_export_excel(request, criteria, date=None):
         filename = 'media/excel/full-shipped-orders-{}.xlsx'.format(datetime.now().isoformat(sep='-'))
 
     wb.save(filename)
+
+    request.session['orders'] = None
+
     excel = open(filename, 'rb')
     response = FileResponse(excel)
-
-
     return response
 
 

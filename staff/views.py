@@ -90,6 +90,7 @@ def orders(request, period='all', channel='all', filter=None):
     # order statics
     orders_statics = orders.aggregate(cost=Sum('payable'), quantity=Sum('quantity'))
 
+    request.session['orders'] = list(orders.values_list('id', flat=True))
     # pagination
     paginator = Paginator(orders, 20)  # 20 order in each page
     page = request.GET.get('page')
@@ -101,6 +102,7 @@ def orders(request, period='all', channel='all', filter=None):
     except EmptyPage:
         # If page is out of range deliver last page of results
         orders = paginator.page(paginator.num_pages)
+
 
     return render(
         request,
