@@ -13,6 +13,7 @@ from django.core.files.base import ContentFile
 from django.core.files import File
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
+from django.db.models import Sum
 
 
 import weasyprint
@@ -297,12 +298,17 @@ def notif_email_to_managers(subject, message, recivers):
 
 def product_export_excel(request, filter='all'):
 
+    # check the ordelines for sold product
+    orderline_id_list = OrderLine.objects.filter(active=True).exclude(product__product_type='craft').values_list('product__id', flat=True)
+
+    # if statement to export two kind of excel file with one code block
     if filter == 'used-noprice':
-        products = Product.objects.filter(available=True).filter(stock_used__gte=1).filter(price_used=0).order_by('name')
+        products = Product.objects.filter(available=True).exclude(product_type='craft').filter(stock_used__gte=1).filter(price_used=0).order_by('name')
     elif filter == 'used-all':
-        products = Product.objects.filter(available=True).filter(stock_used__gte=1).order_by('name')
+        products = Product.objects.filter(available=True).exclude(product_type='craft').filter(stock_used__gte=1).order_by('name')
     else:
-        products = Product.objects.filter(available=True).order_by('name')
+        # export all product books and crafts
+        products = Product.objects.filter(available=True).exclude(product_type='craft').order_by('name')
 
     wb = openpyxl.Workbook()
     sheet = wb.active
@@ -320,6 +326,8 @@ def product_export_excel(request, filter='all'):
             'Not in market',
             'Page number',
             'Weight',
+            'Sold in order No.',
+            'Sold quantity',
         ]
     else:
         headers = [
@@ -374,9 +382,17 @@ def product_export_excel(request, filter='all'):
 
 
     # writing body
-    for count , product in enumerate(products):
+    for count , product in enumerate(products.iterator()):
         # product.save()
         if filter in ('used-noprice', 'used-all'):
+            # check wether the product is sold or not
+            sold_order_list = ''
+            sold_quantity = 0
+            if product.id in orderline_id_list:
+                sold_order_list = OrderLine.objects.filter(product__id=product.id).values_list('order__id', flat=True)
+                sold_order_list = ','.join([str(item) for item in sold_order_list])
+                sold_quantity = OrderLine.objects.filter(product__id=product.id).aggregate(total=Sum('quantity'))['total']
+
             title_list = [
                 count,
                 product.id,
@@ -390,6 +406,8 @@ def product_export_excel(request, filter='all'):
                 True if product.about=='*' else False,
                 product.page_number,
                 product.weight,
+                sold_order_list,
+                sold_quantity,
             ]
         else:
             title_list = [
