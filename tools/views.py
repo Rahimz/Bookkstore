@@ -13,7 +13,7 @@ from django.core.files.base import ContentFile
 from django.core.files import File
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
-from django.db.models import Sum
+from django.db.models import Sum, Count
 
 
 import weasyprint
@@ -727,3 +727,20 @@ def export_excel_sold_products(request, date=None, days=None):
     response = FileResponse(excel)
 
     return response
+
+
+@staff_member_required
+def duplicate_book_name(request):
+    products_list = Product.objects.filter(available=True).exclude(product_type='craft').values('name').annotate(Count('id')).order_by().filter(id__count__gt=1)
+    products_list_count = len(products_list)
+    products = Product.objects.filter(name__in=[item['name'] for item in products_list]).order_by('name')
+    products_count = products.count()
+    return render(
+        request,
+        'staff/duplicate_book_name.html',
+        {
+            'products': products,
+            'products_list_count': products_list_count,
+            'products_count': products_count,
+        }
+    )

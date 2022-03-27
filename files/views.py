@@ -1391,6 +1391,7 @@ def used_book_update_2(request, file_slug, check='check'):
                     database_product.available = False
                     database_product.available_in_store = False
                     database_product.available_online = False
+                    database_product.save()
                 else:
                     database_product.price_used = price_used[0]
                     database_product.has_other_prices = True
