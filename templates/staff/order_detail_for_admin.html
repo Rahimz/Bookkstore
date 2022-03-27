@@ -54,7 +54,7 @@
         </tr>
         <tr>
           <td>{%trans 'Paid' %}</td>
-          <td>{% if order.paid %}&#10004{% else %}&#10008{% endif %}</td>
+          <td>{% if order.paid %}<i class="fa fa-check"></i>{% else %}<i class="fa fa-times"></i>{% endif %}</td>
         </tr>
         <tr>
           <td>{%trans 'Order quantity' %}</td>
@@ -62,7 +62,7 @@
         </tr>
         <tr>
           <td>{%trans 'Is packacge' %}</td>
-          <td>{% if order.is_packaged %}&#10004{% else %}&#10008{% endif %}</td>
+          <td>{% if order.is_packaged %}<i class="fa fa-check"></i>{% else %}<i class="fa fa-times"></i>{% endif %}</td>
         </tr>
         <tr>
           <td>{%trans 'Packacged quantity' %}</td>
