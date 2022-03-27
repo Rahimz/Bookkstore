@@ -74,7 +74,7 @@
               {#<!-- we add this if statement to show ther is not any new version of this book -->#}
               <td>{% if product.about == '*' %}{% trans 'Not in market' %}{% else %}{{ product.price | intcomma:False }}{% endif %}</td>
               <td><a href="{% url 'staff:product_price_show' product.id %}" onclick="return popitup('/staff/products/price-show/{{ product.id }}/')" class="btn btn-sm btn-outline-secondary">{{ product.get_other_stock }}</a></td>
-              <td>{% if product.has_other_prices %}&#10004{% endif %}</td>
+              <td>{% if product.has_other_prices %}<i class="fa fa-check"></i>{% endif %}</td>
               <td>{{ product.price_used | intcomma:False }}</td>
               <td>{{ product.stock_used  }}</td>
               {#<td>{{ product.store_positon }}</td>#}

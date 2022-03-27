@@ -54,9 +54,9 @@
             <td>{{ order.get_total_weight }}</td>
 
             <td>{% if order.approved_date %}{{ order.get_fa_approved }}{% endif %}</td>
-            <td>{% if order.paid %}&#10004{% else %}&#10008{% endif %}</td>
+            <td>{% if order.paid %}<i class="fa fa-check"></i>{% else %}<i class="fa fa-times"></i>{% endif %}</td>
             <td>{{ order.get_shipping_method_display }}</td>
-            <td>{% if order.shipping_status == "full" %}&#10004 {% if order.shipped_code %}- {{ order.shipped_code }}{% endif %}{% else %}<a href="{% url 'staff:order_shipped' order.id %}" onclick="return popitup('/staff/orders/shipping/{{ order.id }}')" class="btn btn-outline-secondary">{% if order.shipping_status == "semi" %}{% trans 'Semi shipped' %}{% else %}{% trans 'Shipping' %}{% endif %}</a>{% endif %}</td>
+            <td>{% if order.shipping_status == "full" %}<i class="fa fa-check"></i> {% if order.shipped_code %}- {{ order.shipped_code }}{% endif %}{% else %}<a href="{% url 'staff:order_shipped' order.id %}" onclick="return popitup('/staff/orders/shipping/{{ order.id }}')" class="btn btn-outline-secondary">{% if order.shipping_status == "semi" %}{% trans 'Semi shipped' %}{% else %}{% trans 'Shipping' %}{% endif %}</a>{% endif %}</td>
             <td>{% if order.full_shipped_date %}{{ order.get_fa_shipped }}{% endif %}</td>
             <td>{{ order.shipping_cost | intcomma:False }}</td>
 

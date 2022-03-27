@@ -48,7 +48,7 @@
         </tr>
         <tr>
           <td>{%trans 'Paid' %}</td>
-          <td>{% if order.paid %}&#10004{% else %}&#10008{% endif %}</td>
+          <td>{% if order.paid %}<i class="fa fa-check"></i>{% else %}<i class="fa fa-times"></i>{% endif %}</td>
         </tr>
         <tr>
           <td>{%trans 'Note' %}</td>
