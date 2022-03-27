@@ -31,4 +31,6 @@ urlpatterns = [
     path('upload/add-craft/<slug:file_slug>/<str:check>/', views.add_crafts, name='add_crafts'),
 
     path('upload/update-used-book/<slug:file_slug>/<str:check>/', views.used_book_update, name='used_book_update'),
+
+    path('upload/update-used-book-2/<slug:file_slug>/<str:check>/', views.used_book_update_2, name='used_book_update_2'),
 ]

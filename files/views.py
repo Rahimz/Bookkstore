@@ -1332,3 +1332,89 @@ def add_used_book_with_no_isbn_2(request, file_slug, check='check'):
 
          }
     )
+
+
+
+def used_book_update_2(request, file_slug, check='check'):
+    duplicate_price = []
+    not_in_database = []
+    number_of_added_object = 0
+    remove_book = []
+
+    if check == 'add':
+        current_import_session = ImportSession.objects.create(user=request.user,)
+
+    # excel file handle
+    file_object = get_object_or_404(FileObject, slug=file_slug)
+
+    myfile = File(file_object)
+
+    path = file_object.file.path
+    with open(path, 'rb') as f:
+        # Load excel workbook
+        wb = load_workbook(f)
+        ws = wb.active
+        row_count = ws.max_row
+
+        # a loop for scrape the excel file
+        # read the data in cells
+        for i in range(2, row_count):
+        # for i in range(2, 15):
+            in_db = False
+            not_in_db = False
+
+            row = ws['A'+str(i):'M'+str(i)]
+
+            product_id = ws['B' + str(i)].value,
+            name = ws['C' + str(i)].value,
+            isbn = ws['D' + str(i)].value,
+            price_used = ws['H' + str(i)].value,
+
+            # print(price[0], type(price[0]))
+
+            if not price_used[0]:
+                price_used = [0,]
+
+            # print(price[0], type(price[0]))
+            if price_used[0] == 'xx':
+                remove_book.append( (product_id[0], name[0],isbn[0]) )
+
+
+            database_product = Product.objects.get(pk=product_id[0])
+            # check for duplicate prices
+            if database_product.price_used and database_product.price_used != price_used[0]:
+                duplicate_price.append((product_id, database_product.price_used, price_used[0]))
+
+
+            if check == 'add':
+                if price_used[0] == 'xx':
+                    database_product.available = False
+                    database_product.available_in_store = False
+                    database_product.available_online = False
+                else:
+                    database_product.price_used = price_used[0]
+                    database_product.has_other_prices = True
+                    database_product.save()
+                    number_of_added_object += 1
+
+    if check == 'add':
+        current_import_session.quantity = number_of_added_object
+        current_import_session.save()
+    # if current_import_session.quantity == 0:
+    #     current_import_session.delete()
+    # print('isbn_in_database', len(isbn_in_database))
+    print('duplicate_price', len(duplicate_price))
+    print('remove_book', len(remove_book))
+    return render(
+        request,
+        'files/used_book_update_2.html',
+        {
+            'file': myfile,
+            'file_object': file_object,
+            'row_count': row_count,
+            'duplicate_price': duplicate_price,
+            'not_in_database': not_in_database,
+            'remove_book': remove_book,
+
+         }
+    )
