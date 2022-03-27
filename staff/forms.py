@@ -21,7 +21,7 @@ class ProductCreateForm(forms.ModelForm):
             # 'price_1', 'stock_1', 'price_2', 'stock_2', 'price_3', 'stock_3', 'price_4', 'stock_4', 'price_5', 'stock_5',
             # 'price_used', 'stock_used',
             'store_positon', 'admin_note',
-            'available', 'available_in_store', 'available_online',
+            # 'available', 'available_in_store', 'available_online',
         ]
         labels = {
             'name':_('Name'), 'isbn': _('ISBN'), 'collection_name': _('Collection name'), 'number_in_collection': _('Number in collection'),
