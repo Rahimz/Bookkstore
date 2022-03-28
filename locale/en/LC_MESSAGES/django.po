@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-27 12:30+0430\n"
+"POT-Creation-Date: 2022-03-28 16:39+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,7 +36,7 @@ msgstr ""
 #: templates/shop/product_detail.html:30 templates/staff/_order_table.html:13
 #: templates/staff/collection_management.html:44
 #: templates/staff/crafts/craft_list.html:50
-#: templates/staff/duplicate_book_name.html:37
+#: templates/staff/duplicate_book_name.html:43
 #: templates/staff/invoice_create.html:134
 #: templates/staff/order_shipping.html:71 templates/staff/products.html:53
 #: templates/staff/purchase/_purchase_list_block.html:13
@@ -224,7 +224,7 @@ msgstr ""
 #: templates/_base.html:75 templates/_base_files_app.html:45
 #: templates/shop/store_book_search.html:72
 #: templates/staff/_order_table.html:29
-#: templates/staff/duplicate_book_name.html:42 templates/staff/products.html:58
+#: templates/staff/duplicate_book_name.html:48 templates/staff/products.html:58
 #: templates/staff/sold_products.html:133
 #: templates/tools/pdf/invoice_pdf.html:100
 #: templates/tools/pdf/print_invoice.html:100
@@ -393,7 +393,7 @@ msgstr ""
 
 #: search/forms.py:34 staff/forms.py:27 templates/shop/product_detail.html:89
 #: templates/staff/collection_management.html:43
-#: templates/staff/duplicate_book_name.html:36
+#: templates/staff/duplicate_book_name.html:42
 #: templates/staff/product_stock_price_edit.html:30
 #: templates/staff/products.html:52 templates/staff/sold_products.html:104
 #: templates/staff/used_book_prices.html:26
@@ -474,7 +474,7 @@ msgstr ""
 msgid "Cover type"
 msgstr ""
 
-#: staff/forms.py:32 templates/staff/duplicate_book_name.html:46
+#: staff/forms.py:32 templates/staff/duplicate_book_name.html:52
 #: templates/staff/product_stock_price_edit.html:38
 #: templates/staff/used_book_prices.html:34
 msgid "Page number"
@@ -486,7 +486,7 @@ msgstr ""
 #: templates/shop/store_book_search.html:75
 #: templates/staff/_order_table.html:15
 #: templates/staff/collection_management.html:47
-#: templates/staff/duplicate_book_name.html:45
+#: templates/staff/duplicate_book_name.html:51
 #: templates/staff/invoice_create.html:135
 #: templates/staff/order_shipping.html:73
 #: templates/staff/product_stock_price_edit.html:34
@@ -593,7 +593,7 @@ msgstr ""
 msgid "Used price"
 msgstr ""
 
-#: staff/forms.py:133 templates/staff/duplicate_book_name.html:43
+#: staff/forms.py:133 templates/staff/duplicate_book_name.html:49
 #: templates/staff/products.html:59
 msgid "Used stock"
 msgstr ""
@@ -1098,7 +1098,7 @@ msgstr ""
 #: templates/account/clients/client_list.html:36
 #: templates/staff/collection_management.html:42
 #: templates/staff/crafts/craft_list.html:47
-#: templates/staff/duplicate_book_name.html:34 templates/staff/products.html:50
+#: templates/staff/duplicate_book_name.html:40 templates/staff/products.html:50
 msgid "Edit"
 msgstr ""
 
@@ -1193,7 +1193,7 @@ msgstr ""
 #: templates/staff/_order_table.html:17
 #: templates/staff/collection_management.html:48
 #: templates/staff/crafts/craft_list.html:51
-#: templates/staff/duplicate_book_name.html:39
+#: templates/staff/duplicate_book_name.html:45
 #: templates/staff/invoice_create.html:139
 #: templates/staff/order_shipping.html:76
 #: templates/staff/product_price_show.html:24 templates/staff/products.html:55
@@ -1708,7 +1708,7 @@ msgstr ""
 #: templates/shop/product_detail.html:118
 #: templates/shop/product_detail.html:124
 #: templates/staff/crafts/craft_list.html:52
-#: templates/staff/duplicate_book_name.html:38
+#: templates/staff/duplicate_book_name.html:44
 #: templates/staff/product_price_show.html:25 templates/staff/products.html:54
 #: templates/staff/used_book_prices.html:48
 msgid "Stock"
@@ -1873,23 +1873,31 @@ msgstr ""
 msgid "List of duplicate products"
 msgstr ""
 
-#: templates/staff/duplicate_book_name.html:24
+#: templates/staff/duplicate_book_name.html:26
 msgid "The count of duplicate names"
 msgstr ""
 
-#: templates/staff/duplicate_book_name.html:26
-msgid "The count of duplicate rows"
+#: templates/staff/duplicate_book_name.html:28
+msgid "The count of all rows"
 msgstr ""
 
-#: templates/staff/duplicate_book_name.html:40 templates/staff/products.html:56
+#: templates/staff/duplicate_book_name.html:30
+msgid "The count of same products"
+msgstr ""
+
+#: templates/staff/duplicate_book_name.html:32
+msgid "Similar products count"
+msgstr ""
+
+#: templates/staff/duplicate_book_name.html:46 templates/staff/products.html:56
 msgid "Other stock"
 msgstr ""
 
-#: templates/staff/duplicate_book_name.html:41 templates/staff/products.html:57
+#: templates/staff/duplicate_book_name.html:47 templates/staff/products.html:57
 msgid "Other prices"
 msgstr ""
 
-#: templates/staff/duplicate_book_name.html:59
+#: templates/staff/duplicate_book_name.html:65
 #: templates/staff/product_stock_price_edit.html:45
 #: templates/staff/products.html:75 templates/staff/used_book_prices.html:41
 msgid "Not in market"
@@ -2489,12 +2497,12 @@ msgstr ""
 msgid "Create craft product"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:17
-msgid "Export publishers"
+#: templates/staff/sidebar_staff.html:16
+msgid "Duplicate books"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:20
-msgid "Duplicate books"
+#: templates/staff/sidebar_staff.html:19
+msgid "Export publishers"
 msgstr ""
 
 #: templates/staff/sidebar_staff.html:26

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-27 12:30+0430\n"
-"PO-Revision-Date: 2022-03-27 12:31+0430\n"
+"POT-Creation-Date: 2022-03-28 16:39+0430\n"
+"PO-Revision-Date: 2022-03-28 16:40+0430\n"
 "Last-Translator: رحیم  <rahim.aghareb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -37,7 +37,7 @@ msgstr "پسوردها یکسان نیستند"
 #: templates/shop/product_detail.html:30 templates/staff/_order_table.html:13
 #: templates/staff/collection_management.html:44
 #: templates/staff/crafts/craft_list.html:50
-#: templates/staff/duplicate_book_name.html:37
+#: templates/staff/duplicate_book_name.html:43
 #: templates/staff/invoice_create.html:134
 #: templates/staff/order_shipping.html:71 templates/staff/products.html:53
 #: templates/staff/purchase/_purchase_list_block.html:13
@@ -225,7 +225,7 @@ msgstr "نو"
 #: templates/_base.html:75 templates/_base_files_app.html:45
 #: templates/shop/store_book_search.html:72
 #: templates/staff/_order_table.html:29
-#: templates/staff/duplicate_book_name.html:42
+#: templates/staff/duplicate_book_name.html:48
 #: templates/staff/products.html:58 templates/staff/sold_products.html:133
 #: templates/tools/pdf/invoice_pdf.html:100
 #: templates/tools/pdf/print_invoice.html:100
@@ -395,7 +395,7 @@ msgstr "نام یا شماره تلفن"
 
 #: search/forms.py:34 staff/forms.py:27 templates/shop/product_detail.html:89
 #: templates/staff/collection_management.html:43
-#: templates/staff/duplicate_book_name.html:36
+#: templates/staff/duplicate_book_name.html:42
 #: templates/staff/product_stock_price_edit.html:30
 #: templates/staff/products.html:52 templates/staff/sold_products.html:104
 #: templates/staff/used_book_prices.html:26
@@ -477,7 +477,7 @@ msgstr "سایز"
 msgid "Cover type"
 msgstr "نوع جلد"
 
-#: staff/forms.py:32 templates/staff/duplicate_book_name.html:46
+#: staff/forms.py:32 templates/staff/duplicate_book_name.html:52
 #: templates/staff/product_stock_price_edit.html:38
 #: templates/staff/used_book_prices.html:34
 msgid "Page number"
@@ -489,7 +489,7 @@ msgstr "تعداد صفحه"
 #: templates/shop/store_book_search.html:75
 #: templates/staff/_order_table.html:15
 #: templates/staff/collection_management.html:47
-#: templates/staff/duplicate_book_name.html:45
+#: templates/staff/duplicate_book_name.html:51
 #: templates/staff/invoice_create.html:135
 #: templates/staff/order_shipping.html:73
 #: templates/staff/product_stock_price_edit.html:34
@@ -596,7 +596,7 @@ msgstr "موجودی اصلی"
 msgid "Used price"
 msgstr " قیمت دست‌دوم"
 
-#: staff/forms.py:133 templates/staff/duplicate_book_name.html:43
+#: staff/forms.py:133 templates/staff/duplicate_book_name.html:49
 #: templates/staff/products.html:59
 msgid "Used stock"
 msgstr "موجودی دست‌دوم"
@@ -1105,7 +1105,7 @@ msgstr "جستجو"
 #: templates/account/clients/client_list.html:36
 #: templates/staff/collection_management.html:42
 #: templates/staff/crafts/craft_list.html:47
-#: templates/staff/duplicate_book_name.html:34
+#: templates/staff/duplicate_book_name.html:40
 #: templates/staff/products.html:50
 msgid "Edit"
 msgstr "اصلاح"
@@ -1177,7 +1177,6 @@ msgid "History of blanace changes"
 msgstr "سابقه تغییرات اعتبار"
 
 #: templates/account/clients/user_history.html:61
-#| msgid "Client credit"
 msgid "Client history"
 msgstr "سابقه مشتری"
 
@@ -1204,7 +1203,7 @@ msgstr "شابک"
 #: templates/shop/product_detail.html:123 templates/staff/_order_table.html:17
 #: templates/staff/collection_management.html:48
 #: templates/staff/crafts/craft_list.html:51
-#: templates/staff/duplicate_book_name.html:39
+#: templates/staff/duplicate_book_name.html:45
 #: templates/staff/invoice_create.html:139
 #: templates/staff/order_shipping.html:76
 #: templates/staff/product_price_show.html:24 templates/staff/products.html:55
@@ -1734,7 +1733,7 @@ msgstr "تعداد صفحات"
 #: templates/shop/product_detail.html:118
 #: templates/shop/product_detail.html:124
 #: templates/staff/crafts/craft_list.html:52
-#: templates/staff/duplicate_book_name.html:38
+#: templates/staff/duplicate_book_name.html:44
 #: templates/staff/product_price_show.html:25 templates/staff/products.html:54
 #: templates/staff/used_book_prices.html:48
 msgid "Stock"
@@ -1899,29 +1898,39 @@ msgid "Not registered"
 msgstr "ثبت نشده"
 
 #: templates/staff/duplicate_book_name.html:22
-#| msgid "List of products"
 msgid "List of duplicate products"
 msgstr "لیست محصولات تکراری"
 
-#: templates/staff/duplicate_book_name.html:24
+#: templates/staff/duplicate_book_name.html:26
 msgid "The count of duplicate names"
 msgstr "تعداد نام‌های تکراری"
 
-#: templates/staff/duplicate_book_name.html:26
-msgid "The count of duplicate rows"
-msgstr "تعداد ردیف‌های دارای نام تکراری"
+#: templates/staff/duplicate_book_name.html:28
+#| msgid "The count of duplicate rows"
+msgid "The count of all rows"
+msgstr "تعداد کل ردیف‌ها"
 
-#: templates/staff/duplicate_book_name.html:40
+#: templates/staff/duplicate_book_name.html:30
+#| msgid "The count of duplicate rows"
+msgid "The count of same products"
+msgstr "تعداد ردیف‌های دارای نام تکراری کاملا یکسان"
+
+#: templates/staff/duplicate_book_name.html:32
+#| msgid "Sold products"
+msgid "Similar products count"
+msgstr "تعداد ردیف‌های دارای نام تکراری مشابه"
+
+#: templates/staff/duplicate_book_name.html:46
 #: templates/staff/products.html:56
 msgid "Other stock"
 msgstr "سایر موجودی‌ها"
 
-#: templates/staff/duplicate_book_name.html:41
+#: templates/staff/duplicate_book_name.html:47
 #: templates/staff/products.html:57
 msgid "Other prices"
 msgstr "قیمت‌های دیگر"
 
-#: templates/staff/duplicate_book_name.html:59
+#: templates/staff/duplicate_book_name.html:65
 #: templates/staff/product_stock_price_edit.html:45
 #: templates/staff/products.html:75 templates/staff/used_book_prices.html:41
 msgid "Not in market"
@@ -2543,14 +2552,13 @@ msgstr "لیست دسته‌بندی‌ها"
 msgid "Create craft product"
 msgstr "ایجاد محصول صنایع‌دستی"
 
-#: templates/staff/sidebar_staff.html:17
-msgid "Export publishers"
-msgstr "خروجی ناشرها"
-
-#: templates/staff/sidebar_staff.html:20
-#| msgid "Available books"
+#: templates/staff/sidebar_staff.html:16
 msgid "Duplicate books"
 msgstr "کتاب‌های تکراری"
+
+#: templates/staff/sidebar_staff.html:19
+msgid "Export publishers"
+msgstr "خروجی ناشرها"
 
 #: templates/staff/sidebar_staff.html:26
 msgid "New invoice"
