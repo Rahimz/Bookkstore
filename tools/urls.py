@@ -28,4 +28,5 @@ urlpatterns = [
     path('export-sold-products/date/<str:date>/', views.export_excel_sold_products, name="export_excel_sold_products_date"),
 
     path('duplicate-book-name/', views.duplicate_book_name, name="duplicate_book_name"),
+    path('duplicate-book-name/export', views.duplicate_book_name_export, name="duplicate_book_name_export"),
 ]
