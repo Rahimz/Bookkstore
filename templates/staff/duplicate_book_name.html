@@ -20,10 +20,16 @@
     </div>
     <div class="col-md-11">
       <h2>{% trans 'List of duplicate products' %}</h2>
+      <a href="{% url 'tools:duplicate_book_name_export' %}" class="my-2"><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto"></a>
+
       <p class="lead">
-        {% trans 'The count of duplicate names' %}: {{ products_list_count}}
+        {% trans 'The count of duplicate names' %}: {{ products_list_count }}
         <br>
-        {% trans 'The count of duplicate rows' %}: {{ products_count}}
+        {% trans 'The count of all rows' %}: {{ products_count }}
+        <br>
+        {% trans 'The count of same products' %}: {{ same_products_count }}
+        <br>
+        {% trans 'Similar products count' %}: {{ similar_products_count }}
       </p>
 
       <div class="table-responsive">

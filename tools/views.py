@@ -731,10 +731,52 @@ def export_excel_sold_products(request, date=None, days=None):
 
 @staff_member_required
 def duplicate_book_name(request):
+
+    from openpyxl import load_workbook
+    from files.models import File as FileObject
+
+    file_object = get_object_or_404(FileObject, slug='leven-list')
+    path = file_object.file.path
+
+    similar_ids = []
+
+    with open(path, 'rb') as f:
+
+        # Load excel workbook
+        wb = load_workbook(f)
+        ws = wb.active
+        row_count = ws.max_row
+
+        # a loop for scrape the excel file
+        # read the data in cells
+        for i in range(2, row_count):
+        # for i in range(2, 15):
+
+            row = ws['A'+str(i):'E'+str(i)]
+
+            product_id_1 = ws['C' + str(i)].value,
+            product_id_2 = ws['E' + str(i)].value,
+
+            similar_ids.append(product_id_1[0])
+            similar_ids.append(product_id_2[0])
+    # similars are those we find with lebenshtein distance
+    similar_products = Product.objects.filter(pk__in=similar_ids)
+    similar_products_count = Product.objects.filter(pk__in=similar_ids).count()
+
+    # these are the products with the exact same name
     products_list = Product.objects.filter(available=True).exclude(product_type='craft').values('name').annotate(Count('id')).order_by().filter(id__count__gt=1)
     products_list_count = len(products_list)
-    products = Product.objects.filter(name__in=[item['name'] for item in products_list]).order_by('name')
+
+    same_products = Product.objects.filter(name__in=[item['name'] for item in products_list]).order_by('name')
+    same_products_count = same_products.count()
+
+    products = same_products | similar_products
     products_count = products.count()
+
+    products = products.order_by('name')
+
+    request.session['duplicate_book_name'] = list(products.values_list('id', flat=True))
+
     return render(
         request,
         'staff/duplicate_book_name.html',
@@ -742,5 +784,101 @@ def duplicate_book_name(request):
             'products': products,
             'products_list_count': products_list_count,
             'products_count': products_count,
+            'similar_products_count': similar_products_count,
+            'same_products_count': same_products_count,
         }
     )
+
+
+@staff_member_required
+def duplicate_book_name_export(request):
+
+    products = Product.objects.filter(id__in=request.session['duplicate_book_name']).order_by('name')
+
+
+    # check the ordelines for sold product
+    orderline_id_list = OrderLine.objects.filter(active=True).exclude(product__product_type='craft').values_list('product__id', flat=True)
+
+    # if statement to export two kind of excel file with one code block
+    # if filter == 'used-noprice':
+    #     products = Product.objects.filter(available=True).exclude(product_type='craft').filter(stock_used__gte=1).filter(price_used=0).order_by('name')
+    # elif filter == 'used-all':
+    #     products = Product.objects.filter(available=True).exclude(product_type='craft').filter(Q(stock_used__gte=1) | Q(price_used__gte=1)).order_by('name')
+    # else:
+    #     # export all product books and crafts
+    #     products = Product.objects.filter(available=True).exclude(product_type='craft').order_by('name')
+
+    wb = openpyxl.Workbook()
+    sheet = wb.active
+
+    headers = [
+        '#',
+        'Product ID.',
+        'Name',
+        'isbn',
+        'Publisher',
+        'Main price',
+        'Main stock',
+        'Price used',
+        'Stock used',
+        'Not in market',
+        'Page number',
+        'Weight',
+        'Sold in order No.',
+        'Sold quantity',
+    ]
+
+
+    # writing header
+    for i in range(len(headers)):
+        c = sheet.cell(row = 1, column = i + 1 )
+        c.value = headers[i]
+        # c.style.fill.fill_type = Fill
+        # c.style.fill.start_color.index = Color.BLUE
+
+
+    # writing body
+    for count , product in enumerate(products.iterator()):
+        # product.save()
+        # if filter in ('used-noprice', 'used-all'):
+        # check wether the product is sold or not
+        sold_order_list = ''
+        sold_quantity = 0
+        if product.id in orderline_id_list:
+            sold_order_list = OrderLine.objects.filter(product__id=product.id).values_list('order__id', flat=True)
+            sold_order_list = ','.join([str(item) for item in sold_order_list])
+            sold_quantity = OrderLine.objects.filter(product__id=product.id).aggregate(total=Sum('quantity'))['total']
+
+        title_list = [
+            count,
+            product.id,
+            str(product),
+            product.isbn,
+            product.publisher,
+            product.price,
+            product.stock,
+            product.price_used,
+            product.stock_used,
+            True if product.about=='*' and product.price==0 else False,
+            product.page_number,
+            product.weight,
+            sold_order_list,
+            sold_quantity,
+        ]
+
+        for i in range(len(headers)):
+            c = sheet.cell(row = count + 2 , column = i + 1)
+            c.value = title_list[i]
+
+
+    filename = 'media/excel/duplicate-products-{}.xlsx'.format(datetime.now().isoformat(sep='-'))
+
+    wb.save(filename)
+
+    request.session['duplicate_book_name'] = None
+
+    excel = open(filename, 'rb')
+    response = FileResponse(excel)
+
+
+    return response
