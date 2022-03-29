@@ -1652,7 +1652,7 @@ def used_book_prices(request, product_id):
         half_price = product.price / 2
     else:
         price_offers = [
-            round(product.page_number / 10 ) * 15000,
+            # round(product.page_number / 10 ) * 15000,
             round(product.page_number *  0.13) * 10000,
             round(product.page_number *  0.15) * 10000,
             round(product.page_number *  0.17) * 10000,
