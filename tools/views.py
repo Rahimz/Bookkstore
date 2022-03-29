@@ -628,7 +628,7 @@ def export_publisher(request):
 
 
 @staff_member_required
-def export_excel_sold_products(request, date=None, days=None):
+def export_excel_sold_products(request, date=None, days=None, period=None):
     fa_date = None
     if days:
         order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.now() - timedelta(days)).exclude(product__product_type='craft').order_by('-created')
@@ -638,6 +638,12 @@ def export_excel_sold_products(request, date=None, days=None):
         fa_date = hij_strf_date(greg_to_hij_date(date), '%-d %B %Y')
         order_lines = OrderLine.objects.all().filter(active=True).filter(created__date=date).exclude(product__product_type='craft').order_by('-created')
 
+    if period:
+        period_list = period.split('-')
+        start = datetime.strptime(period_list[0], "%Y%m%d").date()
+        end = datetime.strptime(period_list[1], "%Y%m%d").date()
+        order_lines = OrderLine.objects.all().filter(active=True).filter(
+            created__date__range=(start, end)).exclude(product__product_type='craft').order_by('-created')
     products = dict()
     main_stock = dict()
     check_list =[]
@@ -721,6 +727,8 @@ def export_excel_sold_products(request, date=None, days=None):
         filename = 'media/excel/sold-products-by-{}-{}.xlsx'.format(date, datetime.now().isoformat(sep='-'))
     if days:
         filename = 'media/excel/sold-products-by-{}-{}.xlsx'.format(days, datetime.now().isoformat(sep='-'))
+    if period:
+        filename = 'media/excel/sold-products-by-{}-{}.xlsx'.format(period, datetime.now().isoformat(sep='-'))
 
     wb.save(filename)
     excel = open(filename, 'rb')

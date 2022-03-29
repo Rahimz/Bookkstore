@@ -56,6 +56,8 @@ urlpatterns = [
     path('warehouse/', views.warehouse, name='warehouse'),
     path('warehouse/sold-products/<int:days>/', views.sold_products, name='sold_products'),
     path('warehouse/sold-products/date/<str:date>/', views.sold_products, name='sold_products_date'),
+    path('warehouse/sold-products/period/<str:period>/', views.sold_products, name='sold_products_date_period'),
+
     path('warehouse/purchased-products/', views.purchased_products, name='purchased_products'),
     path('warehouse/refund/client/', refund_from_client, name="refund_from_client"),
     path('warehouse/refund/client/list/', refund_list_client, name="refund_list_client"),

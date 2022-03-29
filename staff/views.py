@@ -11,6 +11,7 @@ from datetime import datetime, timedelta
 from django.utils.translation import gettext_lazy as _
 from django.db.models import Sum
 from decimal import Decimal
+from django.core.cache import cache
 
 from django_countries.fields import Country
 from tools.gregory_to_hijry import hij_strf_date, greg_to_hij_date
@@ -1227,20 +1228,55 @@ def category_list(request):
 
 
 @staff_member_required
-def sold_products(request, days=None, date=None):
+def sold_products(request, days=None, date=None, period=None):
+    # print(date)
+    date_raw = date
     fa_date = None
     if days:
-        order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.now(
-        ) - timedelta(days)).exclude(product__product_type='craft').order_by('-created')
+         # use cache to reduce queries
+        order_lines = cache.get('order_lines_book_days_{}'.format(days))
+        if not order_lines:
+            order_lines = OrderLine.objects.all().filter(active=True).filter(created__gte=datetime.now(
+            ) - timedelta(days)).exclude(product__product_type='craft').order_by('-created')
+            cache.set('order_lines_book_days_{}'.format(days), order_lines)
+
     if date:
-        date = datetime.strptime(date, "%d%m%Y").date()
+        date = datetime.strptime(date, "%Y%m%d").date()
         fa_date = hij_strf_date(greg_to_hij_date(date), '%-d %B %Y')
-        # print(fa_date)
-        # hij_strf_date(greg_to_hij_date(order.created.date()), '%-d %B %Y')
-        order_lines = OrderLine.objects.all().filter(active=True).filter(
-            created__date=date).exclude(product__product_type='craft').order_by('-created')
+
+         # use cache to reduce queries
+        order_lines = cache.get('order_lines_book_date_{}'.format(date_raw))
+        if not order_lines:
+            order_lines = OrderLine.objects.all().filter(active=True).filter(
+                created__date=date).exclude(product__product_type='craft').order_by('-created')
+            cache.set('order_lines_book_date_{}'.format(date_raw), order_lines)
         # print(len(order_lines))
         # all_payment = Payment.objects.filter(created__date__gte='2022-02-01').aggregate(total_amount=Sum('amount'))
+    if period:
+        period_list = period.split('-')
+        start = datetime.strptime(period_list[0], "%Y%m%d").date()
+        end = datetime.strptime(period_list[1], "%Y%m%d").date()
+
+         # use cache to reduce queries
+        order_lines = cache.get('order_lines_book_{}'.format(period))
+        if not order_lines:
+            order_lines = OrderLine.objects.all().filter(active=True).filter(
+                created__date__range=(start, end)).exclude(product__product_type='craft').order_by('-created')
+            cache.set('order_lines_book_{}'.format(period), order_lines)
+
+    # object_list = order_lines
+
+    paginator = Paginator(order_lines, 50) # 9 products in each page
+    page = request.GET.get('page')
+    try:
+        order_lines = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer deliver the first page
+        order_lines = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range deliver last page of results
+        order_lines = paginator.page(paginator.num_pages)
+
     # order_lines = OrderLine.objects.all().values_list(product.id, flat=True)
     products = dict()
     main_stock = dict()
@@ -1285,14 +1321,18 @@ def sold_products(request, days=None, date=None):
     return render(
         request,
         'staff/sold_products.html',
-        {'order_lines': order_lines,
-         'products': products,
-         'main_stock': main_stock,
-         'added_line': added_line,
-         'check_list': check_list,
-         'date': date,
-         'days': days,
-         'fa_date': fa_date,
+        {
+            'order_lines': order_lines,
+             'products': products,
+             'main_stock': main_stock,
+             'added_line': added_line,
+             'check_list': check_list,
+             'date': date,
+             'date_raw': date_raw,
+             'days': days,
+             'fa_date': fa_date,
+             'period': period,
+             'page': page,
          }
     )
 
