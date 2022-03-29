@@ -36,7 +36,7 @@
       </tr>
       <tr>
         <td>{% trans 'Page number' %}</td>
-        <td>{{ product.page_namber }}</td>
+        <td>{{ product.page_number }}</td>
       </tr>
       <tr>
         <td>{% trans 'Main price' %}</td>
@@ -45,7 +45,7 @@
         <td><span class="text-warning">{% trans 'Not in market'%}</span></td>
         {% endif %}
         {% else %}
-        <td>{{ product.price }}</td>
+        <td>{{ product.price | intcomma:False }}</td>
         {% endif %}
       </tr>
       <tr>
@@ -54,7 +54,7 @@
       </tr>
       <tr>
         <td>{% trans 'Price used' %}</td>
-        <td>{{ product.price_used }}</td>
+        <td>{{ product.price_used | intcomma:False }}</td>
       </tr>
       <tr>
         <td>{% trans 'Stock used' %}</td>
