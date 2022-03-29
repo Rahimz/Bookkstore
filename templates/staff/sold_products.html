@@ -27,7 +27,7 @@
         {% if days %}
         <a href="{% url 'tools:export_excel_sold_products' days=days %}" class="my-2">
           <img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">
-          <span>{{ days }} {% trans "Day" %}</span>
+          <span>{{ days }} {% trans "Last day" %}</span>
         </a>
         {% endif %}
         {% if period %}
