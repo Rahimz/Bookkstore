@@ -1627,7 +1627,8 @@ def used_book_prices(request, product_id):
                 data = request.POST.dict()
                 offer = Decimal(data.get("offer").replace(',', ''))
                 used_price.price_used = offer
-
+            else:
+                offer = used_price.price_used
             used_price.save()
             messages.success(request, _('Used price for product updated') + f": {product.name} - {offer} " + _('Rial'))
             return redirect('staff:products')
