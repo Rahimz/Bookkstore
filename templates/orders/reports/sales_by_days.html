@@ -23,74 +23,76 @@
       <div class="">
         <p>
           {% trans 'Farvardin' %}:
-          <a href="{% url 'orders:sales_by_date' date='20042022' %}" class="btn btn-sm btn-outline-secondary">31</a>
-          <a href="{% url 'orders:sales_by_date' date='19042022' %}" class="btn btn-sm btn-outline-secondary">30</a>
-          <a href="{% url 'orders:sales_by_date' date='18042022' %}" class="btn btn-sm btn-outline-secondary">29</a>
-          <a href="{% url 'orders:sales_by_date' date='17042022' %}" class="btn btn-sm btn-outline-secondary">28</a>
-          <a href="{% url 'orders:sales_by_date' date='16042022' %}" class="btn btn-sm btn-outline-secondary">27</a>
-          <a href="{% url 'orders:sales_by_date' date='15042022' %}" class="btn btn-sm btn-outline-secondary">26</a>
-          <a href="{% url 'orders:sales_by_date' date='14042022' %}" class="btn btn-sm btn-outline-secondary">25</a>
-          <a href="{% url 'orders:sales_by_date' date='13042022' %}" class="btn btn-sm btn-outline-secondary">24</a>
-          <a href="{% url 'orders:sales_by_date' date='12042022' %}" class="btn btn-sm btn-outline-secondary">23</a>
-          <a href="{% url 'orders:sales_by_date' date='11042022' %}" class="btn btn-sm btn-outline-secondary">22</a>
-          <a href="{% url 'orders:sales_by_date' date='10042022' %}" class="btn btn-sm btn-outline-secondary">21</a>
-          <a href="{% url 'orders:sales_by_date' date='09042022' %}" class="btn btn-sm btn-outline-secondary">20</a>
-          <a href="{% url 'orders:sales_by_date' date='08042022' %}" class="btn btn-sm btn-outline-secondary">19</a>
-          <a href="{% url 'orders:sales_by_date' date='07042022' %}" class="btn btn-sm btn-outline-secondary">18</a>
-          <a href="{% url 'orders:sales_by_date' date='06042022' %}" class="btn btn-sm btn-outline-secondary">17</a>
-          <a href="{% url 'orders:sales_by_date' date='05042022' %}" class="btn btn-sm btn-outline-secondary">16</a>
-          <a href="{% url 'orders:sales_by_date' date='04042022' %}" class="btn btn-sm btn-outline-secondary">15</a>
-          <a href="{% url 'orders:sales_by_date' date='03042022' %}" class="btn btn-sm btn-outline-secondary">14</a>
-          <a href="{% url 'orders:sales_by_date' date='02042022' %}" class="btn btn-sm btn-outline-secondary">13</a>
-          <a href="{% url 'orders:sales_by_date' date='01042022' %}" class="btn btn-sm btn-outline-secondary">12</a>
-          <a href="{% url 'orders:sales_by_date' date='31032022' %}" class="btn btn-sm btn-outline-secondary">11</a>
-          <a href="{% url 'orders:sales_by_date' date='30032022' %}" class="btn btn-sm btn-outline-secondary">10</a>
-          <a href="{% url 'orders:sales_by_date' date='29032022' %}" class="btn btn-sm btn-outline-secondary">9</a>
-          <a href="{% url 'orders:sales_by_date' date='28032022' %}" class="btn btn-sm btn-outline-secondary">8</a>
-          <a href="{% url 'orders:sales_by_date' date='27032022' %}" class="btn btn-sm btn-outline-secondary">7</a>
-          <a href="{% url 'orders:sales_by_date' date='26032022' %}" class="btn btn-sm btn-outline-secondary">6</a>
-          <a href="{% url 'orders:sales_by_date' date='25032022' %}" class="btn btn-sm btn-outline-secondary">5</a>
-          <a href="{% url 'orders:sales_by_date' date='24032022' %}" class="btn btn-sm btn-outline-secondary">4</a>
-          <a href="{% url 'orders:sales_by_date' date='23032022' %}" class="btn btn-sm btn-outline-secondary">3</a>
-          <a href="{% url 'orders:sales_by_date' date='22032022' %}" class="btn btn-sm btn-outline-secondary">2</a>
-          <a href="{% url 'orders:sales_by_date' date='21032022' %}" class="btn btn-sm btn-outline-secondary">1</a>
+          <a href="{% url 'orders:sales_by_date' date='20220420' %}" class="btn btn-sm {% if date_raw == "20220420" %}btn-success{% else %}btn-outline-secondary{% endif %}">31</a>
+          <a href="{% url 'orders:sales_by_date' date='20220419' %}" class="btn btn-sm {% if date_raw == "20220419" %}btn-success{% else %}btn-outline-secondary{% endif %}">30</a>
+          <a href="{% url 'orders:sales_by_date' date='20220418' %}" class="btn btn-sm {% if date_raw == "20220418" %}btn-success{% else %}btn-outline-secondary{% endif %}">29</a>
+          <a href="{% url 'orders:sales_by_date' date='20220417' %}" class="btn btn-sm {% if date_raw == "20220417" %}btn-success{% else %}btn-outline-secondary{% endif %}">28</a>
+          <a href="{% url 'orders:sales_by_date' date='20220416' %}" class="btn btn-sm {% if date_raw == "20220416" %}btn-success{% else %}btn-outline-secondary{% endif %}">27</a>
+          <a href="{% url 'orders:sales_by_date' date='20220415' %}" class="btn btn-sm {% if date_raw == "20220415" %}btn-success{% else %}btn-outline-secondary{% endif %}">26</a>
+          <a href="{% url 'orders:sales_by_date' date='20220414' %}" class="btn btn-sm {% if date_raw == "20220414" %}btn-success{% else %}btn-outline-secondary{% endif %}">25</a>
+          <a href="{% url 'orders:sales_by_date' date='20220413' %}" class="btn btn-sm {% if date_raw == "20220413" %}btn-success{% else %}btn-outline-secondary{% endif %}">24</a>
+          <a href="{% url 'orders:sales_by_date' date='20220412' %}" class="btn btn-sm {% if date_raw == "20220412" %}btn-success{% else %}btn-outline-secondary{% endif %}">23</a>
+          <a href="{% url 'orders:sales_by_date' date='20220411' %}" class="btn btn-sm {% if date_raw == "20220411" %}btn-success{% else %}btn-outline-secondary{% endif %}">22</a>
+          <a href="{% url 'orders:sales_by_date' date='20220410' %}" class="btn btn-sm {% if date_raw == "20220410" %}btn-success{% else %}btn-outline-secondary{% endif %}">21</a>
+          <a href="{% url 'orders:sales_by_date' date='20220409' %}" class="btn btn-sm {% if date_raw == "20220409" %}btn-success{% else %}btn-outline-secondary{% endif %}">20</a>
+          <a href="{% url 'orders:sales_by_date' date='20220408' %}" class="btn btn-sm {% if date_raw == "20220408" %}btn-success{% else %}btn-outline-secondary{% endif %}">19</a>
+          <a href="{% url 'orders:sales_by_date' date='20220407' %}" class="btn btn-sm {% if date_raw == "20220407" %}btn-success{% else %}btn-outline-secondary{% endif %}">18</a>
+          <a href="{% url 'orders:sales_by_date' date='20220406' %}" class="btn btn-sm {% if date_raw == "20220406" %}btn-success{% else %}btn-outline-secondary{% endif %}">17</a>
+          <a href="{% url 'orders:sales_by_date' date='20220405' %}" class="btn btn-sm {% if date_raw == "20220405" %}btn-success{% else %}btn-outline-secondary{% endif %}">16</a>
+          <a href="{% url 'orders:sales_by_date' date='20220404' %}" class="btn btn-sm {% if date_raw == "20220404" %}btn-success{% else %}btn-outline-secondary{% endif %}">15</a>
+          <a href="{% url 'orders:sales_by_date' date='20220403' %}" class="btn btn-sm {% if date_raw == "20220403" %}btn-success{% else %}btn-outline-secondary{% endif %}">14</a>
+          <a href="{% url 'orders:sales_by_date' date='20220402' %}" class="btn btn-sm {% if date_raw == "20220402" %}btn-success{% else %}btn-outline-secondary{% endif %}">13</a>
+          <a href="{% url 'orders:sales_by_date' date='20220401' %}" class="btn btn-sm {% if date_raw == "20220401" %}btn-success{% else %}btn-outline-secondary{% endif %}">12</a>
+          <a href="{% url 'orders:sales_by_date' date='20220331' %}" class="btn btn-sm {% if date_raw == "20220331" %}btn-success{% else %}btn-outline-secondary{% endif %}">11</a>
+          <a href="{% url 'orders:sales_by_date' date='20220330' %}" class="btn btn-sm {% if date_raw == "20220330" %}btn-success{% else %}btn-outline-secondary{% endif %}">10</a>
+          <a href="{% url 'orders:sales_by_date' date='20220329' %}" class="btn btn-sm {% if date_raw == "20220329" %}btn-success{% else %}btn-outline-secondary{% endif %}">9</a>
+          <a href="{% url 'orders:sales_by_date' date='20220328' %}" class="btn btn-sm {% if date_raw == "20220328" %}btn-success{% else %}btn-outline-secondary{% endif %}">8</a>
+          <a href="{% url 'orders:sales_by_date' date='20220327' %}" class="btn btn-sm {% if date_raw == "20220327" %}btn-success{% else %}btn-outline-secondary{% endif %}">7</a>
+          <a href="{% url 'orders:sales_by_date' date='20220326' %}" class="btn btn-sm {% if date_raw == "20220326" %}btn-success{% else %}btn-outline-secondary{% endif %}">6</a>
+          <a href="{% url 'orders:sales_by_date' date='20220325' %}" class="btn btn-sm {% if date_raw == "20220325" %}btn-success{% else %}btn-outline-secondary{% endif %}">5</a>
+          <a href="{% url 'orders:sales_by_date' date='20220324' %}" class="btn btn-sm {% if date_raw == "20220324" %}btn-success{% else %}btn-outline-secondary{% endif %}">4</a>
+          <a href="{% url 'orders:sales_by_date' date='20220323' %}" class="btn btn-sm {% if date_raw == "20220323" %}btn-success{% else %}btn-outline-secondary{% endif %}">3</a>
+          <a href="{% url 'orders:sales_by_date' date='20220322' %}" class="btn btn-sm {% if date_raw == "20220322" %}btn-success{% else %}btn-outline-secondary{% endif %}">2</a>
+          <a href="{% url 'orders:sales_by_date' date='20220321' %}" class="btn btn-sm {% if date_raw == "20220321" %}btn-success{% else %}btn-outline-secondary{% endif %}">1</a>
+          {% if date_raw == "20220321" %}{{ date_raw }}{% endif %}
+
         </p>
         <p>
           {% trans 'Esfand' %}:
-          <a href="{% url 'orders:sales_by_date' date='20032022' %}" class="btn btn-sm btn-outline-secondary">29</a>
-          <a href="{% url 'orders:sales_by_date' date='19032022' %}" class="btn btn-sm btn-outline-secondary">28</a>
-          <a href="{% url 'orders:sales_by_date' date='18032022' %}" class="btn btn-sm btn-outline-secondary">27</a>
-          <a href="{% url 'orders:sales_by_date' date='17032022' %}" class="btn btn-sm btn-outline-secondary">26</a>
-          <a href="{% url 'orders:sales_by_date' date='16032022' %}" class="btn btn-sm btn-outline-secondary">25</a>
-          <a href="{% url 'orders:sales_by_date' date='15032022' %}" class="btn btn-sm btn-outline-secondary">24</a>
-          <a href="{% url 'orders:sales_by_date' date='14032022' %}" class="btn btn-sm btn-outline-secondary">23</a>
-          <a href="{% url 'orders:sales_by_date' date='13032022' %}" class="btn btn-sm btn-outline-secondary">22</a>
-          <a href="{% url 'orders:sales_by_date' date='12032022' %}" class="btn btn-sm btn-outline-secondary">21</a>
-          <a href="{% url 'orders:sales_by_date' date='11032022' %}" class="btn btn-sm btn-outline-secondary">20</a>
-          <a href="{% url 'orders:sales_by_date' date='10032022' %}" class="btn btn-sm btn-outline-secondary">19</a>
-          <a href="{% url 'orders:sales_by_date' date='09032022' %}" class="btn btn-sm btn-outline-secondary">18</a>
-          <a href="{% url 'orders:sales_by_date' date='08032022' %}" class="btn btn-sm btn-outline-secondary">17</a>
-          <a href="{% url 'orders:sales_by_date' date='07032022' %}" class="btn btn-sm btn-outline-secondary">16</a>
-          <a href="{% url 'orders:sales_by_date' date='06032022' %}" class="btn btn-sm btn-outline-secondary">15</a>
-          <a href="{% url 'orders:sales_by_date' date='05032022' %}" class="btn btn-sm btn-outline-secondary">14</a>
-          <a href="{% url 'orders:sales_by_date' date='04032022' %}" class="btn btn-sm btn-outline-secondary">13</a>
-          <a href="{% url 'orders:sales_by_date' date='03032022' %}" class="btn btn-sm btn-outline-secondary">12</a>
-          <a href="{% url 'orders:sales_by_date' date='02032022' %}" class="btn btn-sm btn-outline-secondary">11</a>
-          <a href="{% url 'orders:sales_by_date' date='01032022' %}" class="btn btn-sm btn-outline-secondary">10</a>
-          <a href="{% url 'orders:sales_by_date' date='28022022' %}" class="btn btn-sm btn-outline-secondary">9</a>
-          <a href="{% url 'orders:sales_by_date' date='27022022' %}" class="btn btn-sm btn-outline-secondary">8</a>
-          <a href="{% url 'orders:sales_by_date' date='26022022' %}" class="btn btn-sm btn-outline-secondary">7</a>
-          <a href="{% url 'orders:sales_by_date' date='25022022' %}" class="btn btn-sm btn-outline-secondary">6</a>
-          <a href="{% url 'orders:sales_by_date' date='24022022' %}" class="btn btn-sm btn-outline-secondary">5</a>
-          <a href="{% url 'orders:sales_by_date' date='23022022' %}" class="btn btn-sm btn-outline-secondary">4</a>
-          <a href="{% url 'orders:sales_by_date' date='22022022' %}" class="btn btn-sm btn-outline-secondary">3</a>
-          <a href="{% url 'orders:sales_by_date' date='21022022' %}" class="btn btn-sm btn-outline-secondary">2</a>
-          <a href="{% url 'orders:sales_by_date' date='20022022' %}" class="btn btn-sm btn-outline-secondary">1</a>
+          <a href="{% url 'orders:sales_by_date' date='20220320' %}" class="btn btn-sm {% if date_raw == "20220320" %}btn-success{% else %}btn-outline-secondary{% endif %}">29</a>
+          <a href="{% url 'orders:sales_by_date' date='20220319' %}" class="btn btn-sm {% if date_raw == "20220319" %}btn-success{% else %}btn-outline-secondary{% endif %}">28</a>
+          <a href="{% url 'orders:sales_by_date' date='20220318' %}" class="btn btn-sm {% if date_raw == "20220318" %}btn-success{% else %}btn-outline-secondary{% endif %}">27</a>
+          <a href="{% url 'orders:sales_by_date' date='20220317' %}" class="btn btn-sm {% if date_raw == "20220317" %}btn-success{% else %}btn-outline-secondary{% endif %}">26</a>
+          <a href="{% url 'orders:sales_by_date' date='20220316' %}" class="btn btn-sm {% if date_raw == "20220316" %}btn-success{% else %}btn-outline-secondary{% endif %}">25</a>
+          <a href="{% url 'orders:sales_by_date' date='20220315' %}" class="btn btn-sm {% if date_raw == "20220315" %}btn-success{% else %}btn-outline-secondary{% endif %}">24</a>
+          <a href="{% url 'orders:sales_by_date' date='20220314' %}" class="btn btn-sm {% if date_raw == "20220314" %}btn-success{% else %}btn-outline-secondary{% endif %}">23</a>
+          <a href="{% url 'orders:sales_by_date' date='20220313' %}" class="btn btn-sm {% if date_raw == "20220313" %}btn-success{% else %}btn-outline-secondary{% endif %}">22</a>
+          <a href="{% url 'orders:sales_by_date' date='20220312' %}" class="btn btn-sm {% if date_raw == "20220312" %}btn-success{% else %}btn-outline-secondary{% endif %}">21</a>
+          <a href="{% url 'orders:sales_by_date' date='20220311' %}" class="btn btn-sm {% if date_raw == "20220311" %}btn-success{% else %}btn-outline-secondary{% endif %}">20</a>
+          <a href="{% url 'orders:sales_by_date' date='20220310' %}" class="btn btn-sm {% if date_raw == "20220310" %}btn-success{% else %}btn-outline-secondary{% endif %}">19</a>
+          <a href="{% url 'orders:sales_by_date' date='20220309' %}" class="btn btn-sm {% if date_raw == "20220309" %}btn-success{% else %}btn-outline-secondary{% endif %}">18</a>
+          <a href="{% url 'orders:sales_by_date' date='20220308' %}" class="btn btn-sm {% if date_raw == "20220308" %}btn-success{% else %}btn-outline-secondary{% endif %}">17</a>
+          <a href="{% url 'orders:sales_by_date' date='20220307' %}" class="btn btn-sm {% if date_raw == "20220307" %}btn-success{% else %}btn-outline-secondary{% endif %}">16</a>
+          <a href="{% url 'orders:sales_by_date' date='20220306' %}" class="btn btn-sm {% if date_raw == "20220306" %}btn-success{% else %}btn-outline-secondary{% endif %}">15</a>
+          <a href="{% url 'orders:sales_by_date' date='20220305' %}" class="btn btn-sm {% if date_raw == "20220305" %}btn-success{% else %}btn-outline-secondary{% endif %}">14</a>
+          <a href="{% url 'orders:sales_by_date' date='20220304' %}" class="btn btn-sm {% if date_raw == "20220304" %}btn-success{% else %}btn-outline-secondary{% endif %}">13</a>
+          <a href="{% url 'orders:sales_by_date' date='20220303' %}" class="btn btn-sm {% if date_raw == "20220303" %}btn-success{% else %}btn-outline-secondary{% endif %}">12</a>
+          <a href="{% url 'orders:sales_by_date' date='20220302' %}" class="btn btn-sm {% if date_raw == "20220302" %}btn-success{% else %}btn-outline-secondary{% endif %}">11</a>
+          <a href="{% url 'orders:sales_by_date' date='20220301' %}" class="btn btn-sm {% if date_raw == "20220301" %}btn-success{% else %}btn-outline-secondary{% endif %}">10</a>
+          <a href="{% url 'orders:sales_by_date' date='20220228' %}" class="btn btn-sm {% if date_raw == "20220228" %}btn-success{% else %}btn-outline-secondary{% endif %}">9</a>
+          <a href="{% url 'orders:sales_by_date' date='20220227' %}" class="btn btn-sm {% if date_raw == "20220227" %}btn-success{% else %}btn-outline-secondary{% endif %}">8</a>
+          <a href="{% url 'orders:sales_by_date' date='20220226' %}" class="btn btn-sm {% if date_raw == "20220226" %}btn-success{% else %}btn-outline-secondary{% endif %}">7</a>
+          <a href="{% url 'orders:sales_by_date' date='20220225' %}" class="btn btn-sm {% if date_raw == "20220225" %}btn-success{% else %}btn-outline-secondary{% endif %}">6</a>
+          <a href="{% url 'orders:sales_by_date' date='20220224' %}" class="btn btn-sm {% if date_raw == "20220224" %}btn-success{% else %}btn-outline-secondary{% endif %}">5</a>
+          <a href="{% url 'orders:sales_by_date' date='20220223' %}" class="btn btn-sm {% if date_raw == "20220223" %}btn-success{% else %}btn-outline-secondary{% endif %}">4</a>
+          <a href="{% url 'orders:sales_by_date' date='20220222' %}" class="btn btn-sm {% if date_raw == "20220222" %}btn-success{% else %}btn-outline-secondary{% endif %}">3</a>
+          <a href="{% url 'orders:sales_by_date' date='20220221' %}" class="btn btn-sm {% if date_raw == "20220221" %}btn-success{% else %}btn-outline-secondary{% endif %}">2</a>
+          <a href="{% url 'orders:sales_by_date' date='20220220' %}" class="btn btn-sm {% if date_raw == "20220220" %}btn-success{% else %}btn-outline-secondary{% endif %}">1</a>
         </p>
 
       </div>
       <div class="my-3 row">
-        <h3 class="mt-3 border border-warning rounded p-2">{% trans 'Sales' %}: {{ fa_date}}</h3>
+        <h3 class="mt-3 border border-warning rounded p-2">{% trans 'Sales' %}: {% if fa_date %}{{ fa_date}}{% endif %}</h3>
         <table class="table table-striped">
           <thead>
 
@@ -183,7 +185,7 @@
         </table>
 
 
-        <h3 class="mt-5 border border-warning rounded p-2">{% trans 'Sales by product type' %}: {{ fa_date}}</h3>
+        <h3 class="mt-5 border border-warning rounded p-2">{% trans 'Sales by product type' %}: {% if fa_date %}{{ fa_date}}{% endif %}</h3>
         <table class="table table-striped">
           <thead>
 
@@ -212,16 +214,24 @@
 
           <tfoot>
             <tr>
-              <td class="bg-success text-light fs-5"><span>All sales</span></td>
+              <td class="bg-success text-light fs-5"><span>{% trans "All sales" %}</span></td>
               <td class="bg-success text-light fs-5"><span>{{ orderline_all.total | intcomma:False }}</span> {% trans 'Rial' %}</td>
 
               <td class="bg-success text-light fs-5">{% if orderline_all.total_quantity %}{{ orderline_all.total_quantity }}{% else %}0{% endif %}</td>
+              <td class="bg-success text-light fs-5">{% if orders_new_books.total %}{% trans "New" %}{% else %}0{% endif %}</td>
+              <td class="bg-success text-light fs-5"></td>
+              <td class="bg-success text-light fs-5">{% if orders_new_books.total %}{% trans "Used" %}{% else %}0{% endif %}</td>
+              <td class="bg-success text-light fs-5"></td>
             </tr>
 
             <tr>
               <td>{% trans 'Book sales' %}</td>
               <td><b>{{ orders_book.total | intcomma:False }}</b> {% trans 'Rial' %}</td>
               <td>{% if orders_book.total_quantity %}{{ orders_book.total_quantity }}{% else %}0{% endif %}</td>
+              <td>{{ orders_new_books.total |intcomma:False }}</td>
+              <td>{{ orders_new_books.total_quantity |intcomma:False }}</td>
+              <td>{{ orders_used_books.total |intcomma:False }}</td>
+              <td>{{ orders_used_books.total_quantity |intcomma:False }}</td>
             </tr>
             <tr>
               <td>{% trans 'Craft sales' %}</td>

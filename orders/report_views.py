@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from math import trunc
 from decimal import Decimal
 from django.contrib.admin.views.decorators import staff_member_required
-from django.db.models import Sum
+from django.db.models import Sum, Q
 
 from tools.gregory_to_hijry import hij_strf_date, greg_to_hij_date
 
@@ -25,6 +25,7 @@ from zarinpal.models import Payment
 
 @staff_member_required
 def sales_by_days(request, days=365, date=None):
+    date_raw = date
     fa_date = None
     orders_approved_date = None
     orders_draft_date = None
@@ -66,7 +67,7 @@ def sales_by_days(request, days=365, date=None):
 
     # print(date)
     if date:
-        date = datetime.strptime(date, "%d%m%Y").date()
+        date = datetime.strptime(date, "%Y%m%d").date()
         fa_date = hij_strf_date(greg_to_hij_date(date), '%-d %B %Y')
 
     # print(fa_date)
@@ -89,6 +90,19 @@ def sales_by_days(request, days=365, date=None):
 
     orders_paid_all = Order.objects.filter(active=True).filter(paid=True).aggregate(total=Sum('payable'), total_quantity=Sum('quantity'))
     orders_unpaid_all = Order.objects.filter(active=True).filter(paid=False).aggregate(total=Sum('payable'), total_quantity=Sum('quantity'))
+
+    orders_new_books = OrderLine.objects.filter(active=True).exclude(product__product_type='craft').filter(variation__icontains='new').aggregate(total=Sum('cost_after_discount'), total_quantity=Sum('quantity'))
+    orders_used_books = OrderLine.objects.filter(active=True).exclude(product__product_type='craft').filter(variation__icontains='used').aggregate(total=Sum('cost_after_discount'), total_quantity=Sum('quantity'))
+
+    # orders_book_t = OrderLine.objects.filter(active=True).exclude(product__product_type='craft').exclude(variation__icontains='new').exclude(variation__icontains='used').values_list('order__id', flat=True)
+    # orders_new_books_t = OrderLine.objects.filter(active=True).exclude(product__product_type='craft').filter(variation__in=('new main', 'main')).values_list('id', flate=True)
+    # orders_used_books_t = OrderLine.objects.filter(active=True).exclude(product__product_type='craft').filter(variation__icontains='used').values_list('id', flate=True)
+    # result = [item for item not in set(list(orders_new_books_t) + list(orders_used_books_t))]
+    # print(orders_book_t)
+
+
+
+
 
     # dates_list = ['20022022', '21022022', '22022022']
     # the sales_date_dict structure
@@ -121,6 +135,7 @@ def sales_by_days(request, days=365, date=None):
         request,
         'orders/reports/sales_by_days.html',
         {
+            'date_raw': date_raw,
             'order_approved': order_approved,
             'order_draft': order_draft,
             'order_all': order_all,
@@ -141,5 +156,7 @@ def sales_by_days(request, days=365, date=None):
             'orders_unpaid_date': orders_unpaid_date,
             'orders_paid_all': orders_paid_all,
             'orders_unpaid_all': orders_unpaid_all,
+            'orders_new_books': orders_new_books,
+            'orders_used_books': orders_used_books,
         }
     )
