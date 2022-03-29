@@ -1629,6 +1629,7 @@ def used_book_prices(request, product_id):
                 used_price.price_used = offer
 
             used_price.save()
+            messages.success(request, _('Used price for product updated') + f": {product.name} - {offer} " + _('Rial'))
             return redirect('staff:products')
     else:
         price_form = AdminPriceManagementForm(instance=product)

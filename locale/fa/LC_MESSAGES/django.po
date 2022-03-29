@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-29 09:31+0430\n"
-"PO-Revision-Date: 2022-03-29 09:32+0430\n"
+"POT-Creation-Date: 2022-03-29 09:39+0430\n"
+"PO-Revision-Date: 2022-03-29 09:40+0430\n"
 "Last-Translator: رحیم  <rahim.aghareb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -748,27 +748,32 @@ msgstr "محصول به این مجموعه اضافه شد"
 msgid "This product removed from the collection"
 msgstr "این کتاب از این مجموعه حذف شد"
 
-#: staff/views.py:1667
+#: staff/views.py:1632
+#| msgid "Used price update"
+msgid "Used price for product updated"
+msgstr "قیمت دست‌دوم به‌روزرسانی شد "
+
+#: staff/views.py:1668
 msgid "You could not enter a price less than the main price "
 msgstr "شما نمی‌توانید در این فرم قیمت محصول را کمتر کنید"
 
-#: staff/views.py:1672
+#: staff/views.py:1673
 msgid "Price updated"
 msgstr "قیمت به‌روزرسانی شد!"
 
-#: staff/views.py:1677
+#: staff/views.py:1678
 msgid "A purchase added to manage the DB"
 msgstr "برای اصلاح دیتابیس یک فاکتور خرید اضافه شد"
 
-#: staff/views.py:1726
+#: staff/views.py:1727
 msgid "Stock and price updated"
 msgstr "قیمت و موجودی به روزرسانی شد "
 
-#: staff/views.py:1774
+#: staff/views.py:1775
 msgid "New craft is created"
 msgstr "محصول صنایع‌دستی ایجاد شد"
 
-#: staff/views.py:1810 tools/views.py:107
+#: staff/views.py:1811 tools/views.py:107
 msgid "Date is not valid"
 msgstr "تاریخ معتبر نیست"
 
