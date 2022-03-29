@@ -32,7 +32,7 @@
       </tr>
       <tr>
         <td>{% trans 'Page number' %}</td>
-        <td>{{ product.page_namber }}</td>
+        <td>{{ product.page_number }}</td>
       </tr>
       <tr>
         <td>{% trans 'Price' %}</td>
@@ -41,7 +41,7 @@
         <td><span class="text-warning">{% trans 'Not in market'%}</span></td>
         {% endif %}
         {% else %}
-        <td>{{ product.price }}</td>
+        <td>{{ product.price | intcomma:False }}</td>
         {% endif %}
       </tr>
       <tr>
@@ -52,6 +52,10 @@
         <td>{% trans 'Stock used' %}</td>
         <td>{{ product.stock_used }}</td>
       </tr>
+      <tr>
+        <td>{% trans 'Price used' %}</td>
+        <td>{{ product.price_used | intcomma:False }}</td>
+      </tr>
       </table>
 
       <h3 class=" mt-5">{% trans 'Used price update' %}</h3>
@@ -59,8 +63,27 @@
         <form class="" action="." method="post">
           {{ price_form | crispy }}
           {% csrf_token %}
-          <input class="btn btn-outline-secondary my-3" type="submit" name=""value="{% trans 'Submit' %}">
+          <input class="btn btn-outline-success me-2 my-3" type="submit" name="" value="{% trans 'Submit' %}">
+          {% if half_price %}<input class="btn btn-outline-secondary btn-sm ms-2 my-3" type="submit" name="offer" value="{{ half_price | intcomma:False }}">{% endif %}
+          {% if price_offers %}
+          {% for offer in price_offers %}
+          <input class="btn btn-outline-secondary btn-sm my-3" type="submit" name="offer" value="{{ offer | intcomma:False }}">
+          {% endfor %}
+          {% endif %}
         </form>
+      </div>
+      <div class="">
+        <ul>{% trans "Offers based on" %}:
+          {% if price_offers %}
+          <li>pageNumber * 0.10 * 15,000</li>
+          <li>pageNumber * 0.13 * 10,000</li>
+          <li>pageNumber * 0.15 * 10,000</li>
+          <li>pageNumber * 0.17 * 10,000</li>
+          {% else %}
+          <li>price / 2 </li>
+          {% endif %}
+        </ul>
+
       </div>
 
 

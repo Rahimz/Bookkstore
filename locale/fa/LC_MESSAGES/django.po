@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-28 16:39+0430\n"
-"PO-Revision-Date: 2022-03-28 16:40+0430\n"
+"POT-Creation-Date: 2022-03-29 09:31+0430\n"
+"PO-Revision-Date: 2022-03-29 09:32+0430\n"
 "Last-Translator: رحیم  <rahim.aghareb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -578,6 +578,7 @@ msgstr "لطفاً هر بار فقط یک شابک وارد کنید"
 #: templates/staff/price_management.html:75
 #: templates/staff/product_price_show.html:58
 #: templates/staff/product_stock_price_edit.html:56
+#: templates/staff/used_book_prices.html:56
 msgid "Price used"
 msgstr "قیمت دست‌دوم"
 
@@ -747,27 +748,27 @@ msgstr "محصول به این مجموعه اضافه شد"
 msgid "This product removed from the collection"
 msgstr "این کتاب از این مجموعه حذف شد"
 
-#: staff/views.py:1647
+#: staff/views.py:1667
 msgid "You could not enter a price less than the main price "
 msgstr "شما نمی‌توانید در این فرم قیمت محصول را کمتر کنید"
 
-#: staff/views.py:1652
+#: staff/views.py:1672
 msgid "Price updated"
 msgstr "قیمت به‌روزرسانی شد!"
 
-#: staff/views.py:1657
+#: staff/views.py:1677
 msgid "A purchase added to manage the DB"
 msgstr "برای اصلاح دیتابیس یک فاکتور خرید اضافه شد"
 
-#: staff/views.py:1706
+#: staff/views.py:1726
 msgid "Stock and price updated"
 msgstr "قیمت و موجودی به روزرسانی شد "
 
-#: staff/views.py:1754
+#: staff/views.py:1774
 msgid "New craft is created"
 msgstr "محصول صنایع‌دستی ایجاد شد"
 
-#: staff/views.py:1790 tools/views.py:107
+#: staff/views.py:1810 tools/views.py:107
 msgid "Date is not valid"
 msgstr "تاریخ معتبر نیست"
 
@@ -1007,7 +1008,7 @@ msgstr "اضافه کردن مشتری"
 #: templates/staff/purchase_create.html:42
 #: templates/staff/purchase_create.html:150
 #: templates/staff/refund_from_client.html:24
-#: templates/staff/used_book_prices.html:62 templates/staff/vendor_add.html:26
+#: templates/staff/used_book_prices.html:66 templates/staff/vendor_add.html:26
 #: templates/zarinpal/form_payment.html:32
 #: templates/zarinpal/payment_create.html:36
 msgid "Submit"
@@ -1906,17 +1907,14 @@ msgid "The count of duplicate names"
 msgstr "تعداد نام‌های تکراری"
 
 #: templates/staff/duplicate_book_name.html:28
-#| msgid "The count of duplicate rows"
 msgid "The count of all rows"
 msgstr "تعداد کل ردیف‌ها"
 
 #: templates/staff/duplicate_book_name.html:30
-#| msgid "The count of duplicate rows"
 msgid "The count of same products"
 msgstr "تعداد ردیف‌های دارای نام تکراری کاملا یکسان"
 
 #: templates/staff/duplicate_book_name.html:32
-#| msgid "Sold products"
 msgid "Similar products count"
 msgstr "تعداد ردیف‌های دارای نام تکراری مشابه"
 
@@ -2657,9 +2655,13 @@ msgstr "تعداد در انبار"
 msgid "Products price management"
 msgstr "مدیریت قیمت‌ محصول"
 
-#: templates/staff/used_book_prices.html:57
+#: templates/staff/used_book_prices.html:61
 msgid "Used price update"
 msgstr "به روزرسانی قیمت دست‌دوم"
+
+#: templates/staff/used_book_prices.html:76
+msgid "Offers based on"
+msgstr "پیشنهادها بر مبنای"
 
 #: templates/staff/vendor_add.html:8 templates/staff/vendor_add.html:19
 msgid "Vendor add"

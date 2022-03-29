@@ -1606,11 +1606,29 @@ def zero_stock_list(request):
 @staff_member_required
 def used_book_prices(request, product_id):
     product = Product.objects.get(pk=product_id)
+    half_price = 0
+    price_offers = []
+    if product.price:
+        half_price = product.price / 2
+    else:
+        price_offers = [
+            round(product.page_number / 10 ) * 15000,
+            round(product.page_number *  0.13) * 10000,
+            round(product.page_number *  0.15) * 10000,
+            round(product.page_number *  0.17) * 10000,
+        ]
+        # price_offers.sort()
     if request.method == 'POST':
         price_form = AdminPriceManagementForm(
             data=request.POST, instance=product)
         if price_form.is_valid():
-            price_form.save()
+            used_price = price_form.save(commit=False)
+            if 'offer' in request.POST:
+                data = request.POST.dict()
+                offer = Decimal(data.get("offer").replace(',', ''))
+                used_price.price_used = offer
+
+            used_price.save()
             return redirect('staff:products')
     else:
         price_form = AdminPriceManagementForm(instance=product)
@@ -1620,6 +1638,8 @@ def used_book_prices(request, product_id):
         {
             'product': product,
             'price_form': price_form,
+            'half_price': half_price,
+            'price_offers': price_offers,
         }
     )
 
