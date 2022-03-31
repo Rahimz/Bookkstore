@@ -24,6 +24,7 @@
       <div class="row">
         {% for image in images %}
         <div class="thumbnail">
+          <a href="{% url 'staff:image_remove' image_id=image.id product_id=product_id %}"><i class="fa fa-times text-danger"></i></a>          
           <img src="{{ image.file.url }}" alt="{{ image.image_alt }}" class="image-thumbnail">
         </div>
         {% endfor %}
@@ -36,7 +37,7 @@
           <input class="btn btn-outline-success " type="submit" name="another" value="{% trans 'Save and add another' %}">
           <input class="btn btn-outline-secondary " type="submit" name="book" value="{% trans 'Submit' %}">
 
-          
+
 
       </form>
 

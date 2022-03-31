@@ -2037,6 +2037,22 @@ def image_management(request, product_id):
         'staff/products/image_management.html',
         {
             'images': images,
-            'image_form': image_form
+            'image_form': image_form,
+            'product_id': product.id
         }
     )
+
+@staff_member_required
+def image_remove(request, image_id, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+
+    image = get_object_or_404(Image, pk=image_id)
+    image.delete()
+    messages.success(request, _('Image is removed'))
+    images = product.images.all()
+    if images:
+        new_main_image = images.first()
+        new_main_image.main_image = True
+        new_main_image.save()
+
+    return redirect('staff:image_management', product_id )
