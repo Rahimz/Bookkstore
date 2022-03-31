@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from products.models import Product, Good, Category, Craft
+from products.models import Product, Good, Category, Craft, Image
 from orders.models import Order, OrderLine
 
 
@@ -170,3 +170,9 @@ class CraftUpdateForm(forms.ModelForm):
         model = Product
         fields = [
             'name', 'craft_category', 'barcode_number', 'stock', 'price', 'description', 'available']
+
+
+class ProductImageManagementForm(forms.ModelForm):
+    class Meta:
+        model = Image
+        fields = ['name', 'file', 'image_alt', 'main_image', 'variation', 'active']

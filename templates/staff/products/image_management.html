@@ -1,0 +1,52 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Products' %}{% endblock %}
+
+{% block products-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-1">
+      {% include "staff/sidebar_staff.html" with barName="products" %}
+    </div>
+    <div class="col-md-6">
+      <h2>{% trans 'List of images' %}</h2>
+
+      <div class="row">
+        {% for image in images %}
+        <div class="thumbnail">
+          <img src="{{ image.file.url }}" alt="{{ image.image_alt }}" class="image-thumbnail">
+        </div>
+        {% endfor %}
+      </div>
+      <form class="" action="." method="post" enctype="multipart/form-data">
+
+          {{ image_form | crispy }}
+          {% csrf_token %}
+
+          <input class="btn btn-outline-success " type="submit" name="another" value="{% trans 'Save and add another' %}">
+          <input class="btn btn-outline-secondary " type="submit" name="book" value="{% trans 'Submit' %}">
+
+          
+
+      </form>
+
+    </div>
+
+
+  </div>
+
+</div>
+{% endblock %}
+{% block script %}
+
+{% endblock %}

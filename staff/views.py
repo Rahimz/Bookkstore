@@ -17,11 +17,11 @@ from django_countries.fields import Country
 from tools.gregory_to_hijry import hij_strf_date, greg_to_hij_date
 
 from .forms import ProductCreateForm, OrderCreateForm, InvoiceAddForm, CategoryCreateForm, OrderShippingForm, ProductCollectionForm, AdminPriceManagementForm
-from .forms import CraftUpdateForm, AdminPriceStockManagementForm, OnlineAdminPriceStockManagementForm
+from .forms import CraftUpdateForm, AdminPriceStockManagementForm, OnlineAdminPriceStockManagementForm, ProductImageManagementForm
 from orders.forms import OrderAdminCheckoutForm, OrderPaymentManageForm
 from search.forms import ClientSearchForm, BookIsbnSearchForm, SearchForm, OrderSearchForm
 from account.forms import VendorAddForm, AddressAddForm, VendorAddressAddForm
-from products.models import Product, Category
+from products.models import Product, Category, Image
 from orders.models import Order, OrderLine, PurchaseLine, Purchase
 from products.models import Craft
 from account.models import CustomUser, Vendor, Address, Credit
@@ -2005,5 +2005,38 @@ def product_reports(request):
             'all_stock': new_products_quantity + used_products_quantity['total'],
             'crafts_counts': crafts_counts,
             'crafts_counts_quantity': crafts_counts_quantity,
+        }
+    )
+
+
+@staff_member_required
+def image_management(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    images = product.images.all()
+    if request.method == 'POST':
+        image_form = ProductImageManagementForm(
+            data=request.POST,
+            # instance=product,
+            files=request.FILES
+        )
+        if image_form.is_valid():
+            new_image = image_form.save(commit=False)
+            new_image.product = product
+            new_image.registrar = request.user
+
+            new_image.save()
+            messages.success(request, _('Image added to product'))
+            if 'another' in request.POST:
+                return redirect('staff:image_management', product.id)
+            return redirect('staff:products')
+    else:
+        image_form = ProductImageManagementForm()
+
+    return render (
+        request,
+        'staff/products/image_management.html',
+        {
+            'images': images,
+            'image_form': image_form
         }
     )
