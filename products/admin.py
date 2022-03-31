@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Good, Craft
+from .models import Category, Product, Good, Craft, Image
 import simple_history
 
 @admin.register(Category)
@@ -30,3 +30,10 @@ class CraftAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     list_filter = ['available', 'category']
     search_fields = ['name', 'pk', 'category',]
+
+@admin.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    list_display = ['name', 'product', 'main_image', 'active']
+    list_editable = ['main_image', 'active']
+    search_fields = ['pk', 'product__id', 'product_name']
+    list_filter = ['main_image', 'active']

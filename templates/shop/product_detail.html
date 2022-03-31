@@ -8,21 +8,38 @@
 
 {% block title %}{{ product }}{% endblock %}
 
-{% block staff_tab %}<a class="btn btn-sm text-dark btn-outline-warning" href="{% url 'staff:product_update' product.id %}" >{% trans 'Update product' %}</a>{% endblock %}
+{% block staff_tab %}<a class="btn btn-sm text-dark btn-outline-warning" href="{% url 'staff:product_update' product.id %}">{% trans 'Update product' %}</a>{% endblock %}
 
 {% block content %}
 <div class="container-fluid overflow-hidden">
   <div itemscope itemtype="https://schema.org/Book">
     <div class="row gy-2">
       <div class="col-md-4">
-        <div class="border drop_shadow rounded-2">
-          {% if product.image %}
-          <img src="{{ product.image.url }}" itemprop="image" class="card-img-top p-4" alt="{{ product.image_alt }}">
-          {% else %}
-          <img src="{% static 'img/no_image.png' %}" class="card-img-top p-4" alt="no-image">
-          {% endif %}
+        <div class="border drop_shadow rounded-2 ">
+          <div class="product-image">
+            {% if main_image %}
+            <img src="{{ main_image.file.url }}" itemprop="image" class="card-img-top p-4" alt="{{ main_image.image_alt }}">
+            {% else %}
+            <img src="{% static 'img/no_image.png' %}" class="card-img-top p-4" alt="no-image">
+            {% endif %}
+          </div>
         </div>
         <span class="badge rounded-pill ms-4 mt-2 {% if product.state == 'new' %}bg-success{% else %}bg-warning{% endif %}">{{ product.state | capfirst }}</span>
+        <div class="row">
+          <div class="thumbnail">
+            <a href="{% url 'shop:product_detail' product_id=product.id %}">
+              <img src="{{ first_image.file.url }}" itemprop="image" class="image-thumbnail" alt="{{ first_image.image_alt }}">
+            </a>
+          </div>
+
+          {% for image in product_images %}
+          <div class="thumbnail">
+            <a href="{% url 'shop:product_detail_image' product_id=product.id image_id=image.id %}">
+              <img src="{{ image.file.url }}" itemprop="image" class="image-thumbnail" alt="{{ image.image_alt }}">
+            </a>
+          </div>
+          {% endfor %}
+        </div>
       </div>
       <div class="col-md-3">
         <div class="drop_shadow border rounded-2 p-2">

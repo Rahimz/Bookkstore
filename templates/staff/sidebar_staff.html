@@ -1,7 +1,10 @@
 {% load i18n %}
 {% if barName == "products" %}
-  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:product_create'%}">{% trans 'Create product' %}</a>
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:products'%}">{% trans 'List of products' %}</a>
+  <br>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:product_create'%}">{% trans 'Create product' %}</a>
+  
+  <br>
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:collection_management' %}">{% trans 'Collection managment' %}</a>
   <br>
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'shop:store_book_search' state='used' %}">{% trans 'Search in used books' %}</a>

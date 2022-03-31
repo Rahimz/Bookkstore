@@ -68,6 +68,8 @@ urlpatterns = [
     path('products/create/', views.product_create, name='product_create'),
     # path('products/update/<int:product_id>/', views.product_update, name='product_update'),
     path('products/update/<int:product_id>/', views.product_create, name='product_update'),
+    path('products/image-management/<int:product_id>/', views.image_management, name='image_management'),
+    path('products/image-remove/<int:image_id>/<int:product_id>/', views.image_remove, name='image_remove'),
     path('products/price-show/<int:product_id>/', views.product_price_show, name='product_price_show'),
 
     path('products/collection-management/', views.collection_management, name='collection_management'),
