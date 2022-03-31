@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 import string
 import random
+from django.conf import settings
 
 from simple_history.models import HistoricalRecords
 
@@ -565,3 +566,58 @@ class Craft(models.Model):
             self.slug = slugify(self.name, allow_unicode=True)
 
         super(Craft, self).save(*args, **kwargs)
+
+
+class Image(models.Model):
+    VARIATION_CHOICES =(
+        ('new', _('New')),
+        ('used', _('Used')),
+        ('', ''),
+    )
+    name = models.CharField(
+        max_length=150,
+    )
+    product = models.ForeignKey(
+        Product,
+        related_name='images',
+        on_delete=models.CASCADE
+    )
+    file = models.ImageField(
+        upload_to='products/images/',
+    )
+    image_alt = models.CharField(
+        max_length=300,
+        blank=True,
+        null=True
+    )
+    variation = models.CharField(
+        max_length=25,
+        choices=VARIATION_CHOICES,
+        default='new',
+    )
+    registrar = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True
+    )
+    active = models.BooleanField(
+        default=True
+    )
+    created = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.image_alt:
+            self.image_alt = str(self.product)
+
+        super(Image, self).save(*args, **kwargs)
+
+
+    # def get_absolute_url(self):
+    #     return reverse('shop:product_image',
+    #                    args=[self.id, self.slug])
