@@ -3,7 +3,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 
-from products.models import Product, Good, Category
+from products.models import Product, Good, Category, Image
 from search.forms import SearchForm
 from cart.forms import CartAddProductForm
 from search.views import ProductSearch
@@ -69,18 +69,32 @@ def product_list(request, category_slug=None, ):
         }
     )
 
-def product_detail(request, pk, slug=None):
-    product = get_object_or_404(Product, pk=pk)
+def product_detail(request, product_id, slug=None, image_id=None):
+
+    product = get_object_or_404(Product, pk=product_id)
     slug = product.slug
-    goods = Good.objects.filter(product=product)
+    # goods = Good.objects.filter(product=product)
     cart_product_form = CartAddProductForm()
+    product_images = product.images.all().filter(main_image=False)
+    # product_images = Image.objects.filter(product=product)
+
+    first_image = product.images.get(main_image=True)
+    if image_id:
+        main_image = get_object_or_404(Image, pk=image_id)
+        print(main_image.id)
+    else:
+        main_image = product.images.get(main_image=True)
+
     return render(
         request,
         'shop/product_detail.html',
         {
         'product':product,
-        'goods': goods,
+        # 'goods': goods,
         'cart_product_form': cart_product_form,
+        'first_image': first_image,
+        'main_image': main_image,
+        'product_images': product_images,
         }
     )
 

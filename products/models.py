@@ -601,6 +601,9 @@ class Image(models.Model):
         blank=True,
         null=True
     )
+    main_image = models.BooleanField(
+        default=False
+    )
     active = models.BooleanField(
         default=True
     )

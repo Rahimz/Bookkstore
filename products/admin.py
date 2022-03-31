@@ -33,4 +33,7 @@ class CraftAdmin(admin.ModelAdmin):
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ['name', 'product', 'active']
+    list_display = ['name', 'product', 'main_image', 'active']
+    list_editable = ['main_image', 'active']
+    search_fields = ['pk', 'product__id', 'product_name']
+    list_filter = ['main_image', 'active']
