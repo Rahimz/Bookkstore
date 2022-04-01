@@ -2037,6 +2037,8 @@ def image_management(request, product_id):
             new_image.registrar = request.user
             if not images:
                 new_image.main_image = True
+                product.image = new_image.file
+                product.save()
 
             new_image.save()
             messages.success(request, _('Image added to product'))
@@ -2062,6 +2064,9 @@ def image_remove(request, image_id, product_id):
     product = get_object_or_404(Product, pk=product_id)
 
     image = get_object_or_404(Image, pk=image_id)
+    if image.main_image:
+        product.image = None
+
     image.delete()
     messages.success(request, _('Image is removed'))
     images = product.images.all()
@@ -2069,5 +2074,8 @@ def image_remove(request, image_id, product_id):
         new_main_image = images.first()
         new_main_image.main_image = True
         new_main_image.save()
+        product.image = new_main_image.file
+
+    product.save()
 
     return redirect('staff:image_management', product_id )
