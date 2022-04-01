@@ -78,12 +78,18 @@ def product_detail(request, product_id, slug=None, image_id=None):
     product_images = product.images.all().filter(main_image=False)
     # product_images = Image.objects.filter(product=product)
 
-    first_image = product.images.get(main_image=True)
+    try:
+        first_image = product.images.get(main_image=True)
+    except:
+        first_image = None
     if image_id:
         main_image = get_object_or_404(Image, pk=image_id)
-        print(main_image.id)
+        # print(main_image.id)
     else:
-        main_image = product.images.get(main_image=True)
+        try:
+            main_image = product.images.get(main_image=True)
+        except:
+            main_image = None
 
     return render(
         request,

@@ -153,23 +153,35 @@ def warehouse(request):
 
 @staff_member_required
 def products(request):
-    products_object = Product.objects.all().filter(
-        available=True).exclude(product_type='craft')
+    # This if statement check if we have a search result or not
+    # if we dont have result then make a wuery set for products
+    if not request.GET.get('page'):
+        products = cache.get('all_products')
+        if not products:
+            products = Product.objects.all().filter(available=True).exclude(product_type='craft')
+            cache.set('all_products', products)
 
-    search_form = SearchForm()
     if request.method == 'POST':
         search_form = SearchForm(data=request.POST)
         if search_form.is_valid():
             search_query = search_form.cleaned_data['query']
             search_query = number_converter(search_query)
-            products_object = ProductSearch(
+            products = ProductSearch(
                 object=Product, query=search_query).exclude(product_type='craft').order_by('name', 'publisher')
+            cache.set('search_products', products)
+            # print('In if is_valid: ', len(products))
 
             search_form = SearchForm()
+    else:
+        search_form = SearchForm()
 
     # pagination
-    paginator = Paginator(products_object, 50)  # 50 posts in each page
     page = request.GET.get('page')
+    # if we are in a search result then we set products to cached result of serach query
+    if page:
+        products = cache.get('search_products')
+
+    paginator = Paginator(products, 50)  # 50 posts in each page
     try:
         products = paginator.page(page)
     except PageNotAnInteger:
@@ -2023,6 +2035,10 @@ def image_management(request, product_id):
             new_image = image_form.save(commit=False)
             new_image.product = product
             new_image.registrar = request.user
+            if not images:
+                new_image.main_image = True
+                product.image = new_image.file
+                product.save()
 
             new_image.save()
             messages.success(request, _('Image added to product'))
@@ -2038,7 +2054,8 @@ def image_management(request, product_id):
         {
             'images': images,
             'image_form': image_form,
-            'product_id': product.id
+            'product_id': product.id,
+            'product': {'name': product, 'id': product.id, 'isbn':product.isbn}
         }
     )
 
@@ -2047,6 +2064,9 @@ def image_remove(request, image_id, product_id):
     product = get_object_or_404(Product, pk=product_id)
 
     image = get_object_or_404(Image, pk=image_id)
+    if image.main_image:
+        product.image = None
+
     image.delete()
     messages.success(request, _('Image is removed'))
     images = product.images.all()
@@ -2054,5 +2074,8 @@ def image_remove(request, image_id, product_id):
         new_main_image = images.first()
         new_main_image.main_image = True
         new_main_image.save()
+        product.image = new_main_image.file
+
+    product.save()
 
     return redirect('staff:image_management', product_id )
