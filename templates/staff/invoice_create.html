@@ -147,7 +147,7 @@
               <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{ order_line.product.isbn }}</td>
-                <td><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="auto" height="40px"></td>
+                <td><img src="{% if order_line.product.image %}{{ order_line.product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="" alt="{{ product.image_alt }}" width="auto" height="40px"></td>
                 <td>{{ order_line.product }}</td>
                 <td>{% if order_line.poruct.publisher %}{{ order_line.product.publisher }}{% endif %}</td>
                 <td></td>
@@ -193,7 +193,7 @@
               </tr>
             </tfoot>
           </table>
-        </div> 
+        </div>
       </div>
       <div class="my-5">
         <a href="{% url 'staff:draft_orders' %}" class="btn btn-outline-secondary">{% trans 'Save draft' %}</a>
