@@ -153,14 +153,15 @@ def warehouse(request):
 
 @staff_member_required
 def products(request):
+    search_query = None
+    page = None
     # This if statement check if we have a search result or not
     # if we dont have result then make a wuery set for products
-    if not request.GET.get('page'):
-        products = cache.get('all_products')
-        if not products:
-            products = Product.objects.all().filter(available=True).exclude(product_type='craft')
-            cache.set('all_products', products)
+    products = Product.objects.all().filter(
+        available=True).exclude(product_type='craft')
+    counts = products.count()
 
+    search_form = SearchForm()
     if request.method == 'POST':
         search_form = SearchForm(data=request.POST)
         if search_form.is_valid():
@@ -168,28 +169,24 @@ def products(request):
             search_query = number_converter(search_query)
             products = ProductSearch(
                 object=Product, query=search_query).exclude(product_type='craft').order_by('name', 'publisher')
-            cache.set('search_products', products)
-            # print('In if is_valid: ', len(products))
+            counts = products.count()
 
             search_form = SearchForm()
-    else:
-        search_form = SearchForm()
 
-    # pagination
-    page = request.GET.get('page')
-    # if we are in a search result then we set products to cached result of serach query
-    if page:
-        products = cache.get('search_products')
-
-    paginator = Paginator(products, 50)  # 50 posts in each page
-    try:
-        products = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer deliver the first page
-        products = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range deliver last page of results
-        products = paginator.page(paginator.num_pages)
+    if not search_query:
+        # becuase we have bugs in pagination and search together
+        # we do not paginate the search results
+        # pagination
+        paginator = Paginator(products, 50)  # 50 posts in each page
+        page = request.GET.get('page')
+        try:
+            products = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer deliver the first page
+            products = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range deliver last page of results
+            products = paginator.page(paginator.num_pages)
 
     return render(
         request,
@@ -197,6 +194,7 @@ def products(request):
         {
             'products': products,
             'page': page,
+            'counts': counts,
             'search_form': search_form,
         }
     )
