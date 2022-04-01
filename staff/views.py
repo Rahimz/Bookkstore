@@ -2035,6 +2035,8 @@ def image_management(request, product_id):
             new_image = image_form.save(commit=False)
             new_image.product = product
             new_image.registrar = request.user
+            if not images:
+                new_image.main_image = True
 
             new_image.save()
             messages.success(request, _('Image added to product'))
@@ -2050,7 +2052,8 @@ def image_management(request, product_id):
         {
             'images': images,
             'image_form': image_form,
-            'product_id': product.id
+            'product_id': product.id,
+            'product': {'name': product, 'id': product.id, 'isbn':product.isbn}
         }
     )
 
