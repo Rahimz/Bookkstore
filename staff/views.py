@@ -153,10 +153,13 @@ def warehouse(request):
 
 @staff_member_required
 def products(request):
+    search_query = None
+    page = None
     # This if statement check if we have a search result or not
     # if we dont have result then make a wuery set for products
-    products_object = Product.objects.all().filter(
+    products = Product.objects.all().filter(
         available=True).exclude(product_type='craft')
+    counts = products.count()
 
     search_form = SearchForm()
     if request.method == 'POST':
@@ -164,23 +167,26 @@ def products(request):
         if search_form.is_valid():
             search_query = search_form.cleaned_data['query']
             search_query = number_converter(search_query)
-            products_object = ProductSearch(
+            products = ProductSearch(
                 object=Product, query=search_query).exclude(product_type='craft').order_by('name', 'publisher')
+            counts = products.count()
 
             search_form = SearchForm()
 
-    # pagination
-    paginator = Paginator(products_object, 50)  # 50 posts in each page
-    page = request.GET.get('page')
-    try:
-        products = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer deliver the first page
-        products = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range deliver last page of results
-        products = paginator.page(paginator.num_pages)
-
+    if not search_query:
+        # becuase we have bugs in pagination and search together
+        # we do not paginate the search results
+        # pagination
+        paginator = Paginator(products, 50)  # 50 posts in each page
+        page = request.GET.get('page')
+        try:
+            products = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer deliver the first page
+            products = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range deliver last page of results
+            products = paginator.page(paginator.num_pages)
 
     return render(
         request,
@@ -188,6 +194,7 @@ def products(request):
         {
             'products': products,
             'page': page,
+            'counts': counts,
             'search_form': search_form,
         }
     )

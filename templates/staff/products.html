@@ -23,11 +23,19 @@
       <div class="my-3">
         {% if request.user.is_superuser %}
         <p><a href="{% url 'tools:product_export_excel' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'All products' %} <span
-              class="text-danger">{% trans 'Could be very slow or it may crash' %}</span></a></p>
-        <p><a href="{% url 'tools:used_noprice_export_excel' filter='used-noprice' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'Used products without price' %}</a></p>
-        <p><a href="{% url 'tools:used_all_export_excel' filter='used-all' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'All used products' %}</a></p>
+              class="text-danger">{% trans 'Could be very slow or it may crash' %}</span></a>
+        <a href="{% url 'tools:used_noprice_export_excel' filter='used-noprice' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'Used products without price' %}</a>
+        <a href="{% url 'tools:used_all_export_excel' filter='used-all' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'All used products' %}</a></p>
         {% endif %}
       </div>
+      <p>
+      {% if page %}
+        {% trans "All products" %}
+      {% else %}
+        {% trans "Search results" %}
+      {% endif %}
+      <span>: {{ counts | intcomma:False }}</span>
+    </p>
       <form class="" action="." method="post">
         <div class="row">
 
@@ -89,7 +97,9 @@
           </tbody>
         </table>
       </div>
+      {% if page %}
       {% include "shop/pagination.html" with page=products %}
+      {% endif %}
     </div>
 
 
