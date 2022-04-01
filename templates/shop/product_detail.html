@@ -47,12 +47,18 @@
             <p itemprop="name" class="">{% trans 'Name' %} : {{ product }}</p>
             <p itemprop="author" class="">{% trans 'Author' %} : {{ product.author }}</p>
             <p itemprop="translator" class="">{% trans 'Translator' %} : {{ product.translator }}</p>
-            <p class="">{% trans 'Price' %} : {{ product.price | intcomma:False}}<span class="small"> ({% trans 'Rial' %})</span></p>
             <p itemprop="publisher" class="">{% trans 'Publisher' %} : {{ product.publisher }}</p>
             <p itemprop="publisher" class="">{% trans 'Publisher' %} : {% if product.publisher_2 %}{{ product.publisher_2 }}{% endif %}</p>
           </div>
         </div>
         <div class="mt-4">
+          <p class="lead">{% trans 'Price' %} : {% if product.price %}{{ product.price | intcomma:False }}<span class="small"> {% trans 'Rial' %}</span>{% else %}{% trans "No price" %}{% endif %}</p>
+          {% if product.price_1 %}<p class="lead">{% trans 'Price' %} 1: {% if product.price_1 %}{{ product.price_1 | intcomma:False }}<span class="small"> {% trans 'Rial' %}</span>{% else %}{% trans "No price" %}{% endif %}</p>{% endif %}
+          {% if product.price_2 %}<p class="lead">{% trans 'Price' %} 2: {% if product.price_2 %}{{ product.price_2 | intcomma:False }}<span class="small"> {% trans 'Rial' %}</span>{% else %}{% trans "No price" %}{% endif %}</p>{% endif %}
+          {% if product.price_3 %}<p class="lead">{% trans 'Price' %} 3: {% if product.price_3 %}{{ product.price_3 | intcomma:False }}<span class="small"> {% trans 'Rial' %}</span>{% else %}{% trans "No price" %}{% endif %}</p>{% endif %}
+          {% if product.price_4 %}<p class="lead">{% trans 'Price' %} 4: {% if product.price_4 %}{{ product.price_4 | intcomma:False }}<span class="small"> {% trans 'Rial' %}</span>{% else %}{% trans "No price" %}{% endif %}</p>{% endif %}
+          {% if product.price_5 %}<p class="lead">{% trans 'Price' %} 5: {% if product.price_5 %}{{ product.price_5 | intcomma:False }}<span class="small"> {% trans 'Rial' %}</span>{% else %}{% trans "No price" %}{% endif %}</p>{% endif %}
+          <p class="lead">{% trans 'Price used' %} : {% if product.price_used %}{{ product.price_used | intcomma:False }}<span class="small"> {% trans 'Rial' %}</span>{% else %}{% trans "No price" %}{% endif %}</p>
           {% if product.stock >= 1 %}
           <form action="{% url 'cart:cart_add' product.pk %}" method="post">
             {{ cart_product_form}}
@@ -60,6 +66,7 @@
             <input type="submit" value="{% trans 'Add to cart' %}">
           </form>
           {% else %}
+
           <form action="#" method="get">
             <input type="submit" value="{% trans 'Let me know if becomes available' %}">
           </form>
