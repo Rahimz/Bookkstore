@@ -155,33 +155,23 @@ def warehouse(request):
 def products(request):
     # This if statement check if we have a search result or not
     # if we dont have result then make a wuery set for products
-    if not request.GET.get('page'):
-        products = cache.get('all_products')
-        if not products:
-            products = Product.objects.all().filter(available=True).exclude(product_type='craft')
-            cache.set('all_products', products)
+    products_object = Product.objects.all().filter(
+        available=True).exclude(product_type='craft')
 
+    search_form = SearchForm()
     if request.method == 'POST':
         search_form = SearchForm(data=request.POST)
         if search_form.is_valid():
             search_query = search_form.cleaned_data['query']
             search_query = number_converter(search_query)
-            products = ProductSearch(
+            products_object = ProductSearch(
                 object=Product, query=search_query).exclude(product_type='craft').order_by('name', 'publisher')
-            cache.set('search_products', products)
-            # print('In if is_valid: ', len(products))
 
             search_form = SearchForm()
-    else:
-        search_form = SearchForm()
 
     # pagination
+    paginator = Paginator(products_object, 50)  # 50 posts in each page
     page = request.GET.get('page')
-    # if we are in a search result then we set products to cached result of serach query
-    if page:
-        products = cache.get('search_products')
-
-    paginator = Paginator(products, 50)  # 50 posts in each page
     try:
         products = paginator.page(page)
     except PageNotAnInteger:
@@ -190,6 +180,7 @@ def products(request):
     except EmptyPage:
         # If page is out of range deliver last page of results
         products = paginator.page(paginator.num_pages)
+
 
     return render(
         request,
