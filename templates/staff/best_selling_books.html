@@ -1,0 +1,83 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block title %}{% trans 'Best selling books' %}{% endblock %}
+
+{% block warehouses-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-1">
+      {% include "staff/sidebar_staff.html" with barName="reports" %}
+    </div>
+    <div class="col-md-11">
+      <h2>{% trans 'Best selling books'%}</h2>
+
+      <table class="table table-striped">
+        <thead>
+          <th scope="">{% trans 'Product ID' %}</th>
+          <th scope="">{% trans 'ISBN' %}</th>
+          <th scope="">{% trans 'Name' %}</th>
+          <th scope="">{% trans 'variation' %}</th>
+          <th scope="">{% trans 'Publisher' %}</th>
+          <th scope="">{% trans 'Quantity' %}</th>
+
+
+        </thead>
+        <tbody>
+          {% for product in all_list %}
+          <tr>
+            {% for item in product %}
+              <td>{{ item }}</td>
+            {% endfor %}
+          </tr>
+
+          {% endfor %}
+
+        {%comment %}
+
+          {% for line, item  in added_line.items %}
+          <tr>
+            <td>{{ line }}</td>
+
+            <td>{{ item.isbn }}</td>
+            <td><a href="{% url 'warehouses:product_workflow' item.id %}"><img src="{% static 'img/proccess.png' %}" alt="product flow"></a></td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.publisher }}</td>
+            <td>
+              {% for v in item.vendors %}
+              {{ v }}
+              {% endfor %}
+            </td>
+            <td>{{ item.quantity }}</td>
+            <td class="small">
+              {% if 'used' in item.variation %}
+              <p class="border border-warning rounded mt-1 small">{% trans 'Used' %}</p>
+              {% else %}
+              <span class="border border-success p-1 mt-1 rounded">{% trans 'New' %}</span>
+              {% endif %}
+            </td>
+            <td>{{ item.created }}</td>
+
+            <td><span class="{% if item.stock <= 0 %}bg-warning text-dark p-2 rounded{% endif %}">{{ item.stock }}</span></td>
+            {% for item in line %}
+            {% endfor %}
+
+          </tr>
+          {% endfor %}
+          {% endcomment%}
+
+        </tbody>
+      </table>
+
+
+
+    </div>
+    {% include "shop/pagination.html" with page=order_lines %}
+  </div>
+</div>
+{% endblock %}

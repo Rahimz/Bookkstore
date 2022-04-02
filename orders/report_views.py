@@ -8,6 +8,7 @@ from math import trunc
 from decimal import Decimal
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Sum, Q
+from django.core.cache import cache
 
 from tools.gregory_to_hijry import hij_strf_date, greg_to_hij_date
 
@@ -159,4 +160,68 @@ def sales_by_days(request, days=365, date=None):
             'orders_new_books': orders_new_books,
             'orders_used_books': orders_used_books,
         }
+    )
+
+from asgiref.sync import sync_to_async
+
+@sync_to_async
+def best_selling_books(request):
+    order_lines = OrderLine.objects.filter(active=True).exclude(product__product_type='craft')
+    added_line = {}
+    # added_line = {
+    #     'pk': {
+    #         'quantity': 'x',
+    #         'name': 'str',
+    #         'created': 'created',
+    #         'stock': 'y',
+    #          'variation': 'new main'
+    #          'id': 'id'
+    #     }
+    # }
+    for item in order_lines.iterator():
+        # vendors_list = item.product.vendors.all().values_list('first_name', flat=True)
+         # use cache to reduce queries
+        product_id = item.product.id
+        product = cache.get('product_{}'.format(product_id))
+        if not product:
+            product = item.product
+            cache.set('product_{}'.format(product.id), product)
+
+        if str(item.product.id) in added_line:
+            added_line[str(product.id)]['quantity'] += item.quantity
+            pass
+        else:
+            # messages.warning(request, 'hi')
+            # check_list.append(item.product.name)
+            added_line[str(product.id)] = {
+                'name': str(product),
+                'quantity': item.quantity,
+                'variation': item.variation,
+                'isbn': product.isbn,
+                'id': product.id,
+                'publisher': product.publisher,
+                }
+    all_list = [(
+        added_line[item]['id'],
+        added_line[item]['isbn'],
+        added_line[item]['name'],
+        added_line[item]['variation'],
+        added_line[item]['publisher'],
+        added_line[item]['quantity'], )
+        for item, value in added_line.items()
+    ]
+    #  all_list = [(1, 45234), .... ]
+    all_list  = sorted(all_list, key=lambda i: i[5], reverse=True)[:101]
+    # print(all_list[0:50], end='\n')
+
+    return render (
+        request,
+        'staff/best_selling_books.html',
+        {
+            'order_lines': order_lines,
+             'added_line': added_line,
+             'all_list': all_list,
+
+
+         }
     )
