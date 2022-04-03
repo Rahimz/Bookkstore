@@ -30,4 +30,6 @@ urlpatterns = [
 
     path('report/sales-by-days/<int:days>/', report_views.sales_by_days, name='sales_by_days'),
     path('report/sales-by-date/<str:date>/', report_views.sales_by_days, name='sales_by_date'),
+
+    path('report/best_selling_books/', report_views.best_selling_books, name='best_selling_books'),
 ]

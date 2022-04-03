@@ -19,6 +19,8 @@ urlpatterns = [
     path('edit/', views.edit, name='edit'),
 
     path('clients/', views.client_list, name='client_list'),
+    path('clients/<str:filter>/', views.client_list, name='client_list_filter'),
+
     path('client_add/', views.client_add, name='client_add'),
     path('client/update/<int:client_id>/', views.client_update, name='client_update'),
     path('client/<int:client_id>/', views.client_details, name='client_details'),
@@ -28,6 +30,7 @@ urlpatterns = [
     path('client/add-address/<int:client_id>/<str:kind>/', views.client_add_address, name='client_add_address'),
     path('client/add-address/<int:client_id>/<str:kind>/<int:address_id>/', views.client_add_address, name='client_update_address'),
 
+    path('client/most-valuable/', views.client_most_valuable, name='client_most_valuable'),
     # path('address/<int:pk>/', views.address_detail, name='address_detail'),
     # path('address/create/', views.add_address, name='add_address'),
 

@@ -3,7 +3,7 @@
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:products'%}">{% trans 'List of products' %}</a>
   <br>
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:product_create'%}">{% trans 'Create product' %}</a>
-  
+
   <br>
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:collection_management' %}">{% trans 'Collection managment' %}</a>
   <br>
@@ -82,9 +82,18 @@
 {% if barName == "clients" %}
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'client_list' %}">{% trans 'List of clients' %}</a>
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'client_add' %}" accesskey="c" data-bs-toggle="tooltip" data-bs-placement="left" title="alt + shift + c">{% trans 'Add client' %}</a>
+  <br>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'client_most_valuable' %}">{% trans 'Most valuable clients' %}</a>
 
 {% endif %}
 
+{% if barName == "reports" %}
+  {% if request.user.is_superuser or request.user.is_manager %}
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'orders:best_selling_books' %}">{% trans 'Best selling books' %}</a>
+
+
+  {% endif %}
+{% endif %}
 
 {% block script %}
 <script language="javascript" type="text/javascript">

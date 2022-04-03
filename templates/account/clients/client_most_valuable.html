@@ -1,0 +1,68 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Most valuable clients' %}{% endblock %}
+
+{% block clients-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-1">
+      {% include "staff/sidebar_staff.html" with barName="clients" %}
+    </div>
+    <div class="col-md-11">
+      <h2>{% trans 'Most valuable clients' %}</h2>
+
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">{% trans 'Client code' %}</th>
+              <th scope="col">{% trans 'Name' %}</th>
+              <th scope="col">{% trans 'Username' %}</th>
+              <th scope="col">{% trans 'Order sum' %}</th>
+              <th scope="col">{% trans 'Quantity' %}</th>
+              <th scope="col">{% trans 'Book' %}</th>
+              <th scope="col">{% trans 'Quantity' %}</th>
+              <th scope="col">{% trans 'Craft' %}</th>
+              <th scope="col">{% trans 'Quantity' %}</th>
+
+            </tr>
+          </thead>
+          <tbody id="clientTable">
+            {% for credit in credits %}        
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{ credit.user.id }}</td>
+              <td>{{ credit.user }}</td>
+              <td>{{ credit.user.username }}</td>
+              <td>{{ credit.orders_sum | intcomma:False }}</td>
+              <td>{{ credit.orders_count | intcomma:False }}</td>
+              <td>{{ credit.book_sum | intcomma:False }}</td>
+              <td>{{ credit.book_count | intcomma:False }}</td>
+              <td>{{ credit.craft_sum | intcomma:False }}</td>
+              <td>{{ credit.craft_count | intcomma:False }}</td>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+
+      {% include "shop/pagination.html" with page=clients %}
+    </div>
+
+
+  </div>
+
+</div>
+{% endblock %}

@@ -5,6 +5,7 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
+from datetime import datetime
 
 from openpyxl import load_workbook
 from io import BytesIO
@@ -1416,6 +1417,100 @@ def used_book_update_2(request, file_slug, check='check'):
             'duplicate_price': duplicate_price,
             'not_in_database': not_in_database,
             'remove_book': remove_book,
+
+         }
+    )
+
+
+def duplicate_book_1(request, file_slug, check='check'):
+    has_main_stock = []
+    # not_in_database = []
+    # number_of_remove_object = 0
+    remove_book = []
+
+    # excel file handle
+    file_object = get_object_or_404(FileObject, slug=file_slug)
+
+    myfile = File(file_object)
+
+    path = file_object.file.path
+    with open(path, 'rb') as f:
+        # Load excel workbook
+        wb = load_workbook(f)
+        ws = wb.active
+        row_count = ws.max_row
+
+        # a loop for scrape the excel file
+        # read the data in cells
+        for i in range(2, row_count):
+        # for i in range(2, 500):
+
+            # row = ws['A'+str(i):'M'+str(i)]
+
+            product_id = ws['B' + str(i)].value,
+            name = ws['C' + str(i)].value,
+            remove = ws['D' + str(i)].value,
+            main_stock = ws['J' + str(i)].value,
+            flow = ws['N' + str(i)].value,
+
+            if not remove[0]:
+                remove = ['',]
+
+            if flow[0] == None:
+                flow = ['',]
+
+            # the rows marked to eliminated
+            if '/' in  remove[0]:
+                database_product = Product.objects.get(pk=product_id[0])
+                # we check the stock and flow of selected rows
+                if not main_stock[0] and not database_product.stock and not database_product.stock_1 and not database_product.stock_2 and not flow[0]:
+                    remove_book.append( (product_id[0], name[0]) )
+                    if check == 'add':
+                        database_product.available = False
+                        database_product.available_in_store = False
+                        database_product.available_online = False
+                        if not database_product.admin_note:
+                            database_product.admin_note = str(datetime.now().date()) + " remove because of duplication, "
+                        else:
+                            database_product.admin_note += " - " + str(datetime.now().date()) + " remove because of duplication, "
+                        database_product.save()
+
+                else:
+                    has_main_stock.append(
+                        (
+                            product_id[0],
+                            name[0],
+                            flow[0],
+                            main_stock,
+                            database_product.stock,
+                            database_product.stock_1,
+                            database_product.stock_2,
+                            flow[0]
+                        )
+                    )
+                    if check == 'add':
+                        if not database_product.admin_note:
+                            database_product.admin_note = str(datetime.now().date()) + 'It should be removed but has flow or main stock'
+                        else:
+                            database_product.admin_note += " - " + str(datetime.now().date()) + 'It should be removed but has flow or main stock'
+                        database_product.save()
+
+            result_to_remove = [item[0] for item in has_main_stock]
+
+
+
+    print('has_main_stock', len(has_main_stock))
+    print('remove_book', len(remove_book))
+    return render(
+        request,
+        'files/duplicate_book_1.html',
+        {
+            'file': myfile,
+            'file_object': file_object,
+            'row_count': row_count,
+            'has_main_stock': has_main_stock,
+            'remove_book': remove_book,
+            'result_to_remove': result_to_remove,
 
          }
     )

@@ -189,6 +189,43 @@ class Credit(models.Model):
         null=True,
         blank=True
     )
+    orders_sum = models.DecimalField(
+        max_digits=10,
+        decimal_places=0,
+        null=True,
+        blank=True
+    )
+    order_count = models.IntegerField(
+        default=0
+    )
+    orderlines_sum = models.DecimalField(
+        max_digits=10,
+        decimal_places=0,
+        null=True,
+        blank=True
+    )
+    orderlines_count = models.IntegerField(
+        default=0
+    )
+    book_sum = models.DecimalField(
+        max_digits=10,
+        decimal_places=0,
+        null=True,
+        blank=True
+    )
+    book_count = models.IntegerField(
+        default=0
+    )
+    craft_sum = models.DecimalField(
+        max_digits=10,
+        decimal_places=0,
+        null=True,
+        blank=True
+    )
+    craft_count = models.IntegerField(
+        default=0
+    )
+
     expiration_date = models.DateTimeField(
         null=True,
         blank=True
@@ -197,6 +234,7 @@ class Credit(models.Model):
         null=True,
         blank=True
     )
+
     history = HistoricalRecords()
 
     def __str__(self):

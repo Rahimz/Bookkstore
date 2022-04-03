@@ -101,9 +101,9 @@ def edit(request):
 
 
 @staff_member_required
-def client_list(request):
+def client_list(request, filter=None):
     results = None
-    clients = CustomUser.objects.filter(is_client=True).order_by('-pk').exclude(is_superuser=True).exclude(username='guest')
+    clients = CustomUser.objects.filter(is_client=True).order_by('-pk').exclude(username='guest')
 
     if request.method == 'POST':
         client_search_form = CLientSearchStaffForm(data=request.POST)
@@ -117,6 +117,9 @@ def client_list(request):
                 search=SearchVector('first_name', 'last_name', 'username', 'phone', 'social_media_name'),).filter(search__contains=query)
     else:
         client_search_form = CLientSearchStaffForm()
+
+    if filter:
+        clients = clients.order_by(filter)
 
     return render(
         request,
@@ -330,20 +333,63 @@ def credit_update(request, client_id):
     )
 
 
-
 @staff_member_required
 def user_history(request, user_id):
     user = get_object_or_404(CustomUser, pk=user_id)
-    order_counts = Order.objects.filter(client=user).count()
-    orderlines = OrderLine.objects.filter(order__client=user).order_by('product__name')
+    try:
+        credit =  user.credit
+    except:
+        credit = Credit.objects.create(
+            user = user,
+        )
+
+    order = Order.objects.filter(active=True).filter(client=user).aggregate(sum=Sum('payable'), quantity=Sum('quantity'))
+    order_sum = order['sum']
+    order_counts = Order.objects.filter(active=True).filter(client=user).count()
+
+    orderlines = OrderLine.objects.filter(active=True).filter(order__client=user).order_by('product__name')
+
+    book = OrderLine.objects.filter(active=True).filter(order__client=user).exclude(product__product_type='craft').aggregate(sum=Sum('cost_after_discount'), quantity=Sum('quantity'))
+    craft = OrderLine.objects.filter(active=True).filter(order__client=user).filter(product__product_type='craft').aggregate(sum=Sum('cost_after_discount'), quantity=Sum('quantity'))
     orderlines_sum = orderlines.aggregate(total_cost=Sum('cost_after_discount'), total_quantity=Sum('quantity'))
+
+    print (craft)
+
+    # update credit
+    credit.orders_sum = order_sum if order_sum else 0
+    credit.order_count = order_counts if order_counts else 0
+
+
+    credit.orderlines_sum = orderlines_sum['total_cost'] if orderlines_sum['total_cost'] else 0
+    credit.orderlines_count = orderlines_sum['total_quantity'] if orderlines_sum['total_quantity'] else 0
+
+    credit.book_sum = book['sum'] if book['sum'] else 0
+    credit.book_count = book['quantity'] if book['quantity'] else 0
+    credit.craft_sum = craft['sum'] if craft['sum'] else 0
+    credit.craft_count = craft['quantity'] if craft['quantity'] else 0
+
+
+    credit.save()
+
     return render (
-        request, 
+        request,
         'account/clients/user_history.html',
         {
             'order_counts': order_counts,
             'orderlines': orderlines,
             'client': user,
             'orderlines_sum': orderlines_sum,
+        }
+    )
+
+
+@staff_member_required
+def client_most_valuable(request):
+    credits = Credit.objects.all().order_by('-orders_sum')[:50]
+    return render(
+        request,
+        'account/clients/client_most_valuable.html',
+        {
+            'credits': credits,
         }
     )
