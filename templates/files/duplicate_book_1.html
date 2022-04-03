@@ -1,0 +1,34 @@
+{% extends '_base_files_app.html'%}
+{% block content %}
+{% if update_product %}
+<p class="bg-dannger">{{ update_product }}</p>
+{% endif %}
+<a href="{% url 'files:list_of_files' %}" class="btn btn-secondary">Back</a>
+<br>{{ file_object.name }} - {{ file_object.type }} - {{ file_object.file.url}} - {{file_object.slug}}
+<a href="{% url 'files:duplicate_book_1' file_slug=file_object.slug check='add' %}" class="btn btn-warning">Duplicate book </a>
+<p>row_count: {{ row_count }}</p>
+
+<div class="">
+  <p>remove_book</p>
+  {{remove_book | length }}
+  {% comment %}
+  {% for item in remove_book %}
+  {{ item }}
+  <br>{% endfor %}
+  {% endcomment %}
+</div>
+
+<div class="">
+  <p>has_main_stock or other stock or flow</p>
+  <p>
+    product_id[0], name[0], flow[0], main_stock, database_product.stock, database_product.stock_1, database_product.stock_2, flow[0]
+  </p>
+  {{ has_main_stock | length}}
+  {% for item in has_main_stock %}
+  {{ item }}
+  <br>{% endfor %}
+  {{ result_to_remove }}
+</div>
+{% comment %}
+{% endcomment %}
+{% endblock %}
