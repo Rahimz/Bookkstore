@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-01 17:06+0430\n"
-"PO-Revision-Date: 2022-04-01 17:07+0430\n"
+"POT-Creation-Date: 2022-04-03 17:09+0430\n"
+"PO-Revision-Date: 2022-04-03 17:10+0430\n"
 "Last-Translator: رحیم  <rahim.aghareb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -32,9 +32,11 @@ msgid "Passwords don't match."
 msgstr "پسوردها یکسان نیستند"
 
 #: account/forms.py:65 staff/forms.py:27
-#: templates/account/clients/client_list.html:38
+#: templates/account/clients/_client_list_block.html:12
+#: templates/account/clients/client_most_valuable.html:30
 #: templates/account/clients/user_history.html:69
 #: templates/shop/product_detail.html:47 templates/staff/_order_table.html:13
+#: templates/staff/best_selling_books.html:24
 #: templates/staff/collection_management.html:44
 #: templates/staff/crafts/craft_list.html:50
 #: templates/staff/duplicate_book_name.html:43
@@ -57,9 +59,9 @@ msgstr "تخفیف کلی"
 #: account/forms.py:67 templates/_base.html:192
 #: templates/_base_files_app.html:158 templates/_base_payment.html:89
 #: templates/_temp_base.html:58
+#: templates/account/clients/_client_list_block.html:17
 #: templates/account/clients/client_add_address.html:20
 #: templates/account/clients/client_add_address.html:37
-#: templates/account/clients/client_list.html:43
 #: templates/tools/pdf/invoice_pdf_a4.html:21
 #: templates/tools/pdf/invoice_pdf_a4.html:22
 #: templates/tools/pdf/print_address.html:28
@@ -112,7 +114,7 @@ msgstr "تامین‌کننده"
 msgid "Vendors"
 msgstr "تامین‌کنندگان"
 
-#: account/views.py:61 account/views.py:208 account/views.py:221
+#: account/views.py:61 account/views.py:211 account/views.py:224
 #: staff/views.py:300 staff/views.py:324 staff/views.py:1437
 #: staff/views.py:1463
 msgid "Form is not valid"
@@ -126,23 +128,23 @@ msgstr "اطلاعات کاربر به‌روزرسانی شد"
 msgid "Error updating your user details"
 msgstr "مشکلی در به‌روزرسانی اطلاعات کاربر پیش آمد"
 
-#: account/views.py:155 account/views.py:168 account/views.py:196
+#: account/views.py:158 account/views.py:171 account/views.py:199
 msgid "The phone number is already used!"
 msgstr "این شماره تلفن استفاده شده است!"
 
-#: account/views.py:164
+#: account/views.py:167
 msgid "Client added!"
 msgstr "مشتری اضافه شد!"
 
-#: account/views.py:218
+#: account/views.py:221
 msgid "Client details updated"
 msgstr "اطلاعات مشتری به‌روزرسانی شد!"
 
-#: account/views.py:271
+#: account/views.py:274
 msgid "Address added to client details"
 msgstr "آدرس به اطلاعات حساب مشتری اضافه شد"
 
-#: account/views.py:318
+#: account/views.py:321
 msgid "Credit updated"
 msgstr "اعتبار به‌روزرسانی شد"
 
@@ -360,13 +362,17 @@ msgstr "وضعیت خرید  پیش‌نویس است"
 msgid "Purchase status changed to draft"
 msgstr "وضعیت خرید به پیش‌نویس بازگشت"
 
-#: products/models.py:78 templates/orders/reports/sales_by_days.html:195
+#: products/models.py:78
+#: templates/account/clients/client_most_valuable.html:34
+#: templates/orders/reports/sales_by_days.html:195
 #: templates/shop/store_book_search.html:56
 #: templates/shop/store_book_search.html:72
 msgid "Book"
 msgstr "کتاب"
 
-#: products/models.py:79 templates/orders/reports/sales_by_days.html:197
+#: products/models.py:79
+#: templates/account/clients/client_most_valuable.html:36
+#: templates/orders/reports/sales_by_days.html:197
 msgid "Craft"
 msgstr "صنایع دستی"
 
@@ -398,6 +404,7 @@ msgid "Name or phonenumber"
 msgstr "نام یا شماره تلفن"
 
 #: search/forms.py:34 staff/forms.py:27 templates/shop/product_detail.html:113
+#: templates/staff/best_selling_books.html:23
 #: templates/staff/collection_management.html:43
 #: templates/staff/duplicate_book_name.html:42
 #: templates/staff/product_stock_price_edit.html:30
@@ -494,6 +501,7 @@ msgstr "تعداد صفحه"
 #: templates/shop/store_book_search.html:59
 #: templates/shop/store_book_search.html:75
 #: templates/staff/_order_table.html:15
+#: templates/staff/best_selling_books.html:26
 #: templates/staff/collection_management.html:47
 #: templates/staff/duplicate_book_name.html:51
 #: templates/staff/invoice_create.html:135
@@ -526,7 +534,11 @@ msgstr "موقعیت در فروشگاه"
 msgid "Admin note"
 msgstr "یادداشت مدیر"
 
-#: staff/forms.py:63 staff/views.py:1101 templates/cart/detail.html:17
+#: staff/forms.py:63 staff/views.py:1101
+#: templates/account/clients/client_most_valuable.html:33
+#: templates/account/clients/client_most_valuable.html:35
+#: templates/account/clients/client_most_valuable.html:37
+#: templates/cart/detail.html:17
 #: templates/orders/reports/sales_by_days.html:101
 #: templates/orders/reports/sales_by_days.html:103
 #: templates/orders/reports/sales_by_days.html:105
@@ -536,7 +548,9 @@ msgstr "یادداشت مدیر"
 #: templates/orders/reports/sales_by_days.html:194
 #: templates/orders/reports/sales_by_days.html:196
 #: templates/orders/reports/sales_by_days.html:198
-#: templates/staff/_order_table.html:16 templates/staff/draft_orders.html:33
+#: templates/staff/_order_table.html:16
+#: templates/staff/best_selling_books.html:27
+#: templates/staff/draft_orders.html:33
 #: templates/staff/full_shipped_list.html:33
 #: templates/staff/invoice_create.html:71
 #: templates/staff/invoice_create.html:136
@@ -998,9 +1012,9 @@ msgstr "شماره ۷"
 
 #: templates/_base.html:197 templates/_base_files_app.html:162
 #: templates/_base_payment.html:93 templates/_temp_base.html:62
+#: templates/account/clients/_client_list_block.html:13
 #: templates/account/clients/client_add_address.html:33
 #: templates/account/clients/client_details.html:48
-#: templates/account/clients/client_list.html:39
 #: templates/account/clients/user_history.html:50
 #: templates/staff/purchase_create.html:25
 #: templates/tools/pdf/invoice_pdf.html:26
@@ -1034,6 +1048,51 @@ msgstr "بهمن دارالشفایی "
 #: templates/_base_files_app.html:129
 msgid "The datat of products is synced with bookstore data"
 msgstr "اطلاعات دیتابیس با اطلاعات فروشگاه هماهنگ شده است "
+
+#: templates/account/clients/_client_list_block.html:10
+#: templates/staff/collection_management.html:42
+#: templates/staff/crafts/craft_list.html:47
+#: templates/staff/duplicate_book_name.html:40
+#: templates/staff/products.html:58
+msgid "Edit"
+msgstr "اصلاح"
+
+#: templates/account/clients/_client_list_block.html:14
+#: templates/account/clients/client_details.html:32
+#: templates/account/clients/user_history.html:34
+#: templates/staff/draft_orders.html:32
+#: templates/staff/order_detail_for_admin.html:44
+#: templates/staff/order_payment_manage.html:38 templates/staff/orders.html:46
+msgid "Social name"
+msgstr "نام رسانه‌ای"
+
+#: templates/account/clients/_client_list_block.html:15
+#: templates/account/clients/client_most_valuable.html:29
+msgid "Client code"
+msgstr "کد مشتری"
+
+#: templates/account/clients/_client_list_block.html:16
+#: templates/account/clients/client_details.html:44
+#: templates/account/clients/client_most_valuable.html:31
+#: templates/account/clients/user_history.html:46
+msgid "Username"
+msgstr "نام کاربری"
+
+#: templates/account/clients/_client_list_block.html:19
+#: templates/account/clients/client_details.html:36
+#: templates/account/clients/user_history.html:38
+#: templates/staff/_order_table.html:56
+#: templates/staff/invoice_checkout.html:81
+msgid "Credit"
+msgstr "اعتبار"
+
+#: templates/account/clients/_client_list_block.html:36
+msgid "Print billing address"
+msgstr "چاپ آدرس خرید"
+
+#: templates/account/clients/_client_list_block.html:42
+msgid "Print shipping address"
+msgstr "چاپ آدرس ارسال"
 
 #: templates/account/clients/client_add.html:9
 #: templates/account/clients/client_add.html:20
@@ -1103,29 +1162,6 @@ msgstr "نام"
 msgid "Last name"
 msgstr "نام خانوادگی"
 
-#: templates/account/clients/client_details.html:32
-#: templates/account/clients/client_list.html:40
-#: templates/account/clients/user_history.html:34
-#: templates/staff/draft_orders.html:32
-#: templates/staff/order_detail_for_admin.html:44
-#: templates/staff/order_payment_manage.html:38 templates/staff/orders.html:46
-msgid "Social name"
-msgstr "نام رسانه‌ای"
-
-#: templates/account/clients/client_details.html:36
-#: templates/account/clients/client_list.html:45
-#: templates/account/clients/user_history.html:38
-#: templates/staff/_order_table.html:56
-#: templates/staff/invoice_checkout.html:81
-msgid "Credit"
-msgstr "اعتبار"
-
-#: templates/account/clients/client_details.html:44
-#: templates/account/clients/client_list.html:42
-#: templates/account/clients/user_history.html:46
-msgid "Username"
-msgstr "نام کاربری"
-
 #: templates/account/clients/client_details.html:52
 #: templates/account/clients/user_history.html:54
 msgid "Email"
@@ -1165,25 +1201,17 @@ msgstr "آدرس ارسال"
 msgid "Search"
 msgstr "جستجو"
 
-#: templates/account/clients/client_list.html:36
-#: templates/staff/collection_management.html:42
-#: templates/staff/crafts/craft_list.html:47
-#: templates/staff/duplicate_book_name.html:40
-#: templates/staff/products.html:58
-msgid "Edit"
-msgstr "اصلاح"
+#: templates/account/clients/client_most_valuable.html:11
+#: templates/account/clients/client_most_valuable.html:22
+#: templates/staff/sidebar_staff.html:86
+#| msgid "List of clients"
+msgid "Most valuable clients"
+msgstr "باارزش‌ترین مشتریان"
 
-#: templates/account/clients/client_list.html:41
-msgid "Client code"
-msgstr "کد مشتری"
-
-#: templates/account/clients/client_list.html:62
-msgid "Print billing address"
-msgstr "چاپ آدرس خرید"
-
-#: templates/account/clients/client_list.html:68
-msgid "Print shipping address"
-msgstr "چاپ آدرس ارسال"
+#: templates/account/clients/client_most_valuable.html:32
+#| msgid "Orders"
+msgid "Order sum"
+msgstr "جمع سفارش‌ها"
 
 #: templates/account/clients/credit_update.html:11
 msgid "Manage credit"
@@ -1739,7 +1767,6 @@ msgstr "به‌روزرسانی محصول"
 #: templates/shop/product_detail.html:57 templates/shop/product_detail.html:58
 #: templates/shop/product_detail.html:59 templates/shop/product_detail.html:60
 #: templates/shop/product_detail.html:61
-#| msgid "Main price"
 msgid "No price"
 msgstr "بدون قیمت"
 
@@ -1853,6 +1880,23 @@ msgstr "قابل پرداخت"
 #: templates/staff/_used_before_5.html:19
 msgid "Used before 5 March"
 msgstr ""
+
+#: templates/staff/best_selling_books.html:7
+#: templates/staff/best_selling_books.html:18
+#: templates/staff/sidebar_staff.html:92
+msgid "Best selling books"
+msgstr "پرفروش‌ترین کتاب‌ها"
+
+#: templates/staff/best_selling_books.html:22
+#: templates/staff/sold_products.html:111
+#: templates/tools/pdf/invoice_pdf_a4.html:41
+msgid "Product ID"
+msgstr "کد محصول"
+
+#: templates/staff/best_selling_books.html:25
+#| msgid "Variation"
+msgid "variation"
+msgstr "تنوع"
 
 #: templates/staff/category_create.html:8
 #: templates/staff/category_create.html:19
@@ -2430,7 +2474,6 @@ msgstr ""
 "تغییر  قیمت دست‌دوم همانند کلید Bahman در صفحه لیست محصولات عمل می‌کند"
 
 #: templates/staff/products.html:35
-#| msgid "Search for products"
 msgid "Search results"
 msgstr "نتایج جستجو "
 
@@ -2677,11 +2720,6 @@ msgstr "لیست مرجوعی‌ها "
 #: templates/staff/sidebar_staff.html:83
 msgid "List of clients"
 msgstr "لیست مشتریان"
-
-#: templates/staff/sold_products.html:111
-#: templates/tools/pdf/invoice_pdf_a4.html:41
-msgid "Product ID"
-msgstr "کد محصول"
 
 #: templates/staff/sold_products.html:113
 msgid "Flow"
