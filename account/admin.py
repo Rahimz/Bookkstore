@@ -30,4 +30,4 @@ class AddressAdmin(admin.ModelAdmin):
 
 @admin.register(Credit)
 class CreditAdmin(admin.ModelAdmin):
-    list_display = ['user', 'balance']
+    list_display = ['user', 'balance', 'orders_sum', 'order_count']
