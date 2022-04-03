@@ -82,6 +82,8 @@
 {% if barName == "clients" %}
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'client_list' %}">{% trans 'List of clients' %}</a>
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'client_add' %}" accesskey="c" data-bs-toggle="tooltip" data-bs-placement="left" title="alt + shift + c">{% trans 'Add client' %}</a>
+  <br>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'client_most_valuable' %}">{% trans 'Most valuable clients' %}</a>
 
 {% endif %}
 

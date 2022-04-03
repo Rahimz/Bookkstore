@@ -101,9 +101,9 @@ def edit(request):
 
 
 @staff_member_required
-def client_list(request):
+def client_list(request, filter=None):
     results = None
-    clients = CustomUser.objects.filter(is_client=True).order_by('-pk').exclude(is_superuser=True).exclude(username='guest')
+    clients = CustomUser.objects.filter(is_client=True).order_by('-pk').exclude(username='guest')
 
     if request.method == 'POST':
         client_search_form = CLientSearchStaffForm(data=request.POST)
@@ -117,6 +117,9 @@ def client_list(request):
                 search=SearchVector('first_name', 'last_name', 'username', 'phone', 'social_media_name'),).filter(search__contains=query)
     else:
         client_search_form = CLientSearchStaffForm()
+
+    if filter:
+        clients = clients.order_by(filter)
 
     return render(
         request,
@@ -330,7 +333,6 @@ def credit_update(request, client_id):
     )
 
 
-
 @staff_member_required
 def user_history(request, user_id):
     user = get_object_or_404(CustomUser, pk=user_id)
@@ -358,8 +360,8 @@ def user_history(request, user_id):
     credit.order_count = order_counts if order_counts else 0
 
 
-    credit.orderlines_sum = orderlines_sum['total_cost']
-    credit.orderlines_count = orderlines_sum['total_quantity']
+    credit.orderlines_sum = orderlines_sum['total_cost'] if orderlines_sum['total_cost'] else 0
+    credit.orderlines_count = orderlines_sum['total_quantity'] if orderlines_sum['total_quantity'] else 0
 
     credit.book_sum = book['sum'] if book['sum'] else 0
     credit.book_count = book['quantity'] if book['quantity'] else 0
@@ -377,5 +379,17 @@ def user_history(request, user_id):
             'orderlines': orderlines,
             'client': user,
             'orderlines_sum': orderlines_sum,
+        }
+    )
+
+
+@staff_member_required
+def client_most_valuable(request):
+    credits = Credit.objects.all().order_by('-orders_sum')[:50]
+    return render(
+        request,
+        'account/clients/client_most_valuable.html',
+        {
+            'credits': credits,
         }
     )
