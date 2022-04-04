@@ -16,9 +16,9 @@
     <div class="row gy-2">
       <div class="col-md-4">
         <div class="border drop_shadow rounded-2 ">
-          <div class="product-image">
+          <div class="">
             {% if main_image %}
-            <img src="{{ main_image.file.url }}" itemprop="image" class="card-img-top p-4" alt="{{ main_image.image_alt }}">
+            <img src="{{ main_image.file.url }}" itemprop="image" class="product-image p-1" alt="{{ main_image.image_alt }}" width="200px" height="auto">
             {% else %}
             <img src="{% static 'img/no_image.png' %}" class="card-img-top p-4" alt="no-image">
             {% endif %}
@@ -28,14 +28,14 @@
         <div class="row">
           <div class="thumbnail">
             <a href="{% url 'shop:product_detail' product_id=product.id %}">
-              <img src="{{ first_image.file.url }}" itemprop="image" class="image-thumbnail" alt="{{ first_image.image_alt }}">
+              <img src="{{ first_image.file.url }}" itemprop="image" class="image-thumbnail" alt="{{ first_image.image_alt }}" width="100px" height="auto">
             </a>
           </div>
 
           {% for image in product_images %}
           <div class="thumbnail">
             <a href="{% url 'shop:product_detail_image' product_id=product.id image_id=image.id %}">
-              <img src="{{ image.file.url }}" itemprop="image" class="image-thumbnail" alt="{{ image.image_alt }}">
+              <img src="{{ image.file.url }}" itemprop="image" class="image-thumbnail" alt="{{ image.image_alt }} width="100px" height="auto">
             </a>
           </div>
           {% endfor %}
