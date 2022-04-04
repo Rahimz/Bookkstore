@@ -165,3 +165,30 @@ ul.messages li a.close {
   box-shadow: none;
   text-shadow: none;
 }
+.image-box {
+  width: 300px;
+  height: 300px;
+  box-sizing: border-box;
+}
+/* Product image */
+.product-image {
+  /* width: 120px; */
+  /* min-width: auto; */
+  max-width: 250px;
+  /* min-height: auto; */
+  max-height: 250px;
+  /* float: center; */
+  margin: auto;
+  display: block;
+  /* padding: 3px; */
+}
+.thumbnail {
+  width: 100px;
+  height: auto;
+
+}
+.image-thumbnail {
+  width: 100%;
+  display: inline;
+  
+}
