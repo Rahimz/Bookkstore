@@ -2040,6 +2040,12 @@ def image_management(request, product_id):
             file.name = f"{product.id}-{random.randint(10,99)}{random.randint(10,99)}.{file.name.split('.')[1]}"
             new_image.file = file
 
+            # Set the Image name field
+            new_image.name = file.name.split('.')[0]
+
+            if not new_image.image_alt:
+                new_image.image_alt = str(product)
+                
             if not images:
                 new_image.main_image = True
                 product.image = new_image.file
