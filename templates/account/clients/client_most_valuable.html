@@ -27,6 +27,7 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">{% trans 'Client code' %}</th>
+              <th scope="col"></th>
               <th scope="col">{% trans 'Name' %}</th>
               <th scope="col">{% trans 'Username' %}</th>
               <th scope="col">{% trans 'Order sum' %}</th>
@@ -39,11 +40,12 @@
             </tr>
           </thead>
           <tbody id="clientTable">
-            {% for credit in credits %}        
+            {% for credit in credits %}
             <tr>
               <th scope="row">{{ forloop.counter }}</th>
               <td>{{ credit.user.id }}</td>
-              <td>{{ credit.user }}</td>
+              <td><a href="{% url 'user_history' credit.user.id %}"><img src="{% static 'img/history.svg' %}" width="22px" height="auto"></a></td>
+              <td><a href="{% url 'client_details' credit.user.id %}">{{ credit.user }}</a></td>
               <td>{{ credit.user.username }}</td>
               <td>{{ credit.orders_sum | intcomma:False }}</td>
               <td>{{ credit.orders_count | intcomma:False }}</td>
