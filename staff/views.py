@@ -2037,7 +2037,6 @@ def image_management(request, product_id):
 
             #  renaming the file
             file = request.FILES['file']
-            # file._name = str(product.id) + str(random.randint(10,99)) + "." + file._name.split('.')[1]
             file.name = f"{product.id}-{random.randint(10,99)}{random.randint(10,99)}.{file.name.split('.')[1]}"
             new_image.file = file
 
