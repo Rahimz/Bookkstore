@@ -173,6 +173,10 @@ class CraftUpdateForm(forms.ModelForm):
 
 
 class ProductImageManagementForm(forms.ModelForm):
+
     class Meta:
         model = Image
-        fields = ['name', 'file', 'image_alt', 'main_image', 'variation', 'active']
+        fields = ['file', 'image_alt', 'variation']
+        widgets = {
+            'image_alt': forms.TextInput(attrs={'placeholder': _('Image alt is a description for defining the image')})
+        }

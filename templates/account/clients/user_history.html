@@ -37,7 +37,7 @@
           <tr>
             <td>{% trans 'Credit' %}</td>
             {% if client.credit %}
-            <td>{{ client.credit.balance }}</td>
+            <td>{% if client.credit.balance %}{{ client.credit.balance }}{% endif %}</td>
             {% else %}
             <td>0</td>
             {% endif %}
@@ -53,7 +53,15 @@
           <tr>
             <td>{% trans 'Email' %}</td>
             <td>{{ client.email }}</td>
-          </tr>       
+          </tr>
+          <tr>
+            <td>{% trans "Orders" %}</td>
+            <td>
+              {% for order in orders %}
+                <a href="{% url 'staff:order_detail_for_admin' order.id %}">{{ order.id }}</a>
+              {% endfor %}
+            </td>
+          </tr>
         </table>
 
       </div>
@@ -90,10 +98,10 @@
               <td>{{ order_line.get_cost_after_discount | intcomma:False }}</td>
             </tr>
             {% endfor %}
-        
-        
+
+
           <tfoot>
-           
+
           </tfoot>
           </tbody>
         </table>

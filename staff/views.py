@@ -12,6 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from django.db.models import Sum
 from decimal import Decimal
 from django.core.cache import cache
+import random
 
 from django_countries.fields import Country
 from tools.gregory_to_hijry import hij_strf_date, greg_to_hij_date
@@ -2033,6 +2034,18 @@ def image_management(request, product_id):
             new_image = image_form.save(commit=False)
             new_image.product = product
             new_image.registrar = request.user
+
+            #  renaming the file
+            file = request.FILES['file']
+            file.name = f"{product.id}-{random.randint(10,99)}{random.randint(10,99)}.{file.name.split('.')[1]}"
+            new_image.file = file
+
+            # Set the Image name field
+            new_image.name = file.name.split('.')[0]
+
+            if not new_image.image_alt:
+                new_image.image_alt = str(product)
+                
             if not images:
                 new_image.main_image = True
                 product.image = new_image.file

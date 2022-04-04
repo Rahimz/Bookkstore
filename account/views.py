@@ -342,7 +342,7 @@ def user_history(request, user_id):
         credit = Credit.objects.create(
             user = user,
         )
-
+    orders = Order.objects.filter(active=True).filter(client=user)
     order = Order.objects.filter(active=True).filter(client=user).aggregate(sum=Sum('payable'), quantity=Sum('quantity'))
     order_sum = order['sum']
     order_counts = Order.objects.filter(active=True).filter(client=user).count()
@@ -379,6 +379,7 @@ def user_history(request, user_id):
             'orderlines': orderlines,
             'client': user,
             'orderlines_sum': orderlines_sum,
+            'orders': orders,
         }
     )
 
