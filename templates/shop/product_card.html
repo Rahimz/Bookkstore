@@ -6,17 +6,31 @@
   <a href="{{ product.get_absolute_url }}">
     <div class="card col-md-12 text-center">
       <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top p-4 position-relative" alt="{{ product.image_alt }}">
-      {% if product.stock == 0 %}
-      <span class="position-absolute top-50 start-50 translate-middle badge rounded bg-secondary">
-
-        {% trans 'Out of stock' %}
-        <span class="visually-hidden">{% trans 'Out of stock' %}</span>
+      {% if product.stock == 0 and product.stock_1 == 0 and product.stock_2 == 0 and product.stock_3 == 0 and product.stock_4 == 0 and product.stock_5 == 0 and product.stock_used == 0 %}
+      <span class="badge rounded-pill rounded w-50 bg-danger d-block">
+        {% trans "New" %}: {% trans 'Out of stock' %}
+      </span>
+      <span class="badge rounded-pill rounded w-50 bg-danger d-block">        
+        {% trans "Used" %}: {% trans 'Out of stock' %}
+      </span>
+      {% endif %}
+      {% if product.stock or product.stock_1 or product.stock_2 or product.stock_3 or product.stock_4 or product.stock_5 %}
+      <span class=" badge rounded-pill w-50 bg-success d-block">
+        {% trans "New" %}: {% trans 'In stock' %}
+      </span>
+      {% endif %}
+      {% if product.stock_used  %}
+      <span class=" badge rounded-pill d-block w-50 bg-success  d-inline">
+        {% trans "Used" %}: {% trans 'In stock' %}
+        <span class="visually-hidden">{% trans 'In stock' %}</span>
       </span>
       {% endif %}
       <div class="card-body m-2 p-2">
         <h5 class="card-title">{{ product | truncatechars:25 }}</h5>
-        <h6 class="cart-subtitle text-muted">{% if product.stock == 0 %}<span class="unavailable">{% trans 'Out of stock' %}</span>{% else %}{{ product.price | intcomma:False }} {% trans 'Rial' %}{% endif %}</h6>
-        {% if product.author %}<p class="p-1">{{ product.author }} {{ product.ahthor | truncatechars:25 }}{% else %} <br /> {% endif %}</p>
+        <h6 class="cart-subtitle text-muted">
+          {% trans "New" %}: {% if product.price %}{{ product.price | intcomma:False }} {% trans 'Rial' %} {% else %}{% trans "No price" %}{% endif %}
+          {% if product.stock_used %} / {% trans "Used" %}: {% if price_used %}{{ product.price_used | intcomma:False }} {% trans 'Rial' %}{% else %}{% trans "No price" %}{% endif %}{% endif %}</h6>
+        {% if product.publisher %}<p class="p-1">{{ product.publisher }} {{ product.ahthor | truncatechars:25 }}{% else %} <br /> {% endif %}</p>
 
       </div>
     </div>

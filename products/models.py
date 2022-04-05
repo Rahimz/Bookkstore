@@ -28,16 +28,22 @@ class Category(models.Model):
     )
     name = models.CharField(
         max_length=250,
-        unique=True,
+        # unique=True,
         db_index=True,
     )
     slug = models.SlugField(
         max_length=300,
-        unique=True,
+        # unique=True,
         allow_unicode=True
     )
     active = models.BooleanField(
         default=True,
+    )
+    is_main = models.BooleanField(
+        default=False
+    )
+    is_sub = models.BooleanField(
+        default=False
     )
 
     class Meta:
@@ -90,6 +96,13 @@ class Product(models.Model):
     category = models.ForeignKey(
         Category,
         related_name='product',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True
+    )
+    sub_category = models.ForeignKey(
+        Category,
+        related_name='product_sub',
         on_delete=models.SET_NULL,
         blank=True,
         null=True
@@ -425,6 +438,7 @@ class Product(models.Model):
 
     def get_other_stock(self):
         return sum([self.stock_1, self.stock_2, self.stock_3, self.stock_4, self.stock_5])
+
 
 class Good(models.Model):
     STATE_CHOICES = [

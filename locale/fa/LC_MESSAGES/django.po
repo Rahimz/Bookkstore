@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-04 16:02+0430\n"
-"PO-Revision-Date: 2022-04-04 16:03+0430\n"
+"POT-Creation-Date: 2022-04-05 17:00+0430\n"
+"PO-Revision-Date: 2022-04-05 17:00+0430\n"
 "Last-Translator: رحیم  <rahim.aghareb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -214,10 +214,12 @@ msgstr "تخفیف کلی فاکتور"
 msgid "Overal discount percent"
 msgstr "درصد تخفیف کلی"
 
-#: orders/forms.py:75 products/models.py:66 products/models.py:431
-#: products/models.py:573 templates/_base.html:72
+#: orders/forms.py:75 products/models.py:72 products/models.py:445
+#: products/models.py:587 templates/_base.html:72
 #: templates/_base_files_app.html:42
 #: templates/orders/reports/sales_by_days.html:221
+#: templates/shop/product_card.html:11 templates/shop/product_card.html:19
+#: templates/shop/product_card.html:31
 #: templates/shop/store_book_search.html:56
 #: templates/staff/_order_table.html:29 templates/staff/sold_products.html:143
 #: templates/warehouses/product_workflow.html:28
@@ -225,10 +227,12 @@ msgstr "درصد تخفیف کلی"
 msgid "New"
 msgstr "نو"
 
-#: orders/forms.py:76 products/models.py:67 products/models.py:432
-#: products/models.py:574 templates/_base.html:75
+#: orders/forms.py:76 products/models.py:73 products/models.py:446
+#: products/models.py:588 templates/_base.html:75
 #: templates/_base_files_app.html:45
 #: templates/orders/reports/sales_by_days.html:223
+#: templates/shop/product_card.html:14 templates/shop/product_card.html:24
+#: templates/shop/product_card.html:32
 #: templates/shop/store_book_search.html:72
 #: templates/staff/_order_table.html:29
 #: templates/staff/duplicate_book_name.html:48
@@ -362,7 +366,7 @@ msgstr "وضعیت خرید  پیش‌نویس است"
 msgid "Purchase status changed to draft"
 msgstr "وضعیت خرید به پیش‌نویس بازگشت"
 
-#: products/models.py:78
+#: products/models.py:84
 #: templates/account/clients/client_most_valuable.html:35
 #: templates/orders/reports/sales_by_days.html:195
 #: templates/shop/store_book_search.html:56
@@ -370,7 +374,7 @@ msgstr "وضعیت خرید به پیش‌نویس بازگشت"
 msgid "Book"
 msgstr "کتاب"
 
-#: products/models.py:79
+#: products/models.py:85
 #: templates/account/clients/client_most_valuable.html:37
 #: templates/orders/reports/sales_by_days.html:197
 msgid "Craft"
@@ -788,10 +792,11 @@ msgstr "قیمت دست‌دوم به‌روزرسانی شد "
 #: templates/orders/reports/sales_by_days.html:218
 #: templates/orders/reports/sales_by_days.html:229
 #: templates/orders/reports/sales_by_days.html:238
-#: templates/shop/product_card.html:18 templates/shop/product_detail.html:55
-#: templates/shop/product_detail.html:56 templates/shop/product_detail.html:57
-#: templates/shop/product_detail.html:58 templates/shop/product_detail.html:59
-#: templates/shop/product_detail.html:60 templates/shop/product_detail.html:61
+#: templates/shop/product_card.html:31 templates/shop/product_card.html:32
+#: templates/shop/product_detail.html:55 templates/shop/product_detail.html:56
+#: templates/shop/product_detail.html:57 templates/shop/product_detail.html:58
+#: templates/shop/product_detail.html:59 templates/shop/product_detail.html:60
+#: templates/shop/product_detail.html:61
 #: templates/shop/product_detail.html:147
 #: templates/shop/store_book_search.html:61
 #: templates/shop/store_book_search.html:62
@@ -1757,21 +1762,27 @@ msgstr "بعدی"
 msgid "last"
 msgstr "آخرین"
 
-#: templates/shop/product_card.html:12 templates/shop/product_card.html:13
-#: templates/shop/product_card.html:18
+#: templates/shop/product_card.html:11 templates/shop/product_card.html:14
 msgid "Out of stock"
 msgstr "ناموجود"
 
-#: templates/shop/product_detail.html:11
-msgid "Update product"
-msgstr "به‌روزرسانی محصول"
+#: templates/shop/product_card.html:19 templates/shop/product_card.html:24
+#: templates/shop/product_card.html:25
+#| msgid "Main stock"
+msgid "In stock"
+msgstr "موجود"
 
+#: templates/shop/product_card.html:31 templates/shop/product_card.html:32
 #: templates/shop/product_detail.html:55 templates/shop/product_detail.html:56
 #: templates/shop/product_detail.html:57 templates/shop/product_detail.html:58
 #: templates/shop/product_detail.html:59 templates/shop/product_detail.html:60
 #: templates/shop/product_detail.html:61
 msgid "No price"
 msgstr "بدون قیمت"
+
+#: templates/shop/product_detail.html:11
+msgid "Update product"
+msgstr "به‌روزرسانی محصول"
 
 #: templates/shop/product_detail.html:66
 #: templates/shop/product_detail.html:176
@@ -2632,10 +2643,6 @@ msgstr "جستجوی کتاب‌های دست‌دوم  "
 msgid "Search in new books"
 msgstr "جستجوی کتاب‌های نو  "
 
-#: templates/staff/sidebar_staff.html:13
-msgid "Create a new category"
-msgstr "ایجاد یک دسته بندی جدید"
-
 #: templates/staff/sidebar_staff.html:14
 msgid "List of categories"
 msgstr "لیست دسته‌بندی‌ها"
@@ -2991,6 +2998,9 @@ msgstr "این لینک پرداخت قبلاً ساخته شده است"
 #: zarinpal/views.py:347
 msgid "Payment link is created"
 msgstr "لینک پرداخت ایجاد شد"
+
+#~ msgid "Create a new category"
+#~ msgstr "ایجاد یک دسته بندی جدید"
 
 #~ msgid "Day"
 #~ msgstr "روز"
