@@ -4,8 +4,9 @@ import simple_history
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug']
+    list_display = ['id', 'name', 'parent_category', 'is_main', 'is_sub']
     prepopulated_fields = {'slug': ('name',)}
+    list_editable = ['is_main', 'is_sub']
 
 
 @admin.register(Product)

@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from datetime import datetime
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
+from django.core.cache import cache
 
 from openpyxl import load_workbook
 from io import BytesIO
@@ -1544,6 +1545,7 @@ def check_category(request, file_slug, check='check', start=None, end=None):
         # for i in range(2, row_count):
         for i in range(start, end):
             database_product = None
+            database_products = None
             # row = ws['A'+str(i):'M'+str(i)]
 
             name = ws['A' + str(i)].value,
@@ -1572,49 +1574,88 @@ def check_category(request, file_slug, check='check', start=None, end=None):
                 main_category = main_category[0].rstrip().lstrip()
                 if  main_category not in main_categories:
                     main_categories.append(main_category)
-                # grab the category object
-                try:
-                    category_object = Category.objects.get(name=main_category)
-                except:
-                    category_object = Category.objects.create(
-                        name = main_category
-                    )
+
+                if check == 'add':
+                    # grab the category object
+                    category_object = cache.get('category_object_{}'.format(main_category))
+                    if not category_object:
+                        try:
+                            category_object = Category.objects.get(name=main_category, is_main=True)
+                        except:
+                            category_object = Category.objects.create(
+                                name = main_category,
+                                is_main = True
+                            )
+                        cache.set('category_object_{}'.format(main_category), category_object)
+
 
                 #  grab the database object
                 try:
                     # try with isbn_9
-                    database_product = Product.objects.filter(available=True).get(isbn_9=isbn_9)
+                    database_product = Product.objects.filter(available=True).exclude(product_type='craft').get(isbn_9=isbn_9)
+                    if check == 'add':
+                        database_product.category = category_object
+                        database_product.save()
                 except:
                     pass
 
-                if not database_product:
-                    #  try with isbn
-                    try:
-                        database_product = Product.objects.filter(available=True).get(isbn=str(isbn[0]))
-                    except:
-                        pass
+                # if not database_product:
+                #     #  try with isbn
+                #     try:
+                #         database_product = Product.objects.filter(available=True).get(isbn=str(isbn[0]))
+                #         if check == 'add':
+                #             database_product.category = category_object
+                #             database_product.save()
+                #     except:
+                #         pass
 
                 if not database_product:
                     try:
                         #  try with name
-                        database_product = Product.objects.filter(available=True).get(name=name[0])
+                        database_product = Product.objects.filter(available=True).exclude(product_type='craft').get(name=name[0])
                     except MultipleObjectsReturned:
-                        # database_product = Product.objects.filter(available=True).filter(name=name[0])
                         duplicate_name.append((name[0], publisher[0], pages[0]))
+
                     except ObjectDoesNotExist:
                         pass
+
+
+                if check == 'add':
+                    if database_product:
+                        database_product.category = category_object
+                        database_product.save()
+                    if database_products:
+                        database_products = Product.objects.filter(available=True).exclude(product_type='craft').filter(name=name[0], publisher=publisher[0])
+                        database_products.update(category=main_category)
 
                 #  maybe we could not find the book
                 if not database_product:
                     not_found_product.append((name[0], isbn[0]))
 
 
-            if sub_category[0]  != None:
+            if sub_category[0] != None:
                 sub_category = sub_category[0].rstrip().lstrip()
                 if len(sub_category) == 1:
                     sub_category = main_category
                 if sub_category not in sub_categories:
                     sub_categories.append(sub_category)
+
+                if database_product and check=='add':
+                    sub_category_object = cache.get('sub_category_object_{}'.format(sub_category))
+                    if not sub_category_object:
+                        try:
+                            sub_category_object = Category.objects.get(name=sub_category, parent_category__id=category_object.id)
+                        except:
+                            sub_category_object = Category.objects.create(
+                                name = sub_category,
+                                parent_category = category_object,
+                                is_sub = True
+                            )
+                        cache.set('sub_category_object_{}'.format(sub_category), sub_category_object)
+
+                    database_product.sub_category = sub_category_object
+                    database_product.save()
+
 
 
 
