@@ -38,13 +38,17 @@ def product_list(request, category_slug=None, ):
     search_form = SearchForm()
     category = None
 
-    if category_slug == 'new' or category_slug == 'used':
-        products_object = Product.objects.all().filter(available=True).filter(state=category_slug)
+    if category_slug == 'used':
+        products_object = Product.objects.filter(available=True).exclude(product_type='craft').filter(stock_used__gte=1)
         page_title = category_slug
+    elif category_slug == 'new':
+        products_object = Product.objects.filter(available=True).exclude(product_type='craft').filter(Q(stock__gte=1) | Q(stock_1__gte=1) | Q(stock_2__gte=1) | Q(stock_3__gte=1) | Q(stock_4__gte=1) | Q(stock_5__gte=1))
+        page_title = category_slug
+
     else:
-        category = get_object_or_404(Category, slug=category_slug)
-        products_object = Product.objects.all().filter(available=True).filter(category=category)
-        page_title = category.name
+        category = Category.objects.filter(slug=category_slug).values_list('id', flat=True)
+        products_object = Product.objects.all().filter(available=True).filter( Q(category__id__in=category) | Q(sub_category__id__in=category))
+        page_title = category_slug
 
 
     paginator = Paginator(products_object, 20) # 20 posts in each page
