@@ -1,0 +1,40 @@
+{% extends '_base_files_app.html'%}
+{% block content %}
+
+<a href="{% url 'files:list_of_files' %}" class="btn btn-secondary">Back</a>
+<br>{{ file_object.name }} - {{ file_object.type }} - {{ file_object.file.url}} - {{file_object.slug}}
+<a href="{% url 'files:check_category' file_slug=file_object.slug check='add' start=2 end=2000 %}" class="btn btn-warning">Used book update 2 - 2000</a>
+<a href="{% url 'files:check_category' file_slug=file_object.slug check='add' start=2001 end=4000 %}" class="btn btn-warning">Used book update 2001 - 4000</a>
+<a href="{% url 'files:check_category' file_slug=file_object.slug check='add' start=4001 end=6000 %}" class="btn btn-warning">Used book update 4001 - 6000</a>
+<a href="{% url 'files:check_category' file_slug=file_object.slug check='add' start=6001 end=8000 %}" class="btn btn-warning">Used book update 6001 - 8000</a>
+<a href="{% url 'files:check_category' file_slug=file_object.slug check='add' start=8001 end=10000 %}" class="btn btn-warning">Used book update 8001 - 10000</a>
+<a href="{% url 'files:check_category' file_slug=file_object.slug check='add' start=10001 end=12000 %}" class="btn btn-warning">Used book update 10001 - 12000</a>
+<p>row_count: {{ row_count }}</p>
+
+<div class="">
+  <p>main_categories</p>
+  {% for item in main_categories %}
+  {{ item }}
+  <br>{% endfor %}
+</div>
+<div class="">
+  <p>sub_categories</p>
+  {% for item in sub_categories %}
+  {{ item }}
+  <br>{% endfor %}
+</div>
+<div class="">
+  <p>duplicate_name</p>
+  {% for item in duplicate_name %}
+  {{ item }}
+  <br>{% endfor %}
+</div>
+<div class="">
+  <p>not_found_product</p>
+  {% for item in not_found_product %}
+  {{ item }}
+  <br>{% endfor %}
+</div>
+{% comment %}
+{% endcomment %}
+{% endblock %}

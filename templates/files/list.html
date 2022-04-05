@@ -20,8 +20,14 @@
 <a href="{% url 'files:add_used_book_with_no_isbn_2' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check used book with NO isbn 2</a>
 <a href="{% url 'files:add_used_book_with_isbn_2' file_slug=file.slug check='check' %}" class="btn btn-secondary">Check used-book-with isbn 2</a>
 <a href="{% url 'files:used_book_update_2' file_slug=file.slug check='check' %}" class="btn btn-secondary">used_book_update_2</a>
-{% endcomment %}
 <a href="{% url 'files:duplicate_book_1' file_slug=file.slug check='check' %}" class="btn btn-secondary">duplicat_book_1</a>
+{% endcomment %}
+<a href="{% url 'files:check_category' file_slug=file.slug check='check' start=2 end=2000 %}" class="btn btn-secondary">chek category  2 - 2000</a>
+<a href="{% url 'files:check_category' file_slug=file.slug check='check' start=2001 end=4000 %}" class="btn btn-secondary">Used book update 2001 - 4000</a>
+<a href="{% url 'files:check_category' file_slug=file.slug check='check' start=4001 end=6000 %}" class="btn btn-secondary">Used book update 4001 - 6000</a>
+<a href="{% url 'files:check_category' file_slug=file.slug check='check' start=6001 end=8000 %}" class="btn btn-secondary">Used book update 6001 - 8000</a>
+<a href="{% url 'files:check_category' file_slug=file.slug check='check' start=8001 end=10000 %}" class="btn btn-secondary">Used book update 8001 - 10000</a>
+<a href="{% url 'files:check_category' file_slug=file.slug check='check' start=10001 end=12000 %}" class="btn btn-secondary">Used book update 10001 - 12000</a>
 </p>
 {% endfor %}
 {% endblock %}

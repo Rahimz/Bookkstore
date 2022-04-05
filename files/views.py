@@ -6,6 +6,7 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from datetime import datetime
+from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 
 from openpyxl import load_workbook
 from io import BytesIO
@@ -14,10 +15,12 @@ from .models import File as FileObject, ImportSession
 from django.core.files import File
 
 from products.models import Product, Category
+from tools.fa_to_en_num import number_converter
 
 
 def list_of_files(request):
-    files = FileObject.objects.all()
+    files_list = list(FileObject.objects.all().values_list('pk', flat=True))[-1:]
+    files = FileObject.objects.filter(id__in=files_list)
     return render(
         request,
         'files/list.html',
@@ -1511,6 +1514,130 @@ def duplicate_book_1(request, file_slug, check='check'):
             'has_main_stock': has_main_stock,
             'remove_book': remove_book,
             'result_to_remove': result_to_remove,
+
+         }
+    )
+
+
+def check_category(request, file_slug, check='check', start=None, end=None):
+    main_categories = []
+    sub_categories = []
+    not_found_product = []
+    no_isbn = []
+    duplicate_name = []
+
+
+    # excel file handle
+    file_object = get_object_or_404(FileObject, slug=file_slug)
+
+    myfile = File(file_object)
+
+    path = file_object.file.path
+    with open(path, 'rb') as f:
+        # Load excel workbook
+        wb = load_workbook(f)
+        ws = wb.active
+        row_count = ws.max_row
+
+        # a loop for scrape the excel file
+        # read the data in cells
+        # for i in range(2, row_count):
+        for i in range(start, end):
+            database_product = None
+            # row = ws['A'+str(i):'M'+str(i)]
+
+            name = ws['A' + str(i)].value,
+            isbn = ws['B' + str(i)].value,
+            main_category = ws['C' + str(i)].value,
+            sub_category = ws['D' + str(i)].value,
+            publisher = ws['E' + str(i)].value,
+            pages = ws['F' + str(i)].value,
+
+            isbn = [number_converter(str(isbn[0]))]
+            if 'x' in (isbn[0]):
+                isbn = [number_converter(str(isbn[0]).replace('x', ''))]
+            if len(str(isbn[0])) == 13:
+                isbn_9 = str(isbn[0])[3:-1]
+            elif len(str(isbn[0])) == 12:
+                isbn_9 = str(isbn[0])[3:]
+            elif len(str(isbn[0])) == 10:
+                isbn_9 = str(isbn[0])[:-1]
+            elif len(str(isbn[0])) == 9:
+                isbn_9 = str(isbn[0])
+            else:
+                isbn_9 = None
+
+            if main_category[0] != None:
+                #  make the main category list in main_categories
+                main_category = main_category[0].rstrip().lstrip()
+                if  main_category not in main_categories:
+                    main_categories.append(main_category)
+                # grab the category object
+                try:
+                    category_object = Category.objects.get(name=main_category)
+                except:
+                    category_object = Category.objects.create(
+                        name = main_category
+                    )
+
+                #  grab the database object
+                try:
+                    # try with isbn_9
+                    database_product = Product.objects.filter(available=True).get(isbn_9=isbn_9)
+                except:
+                    pass
+
+                if not database_product:
+                    #  try with isbn
+                    try:
+                        database_product = Product.objects.filter(available=True).get(isbn=str(isbn[0]))
+                    except:
+                        pass
+
+                if not database_product:
+                    try:
+                        #  try with name
+                        database_product = Product.objects.filter(available=True).get(name=name[0])
+                    except MultipleObjectsReturned:
+                        # database_product = Product.objects.filter(available=True).filter(name=name[0])
+                        duplicate_name.append((name[0], publisher[0], pages[0]))
+                    except ObjectDoesNotExist:
+                        pass
+
+                #  maybe we could not find the book
+                if not database_product:
+                    not_found_product.append((name[0], isbn[0]))
+
+
+            if sub_category[0]  != None:
+                sub_category = sub_category[0].rstrip().lstrip()
+                if len(sub_category) == 1:
+                    sub_category = main_category
+                if sub_category not in sub_categories:
+                    sub_categories.append(sub_category)
+
+
+
+
+
+    main_categories = sorted(main_categories)
+    sub_categories = sorted(sub_categories)
+    print('main_categories', len(main_categories))
+    print('sub_categories', len(sub_categories))
+    # print('no_isbn', len(no_isbn))
+    print('not_found_product', len(not_found_product))
+
+    return render(
+        request,
+        'files/check_category.html',
+        {
+            'file': myfile,
+            'file_object': file_object,
+            'row_count': row_count,
+            'main_categories': main_categories,
+            'sub_categories': sub_categories,
+            'not_found_product': not_found_product,
+            'duplicate_name': duplicate_name,
 
          }
     )
