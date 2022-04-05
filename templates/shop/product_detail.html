@@ -109,7 +109,9 @@
             <div class="col">
               <div class="" id="info-1">
                 <div class="card card-body">
-                  <p itemprop="isb">{% trans 'ISBN' %} : {{ product.isbn }}</p>
+                  <p itemprop="isbn">{% trans 'ISBN' %} : {{ product.isbn }}</p>
+                  <p itemprop="category">{% trans 'Category' %} : {{ product.category }}</p>
+                  <p itemprop="category">{% trans ' Sub category' %} : {{ product.sub_category }}</p>
                   <p itemprop="copyrightYear">{% trans 'Publish year' %} : {{ product.publish_year }}</p>
                   <p itemprop="bookEdition">{% trans 'Edition' %} : {{ product.edition }}</p>
                   <p itemprop="numberOfPages">{% trans 'Number of pages' %} : {{ product.page_number }}</p>
