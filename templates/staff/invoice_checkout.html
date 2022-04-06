@@ -23,7 +23,7 @@
         <h2 class="my-4">{% trans 'Checkout' %}: {{ order.id }}</h2>
         <div class="main">
           <div class="client">
-          {% if not order.credit %}
+            {% if not order.credit %}
             <form class="w-50" action="" method="post">
               {{ client_search_form | crispy }}
               <input class="btn btn-outline-secondary my-4" type="submit" name="client" value="{% trans 'Search client' %}">
@@ -47,8 +47,12 @@
             {% if client %}
             <div class="mt-3 mb-4">
               <h3 class="mb-4">{% trans 'Client name' %}</h3>
+              {% if client.username == 'guest' %}
+              <span class=" text-light bg-success rounded p-2 col-md-4"><b>{% trans "Client" %} {% trans "Guest" %}</span>
+              {% else %}
               <span class=" text-light bg-success rounded p-2 col-md-4"><b>{{ client.first_name }} {{ client.last_name }}- {{ client.phone }}</span>
-              <a href="{% url 'staff:remove_client_from_order' order.id %}"  class="btn btn-sm text-light bg-danger rounded p-2">{% trans 'Remove' %} {% trans 'Client' %}</a>
+              {% endif %}
+              <a href="{% url 'staff:remove_client_from_order' order.id %}" class="btn btn-sm text-light bg-danger rounded p-2">{% trans 'Remove' %} {% trans 'Client' %}</a>
               {#<!-- if client has credit and order does not usr it  --> #}
               {% if credit and not order.credit %}
               <span class=" text-success  p-2 col-md-4">{% trans 'Client credit' %}: {{ credit.balance | intcomma:False }}</span>
@@ -163,10 +167,10 @@
   }
 </script>
 <script>
-document.addEventListener("wheel", function(event){
-    if(document.activeElement.type === "number"){
-        document.activeElement.blur();
+  document.addEventListener("wheel", function(event) {
+    if (document.activeElement.type === "number") {
+      document.activeElement.blur();
     }
-});
+  });
 </script>
 {% endblock %}
