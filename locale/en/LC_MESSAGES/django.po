@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-07 13:03+0430\n"
+"POT-Creation-Date: 2022-04-07 16:09+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,7 +48,7 @@ msgstr ""
 #: templates/staff/sold_products.html:114
 #: templates/staff/zero_stock_list.html:25
 #: templates/tickets/ticket_details.html:27
-#: templates/tickets/tickets_list.html:62
+#: templates/tickets/tickets_list.html:71
 msgid "Name"
 msgstr ""
 
@@ -100,7 +100,7 @@ msgstr ""
 msgid "Shipping"
 msgstr ""
 
-#: account/models.py:167 orders/forms.py:56
+#: account/models.py:170 orders/forms.py:56
 #: templates/shop/product_detail.html:154
 #: templates/staff/purchase/_purchase_details_block.html:17
 #: templates/staff/purchase/purchase_list.html:28
@@ -110,7 +110,7 @@ msgstr ""
 msgid "Vendor"
 msgstr ""
 
-#: account/models.py:168 templates/staff/sales_by_vendor.html:37
+#: account/models.py:171 templates/staff/sales_by_vendor.html:37
 #: templates/staff/sold_products.html:116
 msgid "Vendors"
 msgstr ""
@@ -2214,7 +2214,7 @@ msgstr ""
 #: templates/staff/order_shipped.html:40 templates/staff/order_shipping.html:25
 #: templates/staff/purchase/_purchase_details_block.html:8
 #: templates/tickets/ticket_details.html:39
-#: templates/tickets/tickets_list.html:65
+#: templates/tickets/tickets_list.html:74
 #: templates/tools/pdf/invoice_pdf_a4.html:26
 msgid "Registrar"
 msgstr ""
@@ -2753,6 +2753,7 @@ msgid "Zero stock products"
 msgstr ""
 
 #: templates/tickets/create_ticket.html:27
+#: templates/tickets/ticket_details.html:94
 msgid "Save"
 msgstr ""
 
@@ -2762,41 +2763,61 @@ msgid "Ticket details"
 msgstr ""
 
 #: templates/tickets/ticket_details.html:31
-#: templates/tickets/tickets_list.html:63
+#: templates/tickets/tickets_list.html:72
 msgid "Priority"
 msgstr ""
 
 #: templates/tickets/ticket_details.html:35
-#: templates/tickets/tickets_list.html:64
+#: templates/tickets/tickets_list.html:73
 msgid "Rank"
 msgstr ""
 
 #: templates/tickets/ticket_details.html:43
-#: templates/tickets/tickets_list.html:66
+#: templates/tickets/tickets_list.html:75
 msgid "Active"
 msgstr ""
 
 #: templates/tickets/ticket_details.html:47
-#: templates/tickets/tickets_list.html:67
+#: templates/tickets/tickets_list.html:76
 msgid "Is checked"
 msgstr ""
 
 #: templates/tickets/ticket_details.html:51
-#: templates/tickets/tickets_list.html:68
+#: templates/tickets/tickets_list.html:77
 msgid "Is solved"
 msgstr ""
 
 #: templates/tickets/ticket_details.html:55
 #: templates/tickets/ticket_details.html:80
-#: templates/tickets/tickets_list.html:69
+#: templates/tickets/tickets_list.html:78
 msgid "File"
+msgstr ""
+
+#: templates/tickets/ticket_details.html:89
+msgid "Edit ticket"
 msgstr ""
 
 #: templates/tickets/tickets_list.html:22
 msgid "List of tickets"
 msgstr ""
 
-#: templates/tickets/tickets_list.html:70
+#: templates/tickets/tickets_list.html:25
+msgid "Priority filters"
+msgstr ""
+
+#: templates/tickets/tickets_list.html:26 tickets/models.py:15
+msgid "High"
+msgstr ""
+
+#: templates/tickets/tickets_list.html:27 tickets/models.py:14
+msgid "Medium"
+msgstr ""
+
+#: templates/tickets/tickets_list.html:28 tickets/models.py:13
+msgid "Normal"
+msgstr ""
+
+#: templates/tickets/tickets_list.html:79
 msgid "Created date"
 msgstr ""
 
@@ -2975,19 +2996,11 @@ msgstr ""
 msgid "select from 1 to 10 tha 1 is the highest rank and 10 is the lowest rank"
 msgstr ""
 
-#: tickets/models.py:13
-msgid "Normal"
+#: tickets/views.py:38
+msgid "Ticket updated"
 msgstr ""
 
-#: tickets/models.py:14
-msgid "Medium"
-msgstr ""
-
-#: tickets/models.py:15
-msgid "High"
-msgstr ""
-
-#: tickets/views.py:43
+#: tickets/views.py:63
 msgid "Ticket created"
 msgstr ""
 

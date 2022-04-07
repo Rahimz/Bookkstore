@@ -84,6 +84,18 @@
           {% endif %}
 
         </div>
+
+        {% if request.user.is_superuser or request.user.is_manager %}
+        <h3 class="mt-4">{% trans 'Edit ticket' %}</h3>
+          <div class="w-50">
+            <form class="" action="" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ ticket_form | crispy }}
+              <input type="submit" name="" class="btn btn-outline-success" value="{% trans "Save" %}">
+            </form>
+          </div>
+          {% endif %}
+
       </div>
       {% if page %}
       {# {% include "shop/pagination.html" with page=products %} #}
