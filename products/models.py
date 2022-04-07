@@ -67,6 +67,28 @@ class Category(models.Model):
         super(Category, self).save(*args, **kwargs)
 
 
+class Publisher(models.Model):
+    name = models.CharField(
+        max_length=250,
+    )
+    active = models.BooleanField(
+        default=True
+    )
+    url = models.URLField(
+        blank=True,
+        null=True
+    )
+    created = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+        ordering = ('name', )
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     STATE_CHOICES = [
         ('new', _('New')),
