@@ -7,8 +7,11 @@ from .models import Ticket
 from .forms import CreateTicketForm
 
 @staff_member_required
-def tickets_list(request):
-    tickets = Ticket.objects.all().order_by('rank')
+def tickets_list(request, filter=None):
+    tickets = Ticket.objects.all().order_by('priority', 'rank' )
+    if filter in ('normal', 'medium', 'high'):
+        tickets = tickets.filter(priority=filter)
+
 
     return render(
         request,
