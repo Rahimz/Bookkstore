@@ -58,47 +58,36 @@
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col" colspan="2">{% trans 'Edit' %}</th>
-              <th scope="col"></th>
-              <th scope="col">{% trans 'ISBN' %}</th>
               <th scope="col">{% trans 'Name' %}</th>
-              <th scope="col">{% trans 'Stock' %}</th>
-              <th scope="col">{% trans 'Price' %}<span class="small"></span></th>
-              <th scope="col">{% trans 'Other stock' %}</th>
-              <th scope="col">{% trans 'Other prices' %}</th>
-              <th scope="col">{% trans 'Used' %}</th>
-              <th scope="col">{% trans 'Used stock' %}</th>
-              {#<th scope="col">{% trans 'Store position' %}</th>#}
-              <th scope="col">{% trans 'Publisher' %}</th>
-              <th scope="col">{% trans 'Price management' %}</th>
+              <th scope="col">{% trans 'Priority' %}</th>
+              <th scope="col">{% trans 'Rank' %}</th>
+              <th scope="col">{% trans 'Registrar' %}</th>
+              <th scope="col">{% trans 'Active' %}<span class="small"></span></th>
+              <th scope="col">{% trans 'Is checked' %}</th>
+              <th scope="col">{% trans 'Is solved' %}</th>
+              <th scope="col">{% trans 'File' %}</th>
+              <th scope="col">{% trans 'Created date' %}</th>
             </tr>
           </thead>
           <tbody>
-            {% comment %}
-            {% for product in products %}
+            {% for ticket in tickets %}
             <tr>
               <th scope="row">{{ forloop.counter }}</th>
+              <td><a href="">{{ ticket }}</a></td>
+              <td>{{ ticket.get_priority_display }}</td>
+              <td>{{ ticket.rank }}</td>
+              <td>{{ ticket.registrar.first_name }}</td>
+              <td>{% if ticket.active %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+              <td>{% if ticket.is_checked %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+              <td>{% if ticket.is_solved %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+              <td>{% if ticket.file %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+              <td>{{ ticket.get_fa_created }}</td>
 
-              <td><a href="{% url 'staff:product_update' product.id %}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-              <td><a class="" href="{% url 'staff:image_management' product.id%}"><i class="fa fa-image"></i></a></td>
-              <td><a href="{% url 'warehouses:product_workflow' product.id %}"><img src="{% static 'img/proccess.png' %}" width="16px" height="auto" alt="product flow"></a></td>
-              <th scope="row">{{ product.isbn }}</th>
-              <td><a href="{% url 'shop:product_detail' product.pk %}">{{ product }}</a></td>
-              <td>{{ product.stock }}</td>
-              {#<!-- we add this if statement to show ther is not any new version of this book -->#}
-              <td>{% if product.about == '*' and not product.price %}{% trans 'Not in market' %}{% else %}{{ product.price | intcomma:False }}{% endif %}</td>
-              <td><a href="{% url 'staff:product_price_show' product.id %}" onclick="return popitup('/staff/products/price-show/{{ product.id }}/')" class="btn btn-sm btn-outline-secondary">{{ product.get_other_stock }}</a></td>
-              <td>{% if product.has_other_prices %}<i class="fa fa-check"></i>{% endif %}</td>
-              <td>{{ product.price_used | intcomma:False }}</td>
-              <td>{{ product.stock_used  }}</td>
-              {#<td>{{ product.store_positon }}</td>#}
-              <td>{% if product.publisher %}{{ product.publisher }}{% endif %}</td>
-              <td>{% if request.user.is_staff %}<a href="{% url 'staff:used_book_prices' product.id %}" class="btn btn-sm p-1 btn-danger">{% trans 'Bahman' %}</a>{% endif %}</td>
-              <td>{% if request.user.is_manager or request.user.is_online_manager %}<a href="{% url 'staff:product_stock_price_edit' product.id %}" class="btn btn-sm p-1 btn-info">{% trans 'Mahsa' %}</a>{% endif %}</td>
 
             </tr>
             {% endfor %}
 
+            {% comment %}
             {% endcomment %}
           </tbody>
         </table>
