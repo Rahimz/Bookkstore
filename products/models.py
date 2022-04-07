@@ -281,6 +281,20 @@ class Product(models.Model):
         null=True,
         blank=True
     )
+    pub_1 = models.ForeignKey(
+        Publisher,
+        on_delete=models.SET_NULL,
+        related_name='productPub_1',
+        null=True,
+        blank=True,
+    )
+    pub_2 = models.ForeignKey(
+        Publisher,
+        on_delete=models.SET_NULL,
+        related_name='productPub_2',
+        null=True,
+        blank=True,
+    )
     publish_year = models.IntegerField(
         # default=1400,
         validators=[MinValueValidator(1233), MaxValueValidator(1400)],
