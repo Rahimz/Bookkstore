@@ -154,6 +154,7 @@
       <a href="{% url 'staff:warehouse' %}" class="btn btn-sm btn-outline-secondary {% block warehouses-btn %}{% endblock %}">{% trans 'Warehouse' %}</a>
       <a href="{% url 'staff:products' %}" class="btn btn-sm btn-outline-secondary {% block products-btn %}{% endblock %}">{% trans 'Products' %}</a>
       <a href="{% url 'client_list' %}" class="btn btn-sm btn-outline-secondary {% block clients-btn %}{% endblock %}">{% trans 'Clients' %}</a>
+      <a href="{% url 'tickets:tickets_list' %}" class="btn btn-sm btn-outline-secondary {% block tickets-btn %}{% endblock %}">{% trans 'Tickets' %}</a>
       {% if request.user.is_manager or request.user.is_superuser %}
       <a href="{% url 'staff:product_reports' %}" class="btn btn-sm btn-outline-secondary ">{% trans 'Prodct reports' %}</a>
       <a href="{% url 'orders:sales_by_days' days=365 %}" class="btn btn-sm btn-outline-secondary {% block reports-btn %}{% endblock %}">{% trans 'Reports' %}</a>

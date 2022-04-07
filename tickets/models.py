@@ -27,6 +27,10 @@ class Ticket(models.Model):
         blank=True,
         null=True
     )
+    url = models.URLField(
+        null=True,
+        blank=True
+    )
     file = models.FileField(
         upload_to='tickets/files',
         null=True,

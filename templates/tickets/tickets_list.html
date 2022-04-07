@@ -10,13 +10,13 @@
 
 {% block title %}{% trans 'Tickets' %}{% endblock %}
 
-{% block products-btn %}btn-secondary text-dark{% endblock %}
+{% block tickets-btn %}btn-secondary text-dark{% endblock %}
 
 {% block content %}
 <div class="container-fluid overflow-hidden">
   <div class="row">
     <div class="col-md-1">
-      {% include "staff/sidebar_staff.html" with barName="products" %}
+      {% include "staff/sidebar_staff.html" with barName="tickets" %}
     </div>
     <div class="col-md-11">
       <h2>{% trans 'List of tickets' %}</h2>
@@ -73,7 +73,7 @@
             {% for ticket in tickets %}
             <tr>
               <th scope="row">{{ forloop.counter }}</th>
-              <td><a href="">{{ ticket }}</a></td>
+              <td><a href="{% url 'tickets:ticket_details' ticket.id %}">{{ ticket }}</a></td>
               <td>{{ ticket.get_priority_display }}</td>
               <td>{{ ticket.rank }}</td>
               <td>{{ ticket.registrar.first_name }}</td>

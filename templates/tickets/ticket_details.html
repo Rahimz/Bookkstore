@@ -1,0 +1,100 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Ticket details' %}{% endblock %}
+
+{% block tickets-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-1">
+      {% include "staff/sidebar_staff.html" with barName="tickets" %}
+    </div>
+    <div class="col-md-11">
+      <h2>{% trans 'Ticket details' %}: {{ ticket.pk }} - {{ ticket }}</h2>
+      <div class="table-responsive">
+        <table class="table table-striped table-responsive w-50">
+          <tbody>
+            <tr>
+              <td>{% trans "Name" %}</td>
+              <td><a href="">{{ ticket }}</a></td>
+            </tr>
+            <tr>
+              <td>{% trans "Priority" %}</td>
+              <td>{{ ticket.get_priority_display }}</td>
+            </tr>
+            <tr>
+              <td>{% trans "Rank" %}</td>
+              <td>{{ ticket.rank }}</td>
+            </tr>
+            <tr>
+              <td>{% trans "Registrar" %}</td>
+              <td>{{ ticket.registrar.first_name }}</td>
+            </tr>
+            <tr>
+              <td>{% trans "Active" %}</td>
+              <td>{% if ticket.active %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+            </tr>
+            <tr>
+              <td>{% trans "Is checked" %}</td>
+              <td>{% if ticket.is_checked %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+            </tr>
+            <tr>
+              <td>{% trans "Is solved" %}</td>
+              <td>{% if ticket.is_solved %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+            </tr>
+            <tr>
+              <td>{% trans "File" %}</td>
+              <td>{% if ticket.file %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+            </tr>
+            <tr>
+              <td>{% trans "Date" %}</td>
+              <td>{{ ticket.get_fa_created }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="border p-2">
+          <p>
+            {% trans "Description" %}: <br>
+            {{ ticket.description | linebreaksbr }}
+          </p>
+          <hr>
+          {% if ticket.url %}
+          <p>
+            <p>
+              URL:
+            </p>
+            <a href="{{ ticket.url }}" target="_blank">{{ ticket.url }}</a>
+          </p>
+          {% endif %}
+          {% if ticket.file %}
+          <p>
+          <p> {% trans "File" %}:
+          </p>
+          <a href="{{ ticket.file.url }}" target="_blank">{{ ticket.file.name }}</a>
+          </p>
+          {% endif %}
+
+        </div>
+      </div>
+      {% if page %}
+      {# {% include "shop/pagination.html" with page=products %} #}
+      {% endif %}
+    </div>
+
+
+  </div>
+
+</div>
+{% endblock %}
+{% block script %}
+
+{% endblock %}
