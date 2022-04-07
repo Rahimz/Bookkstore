@@ -20,6 +20,15 @@
     </div>
     <div class="col-md-11">
       <h2>{% trans 'List of tickets' %}</h2>
+      <div class="">
+        <p>
+          <span>{% trans "Priority filters" %}:</span>
+          <a href="{% url 'tickets:tickets_list_filter' filter='high' %}">{% trans "High" %}</a> |
+          <a href="{% url 'tickets:tickets_list_filter' filter='medium' %}">{% trans "Medium" %}</a> |
+          <a href="{% url 'tickets:tickets_list_filter' filter='normal' %}">{% trans "Normal" %}</a>
+        </p>
+
+      </div>
       {% comment %}
       <div class="my-3">
         {% if request.user.is_superuser %}

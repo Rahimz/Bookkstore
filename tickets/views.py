@@ -7,8 +7,11 @@ from .models import Ticket
 from .forms import CreateTicketForm
 
 @staff_member_required
-def tickets_list(request):
-    tickets = Ticket.objects.all().order_by('rank')
+def tickets_list(request, filter=None):
+    tickets = Ticket.objects.all().order_by('priority', 'rank' )
+    if filter in ('normal', 'medium', 'high'):
+        tickets = tickets.filter(priority=filter)
+
 
     return render(
         request,
@@ -22,11 +25,26 @@ def tickets_list(request):
 @staff_member_required
 def ticket_details(request, ticket_id):
     ticket = get_object_or_404(Ticket, pk=ticket_id)
+    if request.method == 'POST':
+        ticket_form = CreateTicketForm(
+            instance=ticket,
+            data=request.POST,
+            files=request.FILES
+        )
+        if ticket_form.is_valid():
+            ticket_form.save()
+            # new_ticket.registrar = request.user
+            # new_ticket.save()
+            messages.success(request, _('Ticket updated'))
+            return redirect('tickets:tickets_list')
+    else:
+        ticket_form = CreateTicketForm(instance=ticket)
     return render(
         request,
         'tickets/ticket_details.html',
         {
             'ticket': ticket,
+            'ticket_form': ticket_form,
         }
     )
 

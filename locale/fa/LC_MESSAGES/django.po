@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-07 13:03+0430\n"
-"PO-Revision-Date: 2022-04-07 13:08+0430\n"
+"POT-Creation-Date: 2022-04-07 16:09+0430\n"
+"PO-Revision-Date: 2022-04-07 16:10+0430\n"
 "Last-Translator: رحیم  <rahim.aghareb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -49,7 +49,7 @@ msgstr "پسوردها یکسان نیستند"
 #: templates/staff/sold_products.html:114
 #: templates/staff/zero_stock_list.html:25
 #: templates/tickets/ticket_details.html:27
-#: templates/tickets/tickets_list.html:62
+#: templates/tickets/tickets_list.html:71
 msgid "Name"
 msgstr "نام"
 
@@ -101,7 +101,7 @@ msgstr "آدرس خرید"
 msgid "Shipping"
 msgstr "ارسال"
 
-#: account/models.py:167 orders/forms.py:56
+#: account/models.py:170 orders/forms.py:56
 #: templates/shop/product_detail.html:154
 #: templates/staff/purchase/_purchase_details_block.html:17
 #: templates/staff/purchase/purchase_list.html:28
@@ -111,7 +111,7 @@ msgstr "ارسال"
 msgid "Vendor"
 msgstr "تامین‌کننده"
 
-#: account/models.py:168 templates/staff/sales_by_vendor.html:37
+#: account/models.py:171 templates/staff/sales_by_vendor.html:37
 #: templates/staff/sold_products.html:116
 msgid "Vendors"
 msgstr "تامین‌کنندگان"
@@ -1814,7 +1814,6 @@ msgid "Admin info"
 msgstr "مدیریت کتاب"
 
 #: templates/shop/product_detail.html:115
-#| msgid "Category"
 msgid " Sub category"
 msgstr "دسته‌بندی‌ فرعی"
 
@@ -2258,7 +2257,7 @@ msgstr "بازگشت به حالت پیش‌نویس همه چیز"
 #: templates/staff/order_shipping.html:25
 #: templates/staff/purchase/_purchase_details_block.html:8
 #: templates/tickets/ticket_details.html:39
-#: templates/tickets/tickets_list.html:65
+#: templates/tickets/tickets_list.html:74
 #: templates/tools/pdf/invoice_pdf_a4.html:26
 msgid "Registrar"
 msgstr "ثبت کننده"
@@ -2759,7 +2758,6 @@ msgstr "لیست تیکت‌ها"
 #: templates/staff/sidebar_staff.html:98
 #: templates/tickets/create_ticket.html:11
 #: templates/tickets/create_ticket.html:22
-#| msgid "Create invoice"
 msgid "Create ticket"
 msgstr "ساخت تیکت"
 
@@ -2815,53 +2813,73 @@ msgid "Zero stock products"
 msgstr "محصولات موجودی صفر"
 
 #: templates/tickets/create_ticket.html:27
+#: templates/tickets/ticket_details.html:94
 msgid "Save"
 msgstr "ذخیره"
 
 #: templates/tickets/ticket_details.html:11
 #: templates/tickets/ticket_details.html:22
-#| msgid "Client details"
 msgid "Ticket details"
 msgstr "جزییات تیکت"
 
 #: templates/tickets/ticket_details.html:31
-#: templates/tickets/tickets_list.html:63
+#: templates/tickets/tickets_list.html:72
 msgid "Priority"
 msgstr "اولویت"
 
 #: templates/tickets/ticket_details.html:35
-#: templates/tickets/tickets_list.html:64
+#: templates/tickets/tickets_list.html:73
 msgid "Rank"
 msgstr "رتبه"
 
 #: templates/tickets/ticket_details.html:43
-#: templates/tickets/tickets_list.html:66
+#: templates/tickets/tickets_list.html:75
 msgid "Active"
 msgstr "فعال"
 
 #: templates/tickets/ticket_details.html:47
-#: templates/tickets/tickets_list.html:67
+#: templates/tickets/tickets_list.html:76
 msgid "Is checked"
 msgstr "بررسی شده"
 
 #: templates/tickets/ticket_details.html:51
-#: templates/tickets/tickets_list.html:68
+#: templates/tickets/tickets_list.html:77
 msgid "Is solved"
 msgstr "حل شده"
 
 #: templates/tickets/ticket_details.html:55
 #: templates/tickets/ticket_details.html:80
-#: templates/tickets/tickets_list.html:69
+#: templates/tickets/tickets_list.html:78
 msgid "File"
 msgstr "فایل"
 
+#: templates/tickets/ticket_details.html:89
+#| msgid "List of tickets"
+msgid "Edit ticket"
+msgstr "ویرایش تیکت‌"
+
 #: templates/tickets/tickets_list.html:22
-#| msgid "List of clients"
 msgid "List of tickets"
 msgstr "لیست تیکت‌ها "
 
-#: templates/tickets/tickets_list.html:70
-#| msgid "Craeted date"
+#: templates/tickets/tickets_list.html:25
+#| msgid "Priority"
+msgid "Priority filters"
+msgstr "فلتر بر اساس اولویت"
+
+#: templates/tickets/tickets_list.html:26 tickets/models.py:15
+msgid "High"
+msgstr "بالا"
+
+#: templates/tickets/tickets_list.html:27 tickets/models.py:14
+msgid "Medium"
+msgstr "متوسط"
+
+#: templates/tickets/tickets_list.html:28 tickets/models.py:13
+msgid "Normal"
+msgstr "معمولی"
+
+#: templates/tickets/tickets_list.html:79
 msgid "Created date"
 msgstr "تاریخ ایجاد"
 
@@ -3047,20 +3065,12 @@ msgstr ""
 "بین ۱ تا ۱۰ برای این مشکل رتبه اهمیت تعریف کنید ۱ به معنی مهم‌ترین و ۱۰ به "
 "معنی کم‌اهمیت‌ترین  "
 
-#: tickets/models.py:13
-msgid "Normal"
-msgstr "معمولی"
+#: tickets/views.py:38
+#| msgid "Price updated"
+msgid "Ticket updated"
+msgstr "تیکت به‌روزرسانی شد"
 
-#: tickets/models.py:14
-msgid "Medium"
-msgstr "متوسط"
-
-#: tickets/models.py:15
-msgid "High"
-msgstr "بالا"
-
-#: tickets/views.py:43
-#| msgid "Invoice create"
+#: tickets/views.py:63
 msgid "Ticket created"
 msgstr "تیکت ایجاد شد"
 

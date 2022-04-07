@@ -135,6 +135,9 @@ class CustomUser(AbstractUser):
         null=True
     )
 
+    class Meta:
+        ordering = ('is_superuser', 'is_manager', 'last_name', 'first_name')
+
     def get_absolute_url(self):
         return reverse('client_update',
                        args=[self.id])
