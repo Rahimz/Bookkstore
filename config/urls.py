@@ -31,6 +31,7 @@ urlpatterns = [
     path('zarinpal/', include('zarinpal.urls', namespace='zarinpal')),
     path('tools/', include('tools.urls', namespace='tools')),
     path('warehouses/', include('warehouses.urls', namespace='warehouses')),
+    path('tickets/', include('tickets.urls', namespace='tickets')),
     path('rosetta/', include('rosetta.urls')),
     path('admin/', admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),

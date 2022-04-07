@@ -132,8 +132,9 @@ def order_detail_for_admin(request, pk):
 
     # this part added for updating those orders that have not the client address in them
     client = order.client
-    order.billing_address = client.default_billing_address
-    order.shipping_address = client.default_shipping_address
+    if client.username != 'guest':
+        order.billing_address = client.default_billing_address
+        order.shipping_address = client.default_shipping_address
     # print(order.billing_address.get_full_address())
     order.save()
     return render(
@@ -2045,7 +2046,7 @@ def image_management(request, product_id):
 
             if not new_image.image_alt:
                 new_image.image_alt = str(product)
-                
+
             if not images:
                 new_image.main_image = True
                 product.image = new_image.file

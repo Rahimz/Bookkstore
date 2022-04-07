@@ -1,0 +1,107 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Tickets' %}{% endblock %}
+
+{% block tickets-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-1">
+      {% include "staff/sidebar_staff.html" with barName="tickets" %}
+    </div>
+    <div class="col-md-11">
+      <h2>{% trans 'List of tickets' %}</h2>
+      {% comment %}
+      <div class="my-3">
+        {% if request.user.is_superuser %}
+        <p><a href="{% url 'tools:product_export_excel' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'All products' %} <span
+              class="text-danger">{% trans 'Could be very slow or it may crash' %}</span></a>
+        <a href="{% url 'tools:used_noprice_export_excel' filter='used-noprice' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'Used products without price' %}</a>
+        <a href="{% url 'tools:used_all_export_excel' filter='used-all' %}" class=""><img src="{% static 'img/excel-icon.png' %}" alt="Excel icon" width="32px" height="auto">{% trans 'All used products' %}</a></p>
+        {% endif %}
+      </div>
+      <p>
+      {% if page %}
+        {% trans "All products" %}
+      {% else %}
+        {% trans "Search results" %}
+      {% endif %}
+      <span>: {{ counts | intcomma:False }}</span>
+    </p>
+
+      <form class="" action="." method="post">
+        <div class="row">
+
+          <div class="col-md-9">
+            {{ search_form | crispy }}
+            {% csrf_token %}
+          </div>
+
+          <div class="col-md-3">
+            <input class="btn btn-outline-secondary form-control" type="submit" name="book" value="{% trans 'Submit' %}">
+          </div>
+        </div>
+
+      </form>
+      {% endcomment %}
+      <div class="table-responsive">
+        <table class="table table-striped table-responsive">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">{% trans 'Name' %}</th>
+              <th scope="col">{% trans 'Priority' %}</th>
+              <th scope="col">{% trans 'Rank' %}</th>
+              <th scope="col">{% trans 'Registrar' %}</th>
+              <th scope="col">{% trans 'Active' %}<span class="small"></span></th>
+              <th scope="col">{% trans 'Is checked' %}</th>
+              <th scope="col">{% trans 'Is solved' %}</th>
+              <th scope="col">{% trans 'File' %}</th>
+              <th scope="col">{% trans 'Created date' %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ticket in tickets %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td><a href="{% url 'tickets:ticket_details' ticket.id %}">{{ ticket }}</a></td>
+              <td>{{ ticket.get_priority_display }}</td>
+              <td>{{ ticket.rank }}</td>
+              <td>{{ ticket.registrar.first_name }}</td>
+              <td>{% if ticket.active %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+              <td>{% if ticket.is_checked %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+              <td>{% if ticket.is_solved %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+              <td>{% if ticket.file %}<i class="fa fa-check text-success"></i>{% else %}<i class="fa fa-times text-danger"></i>{% endif %}</td>
+              <td>{{ ticket.get_fa_created }}</td>
+
+
+            </tr>
+            {% endfor %}
+
+            {% comment %}
+            {% endcomment %}
+          </tbody>
+        </table>
+      </div>
+      {% if page %}
+      {# {% include "shop/pagination.html" with page=products %} #}
+      {% endif %}
+    </div>
+
+
+  </div>
+
+</div>
+{% endblock %}
+{% block script %}
+
+{% endblock %}

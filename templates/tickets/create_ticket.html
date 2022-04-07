@@ -1,0 +1,41 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Create ticket' %}{% endblock %}
+
+{% block tickets-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-1">
+      {% include "staff/sidebar_staff.html" with barName="tickets" %}
+    </div>
+    <div class="col-md-11">
+      <h2>{% trans 'Create ticket' %}</h2>
+        <div class="w-50">
+          <form class="" action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ ticket_form | crispy }}
+            <input type="submit" name="" class="btn btn-outline-success" value="{% trans "Save" %}">
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+{% endblock %}
+{% block script %}
+
+{% endblock %}

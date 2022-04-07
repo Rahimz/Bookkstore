@@ -90,9 +90,12 @@
 {% if barName == "reports" %}
   {% if request.user.is_superuser or request.user.is_manager %}
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'orders:best_selling_books' %}">{% trans 'Best selling books' %}</a>
-
-
   {% endif %}
+{% endif %}
+
+{% if barName == "tickets" %}
+    <a href="{% url 'tickets:tickets_list' %}" class="btn btn-sm btn-outline-secondary d-block m-1">{% trans 'Tickets list' %}</a>
+    <a href="{% url 'tickets:create_ticket' %}" class="btn btn-sm btn-outline-secondary d-block m-1">{% trans 'Create ticket' %}</a>
 {% endif %}
 
 {% block script %}
