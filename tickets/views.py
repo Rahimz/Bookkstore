@@ -39,7 +39,9 @@ def create_ticket(request):
             files=request.FILES
         )
         if ticket_form.is_valid():
-            ticket_form.save()
+            new_ticket = ticket_form.save(commit=False)
+            new_ticket.registrar = request.user
+            new_ticket.save()
             messages.success(request, _('Ticket created'))
             return redirect('tickets:tickets_list')
     else:
