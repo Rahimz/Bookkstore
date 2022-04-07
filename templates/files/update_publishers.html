@@ -3,7 +3,7 @@
 
 <a href="{% url 'files:list_of_files' %}" class="btn btn-secondary">Back</a>
 <br>{{ file_object.name }} - {{ file_object.type }} - {{ file_object.file.url}} - {{file_object.slug}}<br>
-<a href="{% url 'files:update_publishers' file_slug=file_object.slug check='add' %}" class="btn btn-sm btn-warning">update_publishers</a>
+<a href="{% url 'files:update_publishers' file_slug=file_object.slug check='add' start=2 end=800 %}" class="btn btn-sm btn-warning">update_publishers</a>
 <p>row_count: {{ row_count }}</p>
 
 <div class="">

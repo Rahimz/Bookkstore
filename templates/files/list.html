@@ -34,7 +34,7 @@
 <a href="{% url 'files:check_category' file_slug=file.slug check='check' start=10001 end=11000 %}" class="btn btn-sm btn-secondary">Used book update 10001 - 11000</a>
 <a href="{% url 'files:check_category' file_slug=file.slug check='check' start=11001 end=12460 %}" class="btn btn-sm btn-secondary">Used book update 11001 - 12460</a>
 {% endcomment %}
-<a href="{% url 'files:update_publishers' file_slug=file.slug check='check' %}" class="btn btn-sm btn-secondary">Publishers update</a>
+<a href="{% url 'files:update_publishers' file_slug=file.slug check='check' start=2 end=1600 %}" class="btn btn-sm btn-secondary">Publishers update</a>
 </p>
 {% endfor %}
 {% endblock %}

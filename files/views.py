@@ -1685,7 +1685,7 @@ def check_category(request, file_slug, check='check', start=None, end=None):
 
 
 
-def update_publishers(request, file_slug, check='check'):
+def update_publishers(request, file_slug, start, end, check='check'):
     final = []
 
 
@@ -1703,8 +1703,8 @@ def update_publishers(request, file_slug, check='check'):
 
         # a loop for scrape the excel file
         # read the data in cells
-        for i in range(2, row_count):
-        # for i in range(2, 45):
+        # for i in range(2, row_count):
+        for i in range(start, end):
             publisher_2 = None
 
             # row = ws['A'+str(i):'M'+str(i)]
