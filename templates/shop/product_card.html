@@ -10,7 +10,7 @@
       <span class="badge rounded-pill rounded w-50 bg-danger d-block">
         {% trans "New" %}: {% trans 'Out of stock' %}
       </span>
-      <span class="badge rounded-pill rounded w-50 bg-danger d-block">        
+      <span class="badge rounded-pill rounded w-50 bg-danger d-block">
         {% trans "Used" %}: {% trans 'Out of stock' %}
       </span>
       {% endif %}
@@ -30,7 +30,7 @@
         <h6 class="cart-subtitle text-muted">
           {% trans "New" %}: {% if product.price %}{{ product.price | intcomma:False }} {% trans 'Rial' %} {% else %}{% trans "No price" %}{% endif %}
           {% if product.stock_used %} / {% trans "Used" %}: {% if price_used %}{{ product.price_used | intcomma:False }} {% trans 'Rial' %}{% else %}{% trans "No price" %}{% endif %}{% endif %}</h6>
-        {% if product.publisher %}<p class="p-1">{{ product.publisher }} {{ product.ahthor | truncatechars:25 }}{% else %} <br /> {% endif %}</p>
+        {% if product.pub_1 %}<p class="p-1">{{ product.pub_1.name }} {{ product.ahthor | truncatechars:25 }}{% else %} <br /> {% endif %}</p>
 
       </div>
     </div>

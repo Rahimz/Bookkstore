@@ -28,7 +28,7 @@
         </tr>
         <tr>
           <td>{% trans 'Publisher' %}</td>
-        <td>{{ product.publisher }}</td>
+        <td>{% if product.pub_1.name %}{{ product.pub_1.name }}{% endif %}</td>
       </tr>
       <tr>
         <td>{% trans 'Page number' %}</td>
@@ -74,7 +74,7 @@
       </div>
       <div class="">
         <ul>{% trans "Offers based on" %}:
-          {% if price_offers %}          
+          {% if price_offers %}
           <li>pageNumber * 0.13 * 10,000</li>
           <li>pageNumber * 0.15 * 10,000</li>
           <li>pageNumber * 0.17 * 10,000</li>

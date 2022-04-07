@@ -409,7 +409,7 @@ def product_export_excel(request, filter='all'):
                 product.id,
                 str(product),
                 product.isbn,
-                product.publisher,
+                str(product.pub_1),
                 product.price,
                 product.stock,
                 product.price_used,
@@ -426,7 +426,7 @@ def product_export_excel(request, filter='all'):
                 product.id,
                 str(product),
                 product.isbn,
-                product.publisher,
+                str(product.pub_1),
                 product.stock,
                 product.price,
                 product.weight,
@@ -453,7 +453,7 @@ def product_export_excel(request, filter='all'):
                 str(product.category),
                 product.author,
                 product.translator,
-                product.publisher_2,
+                str(product.pub_1),
                 product.publish_year,
                 product.latin_name,
                 product.author_latin_name,
@@ -528,7 +528,7 @@ def used_product_before_5(request):
             item.product.id,
             str(item.product),
             item.product.isbn,
-            item.product.publisher,
+            item.product.pub_1.name,
             item.product.price,
             item.product.stock,
             item.product.price_used,
@@ -612,7 +612,7 @@ def export_publisher(request):
 
         title_list = [
             count,
-            product.publisher,
+            product.pub_1.name,
         ]
         for i in range(len(headers)):
             c = sheet.cell(row = count + 2 , column = i + 1)
@@ -677,7 +677,7 @@ def export_excel_sold_products(request, date=None, days=None, period=None):
                 'variation': item.variation,
                 'isbn': item.product.isbn,
                 'id': item.product.id,
-                'publisher': item.product.publisher,
+                'publisher': item.product.pub_1.name,
                 'vendors': ','.join(item.product.vendors.all().values_list('first_name', flat=True)),
                 }
 
@@ -862,7 +862,7 @@ def duplicate_book_name_export(request):
             product.id,
             str(product),
             product.isbn,
-            product.publisher,
+            str(product.pub_1),
             product.price,
             product.stock,
             product.price_used,

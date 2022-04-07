@@ -31,7 +31,7 @@
         {% else %}
         <td>{{ purchase_line.product }}</td>
         {% endif %}
-        <td>{{ purchase_line.product.publisher }}</td>
+        <td>{% if purchase_line.product.pub_1 %}{{ purchase_line.product.pub_1.name }}{% endif %}</td>
         <td>{{ purchase_line.quantity }}</td>
         <td>{{ purchase_line.price | intcomma:False }}</td>
         <td>{{ purchase_line.get_cost | intcomma:False }}</td>

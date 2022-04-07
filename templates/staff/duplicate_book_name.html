@@ -68,7 +68,7 @@
               <td>{{ product.price_used | intcomma:False }}</td>
               <td>{{ product.stock_used  }}</td>
               {#<td>{{ product.store_positon }}</td>#}
-              <td>{% if product.publisher %}{{ product.publisher }}{% endif %}</td>
+              <td>{% if product.pub_1 %}{{ product.pub_1.name }}{% endif %}</td>
               <td>{% if product.page_number %}{{ product.page_number }}{% endif %}</td>
 
             </tr>

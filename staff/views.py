@@ -1326,7 +1326,7 @@ def sold_products(request, days=None, date=None, period=None):
                 'variation': item.variation,
                 'isbn': item.product.isbn,
                 'id': item.product.id,
-                'publisher': item.product.publisher,
+                'publisher': item.product.pub_1 if item.product.pub_1 else '',
                 'vendors': vendors_list,
                 }
 

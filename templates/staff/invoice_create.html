@@ -148,10 +148,10 @@
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{ order_line.product.isbn }}</td>
                 <td>
-                    <img src="{% if order_line.product.image %}{{ order_line.product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="d-block" alt="{{ product.image_alt }}" width="auto" height="40px">                    
+                    <img src="{% if order_line.product.image %}{{ order_line.product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="d-block" alt="{{ product.image_alt }}" width="auto" height="40px">
                 </td>
                 <td>{{ order_line.product }}</td>
-                <td>{% if order_line.poruct.publisher %}{{ order_line.product.publisher }}{% endif %}</td>
+                <td>{% if order_line.poruct.pub_1 %}{{ order_line.product.pub_1.name }}{% endif %}</td>
                 <td></td>
                 <td>
                   <form action="{% url 'staff:orderline_update' order_id=order.id orderline_id=order_line.id %}" method="post">
