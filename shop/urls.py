@@ -20,4 +20,5 @@ urlpatterns = [
     path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
 
     path('categories/', views.category_list, name="category_list"),
+    path('publishers/', views.publisher_list, name="publisher_list"),
 ]

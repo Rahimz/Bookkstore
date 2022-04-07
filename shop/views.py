@@ -3,7 +3,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 
-from products.models import Product, Good, Category, Image
+from products.models import Product, Good, Category, Image, Publisher
 from search.forms import SearchForm
 from cart.forms import CartAddProductForm
 from search.views import ProductSearch
@@ -169,5 +169,30 @@ def store_book_search(request, state):
             'new_products': new_products,
             'used_products': used_products,
             'all_quantity': all_quantity,
+        }
+    )
+
+
+def publisher_list(request):
+    publishers = Publisher.objects.filter(active=True)
+
+    # pagination
+    paginator = Paginator(publishers, 50) # 20 posts in each page
+    page = request.GET.get('page')
+    try:
+        publishers = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer deliver the first page
+        publishers = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range deliver last page of results
+        publishers = paginator.page(paginator.num_pages)
+    # print(page)
+    return render (
+        request,
+        'shop/publisher_list.html',
+        {
+            'publishers': publishers,
+            'page': page,
         }
     )

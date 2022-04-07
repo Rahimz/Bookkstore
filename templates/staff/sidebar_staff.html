@@ -19,7 +19,8 @@
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'tools:duplicate_book_name' %}">{% trans 'Duplicate books' %}</a>
   {% if request.user.is_superuser %}
   <br>
-  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'tools:export_publisher' %}">{% trans 'Export publishers' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'shop:publisher_list' %}">{% trans 'Publishers' %}</a>
+  {#<a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'tools:export_publisher' %}">{% trans 'Export publishers' %}</a>#}
   {#<a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'tools:used_product_before_5' %}">{% trans 'used product sold befor 5 march' %}</a>#}
   {% endif %}
 
