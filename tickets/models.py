@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime
+from django.core.validators import MinValueValidator , MaxValueValidator
 
 
 from tools.gregory_to_hijry import hij_strf_date, greg_to_hij_date
@@ -10,7 +11,7 @@ from tools.gregory_to_hijry import hij_strf_date, greg_to_hij_date
 class Ticket(models.Model):
     PRIORITY_CHOICES = (
         ('normal', _('Normal')),
-        ('medium', _('medium')),
+        ('medium', _('Medium')),
         ('high', _('High')),
     )
 
@@ -24,8 +25,11 @@ class Ticket(models.Model):
         choices=PRIORITY_CHOICES
     )
     rank = models.IntegerField(
-        blank=True,
-        null=True
+        default=5,
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(10)
+         ]
     )
     url = models.URLField(
         null=True,

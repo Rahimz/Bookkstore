@@ -94,7 +94,8 @@
 {% endif %}
 
 {% if barName == "tickets" %}
-    <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'tickets:tickets_list' %}">{% trans 'Tickets list' %}</a>
+    <a href="{% url 'tickets:tickets_list' %}" class="btn btn-sm btn-outline-secondary d-block m-1">{% trans 'Tickets list' %}</a>
+    <a href="{% url 'tickets:create_ticket' %}" class="btn btn-sm btn-outline-secondary d-block m-1">{% trans 'Create ticket' %}</a>
 {% endif %}
 
 {% block script %}
