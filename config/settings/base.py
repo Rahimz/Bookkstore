@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'zarinpal.apps.ZarinpalConfig',
     'warehouses.apps.WarehousesConfig',
     'tools.apps.ToolsConfig',
+    'tickets.apps.TicketsConfig',
 ]
 
 MIDDLEWARE = [
