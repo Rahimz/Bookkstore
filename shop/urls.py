@@ -21,4 +21,5 @@ urlpatterns = [
 
     path('categories/', views.category_list, name="category_list"),
     path('publishers/', views.publisher_list, name="publisher_list"),
+    path('publishers/products/<int:publisher_id>/', views.publisher_products, name="publisher_products"),
 ]

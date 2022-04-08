@@ -23,7 +23,8 @@
       <ul>
         {% for publisher in publishers %}
         <li>
-          {{ publisher }}
+          <a href="{% url 'shop:publisher_products' publisher.id %}" class="">{{ publisher }}</a>
+          {% if publisher.product_count %}<span class="text-secondary"> - {{ publisher.product_count }} {% trans "Product" %}</span> {% endif %}
         </li>
         {% endfor %}
       </ul>

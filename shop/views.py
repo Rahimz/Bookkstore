@@ -196,3 +196,20 @@ def publisher_list(request):
             # 'page': page,
         }
     )
+
+
+def publisher_products(request, publisher_id):
+    publisher = get_object_or_404(Publisher, pk=publisher_id)
+    products = Product.objects.filter(available=True).filter( Q(pub_1=publisher) | Q(pub_2=publisher) ).exclude(product_type='craft').order_by('name')
+    publisher.product_count = products.count()
+    publisher.save()
+    
+    return render(
+        request,
+        'shop/publisher_products.html',
+        {
+            'publisher': publisher,
+            'products': products,
+        }
+
+    )
