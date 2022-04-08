@@ -2,9 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
+from django.contrib.postgres.search import SearchVector
 
 from products.models import Product, Good, Category, Image, Publisher
-from search.forms import SearchForm
+from search.forms import SearchForm, PublisherSearchForm
 from cart.forms import CartAddProductForm
 from search.views import ProductSearch
 from .models import Note
@@ -176,9 +177,19 @@ def store_book_search(request, state):
 def publisher_list(request):
     publishers = Publisher.objects.filter(active=True)
 
+    if request.method == 'POST':
+        search_form = PublisherSearchForm(request.POST)
+        if search_form.is_valid():
+            query = search_form.cleaned_data['query']
+            publishers = publishers.annotate(search=SearchVector('name', 'pk',),).filter(search=query)
+    else:
+        search_form = PublisherSearchForm()
+
     # # pagination
     # paginator = Paginator(publishers, 50) # 20 posts in each page
     # page = request.GET.get('page')
+    # print(page)
+    #
     # try:
     #     publishers = paginator.page(page)
     # except PageNotAnInteger:
@@ -187,13 +198,14 @@ def publisher_list(request):
     # except EmptyPage:
     #     # If page is out of range deliver last page of results
     #     publishers = paginator.page(paginator.num_pages)
-    # # print(page)
+
     return render (
         request,
         'shop/publisher_list.html',
         {
             'publishers': publishers,
             # 'page': page,
+            'search_form': search_form,
         }
     )
 
@@ -203,7 +215,7 @@ def publisher_products(request, publisher_id):
     products = Product.objects.filter(available=True).filter( Q(pub_1=publisher) | Q(pub_2=publisher) ).exclude(product_type='craft').order_by('name')
     publisher.product_count = products.count()
     publisher.save()
-    
+
     return render(
         request,
         'shop/publisher_products.html',

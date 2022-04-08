@@ -2,6 +2,8 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 
 
+from products.models import Publisher
+
 class SearchForm(forms.Form):
     query = forms.CharField(
         label='',
@@ -44,4 +46,10 @@ class OrderSearchForm(forms.Form):
     order_query = forms.CharField(
         label=_('Order search'),
         widget=forms.TextInput(attrs={'placeholder': _('Client, order or order notes')})
+    )
+
+
+class PublisherSearchForm(forms.Form):
+    query = forms.CharField(label='',
+        widget=forms.TextInput(attrs={'placeholder': _('Publisher name')})
     )
