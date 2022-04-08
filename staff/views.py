@@ -263,6 +263,16 @@ def product_create(request, product_id=None):
                         return redirect('staff:product_create')
             new_product.save()
 
+            # Updating the publisher product count when any product updated or created
+            publisher_1 = new_product.pub_1
+            publisher_2 = new_product.pub_2
+            if publisher_1:
+                publisher_1.product_count = Product.objects.filter(available=True).filter( Q(pub_1=publisher_1) | Q(pub_2=publisher_1) ).exclude(product_type='craft').count()
+                publisher_1.save()
+            if publisher_2:
+                publisher_2.product_count = Product.objects.filter(available=True).filter( Q(pub_1=publisher_2) | Q(pub_2=publisher_2) ).exclude(product_type='craft').count()
+                publisher_2.save()
+
             if product_id:
                 messages.success(request, _('Product updated'))
             else:
