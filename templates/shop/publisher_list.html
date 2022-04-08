@@ -32,6 +32,7 @@
         <thead>
           <th>#</th>
           <th>{% trans "Publisher ID" %}</th>
+          <th>{% trans "Edit" %}</th>
           <th>{% trans "Publisher" %}</th>
           <th>{% trans "Product quantity" %}</th>
         </thead>
@@ -40,6 +41,7 @@
           <tr>
             <td>{{ forloop.counter }}</td>
             <td>{{ publisher.id }}</td>
+            <td><a href="{% url 'shop:publisher_update' publisher.id %}" class=""><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
             <td><a href="{% url 'shop:publisher_products' publisher.id %}" class="">{{ publisher }}</a></td>
             <td>{% if publisher.product_count %}{{ publisher.product_count }}{% endif %}</td>
           </tr>

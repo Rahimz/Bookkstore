@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from products.models import Product, Good, Category, Craft, Image
+from products.models import Product, Good, Category, Craft, Image, Publisher
 from orders.models import Order, OrderLine
 
 
@@ -15,7 +15,7 @@ class ProductCreateForm(forms.ModelForm):
             # 'image', 'image_alt',
             'description', 'age_range', 'product_type', 'weight',
             'size', 'cover_type', 'page_number',
-            'pub_1', 'pub_2', 'publish_year', # 'publisher', 'publisher_2', 
+            'pub_1', 'pub_2', 'publish_year', # 'publisher', 'publisher_2',
             'edition',
             # 'price', 'stock',
             # 'has_other_prices',
@@ -181,3 +181,9 @@ class ProductImageManagementForm(forms.ModelForm):
         widgets = {
             'image_alt': forms.TextInput(attrs={'placeholder': _('Image alt is a description for defining the image')})
         }
+
+
+class PublisherUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Publisher
+        fields = ['name', 'url', ]

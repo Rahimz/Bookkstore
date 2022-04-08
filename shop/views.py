@@ -3,12 +3,14 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from django.contrib.postgres.search import SearchVector
+from django.contrib import messages
 
 from products.models import Product, Good, Category, Image, Publisher
 from search.forms import SearchForm, PublisherSearchForm
 from cart.forms import CartAddProductForm
 from search.views import ProductSearch
 from .models import Note
+from staff.forms import PublisherUpdateForm
 
 def home(request):
     search_form = SearchForm()
@@ -222,6 +224,46 @@ def publisher_products(request, publisher_id):
         {
             'publisher': publisher,
             'products': products,
+        }
+
+    )
+
+
+def publisher_create(request, publisher_id=None):
+    if publisher_id:
+        publisher = get_object_or_404(Publisher, pk=publisher_id)
+    else:
+        publisher = None
+    # products = Product.objects.filter(available=True).filter( Q(pub_1=publisher) | Q(pub_2=publisher) ).exclude(product_type='craft').order_by('name')
+    # publisher.product_count = products.count()
+    # publisher.save()
+    if request.method == 'POST':
+        if publisher_id:
+            publisher_form = PublisherUpdateForm(
+                instance=publisher,
+                data=request.POST
+            )
+        else:
+            publisher_form = PublisherUpdateForm(data=request.POST)
+        if publisher_form.is_valid():
+            publisher_form.save()
+            if publisher_id:
+                messages.success(request, _('Publisher updated'))
+            else:
+                messages.success(request, _('Publisher created'))
+            return redirect('shop:publisher_list')
+    else:
+        if publisher_id:
+            publisher_form = PublisherUpdateForm(instance=publisher,)
+        else:
+            publisher_form = PublisherUpdateForm()
+
+    return render(
+        request,
+        'staff/publishers/publisher_create.html',
+        {
+            'publisher': publisher,
+            'publisher_form': publisher_form,
         }
 
     )

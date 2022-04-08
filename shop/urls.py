@@ -22,4 +22,6 @@ urlpatterns = [
     path('categories/', views.category_list, name="category_list"),
     path('publishers/', views.publisher_list, name="publisher_list"),
     path('publishers/products/<int:publisher_id>/', views.publisher_products, name="publisher_products"),
+    path('publishers/create/', views.publisher_create, name="publisher_create"),
+    path('publishers/update/<int:publisher_id>', views.publisher_create, name="publisher_update"),
 ]
