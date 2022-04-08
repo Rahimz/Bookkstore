@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from django.contrib.postgres.search import SearchVector
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 
 from products.models import Product, Good, Category, Image, Publisher
 from search.forms import SearchForm, PublisherSearchForm
@@ -176,6 +177,7 @@ def store_book_search(request, state):
     )
 
 
+@staff_member_required
 def publisher_list(request):
     publishers = Publisher.objects.filter(active=True)
 
@@ -212,6 +214,7 @@ def publisher_list(request):
     )
 
 
+@staff_member_required
 def publisher_products(request, publisher_id):
     publisher = get_object_or_404(Publisher, pk=publisher_id)
     products = Product.objects.filter(available=True).filter( Q(pub_1=publisher) | Q(pub_2=publisher) ).exclude(product_type='craft').order_by('name')
@@ -229,6 +232,7 @@ def publisher_products(request, publisher_id):
     )
 
 
+@staff_member_required
 def publisher_create(request, publisher_id=None):
     if publisher_id:
         publisher = get_object_or_404(Publisher, pk=publisher_id)

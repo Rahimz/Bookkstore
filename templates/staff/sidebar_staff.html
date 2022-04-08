@@ -12,11 +12,11 @@
   {#<a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:category_create'%}">{% trans 'Create a new category' %}</a>#}
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:categories' %}">{% trans 'List of categories' %}</a>
   <br>
-  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:craft_list' %}">{% trans 'List of crafts' %}</a>
-  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:craft_create' %}">{% trans 'Create craft product' %}</a>
-  <br>
   <a href="{% url 'shop:publisher_list' %}" class="btn btn-sm btn-outline-secondary d-block m-1">{% trans 'Publishers' %}</a>
   <a href="{% url 'shop:publisher_create' %}" class="btn btn-sm btn-outline-secondary d-block m-1">{% trans 'Create publisher' %}</a>
+  <br>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:craft_list' %}">{% trans 'List of crafts' %}</a>
+  <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'staff:craft_create' %}">{% trans 'Create craft product' %}</a>
   {% if request.user.is_superuser %}
   <br>
   <a class="btn btn-sm btn-outline-secondary d-block m-1" href="{% url 'tools:duplicate_book_name' %}">{% trans 'Duplicate books' %}</a>
