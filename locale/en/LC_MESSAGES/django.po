@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-07 16:09+0430\n"
+"POT-Creation-Date: 2022-04-08 09:36+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,11 +30,13 @@ msgstr ""
 msgid "Passwords don't match."
 msgstr ""
 
-#: account/forms.py:65 staff/forms.py:27
+#: account/forms.py:65 staff/forms.py:28
 #: templates/account/clients/_client_list_block.html:12
 #: templates/account/clients/client_most_valuable.html:31
 #: templates/account/clients/user_history.html:77
-#: templates/shop/product_detail.html:47 templates/staff/_order_table.html:13
+#: templates/shop/product_detail.html:47
+#: templates/shop/publisher_products.html:33
+#: templates/staff/_order_table.html:13
 #: templates/staff/best_selling_books.html:24
 #: templates/staff/collection_management.html:44
 #: templates/staff/crafts/craft_list.html:50
@@ -116,8 +118,7 @@ msgid "Vendors"
 msgstr ""
 
 #: account/views.py:61 account/views.py:211 account/views.py:224
-#: staff/views.py:302 staff/views.py:326 staff/views.py:1439
-#: staff/views.py:1465
+#: staff/views.py:336 staff/views.py:1449 staff/views.py:1475
 msgid "Form is not valid"
 msgstr ""
 
@@ -192,7 +193,7 @@ msgstr ""
 msgid "Shipping cost"
 msgstr ""
 
-#: orders/forms.py:36 staff/forms.py:86
+#: orders/forms.py:36 staff/forms.py:87
 #: templates/staff/order_detail_for_admin.html:85
 #: templates/staff/order_payment_manage.html:70 templates/staff/orders.html:62
 msgid "Shipping time"
@@ -215,8 +216,8 @@ msgstr ""
 msgid "Overal discount percent"
 msgstr ""
 
-#: orders/forms.py:75 products/models.py:72 products/models.py:445
-#: products/models.py:587 templates/_base.html:72
+#: orders/forms.py:75 products/models.py:98 products/models.py:485
+#: products/models.py:627 templates/_base.html:72
 #: templates/_base_files_app.html:42
 #: templates/orders/reports/sales_by_days.html:221
 #: templates/shop/product_card.html:11 templates/shop/product_card.html:19
@@ -227,12 +228,14 @@ msgstr ""
 msgid "New"
 msgstr ""
 
-#: orders/forms.py:76 products/models.py:73 products/models.py:446
-#: products/models.py:588 templates/_base.html:75
+#: orders/forms.py:76 products/models.py:99 products/models.py:486
+#: products/models.py:628 templates/_base.html:75
 #: templates/_base_files_app.html:45
 #: templates/orders/reports/sales_by_days.html:223
 #: templates/shop/product_card.html:14 templates/shop/product_card.html:24
-#: templates/shop/product_card.html:32 templates/shop/store_book_search.html:72
+#: templates/shop/product_card.html:32
+#: templates/shop/publisher_products.html:38
+#: templates/shop/store_book_search.html:72
 #: templates/staff/_order_table.html:29
 #: templates/staff/duplicate_book_name.html:48 templates/staff/products.html:66
 #: templates/staff/sold_products.html:141
@@ -365,23 +368,25 @@ msgstr ""
 msgid "Purchase status changed to draft"
 msgstr ""
 
-#: products/models.py:84 templates/account/clients/client_most_valuable.html:35
+#: products/models.py:110
+#: templates/account/clients/client_most_valuable.html:35
 #: templates/orders/reports/sales_by_days.html:195
 #: templates/shop/store_book_search.html:56
 #: templates/shop/store_book_search.html:72
 msgid "Book"
 msgstr ""
 
-#: products/models.py:85 templates/account/clients/client_most_valuable.html:37
+#: products/models.py:111
+#: templates/account/clients/client_most_valuable.html:37
 #: templates/orders/reports/sales_by_days.html:197
 msgid "Craft"
 msgstr ""
 
-#: search/forms.py:9
+#: search/forms.py:11
 msgid "Name, author, translator, publisher or isbn"
 msgstr ""
 
-#: search/forms.py:21 templates/staff/draft_orders.html:31
+#: search/forms.py:23 templates/staff/draft_orders.html:31
 #: templates/staff/full_shipped_list.html:31
 #: templates/staff/invoice_checkout.html:51
 #: templates/staff/invoice_checkout.html:55
@@ -400,11 +405,12 @@ msgstr ""
 msgid "Client"
 msgstr ""
 
-#: search/forms.py:22 search/forms.py:28
+#: search/forms.py:24 search/forms.py:30
 msgid "Name or phonenumber"
 msgstr ""
 
-#: search/forms.py:34 staff/forms.py:27 templates/shop/product_detail.html:113
+#: search/forms.py:36 staff/forms.py:28 templates/shop/product_detail.html:113
+#: templates/shop/publisher_products.html:32
 #: templates/staff/best_selling_books.html:23
 #: templates/staff/collection_management.html:43
 #: templates/staff/duplicate_book_name.html:42
@@ -417,28 +423,32 @@ msgstr ""
 msgid "ISBN"
 msgstr ""
 
-#: search/forms.py:45
+#: search/forms.py:47
 msgid "Order search"
 msgstr ""
 
-#: search/forms.py:46
+#: search/forms.py:48
 msgid "Client, order or order notes"
 msgstr ""
 
-#: staff/forms.py:27
+#: search/forms.py:54
+msgid "Publisher name"
+msgstr ""
+
+#: staff/forms.py:28
 msgid "Collection name"
 msgstr ""
 
-#: staff/forms.py:27
+#: staff/forms.py:28
 msgid "Number in collection"
 msgstr ""
 
-#: staff/forms.py:28 templates/shop/product_detail.html:114
+#: staff/forms.py:29 templates/shop/product_detail.html:114
 #: templates/staff/crafts/craft_list.html:53
 msgid "Category"
 msgstr ""
 
-#: staff/forms.py:28 templates/account/clients/user_history.html:78
+#: staff/forms.py:29 templates/account/clients/user_history.html:78
 #: templates/shop/product_detail.html:48
 #: templates/staff/collection_management.html:45
 #: templates/staff/order_shipping.html:72
@@ -446,37 +456,37 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: staff/forms.py:28 templates/shop/product_detail.html:49
+#: staff/forms.py:29 templates/shop/product_detail.html:49
 #: templates/staff/collection_management.html:46
 msgid "Translator"
 msgstr ""
 
-#: staff/forms.py:29
+#: staff/forms.py:30
 msgid "Illustrator"
 msgstr ""
 
-#: staff/forms.py:29 templates/shop/product_detail.html:131
+#: staff/forms.py:30 templates/shop/product_detail.html:131
 msgid "Latin name"
 msgstr ""
 
-#: staff/forms.py:29 templates/shop/product_detail.html:132
+#: staff/forms.py:30 templates/shop/product_detail.html:132
 msgid "Author latin name"
 msgstr ""
 
-#: staff/forms.py:31 templates/staff/product_reports.html:34
+#: staff/forms.py:32 templates/staff/product_reports.html:34
 #: templates/tickets/ticket_details.html:66
 msgid "Description"
 msgstr ""
 
-#: staff/forms.py:31 templates/shop/product_detail.html:119
+#: staff/forms.py:32 templates/shop/product_detail.html:119
 msgid "Age range"
 msgstr ""
 
-#: staff/forms.py:31 templates/shop/product_detail.html:147
+#: staff/forms.py:32 templates/shop/product_detail.html:147
 msgid "Product type"
 msgstr ""
 
-#: staff/forms.py:31 templates/shop/product_detail.html:129
+#: staff/forms.py:32 templates/shop/product_detail.html:129
 #: templates/staff/draft_orders.html:37
 #: templates/staff/full_shipped_list.html:34
 #: templates/staff/invoice_create.html:142
@@ -484,22 +494,24 @@ msgstr ""
 msgid "Weight"
 msgstr ""
 
-#: staff/forms.py:32 templates/shop/product_detail.html:128
+#: staff/forms.py:33 templates/shop/product_detail.html:128
 msgid "Size"
 msgstr ""
 
-#: staff/forms.py:32 templates/shop/product_detail.html:130
+#: staff/forms.py:33 templates/shop/product_detail.html:130
 msgid "Cover type"
 msgstr ""
 
-#: staff/forms.py:32 templates/staff/duplicate_book_name.html:52
+#: staff/forms.py:33 templates/staff/duplicate_book_name.html:52
 #: templates/staff/product_stock_price_edit.html:38
 #: templates/staff/used_book_prices.html:34
 msgid "Page number"
 msgstr ""
 
-#: staff/forms.py:32 templates/account/clients/user_history.html:79
+#: staff/forms.py:33 templates/account/clients/user_history.html:79
 #: templates/shop/product_detail.html:50 templates/shop/product_detail.html:51
+#: templates/shop/publisher_list.html:35
+#: templates/shop/publisher_products.html:41
 #: templates/shop/store_book_search.html:59
 #: templates/shop/store_book_search.html:75
 #: templates/staff/_order_table.html:15
@@ -516,27 +528,27 @@ msgstr ""
 msgid "Publisher"
 msgstr ""
 
-#: staff/forms.py:32
+#: staff/forms.py:33 templates/shop/publisher_products.html:42
 msgid "Publisher 2"
 msgstr ""
 
-#: staff/forms.py:33 templates/shop/product_detail.html:116
+#: staff/forms.py:34 templates/shop/product_detail.html:116
 msgid "Publish year"
 msgstr ""
 
-#: staff/forms.py:33 templates/shop/product_detail.html:117
+#: staff/forms.py:34 templates/shop/product_detail.html:117
 msgid "Edition"
 msgstr ""
 
-#: staff/forms.py:35
+#: staff/forms.py:36
 msgid "Store position"
 msgstr ""
 
-#: staff/forms.py:35 templates/shop/product_detail.html:155
+#: staff/forms.py:36 templates/shop/product_detail.html:155
 msgid "Admin note"
 msgstr ""
 
-#: staff/forms.py:63 staff/views.py:1103
+#: staff/forms.py:64 staff/views.py:1113
 #: templates/account/clients/client_most_valuable.html:34
 #: templates/account/clients/client_most_valuable.html:36
 #: templates/account/clients/client_most_valuable.html:38
@@ -576,27 +588,27 @@ msgstr ""
 msgid "Quantity"
 msgstr ""
 
-#: staff/forms.py:84
+#: staff/forms.py:85
 msgid "Shipping code"
 msgstr ""
 
-#: staff/forms.py:85 templates/staff/order_list_by_country.html:37
+#: staff/forms.py:86 templates/staff/order_list_by_country.html:37
 msgid "Shipping status"
 msgstr ""
 
-#: staff/forms.py:87 templates/staff/orders.html:63
+#: staff/forms.py:88 templates/staff/orders.html:63
 msgid "Is packaged"
 msgstr ""
 
-#: staff/forms.py:96
+#: staff/forms.py:97
 msgid "Related product"
 msgstr ""
 
-#: staff/forms.py:98
+#: staff/forms.py:99
 msgid "Please add one ISBN each time"
 msgstr ""
 
-#: staff/forms.py:119 templates/shop/product_detail.html:61
+#: staff/forms.py:120 templates/shop/product_detail.html:61
 #: templates/shop/product_detail.html:151
 #: templates/staff/price_management.html:75
 #: templates/staff/product_price_show.html:58
@@ -605,44 +617,44 @@ msgstr ""
 msgid "Price used"
 msgstr ""
 
-#: staff/forms.py:130 staff/forms.py:151
+#: staff/forms.py:131 staff/forms.py:152
 #: templates/staff/price_management.html:23
 #: templates/staff/product_price_show.html:28
 #: templates/staff/product_stock_price_edit.html:42
 msgid "Main price"
 msgstr ""
 
-#: staff/forms.py:131 templates/staff/product_stock_price_edit.html:52
+#: staff/forms.py:132 templates/staff/product_stock_price_edit.html:52
 msgid "Main stock"
 msgstr ""
 
-#: staff/forms.py:132
+#: staff/forms.py:133
 msgid "Used price"
 msgstr ""
 
-#: staff/forms.py:133 templates/staff/duplicate_book_name.html:49
-#: templates/staff/products.html:67
+#: staff/forms.py:134 templates/shop/publisher_products.html:39
+#: templates/staff/duplicate_book_name.html:49 templates/staff/products.html:67
 msgid "Used stock"
 msgstr ""
 
-#: staff/forms.py:136 staff/forms.py:157
+#: staff/forms.py:137 staff/forms.py:158
 msgid "Only the biggest price"
 msgstr ""
 
-#: staff/forms.py:137
+#: staff/forms.py:138
 msgid "If it's bigger than the stock a purchase will create for it"
 msgstr ""
 
-#: staff/forms.py:138
+#: staff/forms.py:139
 msgid "As same as Bahman key"
 msgstr ""
 
-#: staff/forms.py:139
+#: staff/forms.py:140
 msgid ""
 "Just for editing the databse for books that is in store but not in database"
 msgstr ""
 
-#: staff/forms.py:181
+#: staff/forms.py:182
 msgid "Image alt is a description for defining the image"
 msgstr ""
 
@@ -650,136 +662,136 @@ msgstr ""
 msgid "A product with same isbn is available"
 msgstr ""
 
-#: staff/views.py:267 staff/views.py:297
+#: staff/views.py:277
 msgid "Product updated"
 msgstr ""
 
-#: staff/views.py:269
+#: staff/views.py:279
 msgid "Product is created"
 msgstr ""
 
-#: staff/views.py:321
+#: staff/views.py:331
 msgid "Category is created!"
 msgstr ""
 
-#: staff/views.py:359
+#: staff/views.py:369
 msgid "Product is created!"
 msgstr ""
 
-#: staff/views.py:374
+#: staff/views.py:384
 msgid "Product created"
 msgstr ""
 
-#: staff/views.py:377
+#: staff/views.py:387
 msgid "Product does not created!"
 msgstr ""
 
-#: staff/views.py:483 staff/views.py:541 staff/views.py:653
+#: staff/views.py:493 staff/views.py:551 staff/views.py:663
 msgid "You could not add product without price"
 msgstr ""
 
-#: staff/views.py:487 staff/views.py:545 staff/views.py:656
+#: staff/views.py:497 staff/views.py:555 staff/views.py:666
 msgid "You are adding zero stock!"
 msgstr ""
 
-#: staff/views.py:533 staff/views.py:592 staff/views.py:712
+#: staff/views.py:543 staff/views.py:602 staff/views.py:722
 msgid "Product is added to invoice"
 msgstr ""
 
-#: staff/views.py:554 staff/views.py:683
+#: staff/views.py:564 staff/views.py:693
 msgid "Order is created"
 msgstr ""
 
-#: staff/views.py:660
+#: staff/views.py:670
 msgid "This product has other prices"
 msgstr ""
 
-#: staff/views.py:812
+#: staff/views.py:822
 msgid "Order approved"
 msgstr ""
 
-#: staff/views.py:849
+#: staff/views.py:859
 msgid "Credit of client added to discount of order"
 msgstr ""
 
-#: staff/views.py:861
+#: staff/views.py:871
 msgid "Order paid with credit"
 msgstr ""
 
-#: staff/views.py:878 staff/views.py:943
+#: staff/views.py:888 staff/views.py:953
 msgid "Credit remove from order and added to client credit"
 msgstr ""
 
-#: staff/views.py:896
+#: staff/views.py:906
 msgid "Client added to order"
 msgstr ""
 
-#: staff/views.py:947
+#: staff/views.py:957
 msgid "Client removed from order"
 msgstr ""
 
-#: staff/views.py:1064
+#: staff/views.py:1074
 msgid "You are adding zero stock"
 msgstr ""
 
-#: staff/views.py:1103
+#: staff/views.py:1113
 msgid "Order line updated"
 msgstr ""
 
-#: staff/views.py:1176
+#: staff/views.py:1186
 msgid "This order is not empty"
 msgstr ""
 
-#: staff/views.py:1182
+#: staff/views.py:1192
 msgid "Draft order removed"
 msgstr ""
 
-#: staff/views.py:1191
+#: staff/views.py:1201
 msgid "This order is shipped"
 msgstr ""
 
-#: staff/views.py:1193
+#: staff/views.py:1203
 msgid "This order is completely packaged"
 msgstr ""
 
-#: staff/views.py:1205
+#: staff/views.py:1215
 msgid "Order status changed to draft"
 msgstr ""
 
-#: staff/views.py:1416 staff/views.py:1443
+#: staff/views.py:1426 staff/views.py:1453
 #: templates/tools/pdf/print_address.html:29
 msgid "Tehran"
 msgstr ""
 
-#: staff/views.py:1434
+#: staff/views.py:1444
 msgid "Vendor is added!"
 msgstr ""
 
-#: staff/views.py:1462
+#: staff/views.py:1472
 msgid "Vendor is updated"
 msgstr ""
 
-#: staff/views.py:1598
+#: staff/views.py:1608
 msgid "This product is in this collection"
 msgstr ""
 
-#: staff/views.py:1604
+#: staff/views.py:1614
 msgid "Product does not found"
 msgstr ""
 
-#: staff/views.py:1614
+#: staff/views.py:1624
 msgid "The product added to collection"
 msgstr ""
 
-#: staff/views.py:1642
+#: staff/views.py:1652
 msgid "This product removed from the collection"
 msgstr ""
 
-#: staff/views.py:1685
+#: staff/views.py:1695
 msgid "Used price for product updated"
 msgstr ""
 
-#: staff/views.py:1685 templates/account/clients/credit_update.html:27
+#: staff/views.py:1695 templates/account/clients/credit_update.html:27
 #: templates/account/clients/user_history.html:81
 #: templates/account/clients/user_history.html:83
 #: templates/orders/reports/sales_by_days.html:153
@@ -820,35 +832,35 @@ msgstr ""
 msgid "Rial"
 msgstr ""
 
-#: staff/views.py:1721
+#: staff/views.py:1731
 msgid "You could not enter a price less than the main price "
 msgstr ""
 
-#: staff/views.py:1726
+#: staff/views.py:1736
 msgid "Price updated"
 msgstr ""
 
-#: staff/views.py:1731
+#: staff/views.py:1741
 msgid "A purchase added to manage the DB"
 msgstr ""
 
-#: staff/views.py:1780
+#: staff/views.py:1790
 msgid "Stock and price updated"
 msgstr ""
 
-#: staff/views.py:1828
+#: staff/views.py:1838
 msgid "New craft is created"
 msgstr ""
 
-#: staff/views.py:1864 tools/views.py:107
+#: staff/views.py:1874 tools/views.py:107
 msgid "Date is not valid"
 msgstr ""
 
-#: staff/views.py:2056
+#: staff/views.py:2066
 msgid "Image added to product"
 msgstr ""
 
-#: staff/views.py:2083
+#: staff/views.py:2093
 msgid "Image is removed"
 msgstr ""
 
@@ -936,6 +948,7 @@ msgid "Warehouse"
 msgstr ""
 
 #: templates/_base.html:157 templates/_base_files_app.html:127
+#: templates/shop/publisher_products.html:24
 #: templates/staff/duplicate_book_name.html:11 templates/staff/products.html:11
 #: templates/staff/products/image_management.html:11
 msgid "Products"
@@ -1059,6 +1072,7 @@ msgid "The datat of products is synced with bookstore data"
 msgstr ""
 
 #: templates/account/clients/_client_list_block.html:10
+#: templates/shop/publisher_products.html:30
 #: templates/staff/collection_management.html:42
 #: templates/staff/crafts/craft_list.html:47
 #: templates/staff/duplicate_book_name.html:40 templates/staff/products.html:58
@@ -1106,7 +1120,7 @@ msgstr ""
 #: templates/account/clients/client_add.html:20
 #: templates/staff/invoice_checkout.html:43
 #: templates/staff/order_add_client.html:40
-#: templates/staff/sidebar_staff.html:31 templates/staff/sidebar_staff.html:84
+#: templates/staff/sidebar_staff.html:32 templates/staff/sidebar_staff.html:85
 msgid "Add client"
 msgstr ""
 
@@ -1202,6 +1216,7 @@ msgstr ""
 #: templates/account/clients/client_list.html:27 templates/home.html:19
 #: templates/search/search.html:9 templates/search/search.html:45
 #: templates/shop/category_list.html:20 templates/shop/product_list.html:20
+#: templates/shop/publisher_list.html:27
 #: templates/shop/store_book_search.html:18
 #: templates/shop/store_book_search.html:37 templates/staff/orders.html:28
 msgid "Search"
@@ -1209,7 +1224,7 @@ msgstr ""
 
 #: templates/account/clients/client_most_valuable.html:11
 #: templates/account/clients/client_most_valuable.html:22
-#: templates/staff/sidebar_staff.html:86
+#: templates/staff/sidebar_staff.html:87
 msgid "Most valuable clients"
 msgstr ""
 
@@ -1257,7 +1272,9 @@ msgstr ""
 #: templates/shop/product_detail.html:55 templates/shop/product_detail.html:56
 #: templates/shop/product_detail.html:57 templates/shop/product_detail.html:58
 #: templates/shop/product_detail.html:59 templates/shop/product_detail.html:60
-#: templates/shop/product_detail.html:149 templates/staff/_order_table.html:17
+#: templates/shop/product_detail.html:149
+#: templates/shop/publisher_products.html:35
+#: templates/staff/_order_table.html:17
 #: templates/staff/collection_management.html:48
 #: templates/staff/crafts/craft_list.html:51
 #: templates/staff/duplicate_book_name.html:45
@@ -1791,6 +1808,7 @@ msgstr ""
 
 #: templates/shop/product_detail.html:144
 #: templates/shop/product_detail.html:150
+#: templates/shop/publisher_products.html:34
 #: templates/staff/crafts/craft_list.html:52
 #: templates/staff/duplicate_book_name.html:44
 #: templates/staff/product_price_show.html:25 templates/staff/products.html:62
@@ -1798,7 +1816,7 @@ msgstr ""
 msgid "Stock"
 msgstr ""
 
-#: templates/shop/product_detail.html:145 templates/staff/sidebar_staff.html:75
+#: templates/shop/product_detail.html:145 templates/staff/sidebar_staff.html:76
 msgid "Zero stock"
 msgstr ""
 
@@ -1826,6 +1844,53 @@ msgstr ""
 
 #: templates/shop/product_detail.html:158
 msgid "Just for store sales"
+msgstr ""
+
+#: templates/shop/publisher_list.html:11 templates/staff/sidebar_staff.html:22
+msgid "Publishers"
+msgstr ""
+
+#: templates/shop/publisher_list.html:22
+msgid "List of publishers"
+msgstr ""
+
+#: templates/shop/publisher_list.html:34
+msgid "Publisher ID"
+msgstr ""
+
+#: templates/shop/publisher_list.html:36
+msgid "Product quantity"
+msgstr ""
+
+#: templates/shop/publisher_products.html:11
+msgid "Publisher products"
+msgstr ""
+
+#: templates/shop/publisher_products.html:22
+#: templates/staff/collection_management.html:22
+#: templates/staff/products.html:22 templates/staff/sidebar_staff.html:3
+msgid "List of products"
+msgstr ""
+
+#: templates/shop/publisher_products.html:23
+msgid "Publisher code"
+msgstr ""
+
+#: templates/shop/publisher_products.html:36
+#: templates/staff/duplicate_book_name.html:46 templates/staff/products.html:64
+msgid "Other stock"
+msgstr ""
+
+#: templates/shop/publisher_products.html:37
+#: templates/staff/duplicate_book_name.html:47 templates/staff/products.html:65
+msgid "Other prices"
+msgstr ""
+
+#: templates/shop/publisher_products.html:55
+#: templates/staff/duplicate_book_name.html:65
+#: templates/staff/product_stock_price_edit.html:45
+#: templates/staff/products.html:84 templates/staff/used_book_prices.html:41
+msgid "Not in market"
 msgstr ""
 
 #: templates/shop/store_book_search.html:11
@@ -1874,7 +1939,7 @@ msgstr ""
 
 #: templates/staff/best_selling_books.html:7
 #: templates/staff/best_selling_books.html:18
-#: templates/staff/sidebar_staff.html:92
+#: templates/staff/sidebar_staff.html:93
 msgid "Best selling books"
 msgstr ""
 
@@ -1908,11 +1973,6 @@ msgstr ""
 #: templates/staff/collection_management.html:57
 #: templates/staff/collection_management_edit.html:11
 msgid "Collection management"
-msgstr ""
-
-#: templates/staff/collection_management.html:22
-#: templates/staff/products.html:22 templates/staff/sidebar_staff.html:3
-msgid "List of products"
 msgstr ""
 
 #: templates/staff/collection_management.html:55
@@ -1958,7 +2018,7 @@ msgstr ""
 msgid "Invoice create"
 msgstr ""
 
-#: templates/staff/draft_orders.html:23 templates/staff/sidebar_staff.html:30
+#: templates/staff/draft_orders.html:23 templates/staff/sidebar_staff.html:31
 msgid "List of draft orders"
 msgstr ""
 
@@ -1988,20 +2048,6 @@ msgstr ""
 
 #: templates/staff/duplicate_book_name.html:32
 msgid "Similar products count"
-msgstr ""
-
-#: templates/staff/duplicate_book_name.html:46 templates/staff/products.html:64
-msgid "Other stock"
-msgstr ""
-
-#: templates/staff/duplicate_book_name.html:47 templates/staff/products.html:65
-msgid "Other prices"
-msgstr ""
-
-#: templates/staff/duplicate_book_name.html:65
-#: templates/staff/product_stock_price_edit.html:45
-#: templates/staff/products.html:84 templates/staff/used_book_prices.html:41
-msgid "Not in market"
 msgstr ""
 
 #: templates/staff/full_shipped_list.html:9
@@ -2521,7 +2567,7 @@ msgid "Purchases"
 msgstr ""
 
 #: templates/staff/purchase/purchase_list.html:20
-#: templates/staff/sidebar_staff.html:66
+#: templates/staff/sidebar_staff.html:67
 msgid "List of purchases"
 msgstr ""
 
@@ -2555,12 +2601,12 @@ msgid "Create purchase"
 msgstr ""
 
 #: templates/staff/purchased_products.html:9
-#: templates/staff/sidebar_staff.html:74
+#: templates/staff/sidebar_staff.html:75
 msgid "Purchased products"
 msgstr ""
 
 #: templates/staff/purchased_products.html:21
-#: templates/staff/sidebar_staff.html:73 templates/staff/sold_products.html:7
+#: templates/staff/sidebar_staff.html:74 templates/staff/sold_products.html:7
 #: templates/staff/sold_products.html:18
 msgid "Sold products"
 msgstr ""
@@ -2577,7 +2623,7 @@ msgstr ""
 
 #: templates/staff/sales_by_vendor.html:9
 #: templates/staff/sales_by_vendor.html:20
-#: templates/staff/sidebar_staff.html:37
+#: templates/staff/sidebar_staff.html:38
 msgid "Sales by vendor"
 msgstr ""
 
@@ -2617,85 +2663,81 @@ msgstr ""
 msgid "Duplicate books"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:22
-msgid "Export publishers"
-msgstr ""
-
-#: templates/staff/sidebar_staff.html:29
+#: templates/staff/sidebar_staff.html:30
 msgid "New invoice"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:32
+#: templates/staff/sidebar_staff.html:33
 msgid "Create a payment link"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:33 templates/zarinpal/payment_list.html:7
+#: templates/staff/sidebar_staff.html:34 templates/zarinpal/payment_list.html:7
 #: templates/zarinpal/payment_list.html:26
 msgid "Payment list"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:34
+#: templates/staff/sidebar_staff.html:35
 msgid "Cashier sales"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:35
+#: templates/staff/sidebar_staff.html:36
 msgid "Sales by country"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:42
+#: templates/staff/sidebar_staff.html:43
 msgid "All approved orders"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:44
+#: templates/staff/sidebar_staff.html:45
 msgid "Collectable orders"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:46 templates/staff/sold_products.html:30
+#: templates/staff/sidebar_staff.html:47 templates/staff/sold_products.html:30
 msgid "Last day"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:47
+#: templates/staff/sidebar_staff.html:48
 msgid "Last week"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:48
+#: templates/staff/sidebar_staff.html:49
 msgid "Last month"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:60
+#: templates/staff/sidebar_staff.html:61
 msgid "Full shipped list"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:65
+#: templates/staff/sidebar_staff.html:66
 msgid "New purchase invoice"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:68
+#: templates/staff/sidebar_staff.html:69
 msgid "Add vendor"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:69 templates/staff/vendor_list.html:8
+#: templates/staff/sidebar_staff.html:70 templates/staff/vendor_list.html:8
 #: templates/staff/vendor_list.html:19
 msgid "Vendor list"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:78
+#: templates/staff/sidebar_staff.html:79
 msgid "Refund a product"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:79
+#: templates/staff/sidebar_staff.html:80
 msgid "List of refunds"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:83
+#: templates/staff/sidebar_staff.html:84
 msgid "List of clients"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:97
+#: templates/staff/sidebar_staff.html:98
 msgid "Tickets list"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:98
+#: templates/staff/sidebar_staff.html:99
 #: templates/tickets/create_ticket.html:11
 #: templates/tickets/create_ticket.html:22
 msgid "Create ticket"
