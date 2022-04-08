@@ -87,7 +87,7 @@
             <td>{{ order_line.product.isbn }}</td>
             <td>{{ order_line.product }}</td>
             <td>{{ order_line.product.author }}</td>
-            <td>{{ order_line.product.publisher }}</td>
+            <td>{% if order_line.product.pub_1 %}{{ order_line.product.pub_1.name }}{% endif %}</td>
             <td>{{ order_line.quantity }}</td>
             <td></td>
             <td>{{ order_line.get_cost | intcomma:False }}</td>

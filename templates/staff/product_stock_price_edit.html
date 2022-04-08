@@ -32,7 +32,7 @@
         </tr>
         <tr>
           <td>{% trans 'Publisher' %}</td>
-        <td>{{ product.publisher }}</td>
+        <td>{% if product.pub_1 %}{{ product.pub_1.name }}{% endif %}</td>
       </tr>
       <tr>
         <td>{% trans 'Page number' %}</td>

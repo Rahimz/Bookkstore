@@ -56,7 +56,7 @@
       <span class="badge bg-success rounded-pill">{% trans 'Book' %} {% trans 'New' %}</span>
       <span class=" p-2">
         <b>{{ product }}</b>
-        {% if product.publisher %} - {% trans 'Publisher' %}: {{ product.publisher }}{% endif %}
+        {% if product.pub_1 %} - {% trans 'Publisher' %}: {{ product.pub_1.name }}{% endif %}
         {% if product.page_number %} - {{ product.page_number }} {% trans 'Page' %}{% endif %}
         {% if product.stock %} - <b>{{ product.price | intcomma:False }}</b> {% trans 'Rial' %}{% endif %}
         {% if product.stock_1 %} - <b>{{ product.price_1 | intcomma:False }}</b> {% trans 'Rial' %}{% endif %}
@@ -72,7 +72,7 @@
       <span class="badge bg-warning rounded-pill">{% trans 'Book' %} {% trans 'Used' %}</span>
       <span class=" p-2">
         <b>{{ product }}</b>
-        {% if product.publisher %} - {% trans 'Publisher' %}: {{ product.publisher }}{% endif %}
+        {% if product.pub_1 %} - {% trans 'Publisher' %}: {{ product.pub_1.name }}{% endif %}
         {% if product.page_number %} - {{ product.page_number }} {% trans 'Page' %}{% endif %}
         {% if product.stock_used %} {% if product.price_used != 0  %}- <b>{{ product.price_used | intcomma:False }}</b> {% trans 'Rial' %}{% endif %}{% endif %}
       </span>

@@ -216,7 +216,7 @@ def product_create(request, product_id=None):
                 files=request.FILES)
         else:
             form = ProductCreateForm(
-                request.POST,
+                data=request.POST,
                 files=request.FILES)
         if form.is_valid():
             new_product = form.save(commit=False)
@@ -263,6 +263,16 @@ def product_create(request, product_id=None):
                         return redirect('staff:product_create')
             new_product.save()
 
+            # Updating the publisher product count when any product updated or created
+            publisher_1 = new_product.pub_1
+            publisher_2 = new_product.pub_2
+            if publisher_1:
+                publisher_1.product_count = Product.objects.filter(available=True).filter( Q(pub_1=publisher_1) | Q(pub_2=publisher_1) ).exclude(product_type='craft').count()
+                publisher_1.save()
+            if publisher_2:
+                publisher_2.product_count = Product.objects.filter(available=True).filter( Q(pub_1=publisher_2) | Q(pub_2=publisher_2) ).exclude(product_type='craft').count()
+                publisher_2.save()
+
             if product_id:
                 messages.success(request, _('Product updated'))
             else:
@@ -284,31 +294,31 @@ def product_create(request, product_id=None):
     )
 
 
-@staff_member_required
-def product_update(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
-    if request.method == 'POST':
-        form = ProductCreateForm(
-            data=request.POST,
-            instance=product,
-            files=request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, _('Product updated') +
-                             ' {}'.format(product.name))
-            return redirect('staff:products')
-
-        else:
-            messages.error(request, _('Form is not valid'))
-    else:
-        form = ProductCreateForm(instance=product)
-
-    return render(
-        request,
-        'staff/product_create.html',
-        {'form': form}
-
-    )
+# @staff_member_required
+# def product_update(request, product_id):
+#     product = get_object_or_404(Product, pk=product_id)
+#     if request.method == 'POST':
+#         form = ProductCreateForm(
+#             data=request.POST,
+#             instance=product,
+#             files=request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, _('Product updated') +
+#                              ' {}'.format(product.name))
+#             return redirect('staff:products')
+#
+#         else:
+#             messages.error(request, _('Form is not valid'))
+#     else:
+#         form = ProductCreateForm(instance=product)
+#
+#     return render(
+#         request,
+#         'staff/product_create.html',
+#         {'form': form}
+#
+#     )
 
 
 @staff_member_required
@@ -1326,7 +1336,7 @@ def sold_products(request, days=None, date=None, period=None):
                 'variation': item.variation,
                 'isbn': item.product.isbn,
                 'id': item.product.id,
-                'publisher': item.product.publisher,
+                'publisher': item.product.pub_1 if item.product.pub_1 else '',
                 'vendors': vendors_list,
                 }
 

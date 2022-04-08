@@ -1,0 +1,50 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+  {% if publisher %}
+    {% trans 'Publisher update' %} {{publisher.name}}
+  {% else %}
+    {% trans 'Publisher create' %}
+  {% endif %}
+{% endblock %}
+
+{% block products-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-1">
+      {% include "staff/sidebar_staff.html" with barName="products" %}
+    </div>
+    <div class="col-md-11">
+      {% if publisher %}
+      <h2>{% trans 'Edit publisher' %}: {{ publisher.name }}</h2>
+      {% else %}
+      <h2>{% trans 'Create publisher' %}</h2>
+      {% endif %}
+
+      <form class="w-50" action="." method="post">
+        {{ publisher_form | crispy }}
+        {% csrf_token %}
+          {# <!-- This button prevent form from enter button submit --> #}
+          <button type="submit" disabled style="display: none" aria-hidden="true"></button>
+          <input type="submit"  class="btn btn-success" value="{% trans 'Save' %}">
+
+      </form>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
+{% block script %}
+
+{% endblock %}

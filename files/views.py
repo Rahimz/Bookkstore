@@ -15,7 +15,7 @@ from io import BytesIO
 from .models import File as FileObject, ImportSession
 from django.core.files import File
 
-from products.models import Product, Category
+from products.models import Product, Category, Publisher
 from tools.fa_to_en_num import number_converter
 
 
@@ -1680,5 +1680,83 @@ def check_category(request, file_slug, check='check', start=None, end=None):
             'not_found_product': not_found_product,
             'duplicate_name': duplicate_name,
 
+         }
+    )
+
+
+
+def update_publishers(request, file_slug, start, end, check='check'):
+    final = []
+
+
+    # excel file handle
+    file_object = get_object_or_404(FileObject, slug=file_slug)
+
+    myfile = File(file_object)
+
+    path = file_object.file.path
+    with open(path, 'rb') as f:
+        # Load excel workbook
+        wb = load_workbook(f)
+        ws = wb.active
+        row_count = ws.max_row
+
+        # a loop for scrape the excel file
+        # read the data in cells
+        # for i in range(2, row_count):
+        for i in range(start, end):
+            publisher_2 = None
+
+            # row = ws['A'+str(i):'M'+str(i)]
+
+            false_name = ws['B' + str(i)].value,
+            pub_1 = ws['C' + str(i)].value,
+            pub_2 = ws['D' + str(i)].value,
+
+            # print(false_name, pub_1, pub_2)
+            if str(false_name[0]) in ('-', '0', 'None'):
+                continue
+
+            databse_publisher_1 = cache.get('publisher_{}'.format(str(pub_1[0])))
+            if not databse_publisher_1:
+                try:
+                    databse_publisher_1 = Publisher.objects.get(name=pub_1[0])
+                except:
+                    databse_publisher_1 = Publisher.objects.create(
+                        name = pub_1[0],
+                    )
+                cache.set('publisher_{}'.format(str(pub_1[0])), databse_publisher_1)
+
+            # print(pub_2[0], type(pub_2[0]))
+            if pub_2[0] not in ('', None):
+                publisher_2 = cache.get('publisher_{}'.format(str(pub_2[0])))
+                if not publisher_2:
+                    try:
+                        publisher_2 = Publisher.objects.get(name=pub_2[0])
+                    except:
+                        publisher_2 = Publisher.objects.create(
+                            name = pub_2[0],
+                        )
+                    cache.set('publisher_{}'.format(str(pub_2[0])), publisher_2)
+
+            products_counts = Product.objects.filter(publisher=false_name[0]).count()
+            final.append((false_name[0], products_counts, databse_publisher_1, publisher_2))
+
+            if check == 'add':
+                products = Product.objects.filter(publisher=false_name[0])
+                if publisher_2:
+                    products.update(pub_1=databse_publisher_1, pub_2=publisher_2)
+                else:
+                    products.update(pub_1=databse_publisher_1)
+
+
+    return render(
+        request,
+        'files/update_publishers.html',
+        {
+            'file': myfile,
+            'file_object': file_object,
+            'row_count': row_count,
+            'final': final,
          }
     )

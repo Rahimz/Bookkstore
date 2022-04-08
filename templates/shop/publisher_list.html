@@ -1,0 +1,65 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans 'Publishers' %}{% endblock %}
+
+{% block products-btn %}btn-secondary text-dark{% endblock %}
+
+{% block content %}
+<div class="container-fluid overflow-hidden">
+  <div class="row">
+    <div class="col-md-1">
+      {% include "staff/sidebar_staff.html" with barName="products" %}
+    </div>
+    <div class="col-md-11">
+      <h2>{% trans 'List of publishers' %}</h2>
+      <div class="">
+        <form class="my-3" action="." method="post">
+          {{ search_form | crispy }}
+          {% csrf_token %}
+          <input type="submit" name="" class="btn btn-outline-secondary my-2" value="{% trans 'Search' %}">
+        </form>
+
+      </div>
+      <table class="table">
+        <thead>
+          <th>#</th>
+          <th>{% trans "Publisher ID" %}</th>
+          <th>{% trans "Edit" %}</th>
+          <th>{% trans "Publisher" %}</th>
+          <th>{% trans "Product quantity" %}</th>
+        </thead>
+        <tbody>
+          {% for publisher in publishers %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ publisher.id }}</td>
+            <td><a href="{% url 'shop:publisher_update' publisher.id %}" class=""><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+            <td><a href="{% url 'shop:publisher_products' publisher.id %}" class="">{{ publisher }}</a></td>
+            <td>{% if publisher.product_count %}{{ publisher.product_count }}{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {% if page %}
+      {% include "shop/pagination.html" with page=publishers %}
+      {% endif %}
+    </div>
+
+
+  </div>
+
+</div>
+ {{ block.super }}
+{% endblock %}
+{% block script %}
+
+{% endblock %}

@@ -87,7 +87,7 @@
               <td>{{ product.price_used | intcomma:False }}</td>
               <td>{{ product.stock_used  }}</td>
               {#<td>{{ product.store_positon }}</td>#}
-              <td>{% if product.publisher %}{{ product.publisher }}{% endif %}</td>
+              <td>{% if product.pub_1 %}{{ product.pub_1.name }}{% endif %}</td>
               <td>{% if request.user.is_staff %}<a href="{% url 'staff:used_book_prices' product.id %}" class="btn btn-sm p-1 btn-danger">{% trans 'Bahman' %}</a>{% endif %}</td>
               <td>{% if request.user.is_manager or request.user.is_online_manager %}<a href="{% url 'staff:product_stock_price_edit' product.id %}" class="btn btn-sm p-1 btn-info">{% trans 'Mahsa' %}</a>{% endif %}</td>
 

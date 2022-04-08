@@ -62,7 +62,7 @@
           <td><a href="{% url 'shop:product_detail' product.pk %}">{{ product }}</a></td>
           <td>{{ product.author }}</td>
           <td>{{ product.translator }}</td>
-          <td>{{ product.publisher }}</td>
+          <td>{% if product.pub_1 %}{{ product.pub_1.name }}{% endif %}</td>
           <td>{{ product.price | intcomma:False }}</td>
         </tr>
         {% endfor %}

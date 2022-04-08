@@ -47,8 +47,8 @@
             <p itemprop="name" class="">{% trans 'Name' %} : {{ product }}</p>
             <p itemprop="author" class="">{% trans 'Author' %} : {{ product.author }}</p>
             <p itemprop="translator" class="">{% trans 'Translator' %} : {{ product.translator }}</p>
-            <p itemprop="publisher" class="">{% trans 'Publisher' %} : {{ product.publisher }}</p>
-            <p itemprop="publisher" class="">{% trans 'Publisher' %} : {% if product.publisher_2 %}{{ product.publisher_2 }}{% endif %}</p>
+            <p itemprop="publisher" class="">{% trans 'Publisher' %} : {% if product.pub_1 %}{{ product.pub_1 }}{% endif %}</p>
+            {% if product.pub_2 %}<p itemprop="publisher" class="">{% trans 'Publisher' %} : {{ product.pub_2 }}</p>{% endif %}
           </div>
         </div>
         <div class="mt-4">

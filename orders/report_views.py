@@ -199,7 +199,7 @@ def best_selling_books(request):
                 'variation': item.variation,
                 'isbn': product.isbn,
                 'id': product.id,
-                'publisher': product.publisher,
+                'publisher': product.pub_1.name if product.pub_1 else '',
                 }
     all_list = [(
         added_line[item]['id'],

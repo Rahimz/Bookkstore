@@ -67,6 +67,33 @@ class Category(models.Model):
         super(Category, self).save(*args, **kwargs)
 
 
+class Publisher(models.Model):
+    name = models.CharField(
+        max_length=250,
+        unique=True
+    )
+    active = models.BooleanField(
+        default=True
+    )
+    url = models.URLField(
+        blank=True,
+        null=True
+    )
+    product_count = models.IntegerField(
+        null=True,
+        blank=True
+    )
+    created = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+        ordering = ('name', )
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     STATE_CHOICES = [
         ('new', _('New')),
@@ -258,6 +285,20 @@ class Product(models.Model):
         max_length=250,
         null=True,
         blank=True
+    )
+    pub_1 = models.ForeignKey(
+        Publisher,
+        on_delete=models.SET_NULL,
+        related_name='productPub_1',
+        null=True,
+        blank=True,
+    )
+    pub_2 = models.ForeignKey(
+        Publisher,
+        on_delete=models.SET_NULL,
+        related_name='productPub_2',
+        null=True,
+        blank=True,
     )
     publish_year = models.IntegerField(
         # default=1400,
