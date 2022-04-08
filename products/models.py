@@ -70,6 +70,7 @@ class Category(models.Model):
 class Publisher(models.Model):
     name = models.CharField(
         max_length=250,
+        unique=True
     )
     active = models.BooleanField(
         default=True
