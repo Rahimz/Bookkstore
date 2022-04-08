@@ -20,14 +20,24 @@
     </div>
     <div class="col-md-11">
       <h2>{% trans 'List of publishers' %}</h2>
-      <ul>
-        {% for publisher in publishers %}
-        <li>
-          <a href="{% url 'shop:publisher_products' publisher.id %}" class="">{{ publisher }}</a>
-          {% if publisher.product_count %}<span class="text-secondary"> - {{ publisher.product_count }} {% trans "Product" %}</span> {% endif %}
-        </li>
-        {% endfor %}
-      </ul>
+      <table class="table">
+        <thead>
+          <th>#</th>
+          <th>{% trans "Publisher ID" %}</th>
+          <th>{% trans "Publisher" %}</th>
+          <th>{% trans "Product quantity" %}</th>
+        </thead>
+        <tbody>
+          {% for publisher in publishers %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ publisher.id }}</td>
+            <td><a href="{% url 'shop:publisher_products' publisher.id %}" class="">{{ publisher }}</a></td>
+            <td>{% if publisher.product_count %}{{ publisher.product_count }}{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
 
       {% if page %}
       {% include "shop/pagination.html" with page=publishers %}
