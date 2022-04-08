@@ -176,23 +176,23 @@ def store_book_search(request, state):
 def publisher_list(request):
     publishers = Publisher.objects.filter(active=True)
 
-    # pagination
-    paginator = Paginator(publishers, 50) # 20 posts in each page
-    page = request.GET.get('page')
-    try:
-        publishers = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer deliver the first page
-        publishers = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range deliver last page of results
-        publishers = paginator.page(paginator.num_pages)
-    # print(page)
+    # # pagination
+    # paginator = Paginator(publishers, 50) # 20 posts in each page
+    # page = request.GET.get('page')
+    # try:
+    #     publishers = paginator.page(page)
+    # except PageNotAnInteger:
+    #     # If page is not an integer deliver the first page
+    #     publishers = paginator.page(1)
+    # except EmptyPage:
+    #     # If page is out of range deliver last page of results
+    #     publishers = paginator.page(paginator.num_pages)
+    # # print(page)
     return render (
         request,
         'shop/publisher_list.html',
         {
             'publishers': publishers,
-            'page': page,
+            # 'page': page,
         }
     )

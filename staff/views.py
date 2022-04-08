@@ -216,7 +216,7 @@ def product_create(request, product_id=None):
                 files=request.FILES)
         else:
             form = ProductCreateForm(
-                request.POST,
+                data=request.POST,
                 files=request.FILES)
         if form.is_valid():
             new_product = form.save(commit=False)
@@ -284,31 +284,31 @@ def product_create(request, product_id=None):
     )
 
 
-@staff_member_required
-def product_update(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
-    if request.method == 'POST':
-        form = ProductCreateForm(
-            data=request.POST,
-            instance=product,
-            files=request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, _('Product updated') +
-                             ' {}'.format(product.name))
-            return redirect('staff:products')
-
-        else:
-            messages.error(request, _('Form is not valid'))
-    else:
-        form = ProductCreateForm(instance=product)
-
-    return render(
-        request,
-        'staff/product_create.html',
-        {'form': form}
-
-    )
+# @staff_member_required
+# def product_update(request, product_id):
+#     product = get_object_or_404(Product, pk=product_id)
+#     if request.method == 'POST':
+#         form = ProductCreateForm(
+#             data=request.POST,
+#             instance=product,
+#             files=request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, _('Product updated') +
+#                              ' {}'.format(product.name))
+#             return redirect('staff:products')
+#
+#         else:
+#             messages.error(request, _('Form is not valid'))
+#     else:
+#         form = ProductCreateForm(instance=product)
+#
+#     return render(
+#         request,
+#         'staff/product_create.html',
+#         {'form': form}
+#
+#     )
 
 
 @staff_member_required
