@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-08 09:36+0430\n"
+"POT-Creation-Date: 2022-04-08 10:24+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -216,8 +216,8 @@ msgstr ""
 msgid "Overal discount percent"
 msgstr ""
 
-#: orders/forms.py:75 products/models.py:98 products/models.py:485
-#: products/models.py:627 templates/_base.html:72
+#: orders/forms.py:75 products/models.py:99 products/models.py:486
+#: products/models.py:628 templates/_base.html:72
 #: templates/_base_files_app.html:42
 #: templates/orders/reports/sales_by_days.html:221
 #: templates/shop/product_card.html:11 templates/shop/product_card.html:19
@@ -228,8 +228,8 @@ msgstr ""
 msgid "New"
 msgstr ""
 
-#: orders/forms.py:76 products/models.py:99 products/models.py:486
-#: products/models.py:628 templates/_base.html:75
+#: orders/forms.py:76 products/models.py:100 products/models.py:487
+#: products/models.py:629 templates/_base.html:75
 #: templates/_base_files_app.html:45
 #: templates/orders/reports/sales_by_days.html:223
 #: templates/shop/product_card.html:14 templates/shop/product_card.html:24
@@ -368,7 +368,7 @@ msgstr ""
 msgid "Purchase status changed to draft"
 msgstr ""
 
-#: products/models.py:110
+#: products/models.py:111
 #: templates/account/clients/client_most_valuable.html:35
 #: templates/orders/reports/sales_by_days.html:195
 #: templates/shop/store_book_search.html:56
@@ -376,7 +376,7 @@ msgstr ""
 msgid "Book"
 msgstr ""
 
-#: products/models.py:111
+#: products/models.py:112
 #: templates/account/clients/client_most_valuable.html:37
 #: templates/orders/reports/sales_by_days.html:197
 msgid "Craft"
@@ -433,6 +433,14 @@ msgstr ""
 
 #: search/forms.py:54
 msgid "Publisher name"
+msgstr ""
+
+#: shop/views.py:251
+msgid "Publisher updated"
+msgstr ""
+
+#: shop/views.py:253
+msgid "Publisher created"
 msgstr ""
 
 #: staff/forms.py:28
@@ -510,8 +518,8 @@ msgstr ""
 
 #: staff/forms.py:33 templates/account/clients/user_history.html:79
 #: templates/shop/product_detail.html:50 templates/shop/product_detail.html:51
-#: templates/shop/publisher_list.html:35
-#: templates/shop/publisher_products.html:41
+#: templates/shop/publisher_list.html:36
+#: templates/shop/publisher_products.html:40
 #: templates/shop/store_book_search.html:59
 #: templates/shop/store_book_search.html:75
 #: templates/staff/_order_table.html:15
@@ -528,7 +536,7 @@ msgstr ""
 msgid "Publisher"
 msgstr ""
 
-#: staff/forms.py:33 templates/shop/publisher_products.html:42
+#: staff/forms.py:33 templates/shop/publisher_products.html:41
 msgid "Publisher 2"
 msgstr ""
 
@@ -1072,6 +1080,7 @@ msgid "The datat of products is synced with bookstore data"
 msgstr ""
 
 #: templates/account/clients/_client_list_block.html:10
+#: templates/shop/publisher_list.html:35
 #: templates/shop/publisher_products.html:30
 #: templates/staff/collection_management.html:42
 #: templates/staff/crafts/craft_list.html:47
@@ -1846,7 +1855,7 @@ msgstr ""
 msgid "Just for store sales"
 msgstr ""
 
-#: templates/shop/publisher_list.html:11 templates/staff/sidebar_staff.html:22
+#: templates/shop/publisher_list.html:11 templates/staff/sidebar_staff.html:18
 msgid "Publishers"
 msgstr ""
 
@@ -1858,7 +1867,7 @@ msgstr ""
 msgid "Publisher ID"
 msgstr ""
 
-#: templates/shop/publisher_list.html:36
+#: templates/shop/publisher_list.html:37
 msgid "Product quantity"
 msgstr ""
 
@@ -1886,7 +1895,7 @@ msgstr ""
 msgid "Other prices"
 msgstr ""
 
-#: templates/shop/publisher_products.html:55
+#: templates/shop/publisher_products.html:54
 #: templates/staff/duplicate_book_name.html:65
 #: templates/staff/product_stock_price_edit.html:45
 #: templates/staff/products.html:84 templates/staff/used_book_prices.html:41
@@ -2003,7 +2012,7 @@ msgstr ""
 
 #: templates/staff/crafts/craft_list.html:22
 #: templates/staff/crafts/craft_update.html:22
-#: templates/staff/sidebar_staff.html:16
+#: templates/staff/sidebar_staff.html:15
 msgid "List of crafts"
 msgstr ""
 
@@ -2512,6 +2521,29 @@ msgstr ""
 msgid "List of images"
 msgstr ""
 
+#: templates/staff/publishers/publisher_create.html:13
+msgid "Publisher update"
+msgstr ""
+
+#: templates/staff/publishers/publisher_create.html:15
+msgid "Publisher create"
+msgstr ""
+
+#: templates/staff/publishers/publisher_create.html:29
+msgid "Edit publisher"
+msgstr ""
+
+#: templates/staff/publishers/publisher_create.html:31
+#: templates/staff/sidebar_staff.html:19
+msgid "Create publisher"
+msgstr ""
+
+#: templates/staff/publishers/publisher_create.html:39
+#: templates/tickets/create_ticket.html:27
+#: templates/tickets/ticket_details.html:94
+msgid "Save"
+msgstr ""
+
 #: templates/staff/purchase/_purchase_details_block.html:26
 msgid "days is remained"
 msgstr ""
@@ -2647,19 +2679,15 @@ msgstr ""
 msgid "Search in used books"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:11
-msgid "Search in new books"
-msgstr ""
-
-#: templates/staff/sidebar_staff.html:14
+#: templates/staff/sidebar_staff.html:13
 msgid "List of categories"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:17
+#: templates/staff/sidebar_staff.html:16
 msgid "Create craft product"
 msgstr ""
 
-#: templates/staff/sidebar_staff.html:19
+#: templates/staff/sidebar_staff.html:22
 msgid "Duplicate books"
 msgstr ""
 
@@ -2792,11 +2820,6 @@ msgstr ""
 #: templates/staff/zero_stock_list.html:9
 #: templates/staff/zero_stock_list.html:21
 msgid "Zero stock products"
-msgstr ""
-
-#: templates/tickets/create_ticket.html:27
-#: templates/tickets/ticket_details.html:94
-msgid "Save"
 msgstr ""
 
 #: templates/tickets/ticket_details.html:11
